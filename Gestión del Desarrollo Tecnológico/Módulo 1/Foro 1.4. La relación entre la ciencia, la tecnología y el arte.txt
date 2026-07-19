@@ -1,0 +1,71 @@
+Foro 1.4. La relación entre la ciencia, la tecnología y el arte
+
+Creo que los seres humanos, y en consecuencia la ciencia, no crean conocimiento desde cero, sino que descubren principios y fenómenos que siempre han existido. Vivimos en un universo cuyo funcionamiento apenas comprendemos de manera parcial. A medida que desarrollamos mejores herramientas de observación, formulamos nuevas hipótesis y realizamos experimentos más sofisticados, vamos revelando aspectos de la realidad que siempre estuvieron presentes, pero que no habíamos sido capaces de comprender o aprovechar debido a nuestras limitaciones de conocimiento y tecnología.
+
+Esta perspectiva es consistente con la idea presentada por Kevin Kelly en su libro What Technology Wants, donde plantea que la tecnología no es simplemente una colección de inventos arbitrarios, sino un sistema que evoluciona siguiendo ciertas posibilidades inherentes al conocimiento humano. Desde este punto de vista, muchas innovaciones se vuelven prácticamente inevitables cuando la ciencia alcanza un determinado nivel de desarrollo.
+
+Un ejemplo de ello es el teléfono. Si Alexander Graham Bell no lo hubiera inventado, es muy probable que otra persona lo hubiera hecho poco tiempo después, ya que los avances científicos y tecnológicos de la época habían creado las condiciones necesarias para que esa invención surgiera. La historia demuestra que numerosos descubrimientos han ocurrido de forma simultánea e independiente en distintos lugares del mundo cuando el conocimiento acumulado lo ha permitido.
+
+Por esta razón, considero que la ciencia y la tecnología mantienen una relación de retroalimentación constante. Los avances científicos hacen posibles nuevas tecnologías, mientras que estas proporcionan herramientas que permiten realizar nuevos descubrimientos científicos. El progreso de una impulsa el crecimiento de la otra.
+
+Un ejemplo reciente de esta interacción es el artículo científico Attention Is All You Need, publicado en 2017. Este trabajo introdujo la arquitectura Transformer, basada en el mecanismo de attention, y marcó un punto de inflexión en el desarrollo de los modelos modernos de lenguaje (LLMs). Aunque los conceptos matemáticos y computacionales utilizados ya existían, su combinación y aplicación permitieron abrir un nuevo campo de posibilidades en la inteligencia artificial.
+
+Finalmente, considero que este proceso no se limita únicamente a la ciencia y la tecnología, sino que también influye en otras manifestaciones del conocimiento humano, como el arte. Las formas de expresión artística han evolucionado conforme han aparecido nuevas herramientas y materiales: desde los jeroglíficos y las pinturas sobre piedra, hasta la pintura sobre lienzo, la fotografía, el cine, el arte digital y, más recientemente, las obras generadas con inteligencia artificial. Cada avance tecnológico amplía las posibilidades creativas del ser humano y transforma la manera en que expresa sus ideas y emociones.
+
+
+¿Cómo los aprovecha la sociedad?
+
+La sociedad aprovecha el conocimiento científico y tecnológico para satisfacer necesidades, resolver problemas y mejorar su calidad de vida. Sin embargo, las necesidades humanas no son estáticas; evolucionan conforme cambian las condiciones sociales, económicas y culturales. A medida que se resuelven ciertos problemas, surgen otros nuevos, lo que impulsa un ciclo continuo de innovación.
+
+Un ejemplo de ello es que, en la actualidad, una persona de clase media tiene acceso a comodidades y tecnologías que incluso los magnates y las personas más adineradas de hace menos de un siglo no podían imaginar. Servicios como la comunicación instantánea, el acceso ilimitado a información, la navegación por GPS, los avances en medicina o la posibilidad de viajar largas distancias en pocas horas son hoy parte de la vida cotidiana para millones de personas.
+
+Cuando un individuo o un grupo de personas logra desarrollar una solución que satisface una necesidad real de una cantidad significativa de personas, es muy difícil que ese avance permanezca aislado. Si la solución demuestra ser útil y económicamente viable, tiende a difundirse rápidamente hacia otros mercados, países y culturas. La historia está llena de ejemplos de tecnologías que comenzaron como innovaciones locales y terminaron transformando la vida de personas en todo el mundo.
+
+Como ejemplo, veamos el caso de la producción de maíz por hectarea en estados unidos en el último siglo:
+
+1908–1930 | Comprensión del vigor híbrido
+La investigación genética permitió identificar que el cruce de determinadas líneas de maíz podía producir plantas más uniformes, resistentes y productivas que sus progenitores. Esto sentó las bases científicas para las semillas híbridas.
+
+Décadas de 1930 y 1940 | Adopción de semillas híbridas
+En 1933, menos del 1 % del maíz estadounidense se cultivaba con semillas híbridas; para 1944, la proporción superaba el 80 %. Esta rápida adopción marcó el inicio del crecimiento sostenido del rendimiento por hectárea.
+
+Décadas de 1940 y 1950 | Fertilizantes sintéticos
+El uso creciente de fertilizantes nitrogenados permitió que las plantas recibieran más nutrientes y desarrollaran una mayor cantidad de grano. Las nuevas variedades también fueron seleccionadas para responder mejor a niveles altos de fertilización.
+
+Décadas de 1950 y 1960 | Mecanización agrícola
+Los tractores, sembradoras y cosechadoras modernas permitieron sembrar con mayor precisión, trabajar superficies más extensas y cosechar rápidamente, reduciendo pérdidas y aumentando la eficiencia de las explotaciones agrícolas.
+
+Décadas de 1960 y 1970 | Control de malezas, insectos y enfermedades
+La expansión de herbicidas, insecticidas y fungicidas redujo la competencia por agua y nutrientes, así como las pérdidas causadas por plagas y enfermedades. Estos avances permitieron sembrar poblaciones de plantas cada vez más densas.
+
+Décadas de 1970 y 1980 | Mejoramiento genético continuo
+Los programas de selección desarrollaron híbridos capaces de soportar mayor densidad de siembra, permanecer erguidos hasta la cosecha y aprovechar mejor la fertilización. La mejora genética comenzó a generar incrementos relativamente constantes de productividad.
+
+Década de 1990 | Agricultura de precisión
+El GPS, los mapas digitales de rendimiento y los sensores agrícolas permitieron identificar diferencias dentro de cada terreno. Los productores comenzaron a ajustar la cantidad de semillas, fertilizantes y otros insumos según las condiciones de cada sección del campo.
+
+1996 en adelante | Maíz genéticamente modificado
+Se introdujeron variedades con características como resistencia a determinados insectos y tolerancia a herbicidas. Estas tecnologías no crean directamente todo el potencial de rendimiento, pero reducen las pérdidas causadas por insectos y competencia de malezas.
+
+Décadas de 2000 y 2010 | Biotecnología y selección asistida por marcadores
+El análisis del ADN permitió identificar más rápidamente características deseables y desarrollar híbridos con mayor tolerancia a sequía, calor, enfermedades y otras condiciones adversas. Estudios sobre variedades híbridas estiman mejoras de productividad genética de aproximadamente 1,2 % a 2,4 % anual, dependiendo del conjunto de datos analizado.
+
+Década de 2010 | Sensores, satélites y aplicación variable
+Imágenes satelitales, drones, monitores de cosecha y equipos conectados comenzaron a producir información detallada sobre humedad, salud de las plantas y productividad. Los agricultores pudieron aplicar insumos únicamente donde eran necesarios.
+
+Década de 2020 | Inteligencia artificial y agricultura digital
+Los modelos predictivos combinan datos históricos, meteorológicos, agronómicos y satelitales para anticipar rendimientos, detectar estrés y optimizar decisiones de siembra, riego, fertilización y cosecha. Investigaciones recientes muestran que los modelos de aprendizaje automático pueden explicar una parte importante de la variación espacial y temporal del rendimiento en el cinturón maicero estadounidense.
+
+El aumento no es consecuencia de una sola invención, sino de la acumulación de avances complementarios: mejores semillas permiten aprovechar mejor los fertilizantes; la maquinaria permite sembrarlas con precisión; los agroquímicos protegen su potencial; y los datos ayudan a administrar cada parcela de forma más eficiente.
+
+Referencias:
+
+Kelly, K. (2010). What technology wants. Viking.
+
+Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, Ł., & Polosukhin, I. (2017). Attention is all you need. Advances in Neural Information Processing Systems, 30. https://papers.nips.cc/paper/7181-attention-is-all-you-need
+
+Troyer, A. F. (2009). Development of hybrid corn and the seed corn industry. En J. L. Bennetzen & S. Hake (Eds.), Handbook of maize: Genetics and genomics (2nd ed., pp. 87–114). Springer. https://doi.org/10.1007/978-0-387-79418-1_5
+
+U.S. Department of Agriculture, Economic Research Service. (2024). Adoption of genetically engineered crops in the United States. https://www.ers.usda.gov/data-products/adoption-of-genetically-engineered-crops-in-the-u-s/
+
+U.S. Department of Agriculture, National Agricultural Statistics Service. (n.d.). Quick Stats. https://quickstats.nass.usda.gov/
