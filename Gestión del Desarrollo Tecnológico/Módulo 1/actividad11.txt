@@ -1,0 +1,25 @@
+Actividad 1.1. Cree su propia OPM de una
+tecnología
+Esta primera actividad representó mi primer contacto con la metodología OPM (Object Process
+Methodology), la cual era completamente nueva para mí.
+Como el tema de la actividad era totalmente libre, decidí elegir una tecnología con la que he trabajado
+durante los últimos seis años o más.
+Considero que los conceptos de GraphQL se prestan muy bien para ser representados mediante este
+tipo de diagramas.
+Mi objetivo fue modelar tanto los conceptos del servidor como los del cliente que interactúan para
+permitir que un usuario ejecute cualquiera de las tres operaciones principales que ofrece la tecnología:
+Queries para consultas de solo lectura, Mutations para operaciones de escritura y Subscriptions para
+recibir notificaciones cuando la fuente de datos cambia.
+
+El diagrama está dividido en tres partes: un diagrama principal y dos diagramas secundarios.
+En el diagrama principal se presentan los objetos, los procesos y los posibles cambios de estado de
+aquellos objetos que poseen estado.
+
+El segundo diagrama muestra los conceptos relacionados con el servidor que hacen posible la
+construcción de un GraphQL Schema.
+
+Finalmente, el tercer diagrama representa los componentes del lado del cliente que permiten ejecutar
+cualquiera de las tres operaciones disponibles. Estos componentes interactúan para construir y enviar
+una solicitud (HTTP request) al servidor mediante un cliente HTTP.
+
+

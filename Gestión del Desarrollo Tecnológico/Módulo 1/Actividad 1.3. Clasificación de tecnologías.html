@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taxonomía Tecnológica — Energía Solar Fotovoltaica + Almacenamiento</title>
+<style>
+  :root {
+    --bg: #f7f8fa;
+    --card: #ffffff;
+    --ink: #1a2332;
+    --muted: #5a6a7e;
+    --accent: #e8960c;
+    --accent-soft: #fdf3e0;
+    --header-bg: #1a2332;
+    --header-ink: #ffffff;
+    --row-bg: #eef1f5;
+    --border: #d8dee6;
+    --cell-hover: #fff8ec;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12161c;
+      --card: #1a2028;
+      --ink: #e8ecf1;
+      --muted: #9aa8b8;
+      --accent: #f0a832;
+      --accent-soft: #2a2418;
+      --header-bg: #232c38;
+      --header-ink: #f0f4f8;
+      --row-bg: #202834;
+      --border: #333d4a;
+      --cell-hover: #2a2f28;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    padding: 2rem 1rem;
+    line-height: 1.5;
+  }
+  .container { max-width: 1280px; margin: 0 auto; }
+  header { margin-bottom: 1.5rem; }
+  .kicker {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+  h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 0.5rem; }
+  .subtitle { color: var(--muted); font-size: 0.95rem; max-width: 900px; }
+  .subtitle strong { color: var(--ink); }
+  .source {
+    display: inline-block;
+    margin-top: 0.75rem;
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.8rem;
+    color: var(--ink);
+  }
+  .table-wrap {
+    overflow-x: auto;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  }
+  table { border-collapse: collapse; width: 100%; min-width: 1080px; }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 0.7rem 0.8rem;
+    vertical-align: top;
+    font-size: 0.82rem;
+  }
+  thead th {
+    background: var(--header-bg);
+    color: var(--header-ink);
+    text-align: center;
+    font-size: 0.85rem;
+    padding: 0.9rem 0.8rem;
+  }
+  thead th .code {
+    display: block;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--accent);
+  }
+  tbody th {
+    background: var(--row-bg);
+    text-align: left;
+    width: 165px;
+    min-width: 165px;
+    font-size: 0.83rem;
+  }
+  tbody th .code {
+    display: block;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--accent);
+  }
+  td { background: var(--card); transition: background 0.15s; }
+  td:hover { background: var(--cell-hover); }
+  td .tag {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 0.68rem;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    margin-bottom: 0.25rem;
+  }
+  td ul { padding-left: 1rem; }
+  td li { margin-bottom: 0.25rem; }
+  .corner {
+    background: var(--header-bg) !important;
+    color: var(--header-ink);
+    font-size: 0.72rem;
+    text-align: left;
+    vertical-align: middle;
+  }
+  footer {
+    margin-top: 1.25rem;
+    color: var(--muted);
+    font-size: 0.78rem;
+    max-width: 1000px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="kicker">Gestión del Desarrollo Tecnológico · Módulo 1 · Taxonomía de Tecnologías</div>
+    <h1>Energía Solar Fotovoltaica + Almacenamiento en Baterías</h1>
+    <p class="subtitle">
+      Tecnología seleccionada como la <strong>más prominente para el futuro de la generación de energía</strong>,
+      según el informe <em>“Fighting Words” — 16th Annual Energy Paper</em> (Michael Cembalest, J.P. Morgan, marzo 2026):
+      la adopción solar global sigue en ascenso sostenido (capítulo <em>“Heliocentrism update”</em>), con costos de capital en
+      descenso y creciente acoplamiento solar + baterías como potencia de base, mientras el informe se muestra escéptico
+      frente a los SMR, la geotermia y el hidrógeno geológico.
+    </p>
+    <span class="source">📄 Fuente: fighting-words-amv.pdf — J.P. Morgan Eye on the Market, 3 de marzo de 2026</span>
+  </header>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="corner">Proceso ▼ / Operando ►</th>
+          <th><span class="code">M</span>Materia</th>
+          <th><span class="code">E</span>Energía</th>
+          <th><span class="code">I</span>Información</th>
+          <th><span class="code">V</span>Valor</th>
+          <th><span class="code">L</span>Organismos vivos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th><span class="code">1</span>Proceso de transformación</th>
+          <td><span class="tag">M1</span>
+            <ul>
+              <li>Purificación de polisilicio → lingote → oblea → célula fotovoltaica</li>
+              <li>Laminado y ensamblaje de módulos; reciclaje de paneles al fin de vida</li>
+            </ul>
+          </td>
+          <td><span class="tag">E1</span>
+            <ul>
+              <li>Efecto fotovoltaico: fotones → electricidad DC</li>
+              <li>Inversores DC→AC; conversión electroquímica en carga/descarga de baterías</li>
+            </ul>
+          </td>
+          <td><span class="tag">I1</span>
+            <ul>
+              <li>Modelos de pronóstico: datos de irradiancia y clima → predicción de generación (ML)</li>
+              <li>Procesamiento de señales de sensores en curvas de rendimiento</li>
+            </ul>
+          </td>
+          <td><span class="tag">V1</span>
+            <ul>
+              <li>Radiación solar gratuita → energía facturable (LCOE decreciente)</li>
+              <li>Generación → créditos fiscales (ITC) y certificados renovables (REC)</li>
+            </ul>
+          </td>
+          <td><span class="tag">L1</span>
+            <ul>
+              <li>Agrovoltaica: coexistencia cultivo–panel que transforma el uso del suelo</li>
+              <li>Capacitación de técnicos e ingenieros solares (transformación de competencias)</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <th><span class="code">2</span>Transporte / Distribución</th>
+          <td><span class="tag">M2</span>
+            <ul>
+              <li>Cadena global de suministro de polisilicio, vidrio y módulos (dominada por China)</li>
+              <li>Logística marítima/terrestre de paneles y baterías hasta el sitio</li>
+            </ul>
+          </td>
+          <td><span class="tag">E2</span>
+            <ul>
+              <li>Líneas de transmisión e interconexión de plantas solares a la red</li>
+              <li>Cableado DC/AC, transformadores y redes de distribución local</li>
+            </ul>
+          </td>
+          <td><span class="tag">I2</span>
+            <ul>
+              <li>Telemetría SCADA hacia el operador de red</li>
+              <li>Transmisión de datos de producción y pronósticos a mercados eléctricos</li>
+            </ul>
+          </td>
+          <td><span class="tag">V2</span>
+            <ul>
+              <li>Flujos de pago por energía inyectada (net metering, PPA)</li>
+              <li>Distribución de ingresos entre desarrollador, financista y propietario del terreno</li>
+            </ul>
+          </td>
+          <td><span class="tag">L2</span>
+            <ul>
+              <li>Movilización de cuadrillas de instalación y técnicos de O&amp;M</li>
+              <li>Reubicación/gestión de fauna durante la construcción de plantas</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <th><span class="code">3</span>Almacenamiento</th>
+          <td><span class="tag">M3</span>
+            <ul>
+              <li>Inventarios de módulos, células y materiales críticos (plata, silicio, litio)</li>
+              <li>Bodegas de repuestos para O&amp;M</li>
+            </ul>
+          </td>
+          <td><span class="tag">E3</span>
+            <ul>
+              <li>Baterías Li-ion/LFP acopladas (solar + storage como potencia de base)</li>
+              <li>Almacenamiento térmico y bombeo hidráulico complementarios</li>
+            </ul>
+          </td>
+          <td><span class="tag">I3</span>
+            <ul>
+              <li>Bases de datos históricas de irradiancia y generación</li>
+              <li>Registros de desempeño y degradación de paneles/baterías</li>
+            </ul>
+          </td>
+          <td><span class="tag">V3</span>
+            <ul>
+              <li>Arbitraje energético: almacenar en horas baratas, vender en horas pico</li>
+              <li>Reservas de capacidad acreditada y garantías de desempeño</li>
+            </ul>
+          </td>
+          <td><span class="tag">L3</span>
+            <ul>
+              <li>Hábitats para polinizadores y apiarios dentro de plantas solares</li>
+              <li>Retención de conocimiento experto en equipos de operación</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <th><span class="code">4</span>Intercambio / Comercialización</th>
+          <td><span class="tag">M4</span>
+            <ul>
+              <li>Mercado internacional de compraventa de paneles y baterías</li>
+              <li>Mercado secundario y de reciclaje de equipos usados</li>
+            </ul>
+          </td>
+          <td><span class="tag">E4</span>
+            <ul>
+              <li>Venta de energía en mercados mayoristas y PPAs corporativos (data centers)</li>
+              <li>Intercambio de excedentes entre prosumidores (net billing)</li>
+            </ul>
+          </td>
+          <td><span class="tag">I4</span>
+            <ul>
+              <li>Plataformas de trading energético y subastas de capacidad</li>
+              <li>Comercialización de datos meteorológicos y de pronóstico</li>
+            </ul>
+          </td>
+          <td><span class="tag">V4</span>
+            <ul>
+              <li>Mercados de RECs y créditos de carbono</li>
+              <li>Financiamiento de proyectos, subsidios y leasing solar residencial</li>
+            </ul>
+          </td>
+          <td><span class="tag">L4</span>
+            <ul>
+              <li>Contratos de arrendamiento de tierras con agricultores y comunidades</li>
+              <li>Mercado laboral: contratación de instaladores y especialistas solares</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <th><span class="code">5</span>Control / Regulación</th>
+          <td><span class="tag">M5</span>
+            <ul>
+              <li>Normas de calidad de fabricación (IEC 61215/61730)</li>
+              <li>Aranceles y controles de origen sobre paneles importados</li>
+            </ul>
+          </td>
+          <td><span class="tag">E5</span>
+            <ul>
+              <li>Inversores inteligentes con MPPT; regulación de frecuencia y voltaje</li>
+              <li>Curtailment (recorte de generación) y despacho por el operador de red</li>
+            </ul>
+          </td>
+          <td><span class="tag">I5</span>
+            <ul>
+              <li>Sistemas EMS/SCADA y algoritmos de despacho automático</li>
+              <li>Ciberseguridad de plantas e inversores conectados a la red</li>
+            </ul>
+          </td>
+          <td><span class="tag">V5</span>
+            <ul>
+              <li>Regulación tarifaria y políticas de subsidios/incentivos fiscales</li>
+              <li>Permisos (permitting) e interconexión regulada de proyectos</li>
+            </ul>
+          </td>
+          <td><span class="tag">L5</span>
+            <ul>
+              <li>Estudios de impacto ambiental y protección de fauna/flora</li>
+              <li>Normas de seguridad laboral para instaladores y operadores</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer>
+    <p>Taxonomía basada en el marco de clasificación tecnológica de operandos y procesos (Magee &amp; de Weck, MIT):
+    cada celda cruza un <strong>operando</strong> (Materia, Energía, Información, Valor, Organismos vivos) con un
+    <strong>proceso</strong> (Transformación, Transporte/Distribución, Almacenamiento, Intercambio/Comercialización,
+    Control/Regulación) aplicado al ecosistema de la energía solar fotovoltaica con almacenamiento.</p>
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+Actividad 1.2. Dibuje su propio marco de gestión
+tecnológica
+Sobre la compañía elegida:
+Subaxa es una empresa PropTech que ofrece una plataforma especializada para la inversión en
+remates judiciales en Costa Rica. Nuestra solución combina un mapa interactivo de oportunidades,
+análisis avanzado mediante inteligencia artificial y el acompañamiento de un equipo multidisciplinario
+de expertos en inversión y asuntos legales, brindando a los inversionistas las herramientas necesarias
+para tomar decisiones informadas y minimizar riesgos.
+Nuestros clientes son personas e inversionistas interesados en el mercado inmobiliario que buscan
+acceder a oportunidades de inversión respaldadas por información actualizada, confiable y analizada de
+manera objetiva. A través de nuestra plataforma, facilitamos el acceso a datos que tradicionalmente son
+difíciles de obtener, permitiendo evaluar cada oportunidad con mayor seguridad y confianza.
+El equipo de Subaxa acompaña a cada inversionista durante todo el proceso de inversión. Desde la
+identificación de propiedades que se ajustan a su perfil y objetivos financieros, pasando por un análisis
+exhaustivo o due diligence de cada inmueble (incluyendo aspectos legales, financieros y comerciales),
+hasta el acompañamiento presencial durante el remate judicial en cualquiera de los tribunales de Costa
+Rica. Nuestro objetivo es convertir un proceso tradicionalmente complejo y poco accesible en una
+experiencia transparente, eficiente y respaldada por tecnología de vanguardia y asesoría especializada.
+
+Diagrama OPM:
+El diagrama que se muestra acontinuacion muestra un proceso que ocurre todos los días de manera
+automática y es la fuente de la información que se ofrece en la plataforma.
+
+Explicación del diagrama:
+El elemento central de este modelo es el objeto Propiedad, ya que representa la entidad principal sobre
+la que trabajan todos los procesos del sistema. Cada propiedad avanza progresivamente a través de
+cuatro estados: borrador, autocompletado, normalizado y localizada. El objetivo de toda la
+plataforma es transformar información no estructurada proveniente del Boletín Judicial en una
+propiedad completamente identificada, validada y georreferenciada, lista para ser analizada por los
+inversionistas.
+El proceso inicia con la publicación del Boletín Judicial, el cual es cargado al sistema mediante el
+proceso Subir Boletín. Una vez almacenado como un objeto Boletín, se ejecuta el proceso Extraer
+Remates Judiciales, encargado de identificar todos los remates publicados y generar los
+correspondientes Edictos.
+Posteriormente, cada edicto es procesado mediante Extraer Edictos, un proceso que combina reglas
+tradicionales de procesamiento de texto con el apoyo de un Agente de Inteligencia Artificial para
+interpretar el contenido del documento. A partir de esta información se crea una nueva Propiedad en
+estado borrador, donde la información aún puede estar incompleta o contener inconsistencias propias
+del lenguaje utilizado en los edictos judiciales.
+
+El siguiente paso corresponde al proceso Normalizar Propiedad, cuyo propósito es estandarizar toda
+la información extraída. Para ello utiliza un Catálogo de datos maestros que incluye provincias,
+cantones, distritos, acreedores y juzgados, permitiendo homologar nombres, corregir inconsistencias y
+completar información faltante. Como resultado, la propiedad pasa del estado autocompletado al
+estado normalizado, garantizando que los datos sean consistentes y comparables con el resto de la
+plataforma.
+Finalmente, el proceso Ubicar Propiedad utiliza la información ya normalizada para determinar la
+ubicación geográfica exacta del inmueble. Una vez que la propiedad ha sido localizada exitosamente,
+alcanza su estado final localizada, quedando lista para ser presentada dentro del mapa de
+oportunidades de inversión y para continuar con las siguientes etapas del análisis de inversión y due
+diligence.
+En conjunto, el diagrama representa un flujo de procesamiento de datos donde información
+inicialmente no estructurada se transforma, mediante una combinación de automatización, inteligencia
+artificial y validaciones basadas en catálogos, en un conjunto de propiedades confiables y estructuradas
+que sirven como base para la plataforma de inversión de Subaxa.
+
+Segunda Parte:
+¿Quién hace el scouting tecnológico en su empresa?
+El scouting tecnológico es liderado por el CTO, quien tiene la responsabilidad de identificar nuevas
+tecnologías, evaluar tendencias del mercado y analizar su posible impacto en la estrategia de la
+empresa. Sin embargo, este proceso no es exclusivo de un área o de una sola persona. En nuestra
+organización promovemos una cultura donde cualquier colaborador puede contribuir con nuevas ideas,
+herramientas o descubrimientos tecnológicos.
+Consideramos que la innovación surge con mayor facilidad cuando todas las personas tienen la
+oportunidad de participar, independientemente de su antigüedad o posición dentro de la empresa. Desde
+un colaborador que lleva un día en la organización hasta los fundadores y el CEO pueden aportar
+perspectivas valiosas que eventualmente se conviertan en iniciativas de innovación.
+¿Existen hojas de ruta tecnológicas?
+Sí. La empresa cuenta con hojas de ruta (technology roadmaps) y roadmaps de producto formalmente
+definidos. Estos sirven como guía para la evolución tecnológica de la organización y permiten alinear
+las iniciativas de desarrollo con los objetivos estratégicos del negocio.
+Los roadmaps se construyen considerando tanto las prioridades de la compañía como las necesidades y
+retroalimentación de los usuarios, permitiendo establecer una visión de corto, mediano y largo plazo
+sobre las capacidades que se desean desarrollar y las tecnologías que se incorporarán para generar
+mayor valor.
+¿Quién decide y quién implementa el portafolio de proyectos de I + D?
+La empresa cuenta con un departamento de Investigación y Desarrollo (I+D) que forma parte del área
+de Tecnología. Este equipo es responsable de identificar oportunidades de innovación, desarrollar
+pruebas de concepto (Proof of Concept o PoC), ejecutar proyectos piloto y evaluar nuevas tecnologías
+antes de su adopción a gran escala.
+El departamento dispone de personal dedicado exclusivamente a estas iniciativas y de un presupuesto
+específico para actividades de investigación e innovación. De esta manera, la organización puede
+experimentar de forma continua con nuevas soluciones, validar su viabilidad técnica y de negocio, e
+incorporar aquellas que aporten ventajas competitivas y valor para los clientes.
+
+
