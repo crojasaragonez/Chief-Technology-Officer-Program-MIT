@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/TeX Live for SUSE Linux) (preloaded format=pdflatex 2026.7.25)  25 JUL 2026 10:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/TeX Live for SUSE Linux) (preloaded format=pdflatex 2026.7.25)  25 JUL 2026 11:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -825,10 +825,10 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texmf/fonts/enc/
 dvips/lm/lm-ec.enc}] [2] [3]
+[4] [5] [6]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 236.
-
-[4] (./main.aux
+(Font)              <10.95> on input line 445.
+ [7] [8] (./main.aux
 LaTeX Info: Redefining \sptext on input line 11.
 LaTeX Info: Redefining \. on input line 11.
 LaTeX Info: Redefining \% on input line 11.
@@ -838,27 +838,27 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 5DE3CDFBE894EDFAC4609DF664FD4D58;1800.
+(rerunfilecheck)             Checksum: C7C1275D8752B69DFF0A64893152442A;3912.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 21810 strings out of 469336
- 380554 string characters out of 5466414
- 1368329 words of memory out of 5000000
- 50119 multiletter control sequences out of 15000+600000
- 694880 words of font info for 148 fonts, out of 8000000 for 9000
+ 21899 strings out of 469336
+ 382261 string characters out of 5466414
+ 1368679 words of memory out of 5000000
+ 50161 multiletter control sequences out of 15000+600000
+ 700614 words of font info for 162 fonts, out of 8000000 for 9000
  81 hyphenation exceptions out of 8191
  75i,10n,79p,1197b,2807s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/ty
-pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></us
-r/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/pub
-lic/lm/lmri10.pfb>
-Output written on main.pdf (4 pages, 155474 bytes).
+pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmbxi10.pfb></
+usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/p
+ublic/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb>
+Output written on main.pdf (8 pages, 186814 bytes).
 PDF statistics:
- 119 PDF objects out of 1000 (max. 8388607)
- 101 compressed objects within 2 object streams
- 23 named destinations out of 1000 (max. 500000)
- 36929 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 201 PDF objects out of 1000 (max. 8388607)
+ 177 compressed objects within 2 object streams
+ 43 named destinations out of 1000 (max. 500000)
+ 39049 words of extra memory for PDF output out of 42996 (max. 10000000)
 

@@ -209,15 +209,224 @@ pero sustituyó el objetivo evolutivo de defensa por objetivos definidos por el
 investigador. La innovación central no consistió en copiar la forma de un
 organismo, sino en comprender, simplificar y reprogramar un proceso molecular.
 
+\section{Algoritmos de optimización inspirados en el moho mucilaginoso}
+
+\subsection{Antecedente en la naturaleza}
+
+\emph{Physarum polycephalum} es un moho mucilaginoso plasmodial, perteneciente
+al grupo de los amebozoos y no al de los hongos verdaderos. Durante una etapa
+de su ciclo de vida forma una gran célula multinucleada que se desplaza sobre
+superficies húmedas en busca de alimento. Su cuerpo adopta la forma de una red
+de tubos por los que circula el protoplasma. Esta red transporta nutrientes y
+señales entre las distintas regiones del organismo.
+
+Aunque \emph{Physarum} no posee cerebro ni sistema nervioso, su estructura
+cambia de acuerdo con las condiciones del entorno. Cuando encuentra varias
+fuentes de alimento, inicialmente extiende numerosas conexiones. Con el tiempo
+refuerza algunos tubos y elimina otros, manteniendo rutas que permiten
+transportar nutrientes con un costo material reducido. No se trata de que el
+organismo construya o compare conscientemente un conjunto de mapas. La
+solución emerge de interacciones locales entre flujo, contracciones y grosor
+de los tubos.
+
+Una demostración influyente fue publicada por Nakagaki, Yamada y Tóth en 2000.
+Los investigadores distribuyeron el plasmodio dentro de un laberinto y
+colocaron alimento en dos puntos. El organismo ocupó inicialmente varios
+caminos, pero después conservó una conexión cercana a la ruta de menor longitud
+entre las dos fuentes \parencite{nakagaki2000}. El experimento mostró que un
+sistema biológico sin control central podía resolver físicamente un problema
+de optimización.
+
+\subsection{Principio biológico esencial}
+
+El principio transferible es un ciclo de \textbf{exploración, realimentación y
+poda}. Durante la exploración se forma una red con rutas alternativas. El flujo
+de protoplasma no se distribuye por igual: depende de la longitud y la
+conductividad de cada tubo. Una ruta por la que circula más flujo recibe
+realimentación positiva y aumenta su capacidad. Las rutas con poco flujo se
+debilitan progresivamente hasta desaparecer.
+
+Esta regla local produce una propiedad global. La red tiende a reducir el
+material necesario para conectar las fuentes de alimento, pero puede mantener
+conexiones redundantes que mejoran la tolerancia a interrupciones. Por ello, el
+resultado no debe interpretarse solamente como el camino geométricamente más
+corto. En redes con múltiples destinos, el organismo negocia varios criterios:
+longitud total, eficiencia del transporte y resiliencia.
+
+El diseño es relevante para la gestión tecnológica porque utiliza
+\textbf{control descentralizado}. Ningún componente individual conoce la
+solución completa; la configuración se modifica a partir de información local.
+Además, la red continúa adaptándose cuando aparece alimento, desaparece una
+fuente o cambia el ambiente. Estos atributos resultan atractivos para sistemas
+humanos que operan bajo incertidumbre y no pueden depender siempre de un
+controlador central.
+
+\subsection{Del organismo al modelo matemático}
+
+Tero, Kobayashi y Nakagaki formalizaron en 2007 un modelo de red de transporte
+adaptativa basado en las observaciones fisiológicas de \emph{Physarum}
+\parencite{tero2007}. En su traducción computacional, el problema se representa
+mediante un grafo: las fuentes de alimento se convierten en nodos y los
+posibles tubos en aristas. Cada arista posee una longitud y una conductividad.
+Una diferencia de presión produce un flujo simulado a través de la red.
+
+El algoritmo repite dos operaciones centrales:
+
+\begin{enumerate}
+  \item calcula cómo se distribuiría el flujo entre las conexiones existentes;
+  \item aumenta la conductividad de las conexiones con mayor flujo y reduce la
+    de aquellas que reciben poco.
+\end{enumerate}
+
+Después de varias iteraciones, las rutas ineficientes pierden conductividad y
+las más útiles se estabilizan. El modelo convierte así la morfología dinámica
+del organismo en una regla de actualización numérica. Su importancia no reside
+en simular cada detalle celular, sino en conservar la relación funcional:
+\emph{mayor uso produce refuerzo; menor uso produce desaparición}.
+
+\begin{table}[ht]
+  \centering
+  \small
+  \caption{Traducción del comportamiento de \emph{Physarum} a un modelo de
+  optimización.}
+  \label{tab:traduccion-physarum}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}X
+    >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{Sistema natural} & \textbf{Modelo computacional} \\
+    \midrule
+    Las fuentes de alimento atraen al organismo.
+      & Los destinos se representan como nodos de un grafo. \\
+    Los tubos conectan distintas regiones del plasmodio.
+      & Las conexiones posibles se representan mediante aristas. \\
+    El protoplasma circula por los tubos.
+      & Se calcula un flujo a partir de presión, longitud y conductividad. \\
+    Los tubos con mayor flujo se refuerzan.
+      & La conductividad de las aristas útiles aumenta. \\
+    Los tubos poco utilizados se atrofian.
+      & Las conexiones ineficientes pierden peso o se eliminan. \\
+    La red se reorganiza ante cambios ambientales.
+      & El algoritmo recalcula la solución cuando cambian los datos. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Objetivos y aplicaciones}
+
+El objetivo tecnológico es encontrar configuraciones eficientes en problemas
+con numerosas soluciones posibles. En su forma más directa, el modelo permite
+buscar caminos cortos dentro de un grafo. Sin embargo, su valor aumenta cuando
+el problema exige conectar varios puntos y equilibrar criterios que pueden
+competir entre sí.
+
+Entre sus contextos de aplicación se encuentran:
+
+\begin{itemize}
+  \item diseño de redes de transporte, carreteras y ferrocarriles;
+  \item enrutamiento de información en redes de comunicación;
+  \item planificación de cadenas de suministro y redes logísticas;
+  \item aproximación de problemas de conexión y caminos mínimos;
+  \item optimización de parámetros en problemas de ingeniería.
+\end{itemize}
+
+Estas aplicaciones no implican introducir organismos vivos en la
+infraestructura. El producto transferido es la regla de adaptación obtenida al
+estudiar su comportamiento. En otros experimentos, el organismo físico también
+puede utilizarse como una forma de computación no convencional, pero el diseño
+que aquí se analiza es principalmente matemático y computacional.
+
+\subsection{Contexto de desarrollo y lanzamiento}
+
+Este caso tampoco tuvo un único lanzamiento comercial. Su evolución ocurrió a
+través de una secuencia de publicaciones que trasladaron el conocimiento desde
+la biología experimental hasta la optimización.
+
+El experimento del laberinto publicado en 2000 aportó una evidencia visible de
+selección de rutas \parencite{nakagaki2000}. El modelo matemático de 2007
+identificó el mecanismo de realimentación entre flujo y grosor del tubo y lo
+convirtió en una dinámica aplicable a grafos \parencite{tero2007}. En 2010,
+Tero y sus colaboradores ampliaron el principio al diseño de redes adaptativas.
+Para evaluar el modelo, colocaron fuentes de alimento en posiciones
+correspondientes a ciudades del área de Tokio. Las redes producidas por
+\emph{Physarum} y por el modelo alcanzaron combinaciones de costo, eficiencia y
+tolerancia a fallos comparables con características de la red ferroviaria real
+\parencite{tero2010}.
+
+El contexto de lanzamiento fue, por tanto, interdisciplinario. Participaron la
+biología, la física, las matemáticas y la planificación de redes. La innovación
+no buscó reemplazar inmediatamente a los algoritmos clásicos, sino demostrar
+que una regla biológica sencilla podía generar diseños competitivos y
+adaptativos. Su propuesta de valor se encontraba en la combinación de
+descentralización, flexibilidad y robustez.
+
+\subsection{El \emph{Slime Mould Algorithm} de 2020}
+
+Una línea posterior de desarrollo es el \emph{Slime Mould Algorithm} (SMA),
+presentado por Li y colaboradores en 2020 como un método de optimización
+estocástica \parencite{li2020}. Aunque comparte la inspiración biológica, no
+debe confundirse con el modelo de flujo de Tero. El SMA pertenece a la familia
+de metaheurísticas poblacionales: mantiene múltiples soluciones candidatas y
+actualiza sus posiciones dentro de un espacio de búsqueda.
+
+El algoritmo abstrae tres aspectos del forrajeo de \emph{Physarum}: la
+aproximación hacia zonas con mayor concentración de alimento, las oscilaciones
+del organismo y la realimentación positiva o negativa según la calidad de la
+fuente encontrada. Las soluciones con mejor desempeño reciben pesos mayores y
+orientan la búsqueda, mientras componentes aleatorios permiten explorar otras
+regiones y reducir el riesgo de quedar atrapado prematuramente en una solución
+local. El trabajo de lanzamiento evaluó el método sobre funciones de prueba y
+problemas de ingeniería con restricciones.
+
+La distinción entre ambos desarrollos fortalece el análisis del caso. El modelo
+de redes adaptativas reproduce el refuerzo de conductos y es especialmente
+intuitivo para rutas y transporte. El SMA toma una inspiración más general del
+forrajeo y la transforma en una estrategia de optimización aplicable a
+variables continuas. Ambos proceden del mismo antecedente natural, pero
+responden a objetivos y arquitecturas algorítmicas diferentes.
+
+\subsection{Impacto, límites y evaluación crítica}
+
+La principal contribución de \emph{Physarum} al diseño tecnológico es mostrar
+que la eficiencia de una red puede emerger de reglas locales y adaptación
+continua. Esto abre alternativas a los modelos que requieren conocer de
+antemano toda la estructura del problema. También ofrece una manera de explorar
+soluciones que equilibran costo y resiliencia, en lugar de optimizar una sola
+métrica.
+
+No obstante, la analogía biológica no garantiza superioridad computacional.
+Los modelos simplifican el comportamiento del organismo y su desempeño depende
+de parámetros, condiciones iniciales y criterios de comparación. Las
+metaheurísticas, incluido el SMA, pueden encontrar soluciones de alta calidad,
+pero no necesariamente demuestran que hayan alcanzado el óptimo global. Además,
+los algoritmos clásicos pueden resultar más rápidos o previsibles en problemas
+bien definidos.
+
+Por ello, la evaluación debe comparar resultados, tiempo de cómputo,
+estabilidad y facilidad de implementación, no limitarse al atractivo de la
+metáfora natural. La bioinspiración aporta una hipótesis de diseño; la
+validación experimental y computacional determina si esa hipótesis crea valor
+en un contexto específico.
+
+\subsection{Síntesis del caso}
+
+Los algoritmos inspirados en \emph{Physarum polycephalum} trasladan a la
+computación una estrategia natural de formación de redes. El organismo explora
+el ambiente, distribuye flujo, refuerza conexiones productivas y elimina rutas
+poco utilizadas. Los diseños humanos convierten esas acciones en nodos,
+aristas, conductividades, pesos y reglas iterativas. El resultado es una
+familia de métodos que busca soluciones eficientes sin depender de un plan
+centralizado.
+
+En comparación con CRISPR-Cas9, la transferencia ocurre en otra escala.
+CRISPR adapta directamente componentes moleculares de un sistema inmunitario;
+los algoritmos de \emph{Physarum} abstraen un comportamiento y lo expresan
+mediante matemáticas. Los dos casos muestran que la innovación bioinspirada
+puede surgir tanto de reutilizar mecanismos materiales de la naturaleza como
+de convertir sus principios organizativos en información ejecutable.
+
 % ---------------------------------------------------------------------------
 % ESTRUCTURA PARA LAS SIGUIENTES ITERACIONES
 % Descomentar después de seleccionar los otros casos.
-%
-% \section{Segundo diseño bioinspirado}
-% \subsection{Antecedente en la naturaleza}
-% \subsection{Principio esencial y traducción tecnológica}
-% \subsection{Objetivos, proceso y contexto de lanzamiento}
-% \subsection{Impacto y limitaciones}
 %
 % \section{Tercer diseño bioinspirado}
 % \subsection{Antecedente en la naturaleza}

@@ -398,6 +398,64 @@
       \verb 10.1126/science.1225829
       \endverb
     \endentry
+    \entry{li2020}{article}{}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=9464cfde7fd4d24e316263d9711b1a5b}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Shimin},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e3ed2d62f5b7f5f329949e6682dbcc7a}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Huiling},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0b5aa0e827e3a0017de51556f77bb20b}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Mingjing},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f525d7f8ea960e1a16b66575cca34f81}{%
+           family={Heidari},
+           familyi={H\bibinitperiod},
+           given={Ali\bibnamedelima Asghar},
+           giveni={A\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c424204a9da2927d4d0c77bc4716d175}{%
+           family={Mirjalili},
+           familyi={M\bibinitperiod},
+           given={Seyedali},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{99faee1bcc9d901a191c5ea42355b95e}
+      \strng{fullhash}{ad5e439a52ac265439d993d450533d80}
+      \strng{fullhashraw}{ad5e439a52ac265439d993d450533d80}
+      \strng{bibnamehash}{ad5e439a52ac265439d993d450533d80}
+      \strng{authorbibnamehash}{ad5e439a52ac265439d993d450533d80}
+      \strng{authornamehash}{99faee1bcc9d901a191c5ea42355b95e}
+      \strng{authorfullhash}{ad5e439a52ac265439d993d450533d80}
+      \strng{authorfullhashraw}{ad5e439a52ac265439d993d450533d80}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Future Generation Computer Systems}
+      \field{title}{Slime Mould Algorithm: A New Method for Stochastic Optimization}
+      \field{volume}{111}
+      \field{year}{2020}
+      \field{pages}{300\bibrangedash 323}
+      \range{pages}{24}
+      \verb{doi}
+      \verb 10.1016/j.future.2020.03.055
+      \endverb
+    \endentry
     \entry{mali2013}{article}{}{}
       \name{author}{8}{}{%
         {{un=0,uniquepart=base,hash=f4964ba6d77340526f8faa0874695720}{%
@@ -473,6 +531,185 @@
       \range{pages}{4}
       \verb{doi}
       \verb 10.1126/science.1232033
+      \endverb
+    \endentry
+    \entry{nakagaki2000}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=ba5e190f3e2aef6690c672e8d68953f4}{%
+           family={Nakagaki},
+           familyi={N\bibinitperiod},
+           given={Toshiyuki},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fb3a510cada82c1d101e794f17d47a87}{%
+           family={Yamada},
+           familyi={Y\bibinitperiod},
+           given={Hiroyasu},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e9dce9c2170d309da8c068c84f65de02}{%
+           family={Tóth},
+           familyi={T\bibinitperiod},
+           given={Ágota},
+           giveni={Á\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{246a19fa6f691c454b8114157cf07bd4}
+      \strng{fullhash}{4e09f78560c6c43d5c60ae5ad1e34873}
+      \strng{fullhashraw}{4e09f78560c6c43d5c60ae5ad1e34873}
+      \strng{bibnamehash}{4e09f78560c6c43d5c60ae5ad1e34873}
+      \strng{authorbibnamehash}{4e09f78560c6c43d5c60ae5ad1e34873}
+      \strng{authornamehash}{246a19fa6f691c454b8114157cf07bd4}
+      \strng{authorfullhash}{4e09f78560c6c43d5c60ae5ad1e34873}
+      \strng{authorfullhashraw}{4e09f78560c6c43d5c60ae5ad1e34873}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Nature}
+      \field{number}{6803}
+      \field{title}{Maze-Solving by an Amoeboid Organism}
+      \field{volume}{407}
+      \field{year}{2000}
+      \field{pages}{470}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1038/35035159
+      \endverb
+    \endentry
+    \entry{tero2007}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=8f03f7b7fd881228c4b8e19d928d98c0}{%
+           family={Tero},
+           familyi={T\bibinitperiod},
+           given={Atsushi},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=99f9177c339f3971962e58537ba65066}{%
+           family={Kobayashi},
+           familyi={K\bibinitperiod},
+           given={Ryo},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ba5e190f3e2aef6690c672e8d68953f4}{%
+           family={Nakagaki},
+           familyi={N\bibinitperiod},
+           given={Toshiyuki},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{9d851bd13092c306162a886590937266}
+      \strng{fullhash}{2786c3f75d8fe60eb4968a93320cb595}
+      \strng{fullhashraw}{2786c3f75d8fe60eb4968a93320cb595}
+      \strng{bibnamehash}{2786c3f75d8fe60eb4968a93320cb595}
+      \strng{authorbibnamehash}{2786c3f75d8fe60eb4968a93320cb595}
+      \strng{authornamehash}{9d851bd13092c306162a886590937266}
+      \strng{authorfullhash}{2786c3f75d8fe60eb4968a93320cb595}
+      \strng{authorfullhashraw}{2786c3f75d8fe60eb4968a93320cb595}
+      \field{extraname}{1}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Theoretical Biology}
+      \field{number}{4}
+      \field{title}{A Mathematical Model for Adaptive Transport Network in Path Finding by True Slime Mold}
+      \field{volume}{244}
+      \field{year}{2007}
+      \field{pages}{553\bibrangedash 564}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1016/j.jtbi.2006.07.015
+      \endverb
+    \endentry
+    \entry{tero2010}{article}{}{}
+      \name{author}{9}{}{%
+        {{un=0,uniquepart=base,hash=8f03f7b7fd881228c4b8e19d928d98c0}{%
+           family={Tero},
+           familyi={T\bibinitperiod},
+           given={Atsushi},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2260bf732320cd59bbb85d5e5812201a}{%
+           family={Takagi},
+           familyi={T\bibinitperiod},
+           given={Seiji},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f47a24d9bec41cef6c5233e64556c64d}{%
+           family={Saigusa},
+           familyi={S\bibinitperiod},
+           given={Tetsu},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=99c3fd401d300d5300d0bcbcb984c4ed}{%
+           family={Ito},
+           familyi={I\bibinitperiod},
+           given={Kentaro},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2d3d1bc3870d0d6dd6994f91a197562d}{%
+           family={Bebber},
+           familyi={B\bibinitperiod},
+           given={Dan\bibnamedelima P.},
+           giveni={D\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8189bad9cb7373861b16caa6250b307d}{%
+           family={Fricker},
+           familyi={F\bibinitperiod},
+           given={Mark\bibnamedelima D.},
+           giveni={M\bibinitperiod\bibinitdelim D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=59e8559257181f8f0963c14f344c85e4}{%
+           family={Yumiki},
+           familyi={Y\bibinitperiod},
+           given={Kenji},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=99f9177c339f3971962e58537ba65066}{%
+           family={Kobayashi},
+           familyi={K\bibinitperiod},
+           given={Ryo},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ba5e190f3e2aef6690c672e8d68953f4}{%
+           family={Nakagaki},
+           familyi={N\bibinitperiod},
+           given={Toshiyuki},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{9d851bd13092c306162a886590937266}
+      \strng{fullhash}{c2423034a5aea6a5fec6aea6dc87fc0f}
+      \strng{fullhashraw}{c2423034a5aea6a5fec6aea6dc87fc0f}
+      \strng{bibnamehash}{c2423034a5aea6a5fec6aea6dc87fc0f}
+      \strng{authorbibnamehash}{c2423034a5aea6a5fec6aea6dc87fc0f}
+      \strng{authornamehash}{9d851bd13092c306162a886590937266}
+      \strng{authorfullhash}{c2423034a5aea6a5fec6aea6dc87fc0f}
+      \strng{authorfullhashraw}{c2423034a5aea6a5fec6aea6dc87fc0f}
+      \field{extraname}{2}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Science}
+      \field{number}{5964}
+      \field{title}{Rules for Biologically Inspired Adaptive Network Design}
+      \field{volume}{327}
+      \field{year}{2010}
+      \field{pages}{439\bibrangedash 442}
+      \range{pages}{4}
+      \verb{doi}
+      \verb 10.1126/science.1177894
       \endverb
     \endentry
     \entry{nobel2020}{online}{}{}
@@ -931,6 +1168,64 @@
       \verb 10.1126/science.1225829
       \endverb
     \endentry
+    \entry{li2020}{article}{}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=9464cfde7fd4d24e316263d9711b1a5b}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Shimin},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e3ed2d62f5b7f5f329949e6682dbcc7a}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Huiling},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0b5aa0e827e3a0017de51556f77bb20b}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Mingjing},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f525d7f8ea960e1a16b66575cca34f81}{%
+           family={Heidari},
+           familyi={H\bibinitperiod},
+           given={Ali\bibnamedelima Asghar},
+           giveni={A\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c424204a9da2927d4d0c77bc4716d175}{%
+           family={Mirjalili},
+           familyi={M\bibinitperiod},
+           given={Seyedali},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{99faee1bcc9d901a191c5ea42355b95e}
+      \strng{fullhash}{ad5e439a52ac265439d993d450533d80}
+      \strng{fullhashraw}{ad5e439a52ac265439d993d450533d80}
+      \strng{bibnamehash}{ad5e439a52ac265439d993d450533d80}
+      \strng{authorbibnamehash}{ad5e439a52ac265439d993d450533d80}
+      \strng{authornamehash}{99faee1bcc9d901a191c5ea42355b95e}
+      \strng{authorfullhash}{ad5e439a52ac265439d993d450533d80}
+      \strng{authorfullhashraw}{ad5e439a52ac265439d993d450533d80}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Future Generation Computer Systems}
+      \field{title}{Slime Mould Algorithm: A New Method for Stochastic Optimization}
+      \field{volume}{111}
+      \field{year}{2020}
+      \field{pages}{300\bibrangedash 323}
+      \range{pages}{24}
+      \verb{doi}
+      \verb 10.1016/j.future.2020.03.055
+      \endverb
+    \endentry
     \entry{mali2013}{article}{}{}
       \name{author}{8}{}{%
         {{un=0,uniquepart=base,hash=f4964ba6d77340526f8faa0874695720}{%
@@ -1006,6 +1301,185 @@
       \range{pages}{4}
       \verb{doi}
       \verb 10.1126/science.1232033
+      \endverb
+    \endentry
+    \entry{nakagaki2000}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=ba5e190f3e2aef6690c672e8d68953f4}{%
+           family={Nakagaki},
+           familyi={N\bibinitperiod},
+           given={Toshiyuki},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fb3a510cada82c1d101e794f17d47a87}{%
+           family={Yamada},
+           familyi={Y\bibinitperiod},
+           given={Hiroyasu},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e9dce9c2170d309da8c068c84f65de02}{%
+           family={Tóth},
+           familyi={T\bibinitperiod},
+           given={Ágota},
+           giveni={Á\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{246a19fa6f691c454b8114157cf07bd4}
+      \strng{fullhash}{4e09f78560c6c43d5c60ae5ad1e34873}
+      \strng{fullhashraw}{4e09f78560c6c43d5c60ae5ad1e34873}
+      \strng{bibnamehash}{4e09f78560c6c43d5c60ae5ad1e34873}
+      \strng{authorbibnamehash}{4e09f78560c6c43d5c60ae5ad1e34873}
+      \strng{authornamehash}{246a19fa6f691c454b8114157cf07bd4}
+      \strng{authorfullhash}{4e09f78560c6c43d5c60ae5ad1e34873}
+      \strng{authorfullhashraw}{4e09f78560c6c43d5c60ae5ad1e34873}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Nature}
+      \field{number}{6803}
+      \field{title}{Maze-Solving by an Amoeboid Organism}
+      \field{volume}{407}
+      \field{year}{2000}
+      \field{pages}{470}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1038/35035159
+      \endverb
+    \endentry
+    \entry{tero2007}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=8f03f7b7fd881228c4b8e19d928d98c0}{%
+           family={Tero},
+           familyi={T\bibinitperiod},
+           given={Atsushi},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=99f9177c339f3971962e58537ba65066}{%
+           family={Kobayashi},
+           familyi={K\bibinitperiod},
+           given={Ryo},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ba5e190f3e2aef6690c672e8d68953f4}{%
+           family={Nakagaki},
+           familyi={N\bibinitperiod},
+           given={Toshiyuki},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{9d851bd13092c306162a886590937266}
+      \strng{fullhash}{2786c3f75d8fe60eb4968a93320cb595}
+      \strng{fullhashraw}{2786c3f75d8fe60eb4968a93320cb595}
+      \strng{bibnamehash}{2786c3f75d8fe60eb4968a93320cb595}
+      \strng{authorbibnamehash}{2786c3f75d8fe60eb4968a93320cb595}
+      \strng{authornamehash}{9d851bd13092c306162a886590937266}
+      \strng{authorfullhash}{2786c3f75d8fe60eb4968a93320cb595}
+      \strng{authorfullhashraw}{2786c3f75d8fe60eb4968a93320cb595}
+      \field{extraname}{1}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Theoretical Biology}
+      \field{number}{4}
+      \field{title}{A Mathematical Model for Adaptive Transport Network in Path Finding by True Slime Mold}
+      \field{volume}{244}
+      \field{year}{2007}
+      \field{pages}{553\bibrangedash 564}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1016/j.jtbi.2006.07.015
+      \endverb
+    \endentry
+    \entry{tero2010}{article}{}{}
+      \name{author}{9}{}{%
+        {{un=0,uniquepart=base,hash=8f03f7b7fd881228c4b8e19d928d98c0}{%
+           family={Tero},
+           familyi={T\bibinitperiod},
+           given={Atsushi},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2260bf732320cd59bbb85d5e5812201a}{%
+           family={Takagi},
+           familyi={T\bibinitperiod},
+           given={Seiji},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f47a24d9bec41cef6c5233e64556c64d}{%
+           family={Saigusa},
+           familyi={S\bibinitperiod},
+           given={Tetsu},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=99c3fd401d300d5300d0bcbcb984c4ed}{%
+           family={Ito},
+           familyi={I\bibinitperiod},
+           given={Kentaro},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2d3d1bc3870d0d6dd6994f91a197562d}{%
+           family={Bebber},
+           familyi={B\bibinitperiod},
+           given={Dan\bibnamedelima P.},
+           giveni={D\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8189bad9cb7373861b16caa6250b307d}{%
+           family={Fricker},
+           familyi={F\bibinitperiod},
+           given={Mark\bibnamedelima D.},
+           giveni={M\bibinitperiod\bibinitdelim D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=59e8559257181f8f0963c14f344c85e4}{%
+           family={Yumiki},
+           familyi={Y\bibinitperiod},
+           given={Kenji},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=99f9177c339f3971962e58537ba65066}{%
+           family={Kobayashi},
+           familyi={K\bibinitperiod},
+           given={Ryo},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ba5e190f3e2aef6690c672e8d68953f4}{%
+           family={Nakagaki},
+           familyi={N\bibinitperiod},
+           given={Toshiyuki},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{9d851bd13092c306162a886590937266}
+      \strng{fullhash}{c2423034a5aea6a5fec6aea6dc87fc0f}
+      \strng{fullhashraw}{c2423034a5aea6a5fec6aea6dc87fc0f}
+      \strng{bibnamehash}{c2423034a5aea6a5fec6aea6dc87fc0f}
+      \strng{authorbibnamehash}{c2423034a5aea6a5fec6aea6dc87fc0f}
+      \strng{authornamehash}{9d851bd13092c306162a886590937266}
+      \strng{authorfullhash}{c2423034a5aea6a5fec6aea6dc87fc0f}
+      \strng{authorfullhashraw}{c2423034a5aea6a5fec6aea6dc87fc0f}
+      \field{extraname}{2}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Science}
+      \field{number}{5964}
+      \field{title}{Rules for Biologically Inspired Adaptive Network Design}
+      \field{volume}{327}
+      \field{year}{2010}
+      \field{pages}{439\bibrangedash 442}
+      \range{pages}{4}
+      \verb{doi}
+      \verb 10.1126/science.1177894
       \endverb
     \endentry
     \entry{nobel2020}{online}{}{}
