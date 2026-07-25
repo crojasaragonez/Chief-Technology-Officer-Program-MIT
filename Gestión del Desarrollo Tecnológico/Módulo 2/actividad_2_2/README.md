@@ -1,11 +1,26 @@
 # Actividad 2.2 — diseños inspirados en la biología
 
-El borrador está escrito en LaTeX y utiliza `biblatex-apa`/Biber con estilo
-APA localizado al español.
+El informe está escrito en LaTeX y utiliza LuaLaTeX, la tipografía OpenType
+`Source Serif Pro` y `biblatex-apa`/Biber con estilo APA localizado al español.
 
 La opción `es-noshorthands` de Babel evita una incompatibilidad conocida entre
 los caracteres abreviados de `babel-spanish` y `biblatex-apa` 9.20 en versiones
 recientes de LaTeX.
+
+## Requisitos
+
+- LuaLaTeX con los paquetes `fontspec`, `babel`, `microtype`, `tikz` y
+  `biblatex-apa`.
+- Biber.
+- La tipografía `Source Serif Pro` instalada y disponible para `fontconfig`.
+- `make`, `ripgrep` (`rg`) y `poppler-tools` (`pdfinfo`) para utilizar las
+  tareas automatizadas.
+
+Puede comprobarse la disponibilidad de la tipografía con:
+
+```bash
+fc-match "Source Serif Pro"
+```
 
 ## Compilación
 
@@ -23,10 +38,10 @@ problemas de composición.
 La secuencia equivalente ejecutada manualmente es:
 
 ```bash
-pdflatex main.tex
+lualatex main.tex
 biber main
-pdflatex main.tex
-pdflatex main.tex
+lualatex main.tex
+lualatex main.tex
 ```
 
 Para eliminar únicamente los archivos auxiliares generados:
@@ -34,7 +49,3 @@ Para eliminar únicamente los archivos auxiliares generados:
 ```bash
 make clean
 ```
-
-Antes de entregar, sustituya en `main.tex` los marcadores del nombre y la fecha.
-Las secciones comentadas al final del archivo sirven como estructura para los
-otros diseños bioinspirados.
