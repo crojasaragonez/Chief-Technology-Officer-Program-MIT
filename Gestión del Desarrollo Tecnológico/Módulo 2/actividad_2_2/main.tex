@@ -14,15 +14,18 @@
 \usepackage{csquotes}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric}
+\usepackage{xurl}
 \usepackage[hidelinks]{hyperref}
 \usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}
 \DeclareLanguageMapping{spanish}{spanish-apa}
 
 \geometry{margin=2.5cm}
+\setlength{\emergencystretch}{1em}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.65em}
 \setlist{nosep}
 \addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy}
 
 \newcommand{\pendiente}[1]{\textcolor{gray}{[#1]}}
 
@@ -47,6 +50,13 @@ principios a una solución técnica, se produce una innovación bioinspirada. La
 transferencia no tiene que limitarse a copiar la forma visible de un organismo;
 también puede aprovechar procesos que ocurren en las escalas celular y
 molecular.
+
+En este informe, la biomímesis se entiende en un sentido amplio: incluye tanto
+la imitación de principios de organización natural como la adaptación
+tecnológica directa de mecanismos biológicos. Esta precisión permite comparar
+una tecnología que reutiliza componentes moleculares, CRISPR-Cas9, con otra que
+convierte un comportamiento biológico en reglas matemáticas, el modelo de
+\emph{Physarum}.
 
 Este informe compara dos formas distintas de transferencia desde la naturaleza.
 CRISPR-Cas9 adapta componentes moleculares de la inmunidad bacteriana para
@@ -89,6 +99,9 @@ capaz de cortar las dos hebras del ADN. La bacteria combina, por tanto,
 \emph{memoria}, \emph{reconocimiento} y \emph{respuesta} en un sistema
 molecular programable.
 
+La Figura~\ref{fig:ilustracion-crispr} presenta de manera conceptual la
+transición desde la defensa bacteriana hasta la edición dirigida.
+
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.96\textwidth]{images/crispr-bioinspiracion.png}
@@ -120,6 +133,10 @@ eliminaciones y desactivar un gen. Si se aporta una plantilla adecuada, otros
 mecanismos celulares pueden incorporar un cambio específico. Por consiguiente,
 la edición depende tanto de la precisión del reconocimiento como de la vía de
 reparación que se active.
+
+El Cuadro~\ref{tab:traduccion-crispr} compara los componentes naturales con su
+función tecnológica, mientras la Figura~\ref{fig:flujo-crispr} resume la
+secuencia funcional del diseño.
 
 \begin{table}[ht]
   \centering
@@ -214,6 +231,14 @@ Las finalidades posteriores pueden agruparse en tres ámbitos:
     productivos.
 \end{itemize}
 
+La traducción clínica dejó de ser solamente una posibilidad en diciembre de
+2023, cuando la Administración de Alimentos y Medicamentos de Estados Unidos
+(FDA) aprobó Casgevy para pacientes de 12 años o más con anemia falciforme y
+crisis vasooclusivas recurrentes. Fue la primera terapia aprobada por esa
+agencia que utiliza CRISPR-Cas9. El procedimiento modifica fuera del cuerpo las
+células madre sanguíneas del propio paciente y las reinfunde para aumentar la
+producción de hemoglobina fetal \parencite{fda2023}.
+
 \subsection*{05. Impacto y beneficios}
 
 El beneficio estratégico de CRISPR-Cas9 es que convierte la especificidad de la
@@ -224,6 +249,15 @@ entrada para producir experimentos genéticos, facilita trabajar con múltiples
 objetivos y acelera la construcción de modelos de enfermedades. Su impacto no
 se limita a un producto: crea una plataforma sobre la cual pueden desarrollarse
 herramientas, procesos y terapias \parencite{nobel2020}.
+
+Casgevy ofrece una evidencia concreta del impacto clínico, aunque también
+ilustra la complejidad de convertir una herramienta de laboratorio en un
+tratamiento. En la evaluación utilizada para la aprobación, 29 de 31 pacientes
+con seguimiento suficiente permanecieron al menos doce meses sin crisis
+vasooclusivas graves. El tratamiento exige extraer células, editarlas,
+acondicionar al paciente con quimioterapia y realizar un trasplante; por ello,
+el beneficio terapéutico coexiste con costos, riesgos y necesidades de
+infraestructura especializada \parencite{fda2023}.
 
 La misma capacidad de programación que hace valiosa a CRISPR-Cas9 genera
 desafíos. El ARN guía puede conducir cortes en sitios no deseados; la reparación
@@ -268,6 +302,9 @@ caminos, pero después conservó una conexión cercana a la ruta de menor longit
 entre las dos fuentes \parencite{nakagaki2000}. El experimento mostró que un
 sistema biológico sin control central podía resolver físicamente un problema
 de optimización.
+
+La Figura~\ref{fig:ilustracion-physarum} representa la transición desde la red
+plasmodial hasta su abstracción como un grafo.
 
 \begin{figure}[ht]
   \centering
@@ -324,6 +361,10 @@ las más útiles se estabilizan. El modelo convierte así la morfología dinámi
 del organismo en una regla de actualización numérica. Su importancia no reside
 en simular cada detalle celular, sino en conservar la relación funcional:
 \emph{mayor uso produce refuerzo; menor uso produce desaparición}.
+
+El Cuadro~\ref{tab:traduccion-physarum} detalla las equivalencias entre ambos
+sistemas y la Figura~\ref{fig:flujo-physarum} sintetiza el ciclo iterativo del
+algoritmo.
 
 \begin{table}[ht]
   \centering
@@ -441,6 +482,13 @@ Entre sus contextos de aplicación se encuentran:
   \item optimización de parámetros en problemas de ingeniería.
 \end{itemize}
 
+Una aplicación investigada es el diseño sostenible de cadenas de suministro.
+Zhang y colaboradores formularon un problema multicriterio en el que la
+capacidad y el flujo de cada conexión eran variables, con el propósito de
+reducir la inversión, los costos operativos y efectos no deseados como las
+emisiones de dióxido de carbono. El modelo inspirado en \emph{Physarum} fue
+evaluado mediante ejemplos numéricos \parencite{zhang2017}.
+
 Estas aplicaciones no implican introducir organismos vivos en la
 infraestructura. El producto transferido es la regla de adaptación obtenida al
 estudiar su comportamiento. En otros experimentos, el organismo físico también
@@ -464,6 +512,13 @@ capacidad relevante para transporte, telecomunicaciones y logística. Como
 herramienta de diseño, su beneficio principal es ampliar el conjunto de
 alternativas que un ingeniero puede evaluar antes de invertir en
 infraestructura.
+
+El nivel de madurez debe interpretarse con cautela. Los estudios de Tokio y de
+cadenas de suministro demuestran capacidad de modelado y optimización, pero no
+constituyen evidencia de que redes ferroviarias o empresas operen actualmente
+con estos algoritmos. Su impacto comprobado se concentra todavía en
+investigación, simulación y apoyo al diseño; la adopción industrial permanece
+como una oportunidad que requiere validación en condiciones reales.
 
 No obstante, la analogía biológica no garantiza superioridad computacional.
 Los modelos simplifican el comportamiento del organismo y su desempeño depende

@@ -746,6 +746,43 @@
       \verb https://www.nobelprize.org/prizes/chemistry/2020/summary/
       \endverb
     \endentry
+    \entry{fda2023}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=2f9a65cc9bb5b4e762ce8af8bb256f98}{%
+           family={{U.S. Food and Drug Administration}},
+           familyi={U\bibinitperiod}}}%
+      }
+      \strng{namehash}{2f9a65cc9bb5b4e762ce8af8bb256f98}
+      \strng{fullhash}{2f9a65cc9bb5b4e762ce8af8bb256f98}
+      \strng{fullhashraw}{2f9a65cc9bb5b4e762ce8af8bb256f98}
+      \strng{bibnamehash}{2f9a65cc9bb5b4e762ce8af8bb256f98}
+      \strng{authorbibnamehash}{2f9a65cc9bb5b4e762ce8af8bb256f98}
+      \strng{authornamehash}{2f9a65cc9bb5b4e762ce8af8bb256f98}
+      \strng{authorfullhash}{2f9a65cc9bb5b4e762ce8af8bb256f98}
+      \strng{authorfullhashraw}{2f9a65cc9bb5b4e762ce8af8bb256f98}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{8}
+      \field{month}{12}
+      \field{title}{{FDA} Approves First Gene Therapies to Treat Patients with Sickle Cell Disease}
+      \field{urlday}{25}
+      \field{urlmonth}{7}
+      \field{urlyear}{2026}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.fda.gov/news-events/press-announcements/fda-approves-first-gene-therapies-treat-patients-sickle-cell-disease
+      \endverb
+      \verb{url}
+      \verb https://www.fda.gov/news-events/press-announcements/fda-approves-first-gene-therapies-treat-patients-sickle-cell-disease
+      \endverb
+    \endentry
     \entry{who2021}{report}{}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=531217507bec092b6ec36c0f78f46736}{%
@@ -785,6 +822,65 @@
       \endverb
       \verb{url}
       \verb https://www.who.int/publications/i/item/9789240030381
+      \endverb
+    \endentry
+    \entry{zhang2017}{article}{}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=3bcfbd935493140de59f26f618828468}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Xiaoge},
+           giveni={X\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8ce004772283be36393dcebad38ed3a1}{%
+           family={Adamatzky},
+           familyi={A\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6e097c7ab1e86702a3d42cd77bb7a844}{%
+           family={Chan},
+           familyi={C\bibinitperiod},
+           given={Felix\bibnamedelimb T.\bibnamedelimi S.},
+           giveni={F\bibinitperiod\bibinitdelim T\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b355b4e41b9afd30080a3e932da41301}{%
+           family={Mahadevan},
+           familyi={M\bibinitperiod},
+           given={Sankaran},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c40603e7956e020566ebeebf61741516}{%
+           family={Deng},
+           familyi={D\bibinitperiod},
+           given={Yong},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{fcc83bb91344dd6661d1dcd6f5a247d3}
+      \strng{fullhash}{30344d517834987d39700c36223a5005}
+      \strng{fullhashraw}{30344d517834987d39700c36223a5005}
+      \strng{bibnamehash}{30344d517834987d39700c36223a5005}
+      \strng{authorbibnamehash}{30344d517834987d39700c36223a5005}
+      \strng{authornamehash}{fcc83bb91344dd6661d1dcd6f5a247d3}
+      \strng{authorfullhash}{30344d517834987d39700c36223a5005}
+      \strng{authorfullhashraw}{30344d517834987d39700c36223a5005}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Annals of Operations Research}
+      \field{number}{1--2}
+      \field{title}{\emph{Physarum} Solver: A Bio-Inspired Method for Sustainable Supply Chain Network Design Problem}
+      \field{volume}{254}
+      \field{year}{2017}
+      \field{pages}{533\bibrangedash 552}
+      \range{pages}{20}
+      \verb{doi}
+      \verb 10.1007/s10479-017-2410-x
       \endverb
     \endentry
   \enddatalist
@@ -1516,6 +1612,43 @@
       \verb https://www.nobelprize.org/prizes/chemistry/2020/summary/
       \endverb
     \endentry
+    \entry{fda2023}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=2f9a65cc9bb5b4e762ce8af8bb256f98}{%
+           family={{U.S. Food and Drug Administration}},
+           familyi={U\bibinitperiod}}}%
+      }
+      \strng{namehash}{2f9a65cc9bb5b4e762ce8af8bb256f98}
+      \strng{fullhash}{2f9a65cc9bb5b4e762ce8af8bb256f98}
+      \strng{fullhashraw}{2f9a65cc9bb5b4e762ce8af8bb256f98}
+      \strng{bibnamehash}{2f9a65cc9bb5b4e762ce8af8bb256f98}
+      \strng{authorbibnamehash}{2f9a65cc9bb5b4e762ce8af8bb256f98}
+      \strng{authornamehash}{2f9a65cc9bb5b4e762ce8af8bb256f98}
+      \strng{authorfullhash}{2f9a65cc9bb5b4e762ce8af8bb256f98}
+      \strng{authorfullhashraw}{2f9a65cc9bb5b4e762ce8af8bb256f98}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{8}
+      \field{month}{12}
+      \field{title}{{FDA} Approves First Gene Therapies to Treat Patients with Sickle Cell Disease}
+      \field{urlday}{25}
+      \field{urlmonth}{7}
+      \field{urlyear}{2026}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.fda.gov/news-events/press-announcements/fda-approves-first-gene-therapies-treat-patients-sickle-cell-disease
+      \endverb
+      \verb{url}
+      \verb https://www.fda.gov/news-events/press-announcements/fda-approves-first-gene-therapies-treat-patients-sickle-cell-disease
+      \endverb
+    \endentry
     \entry{who2021}{report}{}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=531217507bec092b6ec36c0f78f46736}{%
@@ -1555,6 +1688,65 @@
       \endverb
       \verb{url}
       \verb https://www.who.int/publications/i/item/9789240030381
+      \endverb
+    \endentry
+    \entry{zhang2017}{article}{}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=3bcfbd935493140de59f26f618828468}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Xiaoge},
+           giveni={X\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8ce004772283be36393dcebad38ed3a1}{%
+           family={Adamatzky},
+           familyi={A\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6e097c7ab1e86702a3d42cd77bb7a844}{%
+           family={Chan},
+           familyi={C\bibinitperiod},
+           given={Felix\bibnamedelimb T.\bibnamedelimi S.},
+           giveni={F\bibinitperiod\bibinitdelim T\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b355b4e41b9afd30080a3e932da41301}{%
+           family={Mahadevan},
+           familyi={M\bibinitperiod},
+           given={Sankaran},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c40603e7956e020566ebeebf61741516}{%
+           family={Deng},
+           familyi={D\bibinitperiod},
+           given={Yong},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{fcc83bb91344dd6661d1dcd6f5a247d3}
+      \strng{fullhash}{30344d517834987d39700c36223a5005}
+      \strng{fullhashraw}{30344d517834987d39700c36223a5005}
+      \strng{bibnamehash}{30344d517834987d39700c36223a5005}
+      \strng{authorbibnamehash}{30344d517834987d39700c36223a5005}
+      \strng{authornamehash}{fcc83bb91344dd6661d1dcd6f5a247d3}
+      \strng{authorfullhash}{30344d517834987d39700c36223a5005}
+      \strng{authorfullhashraw}{30344d517834987d39700c36223a5005}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Annals of Operations Research}
+      \field{number}{1--2}
+      \field{title}{\emph{Physarum} Solver: A Bio-Inspired Method for Sustainable Supply Chain Network Design Problem}
+      \field{volume}{254}
+      \field{year}{2017}
+      \field{pages}{533\bibrangedash 552}
+      \range{pages}{20}
+      \verb{doi}
+      \verb 10.1007/s10479-017-2410-x
       \endverb
     \endentry
   \enddatalist
