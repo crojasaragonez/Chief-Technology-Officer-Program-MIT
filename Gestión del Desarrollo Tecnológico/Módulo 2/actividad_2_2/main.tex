@@ -1,0 +1,238 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{csquotes}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.5cm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\setlist{nosep}
+\addbibresource{referencias.bib}
+
+\newcommand{\pendiente}[1]{\textcolor{gray}{[#1]}}
+
+\title{\textbf{Innovaciones inspiradas en la naturaleza}\\
+\large CRISPR-Cas9: de la inmunidad bacteriana a la edición genética}
+\author{\pendiente{Nombre del estudiante}\\
+Gestión del Desarrollo Tecnológico}
+\date{\pendiente{Fecha de entrega}}
+
+\begin{document}
+
+\maketitle
+
+\section{Introducción}
+
+La naturaleza puede entenderse como un extenso laboratorio de investigación y
+desarrollo. A través de la evolución, los organismos han generado mecanismos
+para obtener energía, defenderse, comunicarse y adaptarse a condiciones
+cambiantes. Cuando un diseño humano estudia esos mecanismos y traslada sus
+principios a una solución técnica, se produce una innovación bioinspirada. La
+transferencia no tiene que limitarse a copiar la forma visible de un organismo;
+también puede aprovechar procesos que ocurren en las escalas celular y
+molecular.
+
+CRISPR-Cas9 constituye un caso especialmente profundo de esta transferencia.
+La tecnología no surgió inicialmente como una herramienta construida para
+editar el genoma humano. Su antecedente es un sistema mediante el cual ciertas
+bacterias y arqueas reconocen material genético invasor y se protegen de
+nuevas infecciones. La investigación científica permitió comprender ese
+proceso natural, simplificarlo y reprogramarlo para cortar ADN en lugares
+elegidos por una persona. Este caso muestra cómo el conocimiento de una función
+biológica puede convertirse en una plataforma tecnológica con aplicaciones en
+investigación, medicina y agricultura.
+
+\section{CRISPR-Cas9: una herramienta inspirada en la inmunidad bacteriana}
+
+\subsection{Antecedente en la naturaleza}
+
+Las bacterias están expuestas a bacteriófagos, virus que introducen su material
+genético dentro de ellas para reproducirse. Algunas bacterias responden a esta
+amenaza mediante el sistema CRISPR-Cas, una forma de inmunidad adaptativa. El
+acrónimo CRISPR designa unas secuencias repetidas del ADN bacteriano separadas
+por fragmentos variables llamados \emph{espaciadores}. Muchos de estos
+espaciadores proceden del ADN de virus encontrados anteriormente.
+
+El proceso natural puede resumirse en tres funciones. Primero, durante la
+\textbf{adaptación}, la bacteria incorpora un fragmento del ADN invasor en su
+región CRISPR y conserva así un registro molecular de la infección. Después,
+durante la \textbf{expresión}, esa región se transcribe y procesa para producir
+pequeños ARN CRISPR (crRNA). Finalmente, durante la
+\textbf{interferencia}, el crRNA guía a proteínas asociadas con CRISPR hacia
+una secuencia complementaria del material invasor, que es reconocida y
+cortada. En 2007, Barrangou y sus colaboradores demostraron
+experimentalmente que la adquisición de nuevos espaciadores podía conferir
+resistencia frente a bacteriófagos y que la especificidad dependía de la
+correspondencia entre el espaciador y la secuencia viral
+\parencite{barrangou2007}.
+
+El sistema tipo II de la bacteria \emph{Streptococcus pyogenes} utiliza la
+proteína Cas9. En él participa además un ARN transactivador, o tracrRNA, que
+contribuye a la maduración del crRNA y es esencial para la defensa contra ADN
+invasor \parencite{deltcheva2011}. El crRNA aporta la información para
+reconocer el objetivo, mientras Cas9 actúa como una endonucleasa: una enzima
+capaz de cortar las dos hebras del ADN. La bacteria combina, por tanto,
+\emph{memoria}, \emph{reconocimiento} y \emph{respuesta} en un sistema
+molecular programable.
+
+\subsection{De fenómeno natural a diseño tecnológico}
+
+El paso decisivo consistió en abstraer el principio esencial del sistema:
+una secuencia de ARN puede dirigir una enzima de corte hacia una secuencia
+específica de ADN. En 2011, el equipo de Emmanuelle Charpentier describió la
+función del tracrRNA \parencite{deltcheva2011}. Posteriormente, Charpentier y
+Jennifer Doudna colaboraron para reconstruir y simplificar el mecanismo.
+
+En el trabajo publicado por Jinek y sus colaboradores en 2012, se demostró que
+Cas9 podía programarse para cortar secuencias seleccionadas de ADN. Además, el
+crRNA y el tracrRNA naturales se fusionaron en una sola molécula sintética,
+denominada ARN guía único. Al modificar la parte variable de esta guía, el
+investigador puede dirigir Cas9 hacia un nuevo objetivo sin tener que diseñar
+una proteína distinta para cada secuencia \parencite{jinek2012}.
+
+La analogía de las ``tijeras genéticas'' resulta útil, pero es incompleta. El
+sistema no reescribe por sí solo el ADN: Cas9 genera un corte y la célula lo
+repara. Una reparación directa puede introducir pequeñas inserciones o
+eliminaciones y desactivar un gen. Si se aporta una plantilla adecuada, otros
+mecanismos celulares pueden incorporar un cambio específico. Por consiguiente,
+la edición depende tanto de la precisión del reconocimiento como de la vía de
+reparación que se active.
+
+\begin{table}[ht]
+  \centering
+  \small
+  \caption{Traducción del sistema natural a la herramienta tecnológica.}
+  \label{tab:traduccion-crispr}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}X
+    >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{Sistema natural} & \textbf{Diseño tecnológico} \\
+    \midrule
+    El espaciador conserva información de un virus previo.
+      & La persona diseña una secuencia guía para el objetivo elegido. \\
+    El crRNA y el tracrRNA participan en la localización del ADN invasor.
+      & Ambos componentes se simplifican en un ARN guía único. \\
+    Cas9 corta ADN viral complementario y protege a la bacteria.
+      & Cas9 corta una región seleccionada del genoma para permitir su edición. \\
+    La finalidad biológica es la supervivencia frente a una infección.
+      & La finalidad humana es estudiar, desactivar, corregir o modificar genes. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Objetivos y propuesta de valor}
+
+El objetivo inicial del diseño de 2012 fue demostrar una endonucleasa de ADN
+programable mediante ARN, no presentar de inmediato una terapia terminada.
+Como plataforma de investigación, su propuesta de valor consistía en separar
+dos funciones: Cas9 conservaba la capacidad de corte y el ARN guía determinaba
+el destino. Esta modularidad hizo que cambiar de objetivo fuera relativamente
+rápido y redujo la complejidad de diseñar herramientas específicas.
+
+Las finalidades posteriores pueden agruparse en tres ámbitos:
+
+\begin{itemize}
+  \item \textbf{Investigación básica:} desactivar o modificar genes para
+    estudiar su función y construir modelos celulares o animales.
+  \item \textbf{Salud:} explorar tratamientos para enfermedades de base
+    genética, modificar células con fines terapéuticos y desarrollar nuevas
+    estrategias contra el cáncer.
+  \item \textbf{Agricultura y biotecnología:} generar cultivos con propiedades
+    seleccionadas y modificar microorganismos utilizados en procesos
+    productivos.
+\end{itemize}
+
+\subsection{Proceso y contexto de lanzamiento}
+
+CRISPR-Cas9 no tuvo un lanzamiento convencional como producto de consumo. Su
+introducción ocurrió mediante publicaciones científicas que convirtieron un
+hallazgo biológico en una plataforma reproducible. La trayectoria comenzó con
+la observación, en 1987, de una estructura de secuencias repetidas cuyo
+significado todavía era desconocido \parencite{ishino1987}. Décadas de
+investigación posterior relacionaron los espaciadores con virus y demostraron
+la función inmunitaria del sistema \parencite{barrangou2007}.
+
+El artículo de 2012 representó el punto de inflexión tecnológico: mostró que
+Cas9 podía recibir instrucciones sintéticas para cortar ADN en sitios
+predeterminados \parencite{jinek2012}. En 2013, distintos equipos demostraron
+su aplicación para editar células de mamíferos y humanas
+\parencite{cong2013,mali2013}. Esta rápida adopción indica que el lanzamiento
+efectivo se produjo dentro de una comunidad científica capaz de reproducir,
+mejorar y ampliar el diseño.
+
+En 2020, la Real Academia Sueca de Ciencias otorgó a Charpentier y Doudna el
+Premio Nobel de Química ``por el desarrollo de un método para la edición del
+genoma'' \parencite{nobel2020}. El reconocimiento no correspondió al
+descubrimiento inicial de las secuencias CRISPR, sino a la transformación del
+mecanismo en una herramienta programable. Esta distinción evidencia el
+carácter acumulativo de la innovación: observaciones, explicación funcional,
+simplificación de componentes y adopción tecnológica fueron etapas
+complementarias.
+
+\subsection{Impacto, límites y gobernanza}
+
+La misma capacidad de programación que hace valiosa a CRISPR-Cas9 genera
+desafíos. El ARN guía puede conducir cortes en sitios no deseados; la reparación
+celular no siempre produce el resultado previsto; y llevar los componentes
+hasta el tejido correcto continúa siendo un problema técnico. Además, las
+consecuencias éticas varían según se editen células somáticas de una persona o
+células reproductivas cuyos cambios podrían heredarse.
+
+Por ello, el desarrollo tecnológico no puede evaluarse únicamente por su
+eficacia molecular. También requiere gobernanza, supervisión, acceso
+equitativo y deliberación sobre usos aceptables. La Organización Mundial de la
+Salud ha propuesto recomendaciones para la supervisión de la edición del
+genoma humano ante sus implicaciones científicas, éticas, sociales y legales
+\parencite{who2021}. Desde la gestión tecnológica, CRISPR-Cas9 demuestra que
+una plataforma de gran alcance necesita evolucionar junto con las capacidades
+institucionales que controlan su aplicación.
+
+\subsection{Síntesis del caso}
+
+CRISPR-Cas9 es un diseño inspirado en la biología porque transfiere un
+principio funcional de la inmunidad bacteriana a un contexto humano. La
+naturaleza aportó un sistema que registra amenazas, reconoce secuencias y
+corta ADN invasor. La ingeniería conservó la lógica de reconocimiento y corte,
+pero sustituyó el objetivo evolutivo de defensa por objetivos definidos por el
+investigador. La innovación central no consistió en copiar la forma de un
+organismo, sino en comprender, simplificar y reprogramar un proceso molecular.
+
+% ---------------------------------------------------------------------------
+% ESTRUCTURA PARA LAS SIGUIENTES ITERACIONES
+% Descomentar después de seleccionar los otros casos.
+%
+% \section{Segundo diseño bioinspirado}
+% \subsection{Antecedente en la naturaleza}
+% \subsection{Principio esencial y traducción tecnológica}
+% \subsection{Objetivos, proceso y contexto de lanzamiento}
+% \subsection{Impacto y limitaciones}
+%
+% \section{Tercer diseño bioinspirado}
+% \subsection{Antecedente en la naturaleza}
+% \subsection{Principio esencial y traducción tecnológica}
+% \subsection{Objetivos, proceso y contexto de lanzamiento}
+% \subsection{Impacto y limitaciones}
+%
+% \section{Comparación de los casos}
+% Comparar tipo de inspiración, problema abordado, proceso de transferencia,
+% contexto de lanzamiento, impacto y límites.
+%
+% \section{Conclusiones}
+% Integrar los hallazgos de los dos o tres casos.
+% ---------------------------------------------------------------------------
+
+\printbibliography[title={Referencias}]
+
+\end{document}

@@ -1,0 +1,1089 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/apasortcite//global/global/global}
+    \entry{barrangou2007}{article}{}{}
+      \name{author}{8}{}{%
+        {{un=0,uniquepart=base,hash=050906ce9a0a673486fa3f90f4b3aaaf}{%
+           family={Barrangou},
+           familyi={B\bibinitperiod},
+           given={Rodolphe},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2d0dccdbe3ffe06bdb2c147dae5b6ddb}{%
+           family={Fremaux},
+           familyi={F\bibinitperiod},
+           given={Christophe},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a12b80433552fe005c4a71c8d9f4a035}{%
+           family={Deveau},
+           familyi={D\bibinitperiod},
+           given={Hélène},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8e22ec1490c9fcb9b49326e468253e5d}{%
+           family={Richards},
+           familyi={R\bibinitperiod},
+           given={Melissa},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=39d33e45688fd3a930c4128439cfdd39}{%
+           family={Boyaval},
+           familyi={B\bibinitperiod},
+           given={Patrick},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=63540d5114aaef35adf19c535c8bc7cf}{%
+           family={Moineau},
+           familyi={M\bibinitperiod},
+           given={Sylvain},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=76c4186035bc2759653c8e374bf50edf}{%
+           family={Romero},
+           familyi={R\bibinitperiod},
+           given={Dennis\bibnamedelima A.},
+           giveni={D\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=bd22e4c559845af3bc845dc24d21ae4c}{%
+           family={Horvath},
+           familyi={H\bibinitperiod},
+           given={Philippe},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{7db243febf09044cb796b3a6c5706e0e}
+      \strng{fullhash}{e276bc9940f91dc67e3893a713203477}
+      \strng{fullhashraw}{e276bc9940f91dc67e3893a713203477}
+      \strng{bibnamehash}{e276bc9940f91dc67e3893a713203477}
+      \strng{authorbibnamehash}{e276bc9940f91dc67e3893a713203477}
+      \strng{authornamehash}{7db243febf09044cb796b3a6c5706e0e}
+      \strng{authorfullhash}{e276bc9940f91dc67e3893a713203477}
+      \strng{authorfullhashraw}{e276bc9940f91dc67e3893a713203477}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Science}
+      \field{number}{5819}
+      \field{title}{{CRISPR} Provides Acquired Resistance Against Viruses in Prokaryotes}
+      \field{volume}{315}
+      \field{year}{2007}
+      \field{pages}{1709\bibrangedash 1712}
+      \range{pages}{4}
+      \verb{doi}
+      \verb 10.1126/science.1138140
+      \endverb
+    \endentry
+    \entry{cong2013}{article}{}{}
+      \name{author}{11}{}{%
+        {{un=0,uniquepart=base,hash=231478e5ba3e6738aa84b845035a224f}{%
+           family={Cong},
+           familyi={C\bibinitperiod},
+           given={Le},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=003a720310d15206b46fc0ca9880a7a7}{%
+           family={Ran},
+           familyi={R\bibinitperiod},
+           given={F.\bibnamedelimi Ann},
+           giveni={F\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=bc0b42f4eec960b52a2496b25fbb4ec7}{%
+           family={Cox},
+           familyi={C\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ce9613cdb4d214eb0898f8118469ba1d}{%
+           family={Lin},
+           familyi={L\bibinitperiod},
+           given={Shuailiang},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=56d3731f8b9a3e4aed28ce677b126958}{%
+           family={Barretto},
+           familyi={B\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b841f4a11ec5b52a9fbc0bd492854dbe}{%
+           family={Habib},
+           familyi={H\bibinitperiod},
+           given={Naomi},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f92bee55282b37c3aa0912c6f9c9077f}{%
+           family={Hsu},
+           familyi={H\bibinitperiod},
+           given={Patrick\bibnamedelima D.},
+           giveni={P\bibinitperiod\bibinitdelim D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7422b476ab59fccdaee7169fe807a0b0}{%
+           family={Wu},
+           familyi={W\bibinitperiod},
+           given={Xuebing},
+           giveni={X\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ca8123b9fd2c6547fc704f913bab7889}{%
+           family={Jiang},
+           familyi={J\bibinitperiod},
+           given={Wenyan},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3bccabb14b4cea6f0345854fad5aaca7}{%
+           family={Marraffini},
+           familyi={M\bibinitperiod},
+           given={Luciano\bibnamedelima A.},
+           giveni={L\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=65afd11c8e50cacdbd6ae4f35d03e308}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Feng},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{923922307e159bd28c49fa712a3e00e2}
+      \strng{fullhash}{4f78d6ee8cd1df9e700463a619c8bd41}
+      \strng{fullhashraw}{4f78d6ee8cd1df9e700463a619c8bd41}
+      \strng{bibnamehash}{4f78d6ee8cd1df9e700463a619c8bd41}
+      \strng{authorbibnamehash}{4f78d6ee8cd1df9e700463a619c8bd41}
+      \strng{authornamehash}{923922307e159bd28c49fa712a3e00e2}
+      \strng{authorfullhash}{4f78d6ee8cd1df9e700463a619c8bd41}
+      \strng{authorfullhashraw}{4f78d6ee8cd1df9e700463a619c8bd41}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Science}
+      \field{number}{6121}
+      \field{title}{Multiplex Genome Engineering Using {CRISPR/Cas} Systems}
+      \field{volume}{339}
+      \field{year}{2013}
+      \field{pages}{819\bibrangedash 823}
+      \range{pages}{5}
+      \verb{doi}
+      \verb 10.1126/science.1231143
+      \endverb
+    \endentry
+    \entry{deltcheva2011}{article}{}{}
+      \name{author}{9}{}{%
+        {{un=0,uniquepart=base,hash=17a43b4caa60e9cf0ca310f63f73035d}{%
+           family={Deltcheva},
+           familyi={D\bibinitperiod},
+           given={Elitza},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=33bbdf41a18c108757feb6e3e9135dbe}{%
+           family={Chylinski},
+           familyi={C\bibinitperiod},
+           given={Krzysztof},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d1762afd2aa7fadc29195f8bd2e293ca}{%
+           family={Sharma},
+           familyi={S\bibinitperiod},
+           given={Cynthia\bibnamedelima M.},
+           giveni={C\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0b75fd440f8e5cae91184f56d1e079a7}{%
+           family={Gonzales},
+           familyi={G\bibinitperiod},
+           given={Karine},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3ee77e8a76b6822a7fb47944231271e2}{%
+           family={Chao},
+           familyi={C\bibinitperiod},
+           given={Yanjie},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3542c611380820eee907ad42d313bff2}{%
+           family={Pirzada},
+           familyi={P\bibinitperiod},
+           given={Zaid\bibnamedelima A.},
+           giveni={Z\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4d75c3cfe8caa43eeeba82387c1dd733}{%
+           family={Eckert},
+           familyi={E\bibinitperiod},
+           given={Maria\bibnamedelima R.},
+           giveni={M\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4069654cf9ba3f94122953e297a51891}{%
+           family={Vogel},
+           familyi={V\bibinitperiod},
+           given={Jörg},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=147cdad451a06b98a827e8850511922a}{%
+           family={Charpentier},
+           familyi={C\bibinitperiod},
+           given={Emmanuelle},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{06f92a6dcfa244f2ea60da5fafd07b8c}
+      \strng{fullhash}{391cc3d1d86a9aeecc7108ddec0871e3}
+      \strng{fullhashraw}{391cc3d1d86a9aeecc7108ddec0871e3}
+      \strng{bibnamehash}{391cc3d1d86a9aeecc7108ddec0871e3}
+      \strng{authorbibnamehash}{391cc3d1d86a9aeecc7108ddec0871e3}
+      \strng{authornamehash}{06f92a6dcfa244f2ea60da5fafd07b8c}
+      \strng{authorfullhash}{391cc3d1d86a9aeecc7108ddec0871e3}
+      \strng{authorfullhashraw}{391cc3d1d86a9aeecc7108ddec0871e3}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Nature}
+      \field{number}{7340}
+      \field{title}{{CRISPR RNA} Maturation by Trans-Encoded Small {RNA} and Host Factor {RNase III}}
+      \field{volume}{471}
+      \field{year}{2011}
+      \field{pages}{602\bibrangedash 607}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1038/nature09886
+      \endverb
+    \endentry
+    \entry{ishino1987}{article}{}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=1f11d2b4a80c5317d7865f21c4bd7ca8}{%
+           family={Ishino},
+           familyi={I\bibinitperiod},
+           given={Yoshizumi},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1340d5cf296d11c641b76c630eb2adf9}{%
+           family={Shinagawa},
+           familyi={S\bibinitperiod},
+           given={Hiroshi},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8f2c4872f11169fb1db9f9af278ae031}{%
+           family={Makino},
+           familyi={M\bibinitperiod},
+           given={Kozo},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f5ab2e8659d3c4d3e9bfb2eed7e48e0f}{%
+           family={Amemura},
+           familyi={A\bibinitperiod},
+           given={Mitsuko},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=54d537b1f05da7f12b937e894f9ad8f7}{%
+           family={Nakata},
+           familyi={N\bibinitperiod},
+           given={Atsuo},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{568e740679ec9932f59c70ab67f9cc86}
+      \strng{fullhash}{9b2beff1617e691eeb370a400f455586}
+      \strng{fullhashraw}{9b2beff1617e691eeb370a400f455586}
+      \strng{bibnamehash}{9b2beff1617e691eeb370a400f455586}
+      \strng{authorbibnamehash}{9b2beff1617e691eeb370a400f455586}
+      \strng{authornamehash}{568e740679ec9932f59c70ab67f9cc86}
+      \strng{authorfullhash}{9b2beff1617e691eeb370a400f455586}
+      \strng{authorfullhashraw}{9b2beff1617e691eeb370a400f455586}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Bacteriology}
+      \field{number}{12}
+      \field{title}{Nucleotide Sequence of the \textit{iap} Gene, Responsible for Alkaline Phosphatase Isozyme Conversion in \textit{Escherichia coli}, and Identification of the Gene Product}
+      \field{volume}{169}
+      \field{year}{1987}
+      \field{pages}{5429\bibrangedash 5433}
+      \range{pages}{5}
+      \verb{doi}
+      \verb 10.1128/jb.169.12.5429-5433.1987
+      \endverb
+    \endentry
+    \entry{jinek2012}{article}{}{}
+      \name{author}{6}{}{%
+        {{un=0,uniquepart=base,hash=3aa57e081fa07841f82a2722cbf3fce1}{%
+           family={Jinek},
+           familyi={J\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=33bbdf41a18c108757feb6e3e9135dbe}{%
+           family={Chylinski},
+           familyi={C\bibinitperiod},
+           given={Krzysztof},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6354fb90208c2bc8c428afa3c4a7502b}{%
+           family={Fonfara},
+           familyi={F\bibinitperiod},
+           given={Ines},
+           giveni={I\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=30d432e9ac0b22aa65c70baacd7b3d81}{%
+           family={Hauer},
+           familyi={H\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=db6ee88c2505c20e204e8ea38dc1a7ed}{%
+           family={Doudna},
+           familyi={D\bibinitperiod},
+           given={Jennifer\bibnamedelima A.},
+           giveni={J\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=147cdad451a06b98a827e8850511922a}{%
+           family={Charpentier},
+           familyi={C\bibinitperiod},
+           given={Emmanuelle},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{37e33dd0cf7e17cf0a3fb2fb26848a11}
+      \strng{fullhash}{6b32f7927e60c50bc32a624f451e2060}
+      \strng{fullhashraw}{6b32f7927e60c50bc32a624f451e2060}
+      \strng{bibnamehash}{6b32f7927e60c50bc32a624f451e2060}
+      \strng{authorbibnamehash}{6b32f7927e60c50bc32a624f451e2060}
+      \strng{authornamehash}{37e33dd0cf7e17cf0a3fb2fb26848a11}
+      \strng{authorfullhash}{6b32f7927e60c50bc32a624f451e2060}
+      \strng{authorfullhashraw}{6b32f7927e60c50bc32a624f451e2060}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Science}
+      \field{number}{6096}
+      \field{title}{A Programmable Dual-{RNA}-Guided {DNA} Endonuclease in Adaptive Bacterial Immunity}
+      \field{volume}{337}
+      \field{year}{2012}
+      \field{pages}{816\bibrangedash 821}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1126/science.1225829
+      \endverb
+    \endentry
+    \entry{mali2013}{article}{}{}
+      \name{author}{8}{}{%
+        {{un=0,uniquepart=base,hash=f4964ba6d77340526f8faa0874695720}{%
+           family={Mali},
+           familyi={M\bibinitperiod},
+           given={Prashant},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8ec16aaf60cad0180f2a45ec75aeb917}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Luhan},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=35411c07fb34046ceb68c5d1fffcbd92}{%
+           family={Esvelt},
+           familyi={E\bibinitperiod},
+           given={Kevin\bibnamedelima M.},
+           giveni={K\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=de810431add920588a38438fc14d0ac4}{%
+           family={Aach},
+           familyi={A\bibinitperiod},
+           given={John},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=329602018834a97c955a5bbb95a2a583}{%
+           family={Guell},
+           familyi={G\bibinitperiod},
+           given={Marc},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b0f389811044ee83c4d3a69e8ae36589}{%
+           family={DiCarlo},
+           familyi={D\bibinitperiod},
+           given={James\bibnamedelima E.},
+           giveni={J\bibinitperiod\bibinitdelim E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=61a5e4102ff27e20562adb67b7e649c9}{%
+           family={Norville},
+           familyi={N\bibinitperiod},
+           given={Julie\bibnamedelima E.},
+           giveni={J\bibinitperiod\bibinitdelim E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b00fe11c0f380518a33375277e8608a2}{%
+           family={Church},
+           familyi={C\bibinitperiod},
+           given={George\bibnamedelima M.},
+           giveni={G\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{ddaa160e469184eefef6db0920aef3c0}
+      \strng{fullhash}{f562686b7f2d021c44deedaba4fb648e}
+      \strng{fullhashraw}{f562686b7f2d021c44deedaba4fb648e}
+      \strng{bibnamehash}{f562686b7f2d021c44deedaba4fb648e}
+      \strng{authorbibnamehash}{f562686b7f2d021c44deedaba4fb648e}
+      \strng{authornamehash}{ddaa160e469184eefef6db0920aef3c0}
+      \strng{authorfullhash}{f562686b7f2d021c44deedaba4fb648e}
+      \strng{authorfullhashraw}{f562686b7f2d021c44deedaba4fb648e}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Science}
+      \field{number}{6121}
+      \field{title}{{RNA}-Guided Human Genome Engineering via {Cas9}}
+      \field{volume}{339}
+      \field{year}{2013}
+      \field{pages}{823\bibrangedash 826}
+      \range{pages}{4}
+      \verb{doi}
+      \verb 10.1126/science.1232033
+      \endverb
+    \endentry
+    \entry{nobel2020}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=d1c59ef58fab959c3fc3ecfa15e012fc}{%
+           family={{The Nobel Prize}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{d1c59ef58fab959c3fc3ecfa15e012fc}
+      \strng{fullhash}{d1c59ef58fab959c3fc3ecfa15e012fc}
+      \strng{fullhashraw}{d1c59ef58fab959c3fc3ecfa15e012fc}
+      \strng{bibnamehash}{d1c59ef58fab959c3fc3ecfa15e012fc}
+      \strng{authorbibnamehash}{d1c59ef58fab959c3fc3ecfa15e012fc}
+      \strng{authornamehash}{d1c59ef58fab959c3fc3ecfa15e012fc}
+      \strng{authorfullhash}{d1c59ef58fab959c3fc3ecfa15e012fc}
+      \strng{authorfullhashraw}{d1c59ef58fab959c3fc3ecfa15e012fc}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{The Nobel Prize in Chemistry 2020}
+      \field{urlday}{25}
+      \field{urlmonth}{7}
+      \field{urlyear}{2026}
+      \field{year}{2020}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.nobelprize.org/prizes/chemistry/2020/summary/
+      \endverb
+      \verb{url}
+      \verb https://www.nobelprize.org/prizes/chemistry/2020/summary/
+      \endverb
+    \endentry
+    \entry{who2021}{report}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=531217507bec092b6ec36c0f78f46736}{%
+           family={{World Health Organization}},
+           familyi={W\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {World Health Organization}%
+      }
+      \list{location}{1}{%
+        {Geneva}%
+      }
+      \strng{namehash}{531217507bec092b6ec36c0f78f46736}
+      \strng{fullhash}{531217507bec092b6ec36c0f78f46736}
+      \strng{fullhashraw}{531217507bec092b6ec36c0f78f46736}
+      \strng{bibnamehash}{531217507bec092b6ec36c0f78f46736}
+      \strng{authorbibnamehash}{531217507bec092b6ec36c0f78f46736}
+      \strng{authornamehash}{531217507bec092b6ec36c0f78f46736}
+      \strng{authorfullhash}{531217507bec092b6ec36c0f78f46736}
+      \strng{authorfullhashraw}{531217507bec092b6ec36c0f78f46736}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-92-4-003038-1}
+      \field{title}{Human Genome Editing: Recommendations}
+      \field{urlday}{25}
+      \field{urlmonth}{7}
+      \field{urlyear}{2026}
+      \field{year}{2021}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.who.int/publications/i/item/9789240030381
+      \endverb
+      \verb{url}
+      \verb https://www.who.int/publications/i/item/9789240030381
+      \endverb
+    \endentry
+  \enddatalist
+  \datalist[entry]{nyt/global//global/global/global}
+    \entry{barrangou2007}{article}{}{}
+      \name{author}{8}{}{%
+        {{un=0,uniquepart=base,hash=050906ce9a0a673486fa3f90f4b3aaaf}{%
+           family={Barrangou},
+           familyi={B\bibinitperiod},
+           given={Rodolphe},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2d0dccdbe3ffe06bdb2c147dae5b6ddb}{%
+           family={Fremaux},
+           familyi={F\bibinitperiod},
+           given={Christophe},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a12b80433552fe005c4a71c8d9f4a035}{%
+           family={Deveau},
+           familyi={D\bibinitperiod},
+           given={Hélène},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8e22ec1490c9fcb9b49326e468253e5d}{%
+           family={Richards},
+           familyi={R\bibinitperiod},
+           given={Melissa},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=39d33e45688fd3a930c4128439cfdd39}{%
+           family={Boyaval},
+           familyi={B\bibinitperiod},
+           given={Patrick},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=63540d5114aaef35adf19c535c8bc7cf}{%
+           family={Moineau},
+           familyi={M\bibinitperiod},
+           given={Sylvain},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=76c4186035bc2759653c8e374bf50edf}{%
+           family={Romero},
+           familyi={R\bibinitperiod},
+           given={Dennis\bibnamedelima A.},
+           giveni={D\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=bd22e4c559845af3bc845dc24d21ae4c}{%
+           family={Horvath},
+           familyi={H\bibinitperiod},
+           given={Philippe},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{7db243febf09044cb796b3a6c5706e0e}
+      \strng{fullhash}{e276bc9940f91dc67e3893a713203477}
+      \strng{fullhashraw}{e276bc9940f91dc67e3893a713203477}
+      \strng{bibnamehash}{e276bc9940f91dc67e3893a713203477}
+      \strng{authorbibnamehash}{e276bc9940f91dc67e3893a713203477}
+      \strng{authornamehash}{7db243febf09044cb796b3a6c5706e0e}
+      \strng{authorfullhash}{e276bc9940f91dc67e3893a713203477}
+      \strng{authorfullhashraw}{e276bc9940f91dc67e3893a713203477}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Science}
+      \field{number}{5819}
+      \field{title}{{CRISPR} Provides Acquired Resistance Against Viruses in Prokaryotes}
+      \field{volume}{315}
+      \field{year}{2007}
+      \field{pages}{1709\bibrangedash 1712}
+      \range{pages}{4}
+      \verb{doi}
+      \verb 10.1126/science.1138140
+      \endverb
+    \endentry
+    \entry{cong2013}{article}{}{}
+      \name{author}{11}{}{%
+        {{un=0,uniquepart=base,hash=231478e5ba3e6738aa84b845035a224f}{%
+           family={Cong},
+           familyi={C\bibinitperiod},
+           given={Le},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=003a720310d15206b46fc0ca9880a7a7}{%
+           family={Ran},
+           familyi={R\bibinitperiod},
+           given={F.\bibnamedelimi Ann},
+           giveni={F\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=bc0b42f4eec960b52a2496b25fbb4ec7}{%
+           family={Cox},
+           familyi={C\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ce9613cdb4d214eb0898f8118469ba1d}{%
+           family={Lin},
+           familyi={L\bibinitperiod},
+           given={Shuailiang},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=56d3731f8b9a3e4aed28ce677b126958}{%
+           family={Barretto},
+           familyi={B\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b841f4a11ec5b52a9fbc0bd492854dbe}{%
+           family={Habib},
+           familyi={H\bibinitperiod},
+           given={Naomi},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f92bee55282b37c3aa0912c6f9c9077f}{%
+           family={Hsu},
+           familyi={H\bibinitperiod},
+           given={Patrick\bibnamedelima D.},
+           giveni={P\bibinitperiod\bibinitdelim D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7422b476ab59fccdaee7169fe807a0b0}{%
+           family={Wu},
+           familyi={W\bibinitperiod},
+           given={Xuebing},
+           giveni={X\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ca8123b9fd2c6547fc704f913bab7889}{%
+           family={Jiang},
+           familyi={J\bibinitperiod},
+           given={Wenyan},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3bccabb14b4cea6f0345854fad5aaca7}{%
+           family={Marraffini},
+           familyi={M\bibinitperiod},
+           given={Luciano\bibnamedelima A.},
+           giveni={L\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=65afd11c8e50cacdbd6ae4f35d03e308}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Feng},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{923922307e159bd28c49fa712a3e00e2}
+      \strng{fullhash}{4f78d6ee8cd1df9e700463a619c8bd41}
+      \strng{fullhashraw}{4f78d6ee8cd1df9e700463a619c8bd41}
+      \strng{bibnamehash}{4f78d6ee8cd1df9e700463a619c8bd41}
+      \strng{authorbibnamehash}{4f78d6ee8cd1df9e700463a619c8bd41}
+      \strng{authornamehash}{923922307e159bd28c49fa712a3e00e2}
+      \strng{authorfullhash}{4f78d6ee8cd1df9e700463a619c8bd41}
+      \strng{authorfullhashraw}{4f78d6ee8cd1df9e700463a619c8bd41}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Science}
+      \field{number}{6121}
+      \field{title}{Multiplex Genome Engineering Using {CRISPR/Cas} Systems}
+      \field{volume}{339}
+      \field{year}{2013}
+      \field{pages}{819\bibrangedash 823}
+      \range{pages}{5}
+      \verb{doi}
+      \verb 10.1126/science.1231143
+      \endverb
+    \endentry
+    \entry{deltcheva2011}{article}{}{}
+      \name{author}{9}{}{%
+        {{un=0,uniquepart=base,hash=17a43b4caa60e9cf0ca310f63f73035d}{%
+           family={Deltcheva},
+           familyi={D\bibinitperiod},
+           given={Elitza},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=33bbdf41a18c108757feb6e3e9135dbe}{%
+           family={Chylinski},
+           familyi={C\bibinitperiod},
+           given={Krzysztof},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d1762afd2aa7fadc29195f8bd2e293ca}{%
+           family={Sharma},
+           familyi={S\bibinitperiod},
+           given={Cynthia\bibnamedelima M.},
+           giveni={C\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0b75fd440f8e5cae91184f56d1e079a7}{%
+           family={Gonzales},
+           familyi={G\bibinitperiod},
+           given={Karine},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3ee77e8a76b6822a7fb47944231271e2}{%
+           family={Chao},
+           familyi={C\bibinitperiod},
+           given={Yanjie},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3542c611380820eee907ad42d313bff2}{%
+           family={Pirzada},
+           familyi={P\bibinitperiod},
+           given={Zaid\bibnamedelima A.},
+           giveni={Z\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4d75c3cfe8caa43eeeba82387c1dd733}{%
+           family={Eckert},
+           familyi={E\bibinitperiod},
+           given={Maria\bibnamedelima R.},
+           giveni={M\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4069654cf9ba3f94122953e297a51891}{%
+           family={Vogel},
+           familyi={V\bibinitperiod},
+           given={Jörg},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=147cdad451a06b98a827e8850511922a}{%
+           family={Charpentier},
+           familyi={C\bibinitperiod},
+           given={Emmanuelle},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{06f92a6dcfa244f2ea60da5fafd07b8c}
+      \strng{fullhash}{391cc3d1d86a9aeecc7108ddec0871e3}
+      \strng{fullhashraw}{391cc3d1d86a9aeecc7108ddec0871e3}
+      \strng{bibnamehash}{391cc3d1d86a9aeecc7108ddec0871e3}
+      \strng{authorbibnamehash}{391cc3d1d86a9aeecc7108ddec0871e3}
+      \strng{authornamehash}{06f92a6dcfa244f2ea60da5fafd07b8c}
+      \strng{authorfullhash}{391cc3d1d86a9aeecc7108ddec0871e3}
+      \strng{authorfullhashraw}{391cc3d1d86a9aeecc7108ddec0871e3}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Nature}
+      \field{number}{7340}
+      \field{title}{{CRISPR RNA} Maturation by Trans-Encoded Small {RNA} and Host Factor {RNase III}}
+      \field{volume}{471}
+      \field{year}{2011}
+      \field{pages}{602\bibrangedash 607}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1038/nature09886
+      \endverb
+    \endentry
+    \entry{ishino1987}{article}{}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=1f11d2b4a80c5317d7865f21c4bd7ca8}{%
+           family={Ishino},
+           familyi={I\bibinitperiod},
+           given={Yoshizumi},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1340d5cf296d11c641b76c630eb2adf9}{%
+           family={Shinagawa},
+           familyi={S\bibinitperiod},
+           given={Hiroshi},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8f2c4872f11169fb1db9f9af278ae031}{%
+           family={Makino},
+           familyi={M\bibinitperiod},
+           given={Kozo},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f5ab2e8659d3c4d3e9bfb2eed7e48e0f}{%
+           family={Amemura},
+           familyi={A\bibinitperiod},
+           given={Mitsuko},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=54d537b1f05da7f12b937e894f9ad8f7}{%
+           family={Nakata},
+           familyi={N\bibinitperiod},
+           given={Atsuo},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{568e740679ec9932f59c70ab67f9cc86}
+      \strng{fullhash}{9b2beff1617e691eeb370a400f455586}
+      \strng{fullhashraw}{9b2beff1617e691eeb370a400f455586}
+      \strng{bibnamehash}{9b2beff1617e691eeb370a400f455586}
+      \strng{authorbibnamehash}{9b2beff1617e691eeb370a400f455586}
+      \strng{authornamehash}{568e740679ec9932f59c70ab67f9cc86}
+      \strng{authorfullhash}{9b2beff1617e691eeb370a400f455586}
+      \strng{authorfullhashraw}{9b2beff1617e691eeb370a400f455586}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Bacteriology}
+      \field{number}{12}
+      \field{title}{Nucleotide Sequence of the \textit{iap} Gene, Responsible for Alkaline Phosphatase Isozyme Conversion in \textit{Escherichia coli}, and Identification of the Gene Product}
+      \field{volume}{169}
+      \field{year}{1987}
+      \field{pages}{5429\bibrangedash 5433}
+      \range{pages}{5}
+      \verb{doi}
+      \verb 10.1128/jb.169.12.5429-5433.1987
+      \endverb
+    \endentry
+    \entry{jinek2012}{article}{}{}
+      \name{author}{6}{}{%
+        {{un=0,uniquepart=base,hash=3aa57e081fa07841f82a2722cbf3fce1}{%
+           family={Jinek},
+           familyi={J\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=33bbdf41a18c108757feb6e3e9135dbe}{%
+           family={Chylinski},
+           familyi={C\bibinitperiod},
+           given={Krzysztof},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6354fb90208c2bc8c428afa3c4a7502b}{%
+           family={Fonfara},
+           familyi={F\bibinitperiod},
+           given={Ines},
+           giveni={I\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=30d432e9ac0b22aa65c70baacd7b3d81}{%
+           family={Hauer},
+           familyi={H\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=db6ee88c2505c20e204e8ea38dc1a7ed}{%
+           family={Doudna},
+           familyi={D\bibinitperiod},
+           given={Jennifer\bibnamedelima A.},
+           giveni={J\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=147cdad451a06b98a827e8850511922a}{%
+           family={Charpentier},
+           familyi={C\bibinitperiod},
+           given={Emmanuelle},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{37e33dd0cf7e17cf0a3fb2fb26848a11}
+      \strng{fullhash}{6b32f7927e60c50bc32a624f451e2060}
+      \strng{fullhashraw}{6b32f7927e60c50bc32a624f451e2060}
+      \strng{bibnamehash}{6b32f7927e60c50bc32a624f451e2060}
+      \strng{authorbibnamehash}{6b32f7927e60c50bc32a624f451e2060}
+      \strng{authornamehash}{37e33dd0cf7e17cf0a3fb2fb26848a11}
+      \strng{authorfullhash}{6b32f7927e60c50bc32a624f451e2060}
+      \strng{authorfullhashraw}{6b32f7927e60c50bc32a624f451e2060}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Science}
+      \field{number}{6096}
+      \field{title}{A Programmable Dual-{RNA}-Guided {DNA} Endonuclease in Adaptive Bacterial Immunity}
+      \field{volume}{337}
+      \field{year}{2012}
+      \field{pages}{816\bibrangedash 821}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1126/science.1225829
+      \endverb
+    \endentry
+    \entry{mali2013}{article}{}{}
+      \name{author}{8}{}{%
+        {{un=0,uniquepart=base,hash=f4964ba6d77340526f8faa0874695720}{%
+           family={Mali},
+           familyi={M\bibinitperiod},
+           given={Prashant},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8ec16aaf60cad0180f2a45ec75aeb917}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Luhan},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=35411c07fb34046ceb68c5d1fffcbd92}{%
+           family={Esvelt},
+           familyi={E\bibinitperiod},
+           given={Kevin\bibnamedelima M.},
+           giveni={K\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=de810431add920588a38438fc14d0ac4}{%
+           family={Aach},
+           familyi={A\bibinitperiod},
+           given={John},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=329602018834a97c955a5bbb95a2a583}{%
+           family={Guell},
+           familyi={G\bibinitperiod},
+           given={Marc},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b0f389811044ee83c4d3a69e8ae36589}{%
+           family={DiCarlo},
+           familyi={D\bibinitperiod},
+           given={James\bibnamedelima E.},
+           giveni={J\bibinitperiod\bibinitdelim E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=61a5e4102ff27e20562adb67b7e649c9}{%
+           family={Norville},
+           familyi={N\bibinitperiod},
+           given={Julie\bibnamedelima E.},
+           giveni={J\bibinitperiod\bibinitdelim E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b00fe11c0f380518a33375277e8608a2}{%
+           family={Church},
+           familyi={C\bibinitperiod},
+           given={George\bibnamedelima M.},
+           giveni={G\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{ddaa160e469184eefef6db0920aef3c0}
+      \strng{fullhash}{f562686b7f2d021c44deedaba4fb648e}
+      \strng{fullhashraw}{f562686b7f2d021c44deedaba4fb648e}
+      \strng{bibnamehash}{f562686b7f2d021c44deedaba4fb648e}
+      \strng{authorbibnamehash}{f562686b7f2d021c44deedaba4fb648e}
+      \strng{authornamehash}{ddaa160e469184eefef6db0920aef3c0}
+      \strng{authorfullhash}{f562686b7f2d021c44deedaba4fb648e}
+      \strng{authorfullhashraw}{f562686b7f2d021c44deedaba4fb648e}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Science}
+      \field{number}{6121}
+      \field{title}{{RNA}-Guided Human Genome Engineering via {Cas9}}
+      \field{volume}{339}
+      \field{year}{2013}
+      \field{pages}{823\bibrangedash 826}
+      \range{pages}{4}
+      \verb{doi}
+      \verb 10.1126/science.1232033
+      \endverb
+    \endentry
+    \entry{nobel2020}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=d1c59ef58fab959c3fc3ecfa15e012fc}{%
+           family={{The Nobel Prize}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{d1c59ef58fab959c3fc3ecfa15e012fc}
+      \strng{fullhash}{d1c59ef58fab959c3fc3ecfa15e012fc}
+      \strng{fullhashraw}{d1c59ef58fab959c3fc3ecfa15e012fc}
+      \strng{bibnamehash}{d1c59ef58fab959c3fc3ecfa15e012fc}
+      \strng{authorbibnamehash}{d1c59ef58fab959c3fc3ecfa15e012fc}
+      \strng{authornamehash}{d1c59ef58fab959c3fc3ecfa15e012fc}
+      \strng{authorfullhash}{d1c59ef58fab959c3fc3ecfa15e012fc}
+      \strng{authorfullhashraw}{d1c59ef58fab959c3fc3ecfa15e012fc}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{The Nobel Prize in Chemistry 2020}
+      \field{urlday}{25}
+      \field{urlmonth}{7}
+      \field{urlyear}{2026}
+      \field{year}{2020}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.nobelprize.org/prizes/chemistry/2020/summary/
+      \endverb
+      \verb{url}
+      \verb https://www.nobelprize.org/prizes/chemistry/2020/summary/
+      \endverb
+    \endentry
+    \entry{who2021}{report}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=531217507bec092b6ec36c0f78f46736}{%
+           family={{World Health Organization}},
+           familyi={W\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {World Health Organization}%
+      }
+      \list{location}{1}{%
+        {Geneva}%
+      }
+      \strng{namehash}{531217507bec092b6ec36c0f78f46736}
+      \strng{fullhash}{531217507bec092b6ec36c0f78f46736}
+      \strng{fullhashraw}{531217507bec092b6ec36c0f78f46736}
+      \strng{bibnamehash}{531217507bec092b6ec36c0f78f46736}
+      \strng{authorbibnamehash}{531217507bec092b6ec36c0f78f46736}
+      \strng{authornamehash}{531217507bec092b6ec36c0f78f46736}
+      \strng{authorfullhash}{531217507bec092b6ec36c0f78f46736}
+      \strng{authorfullhashraw}{531217507bec092b6ec36c0f78f46736}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-92-4-003038-1}
+      \field{title}{Human Genome Editing: Recommendations}
+      \field{urlday}{25}
+      \field{urlmonth}{7}
+      \field{urlyear}{2026}
+      \field{year}{2021}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.who.int/publications/i/item/9789240030381
+      \endverb
+      \verb{url}
+      \verb https://www.who.int/publications/i/item/9789240030381
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
