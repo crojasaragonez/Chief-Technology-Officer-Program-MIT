@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/TeX Live for SUSE Linux) (preloaded format=pdflatex 2026.7.25)  25 JUL 2026 11:30
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/TeX Live for SUSE Linux) (preloaded format=pdflatex 2026.7.25)  25 JUL 2026 11:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1144,7 +1144,7 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 Here is how much of TeX's memory you used:
  33225 strings out of 469336
  629840 string characters out of 5466414
- 1596263 words of memory out of 5000000
+ 1596266 words of memory out of 5000000
  61232 multiletter control sequences out of 15000+600000
  705690 words of font info for 170 fonts, out of 8000000 for 9000
  81 hyphenation exceptions out of 8191
@@ -1154,7 +1154,7 @@ pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmbxi10.pfb></
 usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/p
 ublic/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/sha
 re/texmf/fonts/type1/public/lm/lmri12.pfb>
-Output written on main.pdf (9 pages, 4732651 bytes).
+Output written on main.pdf (9 pages, 4469606 bytes).
 PDF statistics:
  177 PDF objects out of 1000 (max. 8388607)
  148 compressed objects within 2 object streams
