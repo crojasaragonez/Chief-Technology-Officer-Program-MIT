@@ -1,17 +1,17 @@
 [0] Config.pm:328> INFO - This is Biber 2.21
 [0] Config.pm:331> INFO - Logfile is 'main.blg'
-[25] biber:344> INFO - === Sat Jul 25, 2026, 11:14:19
-[32] Biber.pm:421> INFO - Reading 'main.bcf'
-[63] Biber.pm:1002> INFO - Found 12 citekeys in bib section 0
+[25] biber:344> INFO - === Sat Jul 25, 2026, 11:30:50
+[31] Biber.pm:421> INFO - Reading 'main.bcf'
+[62] Biber.pm:1002> INFO - Found 12 citekeys in bib section 0
 [71] Biber.pm:4487> INFO - Processing section 0
-[75] Biber.pm:4678> INFO - Looking for bibtex file 'referencias.bib' for section 0
-[76] bibtex.pm:1713> INFO - LaTeX decoding ...
-[80] bibtex.pm:1519> INFO - Found BibTeX data source 'referencias.bib'
+[74] Biber.pm:4678> INFO - Looking for bibtex file 'referencias.bib' for section 0
+[75] bibtex.pm:1713> INFO - LaTeX decoding ...
+[79] bibtex.pm:1519> INFO - Found BibTeX data source 'referencias.bib'
 [156] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'normalization = NFD' with 'normalization = prenormalized'
 [156] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'variable = shifted' with 'variable = non-ignorable'
 [156] Biber.pm:4307> INFO - Sorting list 'nyt/apasortcite//global/global/global' of type 'entry' with template 'nyt' and locale 'es-ES'
-[172] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[172] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'variable = shifted' with 'variable = non-ignorable'
-[172] Biber.pm:4307> INFO - Sorting list 'nyt/global//global/global/global' of type 'entry' with template 'nyt' and locale 'es-ES'
+[171] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[171] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'variable = shifted' with 'variable = non-ignorable'
+[171] Biber.pm:4307> INFO - Sorting list 'nyt/global//global/global/global' of type 'entry' with template 'nyt' and locale 'es-ES'
 [180] bbl.pm:677> INFO - Writing 'main.bbl' with encoding 'UTF-8'
 [187] bbl.pm:780> INFO - Output to main.bbl
