@@ -11,6 +11,8 @@
 \usepackage{enumitem}
 \usepackage{xcolor}
 \usepackage{csquotes}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric}
 \usepackage[hidelinks]{hyperref}
 \usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}
 \DeclareLanguageMapping{spanish}{spanish-apa}
@@ -24,7 +26,8 @@
 \newcommand{\pendiente}[1]{\textcolor{gray}{[#1]}}
 
 \title{\textbf{Innovaciones inspiradas en la naturaleza}\\
-\large CRISPR-Cas9: de la inmunidad bacteriana a la edición genética}
+\large CRISPR-Cas9 y algoritmos de optimización basados en
+\emph{Physarum polycephalum}}
 \author{\pendiente{Nombre del estudiante}\\
 Gestión del Desarrollo Tecnológico}
 \date{\pendiente{Fecha de entrega}}
@@ -44,19 +47,17 @@ transferencia no tiene que limitarse a copiar la forma visible de un organismo;
 también puede aprovechar procesos que ocurren en las escalas celular y
 molecular.
 
-CRISPR-Cas9 constituye un caso especialmente profundo de esta transferencia.
-La tecnología no surgió inicialmente como una herramienta construida para
-editar el genoma humano. Su antecedente es un sistema mediante el cual ciertas
-bacterias y arqueas reconocen material genético invasor y se protegen de
-nuevas infecciones. La investigación científica permitió comprender ese
-proceso natural, simplificarlo y reprogramarlo para cortar ADN en lugares
-elegidos por una persona. Este caso muestra cómo el conocimiento de una función
-biológica puede convertirse en una plataforma tecnológica con aplicaciones en
-investigación, medicina y agricultura.
+Este informe compara dos formas distintas de transferencia desde la naturaleza.
+CRISPR-Cas9 adapta componentes moleculares de la inmunidad bacteriana para
+editar ADN. Los algoritmos inspirados en \emph{Physarum polycephalum} abstraen
+el comportamiento de un organismo que construye redes eficientes para
+convertirlo en reglas de optimización. La comparación permite analizar no solo
+qué se copió, sino cómo el conocimiento biológico se transformó en una
+tecnología capaz de resolver problemas humanos.
 
 \section{CRISPR-Cas9: una herramienta inspirada en la inmunidad bacteriana}
 
-\subsection{Antecedente en la naturaleza}
+\subsection*{01. Antecedentes en la naturaleza}
 
 Las bacterias están expuestas a bacteriófagos, virus que introducen su material
 genético dentro de ellas para reproducirse. Algunas bacterias responden a esta
@@ -87,7 +88,7 @@ capaz de cortar las dos hebras del ADN. La bacteria combina, por tanto,
 \emph{memoria}, \emph{reconocimiento} y \emph{respuesta} en un sistema
 molecular programable.
 
-\subsection{De fenómeno natural a diseño tecnológico}
+\subsection*{02. Principios esenciales de la tecnología}
 
 El paso decisivo consistió en abstraer el principio esencial del sistema:
 una secuencia de ARN puede dirigir una enzima de corte hacia una secuencia
@@ -132,29 +133,29 @@ reparación que se active.
   \end{tabularx}
 \end{table}
 
-\subsection{Objetivos y propuesta de valor}
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[
+    node distance=5mm,
+    bloque/.style={draw, rounded corners, align=center, minimum height=10mm,
+      text width=0.20\textwidth, fill=blue!6},
+    flecha/.style={-{Stealth[length=2.2mm]}, thick}
+  ]
+    \node[bloque] (memoria) {ADN viral\\como memoria};
+    \node[bloque, right=of memoria] (guia) {ARN reconoce\\la secuencia};
+    \node[bloque, right=of guia] (corte) {Cas9 corta\\el ADN objetivo};
+    \node[bloque, right=of corte, fill=green!9] (edicion)
+      {Reparación y\\edición genética};
+    \draw[flecha] (memoria) -- (guia);
+    \draw[flecha] (guia) -- (corte);
+    \draw[flecha] (corte) -- (edicion);
+  \end{tikzpicture}
+  \caption{Del mecanismo de defensa bacteriano a la herramienta de edición.
+  Elaboración propia.}
+  \label{fig:flujo-crispr}
+\end{figure}
 
-El objetivo inicial del diseño de 2012 fue demostrar una endonucleasa de ADN
-programable mediante ARN, no presentar de inmediato una terapia terminada.
-Como plataforma de investigación, su propuesta de valor consistía en separar
-dos funciones: Cas9 conservaba la capacidad de corte y el ARN guía determinaba
-el destino. Esta modularidad hizo que cambiar de objetivo fuera relativamente
-rápido y redujo la complejidad de diseñar herramientas específicas.
-
-Las finalidades posteriores pueden agruparse en tres ámbitos:
-
-\begin{itemize}
-  \item \textbf{Investigación básica:} desactivar o modificar genes para
-    estudiar su función y construir modelos celulares o animales.
-  \item \textbf{Salud:} explorar tratamientos para enfermedades de base
-    genética, modificar células con fines terapéuticos y desarrollar nuevas
-    estrategias contra el cáncer.
-  \item \textbf{Agricultura y biotecnología:} generar cultivos con propiedades
-    seleccionadas y modificar microorganismos utilizados en procesos
-    productivos.
-\end{itemize}
-
-\subsection{Proceso y contexto de lanzamiento}
+\subsection*{03. Contexto del desarrollo y lanzamiento}
 
 CRISPR-Cas9 no tuvo un lanzamiento convencional como producto de consumo. Su
 introducción ocurrió mediante publicaciones científicas que convirtieron un
@@ -181,7 +182,38 @@ carácter acumulativo de la innovación: observaciones, explicación funcional,
 simplificación de componentes y adopción tecnológica fueron etapas
 complementarias.
 
-\subsection{Impacto, límites y gobernanza}
+\subsection*{04. Objetivos y aplicaciones}
+
+El objetivo inicial del diseño de 2012 fue demostrar una endonucleasa de ADN
+programable mediante ARN, no presentar de inmediato una terapia terminada.
+Como plataforma de investigación, su propuesta de valor consistía en separar
+dos funciones: Cas9 conservaba la capacidad de corte y el ARN guía determinaba
+el destino. Esta modularidad hizo que cambiar de objetivo fuera relativamente
+rápido y redujo la complejidad de diseñar herramientas específicas.
+
+Las finalidades posteriores pueden agruparse en tres ámbitos:
+
+\begin{itemize}
+  \item \textbf{Investigación básica:} desactivar o modificar genes para
+    estudiar su función y construir modelos celulares o animales.
+  \item \textbf{Salud:} explorar tratamientos para enfermedades de base
+    genética, modificar células con fines terapéuticos y desarrollar nuevas
+    estrategias contra el cáncer.
+  \item \textbf{Agricultura y biotecnología:} generar cultivos con propiedades
+    seleccionadas y modificar microorganismos utilizados en procesos
+    productivos.
+\end{itemize}
+
+\subsection*{05. Impacto y beneficios}
+
+El beneficio estratégico de CRISPR-Cas9 es que convierte la especificidad de la
+edición en un problema de diseño de ARN. Frente a tecnologías que exigían
+construir una proteína diferente para cada objetivo, la misma proteína Cas9
+puede reutilizarse cambiando la guía. Esto reduce tiempo, costo y barreras de
+entrada para producir experimentos genéticos, facilita trabajar con múltiples
+objetivos y acelera la construcción de modelos de enfermedades. Su impacto no
+se limita a un producto: crea una plataforma sobre la cual pueden desarrollarse
+herramientas, procesos y terapias \parencite{nobel2020}.
 
 La misma capacidad de programación que hace valiosa a CRISPR-Cas9 genera
 desafíos. El ARN guía puede conducir cortes en sitios no deseados; la reparación
@@ -199,19 +231,9 @@ genoma humano ante sus implicaciones científicas, éticas, sociales y legales
 una plataforma de gran alcance necesita evolucionar junto con las capacidades
 institucionales que controlan su aplicación.
 
-\subsection{Síntesis del caso}
-
-CRISPR-Cas9 es un diseño inspirado en la biología porque transfiere un
-principio funcional de la inmunidad bacteriana a un contexto humano. La
-naturaleza aportó un sistema que registra amenazas, reconoce secuencias y
-corta ADN invasor. La ingeniería conservó la lógica de reconocimiento y corte,
-pero sustituyó el objetivo evolutivo de defensa por objetivos definidos por el
-investigador. La innovación central no consistió en copiar la forma de un
-organismo, sino en comprender, simplificar y reprogramar un proceso molecular.
-
 \section{Algoritmos de optimización inspirados en el moho mucilaginoso}
 
-\subsection{Antecedente en la naturaleza}
+\subsection*{01. Antecedentes en la naturaleza}
 
 \emph{Physarum polycephalum} es un moho mucilaginoso plasmodial, perteneciente
 al grupo de los amebozoos y no al de los hongos verdaderos. Durante una etapa
@@ -237,7 +259,7 @@ entre las dos fuentes \parencite{nakagaki2000}. El experimento mostró que un
 sistema biológico sin control central podía resolver físicamente un problema
 de optimización.
 
-\subsection{Principio biológico esencial}
+\subsubsection*{Mecanismo natural de adaptación}
 
 El principio transferible es un ciclo de \textbf{exploración, realimentación y
 poda}. Durante la exploración se forma una red con rutas alternativas. El flujo
@@ -261,7 +283,7 @@ fuente o cambia el ambiente. Estos atributos resultan atractivos para sistemas
 humanos que operan bajo incertidumbre y no pueden depender siempre de un
 controlador central.
 
-\subsection{Del organismo al modelo matemático}
+\subsection*{02. Principios esenciales de la tecnología}
 
 Tero, Kobayashi y Nakagaki formalizaron en 2007 un modelo de red de transporte
 adaptativa basado en las observaciones fisiológicas de \emph{Physarum}
@@ -311,31 +333,29 @@ en simular cada detalle celular, sino en conservar la relación funcional:
   \end{tabularx}
 \end{table}
 
-\subsection{Objetivos y aplicaciones}
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[
+    node distance=5mm,
+    bloque/.style={draw, rounded corners, align=center, minimum height=10mm,
+      text width=0.20\textwidth, fill=orange!9},
+    flecha/.style={-{Stealth[length=2.2mm]}, thick}
+  ]
+    \node[bloque] (explora) {Explorar rutas\\alternativas};
+    \node[bloque, right=of explora] (flujo) {Calcular flujo\\por conexión};
+    \node[bloque, right=of flujo] (refuerzo) {Reforzar rutas\\con mayor uso};
+    \node[bloque, right=of refuerzo, fill=green!9] (poda)
+      {Podar rutas\\ineficientes};
+    \draw[flecha] (explora) -- (flujo);
+    \draw[flecha] (flujo) -- (refuerzo);
+    \draw[flecha] (refuerzo) -- (poda);
+  \end{tikzpicture}
+  \caption{Ciclo de adaptación trasladado al modelo computacional.
+  Elaboración propia.}
+  \label{fig:flujo-physarum}
+\end{figure}
 
-El objetivo tecnológico es encontrar configuraciones eficientes en problemas
-con numerosas soluciones posibles. En su forma más directa, el modelo permite
-buscar caminos cortos dentro de un grafo. Sin embargo, su valor aumenta cuando
-el problema exige conectar varios puntos y equilibrar criterios que pueden
-competir entre sí.
-
-Entre sus contextos de aplicación se encuentran:
-
-\begin{itemize}
-  \item diseño de redes de transporte, carreteras y ferrocarriles;
-  \item enrutamiento de información en redes de comunicación;
-  \item planificación de cadenas de suministro y redes logísticas;
-  \item aproximación de problemas de conexión y caminos mínimos;
-  \item optimización de parámetros en problemas de ingeniería.
-\end{itemize}
-
-Estas aplicaciones no implican introducir organismos vivos en la
-infraestructura. El producto transferido es la regla de adaptación obtenida al
-estudiar su comportamiento. En otros experimentos, el organismo físico también
-puede utilizarse como una forma de computación no convencional, pero el diseño
-que aquí se analiza es principalmente matemático y computacional.
-
-\subsection{Contexto de desarrollo y lanzamiento}
+\subsection*{03. Contexto del desarrollo y lanzamiento}
 
 Este caso tampoco tuvo un único lanzamiento comercial. Su evolución ocurrió a
 través de una secuencia de publicaciones que trasladaron el conocimiento desde
@@ -359,7 +379,7 @@ que una regla biológica sencilla podía generar diseños competitivos y
 adaptativos. Su propuesta de valor se encontraba en la combinación de
 descentralización, flexibilidad y robustez.
 
-\subsection{El \emph{Slime Mould Algorithm} de 2020}
+\subsubsection*{El \emph{Slime Mould Algorithm} de 2020}
 
 Una línea posterior de desarrollo es el \emph{Slime Mould Algorithm} (SMA),
 presentado por Li y colaboradores en 2020 como un método de optimización
@@ -384,7 +404,31 @@ forrajeo y la transforma en una estrategia de optimización aplicable a
 variables continuas. Ambos proceden del mismo antecedente natural, pero
 responden a objetivos y arquitecturas algorítmicas diferentes.
 
-\subsection{Impacto, límites y evaluación crítica}
+\subsection*{04. Objetivos y aplicaciones}
+
+El objetivo tecnológico es encontrar configuraciones eficientes en problemas
+con numerosas soluciones posibles. En su forma más directa, el modelo permite
+buscar caminos cortos dentro de un grafo. Sin embargo, su valor aumenta cuando
+el problema exige conectar varios puntos y equilibrar criterios que pueden
+competir entre sí.
+
+Entre sus contextos de aplicación se encuentran:
+
+\begin{itemize}
+  \item diseño de redes de transporte, carreteras y ferrocarriles;
+  \item enrutamiento de información en redes de comunicación;
+  \item planificación de cadenas de suministro y redes logísticas;
+  \item aproximación de problemas de conexión y caminos mínimos;
+  \item optimización de parámetros en problemas de ingeniería.
+\end{itemize}
+
+Estas aplicaciones no implican introducir organismos vivos en la
+infraestructura. El producto transferido es la regla de adaptación obtenida al
+estudiar su comportamiento. En otros experimentos, el organismo físico también
+puede utilizarse como una forma de computación no convencional, pero el diseño
+que aquí se analiza es principalmente matemático y computacional.
+
+\subsection*{05. Impacto y beneficios}
 
 La principal contribución de \emph{Physarum} al diseño tecnológico es mostrar
 que la eficiencia de una red puede emerger de reglas locales y adaptación
@@ -392,6 +436,15 @@ continua. Esto abre alternativas a los modelos que requieren conocer de
 antemano toda la estructura del problema. También ofrece una manera de explorar
 soluciones que equilibran costo y resiliencia, en lugar de optimizar una sola
 métrica.
+
+En términos de impacto, este enfoque puede reducir el costo material de una red
+al eliminar conexiones de poco valor y, simultáneamente, conservar redundancia
+suficiente para responder ante fallos. El control descentralizado también
+permite recalcular rutas cuando cambian los nodos o las condiciones, una
+capacidad relevante para transporte, telecomunicaciones y logística. Como
+herramienta de diseño, su beneficio principal es ampliar el conjunto de
+alternativas que un ingeniero puede evaluar antes de invertir en
+infraestructura.
 
 No obstante, la analogía biológica no garantiza superioridad computacional.
 Los modelos simplifican el comportamiento del organismo y su desempeño depende
@@ -407,41 +460,36 @@ metáfora natural. La bioinspiración aporta una hipótesis de diseño; la
 validación experimental y computacional determina si esa hipótesis crea valor
 en un contexto específico.
 
-\subsection{Síntesis del caso}
+\section*{06. Conclusiones}
 
-Los algoritmos inspirados en \emph{Physarum polycephalum} trasladan a la
-computación una estrategia natural de formación de redes. El organismo explora
-el ambiente, distribuye flujo, refuerza conexiones productivas y elimina rutas
-poco utilizadas. Los diseños humanos convierten esas acciones en nodos,
-aristas, conductividades, pesos y reglas iterativas. El resultado es una
-familia de métodos que busca soluciones eficientes sin depender de un plan
-centralizado.
+Los dos casos indican que el éxito de la biomímesis no depende de reproducir la
+apariencia de un organismo, sino de identificar la relación causal que hace
+útil a su mecanismo. En CRISPR-Cas9, esa relación es la capacidad de utilizar
+ARN para reconocer una secuencia y dirigir un corte. En \emph{Physarum}, es la
+realimentación entre flujo y capacidad de las conexiones. La ingeniería crea
+valor cuando separa esos principios de su función biológica original y los
+vuelve controlables, reproducibles y evaluables.
 
-En comparación con CRISPR-Cas9, la transferencia ocurre en otra escala.
-CRISPR adapta directamente componentes moleculares de un sistema inmunitario;
-los algoritmos de \emph{Physarum} abstraen un comportamiento y lo expresan
-mediante matemáticas. Los dos casos muestran que la innovación bioinspirada
-puede surgir tanto de reutilizar mecanismos materiales de la naturaleza como
-de convertir sus principios organizativos en información ejecutable.
+La comparación también revela dos rutas de innovación. CRISPR reutiliza
+componentes materiales de la naturaleza y los reprograma; el modelo de
+\emph{Physarum} convierte un comportamiento en ecuaciones y reglas
+computacionales. En ambos casos, el desarrollo fue acumulativo: comenzó con
+observaciones cuya utilidad no era evidente, continuó con una explicación del
+mecanismo y alcanzó impacto cuando distintas comunidades pudieron reproducirlo
+y aplicarlo. Esto demuestra que la investigación básica es una fuente de
+opciones tecnológicas, aunque su valor final dependa de validación, gobernanza
+y adaptación al contexto.
 
-% ---------------------------------------------------------------------------
-% ESTRUCTURA PARA LAS SIGUIENTES ITERACIONES
-% Descomentar después de seleccionar los otros casos.
-%
-% \section{Tercer diseño bioinspirado}
-% \subsection{Antecedente en la naturaleza}
-% \subsection{Principio esencial y traducción tecnológica}
-% \subsection{Objetivos, proceso y contexto de lanzamiento}
-% \subsection{Impacto y limitaciones}
-%
-% \section{Comparación de los casos}
-% Comparar tipo de inspiración, problema abordado, proceso de transferencia,
-% contexto de lanzamiento, impacto y límites.
-%
-% \section{Conclusiones}
-% Integrar los hallazgos de los dos o tres casos.
-% ---------------------------------------------------------------------------
+Las oportunidades futuras surgen de los mismos principios. La edición genética
+puede avanzar hacia herramientas más precisas y controlables, mientras los
+sistemas inspirados en \emph{Physarum} pueden contribuir a redes logísticas,
+energéticas y de comunicación capaces de reconfigurarse frente a fallos. El
+aprendizaje más importante es que observar la naturaleza no proporciona una
+solución terminada: proporciona reglas probadas en otro contexto. La tarea del
+ingeniero consiste en abstraerlas sin perder su función, contrastarlas con
+alternativas existentes y gestionar responsablemente los nuevos riesgos que
+aparecen al trasladarlas.
 
-\printbibliography[title={Referencias}]
+\printbibliography[title={07. Referencias bibliográficas}]
 
 \end{document}
