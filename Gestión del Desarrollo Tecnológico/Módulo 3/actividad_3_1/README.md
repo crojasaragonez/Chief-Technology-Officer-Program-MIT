@@ -7,13 +7,18 @@ eléctrico en el año 2000 (375 kWh/ton).
 El informe está escrito en LaTeX y utiliza LuaLaTeX, la tipografía OpenType
 `Source Serif Pro` y `biblatex-apa`/Biber con estilo APA localizado al español.
 
-## Archivos de partida
+## Archivos
 
-- `chart.png` — gráfico original del curso con las tres figuras de mérito
-  (1970–2000); se usa en el informe como `images/figuras-merito-eaf.png`.
-- `table.png` — cuadro de fórmulas del enunciado; sus ecuaciones están
-  compuestas directamente en LaTeX, no incrustadas como imagen.
+- `main.tex` — informe.
+- `referencias.bib` — bibliografía (Biber/APA).
+- `chart.png` — gráfico del curso con las tres figuras de mérito (1970–2000);
+  es la Figura 1 del informe.
 - `context.txt` — enunciado de la actividad.
+- `Makefile` — tareas de compilación.
+- `main.pdf` — documento generado.
+
+Las fórmulas del cuadro del enunciado están compuestas directamente en LaTeX,
+por lo que no se conserva ninguna imagen para ellas.
 
 La opción `es-noshorthands` de Babel evita una incompatibilidad conocida entre
 los caracteres abreviados de `babel-spanish` y `biblatex-apa` 9.20 en versiones
