@@ -1,4 +1,4 @@
-# Actividad 3.1 — fundición del acero en un horno de arco eléctrico
+# Actividad 3.1: fundición del acero en un horno de arco eléctrico
 
 Cálculo del límite teórico de consumo eléctrico para fundir una tonelada de
 acero (≈ 268 kWh/ton) y comparación con el desempeño del horno de arco
@@ -9,13 +9,13 @@ El informe está escrito en LaTeX y utiliza LuaLaTeX, la tipografía OpenType
 
 ## Archivos
 
-- `main.tex` — informe.
-- `referencias.bib` — bibliografía (Biber/APA).
-- `chart.png` — gráfico del curso con las tres figuras de mérito (1970–2000);
-  es la Figura 1 del informe.
-- `context.txt` — enunciado de la actividad.
-- `Makefile` — tareas de compilación.
-- `main.pdf` — documento generado.
+- `main.tex`: informe.
+- `referencias.bib`: bibliografía (Biber/APA).
+- `chart.png`: gráfico del curso con las tres figuras de mérito (1970-2000).
+  Es la Figura 1 del informe.
+- `context.txt`: enunciado de la actividad.
+- `Makefile`: tareas de compilación.
+- `main.pdf`: documento generado.
 
 Las fórmulas del cuadro del enunciado están compuestas directamente en LaTeX,
 por lo que no se conserva ninguna imagen para ellas.
