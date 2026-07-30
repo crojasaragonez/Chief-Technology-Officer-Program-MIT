@@ -1,0 +1,10 @@
+Con la siguiente información, calcule el límite teórico más bajo en términos de consumo de electricidad para fundir escoria de acero (kWh/ton): 
+
+La temperatura de fusión del acero se sitúa en torno a los 1.500 ℃ y la capacidad de calentarlo, sobre los 0,466 J/g ℃. El calor latente de fusión del acero es aproximadamente de 276 J/g. A partir de este límite, ¿hasta dónde llegó el horno de arco eléctrico en el año 2000? 
+
+Tres figuras de mérito en la fundición de acero (1970-2000) 
+
+Energía total necesaria para fundir un material sólido = Energía para elevar la temperatura del punto de fusión de la sustancia + Energía para producir el cambio de fase de la sustancia 
+
+Tres figuras de mérito en la fundición de acero (1970-2000) (chart.png)
+
