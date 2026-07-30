@@ -1,0 +1,9 @@
+Actividad 3.5
+
+¿Cómo resolvería la aparente paradoja que surge entre el modelo de la curva S,
+que predice si una tecnología entra en declive o madurez, y la ley de Moore, que
+predice su progreso exponencial?
+
+Indicación adicional: buscar alguna otra ley o teoría que demuestre que la ley de
+Moore no es especial y que existen ejemplos de tecnologías que se han comportado
+de forma similar a lo largo del tiempo.

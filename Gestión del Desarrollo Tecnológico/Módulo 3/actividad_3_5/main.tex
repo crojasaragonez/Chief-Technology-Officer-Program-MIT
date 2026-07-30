@@ -1,0 +1,724 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,backgrounds}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.5cm}
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\setlist{nosep}
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy}
+
+\sisetup{
+  output-decimal-marker = {,},
+  group-separator = {.},
+  group-minimum-digits = 4,
+  per-mode = symbol,
+  detect-all
+}
+\DeclareSIUnit{\ton}{ton}
+\DeclareSIUnit{\kWh}{kWh}
+\DeclareSIUnit{\lumen}{lm}
+\DeclareSIUnit{\bit}{bit}
+
+\title{\textbf{La paradoja entre la curva S y la ley de Moore}\\
+\large Por qué una tecnología puede madurar y progresar exponencialmente al
+mismo tiempo}
+\author{Carlos Luis Rojas Aragonés\\
+Gestión del Desarrollo Tecnológico}
+\date{29 de julio de 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{La paradoja}
+
+Los dos modelos que la gestión tecnológica usa con más frecuencia parecen
+contradecirse.
+
+La \textbf{curva S} sostiene que el desempeño de una tecnología, medido en su
+figura de mérito relevante, crece lentamente al principio, se acelera cuando se
+resuelven los cuellos de botella principales y luego se aplana al aproximarse a
+un límite físico o económico. Su implicación de gestión es inequívoca: toda
+tecnología tiene un techo, la inversión adicional produce rendimientos
+decrecientes en el tramo superior, y el momento de saltar a la siguiente curva
+llega antes de que la curva actual haya dejado de mejorar
+\parencite{foster1986}.
+
+La \textbf{ley de Moore} afirma lo aparentemente opuesto. Formulada en 1965 sobre
+apenas cinco puntos de datos, observó que el número de componentes en el circuito
+integrado de costo unitario mínimo se duplicaba aproximadamente cada año, y
+proyectó que la tendencia continuaría una década \parencite{moore1965}. En 1975
+Moore revisó el ritmo a una duplicación cada dos años \parencite{moore1975}. La
+proyección no duró diez años: duró más de cincuenta. Su implicación de gestión
+también es inequívoca, y es la contraria: no planifique para un techo, planifique
+para que el desempeño de mañana sea el doble del de hoy.
+
+La contradicción es visible en la práctica: en 1971 el Intel 4004 integraba unos
+\num{2300} transistores; en 2023 el Apple M2 Ultra integraba
+\num{134000000000}. Son \num{25.8} duplicaciones en \num{52} años, es decir una
+duplicación cada \num{2.02} años, exactamente el ritmo anunciado por Moore en
+1975. Ninguna curva S ordinaria se comporta así durante medio siglo.
+
+\begin{quote}
+\textbf{Tesis de este trabajo.} La paradoja es aparente, no real. Surge de
+comparar dos modelos que hablan de objetos distintos, con variables
+independientes distintas y en escalas distintas. Correctamente alineados, la ley
+de Moore no contradice la curva S: es \emph{el resultado que produce la curva S}
+cuando el esfuerzo acumulado en I+D crece de forma exponencial y cuando cada
+paradigma agotado es reemplazado por otro antes de saturarse. Y una vez
+establecido eso, la ley de Moore deja de ser un caso excepcional: es un miembro
+más de una familia amplia y bien documentada de regularidades exponenciales que
+incluye desde la fabricación de fuselajes en 1936 hasta el precio de la luz
+artificial desde el siglo XIV.
+\end{quote}
+
+\section{Qué afirma exactamente cada modelo}
+
+Antes de resolver la contradicción conviene enunciar con precisión qué dice cada
+modelo, porque la mayor parte del conflicto desaparece en el enunciado.
+
+\begin{table}[ht]
+  \centering
+  \small
+  \caption{Los dos modelos comparados en sus propios términos.}
+  \label{tab:modelos}
+  \begin{tabularx}{\textwidth}{@{}l >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    & \textbf{Curva S (Foster)} & \textbf{Ley de Moore} \\
+    \midrule
+    Objeto que describe
+      & Una tecnología concreta, un paradigma o un diseño dominante
+      & Una industria completa y su trayectoria acumulada de paradigmas \\
+    Variable dependiente
+      & Una figura de mérito técnica
+      & Densidad de transistores y las métricas derivadas de ella \\
+    Variable independiente
+      & \textbf{Esfuerzo acumulado} de ingeniería o inversión
+      & \textbf{Tiempo} calendario \\
+    Mecanismo
+      & Rendimientos decrecientes al aproximarse a un límite físico
+      & Escalado dimensional, aprendizaje por producción e inversión creciente \\
+    Forma funcional
+      & Logística o sigmoide
+      & Exponencial, es decir recta en escala semilogarítmica \\
+    Estatus epistemológico
+      & Modelo con mecanismo causal explícito
+      & Regularidad empírica, además con componente de profecía autocumplida \\
+    Qué predice
+      & Cuándo dejará de rendir la inversión y cuándo hay que cambiar de curva
+      & El ritmo de mejora esperable en el próximo ciclo de producto \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Dos observaciones de la Tabla~\ref{tab:modelos} bastan para desactivar buena
+parte del problema.
+
+La primera es que \textbf{la curva S de Foster no está dibujada contra el
+tiempo}. Su eje horizontal es el esfuerzo acumulado de ingeniería, y Foster
+insiste en ese punto justamente porque el tiempo es un sustituto engañoso: dos
+tecnologías con el mismo calendario pueden estar en puntos muy diferentes de su
+curva si una recibió cien veces más inversión que la otra \parencite{foster1986}.
+La ley de Moore, en cambio, está formulada contra el tiempo. Comparar ambas
+directamente equivale a comparar dos gráficos con abscisas incompatibles.
+
+La segunda es que \textbf{no describen el mismo objeto}. La curva S describe un
+paradigma; la ley de Moore describe una industria que ha cambiado de paradigma
+al menos media docena de veces sin cambiar de figura de mérito. Son dos niveles
+de análisis distintos, y el error de la paradoja es tratarlos como si fueran uno.
+
+\section{Resolución: cuatro desajustes que hay que corregir}
+
+\subsection*{01. Desajuste de nivel: la envolvente no es una curva S, es una
+sucesión de curvas S}
+
+La ley de Moore no describe el ciclo de vida del transistor bipolar, ni el del
+NMOS, ni el del CMOS planar, ni el del FinFET. Describe la \emph{envolvente} de
+todos ellos. Cada uno de esos paradigmas sí siguió una curva S propia: entrada
+lenta, tramo de mejora rápida, saturación y sustitución. Lo que la industria de
+semiconductores logró, y lo que la hace notable, no fue evitar la saturación,
+sino \textbf{encadenar sustituciones con la puntualidad suficiente para que la
+envolvente no tuviera discontinuidades visibles}.
+
+Foster ya describía este fenómeno con el nombre de \emph{curvas en cascada}, y
+Sahal lo formalizó como \enquote{guías tecnológicas}: familias de curvas S
+sucesivas que comparten una misma trayectoria de mejora y una misma figura de
+mérito \parencite{foster1986,sahal1985}. Utterback documentó el mismo patrón en
+la sucesión de diseños dominantes de varias industrias \parencite{utterback1994}.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[xscale=1.28,yscale=0.92]
+    % ejes
+    \draw[-{Stealth[length=2mm]}] (-0.2,-0.2) -- (9.9,-0.2)
+      node[below left=1mm and 0mm] {\footnotesize Tiempo};
+    \draw[-{Stealth[length=2mm]}] (-0.2,-0.2) -- (-0.2,6.6)
+      node[above, rotate=0, align=center]
+      {\footnotesize $\log$ (figura de mérito)};
+    % envolvente
+    \draw[dashed, thick, red!65!black, domain=0.1:9.3, samples=2, variable=\x]
+      plot (\x, {0.75*\x - 0.125})
+      node[right, align=left, text width=1.6cm]
+      {\footnotesize\color{red!65!black} Ley de\\ Moore};
+    % curvas S
+    \foreach \i/\name in {0/P1, 1/P2, 2/P3, 3/P4} {
+      \pgfmathsetmacro{\xc}{1.5 + 2*\i}
+      \pgfmathsetmacro{\yc}{1.0 + 1.5*\i}
+      \draw[thick, blue!60!black, domain=\xc-1.7:\xc+1.7, samples=60,
+        variable=\x, smooth]
+        plot (\x, {\yc - 1.0 + 2.0/(1+exp(-2.2*(\x-\xc)))});
+      \node[blue!60!black, font=\scriptsize] at (\xc-1.25, \yc+1.15) {\name};
+    }
+  \end{tikzpicture}
+  \caption{La ley de Moore como envolvente de curvas S en cascada. Cada
+  paradigma tecnológico ($P1$ a $P4$) satura, pero su sucesor entra antes de que
+  la saturación se haga visible en la agregación. La recta en escala
+  semilogarítmica no describe ninguna tecnología concreta: describe la política
+  de reemplazo de una industria. Elaboración propia.}
+  \label{fig:envolvente}
+\end{figure}
+
+La consecuencia de gestión es importante y con frecuencia se pasa por alto: la
+envolvente \textbf{no es un mecanismo, es un resultado agregado}. No existe
+ninguna ley física que garantice que un paradigma sucesor estará disponible
+cuando el actual se agote. La envolvente exponencial es un hecho retrospectivo
+sobre una industria que invirtió lo necesario para que hubiera sucesor. Este es
+el punto donde la lectura de Kurzweil, que eleva la cascada a \enquote{ley de
+retornos acelerados} con validez general \parencite{kurzweil2005}, va más allá de
+lo que la evidencia sostiene: extrapolar la envolvente supone que la cascada
+continúa, y esa es una hipótesis sobre inversión y sobre la existencia de un
+sucesor viable, no una consecuencia de los datos históricos.
+
+\subsection*{02. Desajuste de escala: la exponencial es el tramo de despegue de
+la propia curva S}
+
+El segundo desajuste es puramente geométrico y explica por qué el conflicto
+resulta tan persuasivo a la vista. Sea la logística estándar con techo $L$:
+
+\begin{equation}
+  y(t) = \frac{L}{1 + e^{-r(t - t_0)}}
+  \label{eq:logistica}
+\end{equation}
+
+Cuando $y \ll L$, el denominador está dominado por el término exponencial y la
+expresión se reduce a
+
+\begin{equation}
+  y(t) \approx L\, e^{\,r(t-t_0)}
+  \label{eq:aprox}
+\end{equation}
+
+Es decir: \textbf{el tramo de despegue de una curva S es indistinguible de una
+exponencial pura}. En escala semilogarítmica, que es la escala en la que siempre
+se dibuja la ley de Moore, la logística aparece como una recta durante toda la
+fase en que el desempeño se mantiene lejos del techo, y solo se dobla cuando ya
+está cerca de él. Una tecnología puede pasar décadas en ese tramo recto y ser,
+sin ninguna contradicción, una curva S.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[yscale=0.62]
+    \begin{scope}
+      \draw[-{Stealth[length=2mm]}] (0,0) -- (5.3,0)
+        node[below left=1mm and 0mm] {\footnotesize $t$};
+      \draw[-{Stealth[length=2mm]}] (0,0) -- (0,7.1)
+        node[above] {\footnotesize $y$};
+      \draw[dotted, gray] (0,6) -- (5.1,6) node[right, font=\scriptsize] {$L$};
+      \draw[thick, blue!60!black, domain=0:5, samples=80, variable=\x, smooth]
+        plot (\x, {6/(1+exp(-1.8*(\x-2.5)))});
+      \node[font=\scriptsize, align=center] at (2.5,-1.0)
+        {Escala lineal:\\ la S es evidente};
+    \end{scope}
+    \begin{scope}[xshift=7.4cm]
+      \draw[-{Stealth[length=2mm]}] (0,0) -- (5.3,0)
+        node[below left=1mm and 0mm] {\footnotesize $t$};
+      \draw[-{Stealth[length=2mm]}] (0,0) -- (0,7.1)
+        node[above] {\footnotesize $\log y$};
+      \draw[dotted, gray] (0,6) -- (5.1,6) node[right, font=\scriptsize] {$\log L$};
+      \draw[thick, blue!60!black, domain=0:5, samples=80, variable=\x, smooth]
+        plot (\x, {6 - ln(1+exp(-1.8*(\x-2.5)))*0.98});
+      \draw[dashed, red!65!black] (0.15,0.42) -- (2.9,5.3);
+      \node[font=\scriptsize, align=center] at (2.5,-1.0)
+        {Escala semilogarítmica:\\ recta hasta muy cerca del techo};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{La misma curva logística en dos escalas. La recta discontinua marca
+  el tramo en el que la curva S es empíricamente indistinguible de una
+  exponencial. Una serie observada dentro de ese tramo admite las dos lecturas.
+  Elaboración propia.}
+  \label{fig:escalas}
+\end{figure}
+
+Esto tiene una consecuencia metodológica directa: \textbf{la observación de una
+recta en semilogarítmico no permite descartar la existencia de un techo}. Solo
+permite afirmar que el techo todavía no se ha alcanzado. Determinar la distancia
+al techo exige información externa a la serie, típicamente un cálculo del límite
+físico, como el que se aplica al horno de arco eléctrico cuando se compara su
+consumo real con el mínimo termodinámico de fusión del acero. Sin ese cálculo,
+extrapolar la recta es una apuesta, no una predicción.
+
+\subsection*{03. Desajuste de variable: la ley de Moore es la ley de Wright más
+inversión exponencial}
+
+Este es el núcleo analítico de la resolución, y proviene de un resultado que
+Sahal publicó en 1979 \parencite{sahal1979} y que Nagy y colaboradores
+reformularon y contrastaron empíricamente décadas después
+\parencite{nagy2013,farmer2016}.
+
+La \textbf{ley de Wright}, formulada en 1936 a partir de datos de fabricación de
+fuselajes, establece que el costo unitario cae en un porcentaje fijo cada vez que
+se duplica la producción acumulada \parencite{wright1936}. En forma de potencia:
+
+\begin{equation}
+  y(x) = y_0 \left(\frac{x}{x_0}\right)^{-w}
+  \label{eq:wright}
+\end{equation}
+
+donde $x$ es el esfuerzo o la producción acumulada, $y$ la figura de mérito
+(costo por unidad, energía por operación, precio por watt) y $w > 0$ la
+elasticidad de aprendizaje. Nótese que la variable independiente de la
+ecuación~\eqref{eq:wright} es la misma que la de la curva S de Foster: esfuerzo
+acumulado, no tiempo.
+
+Supongamos ahora que el esfuerzo acumulado crece exponencialmente en el tiempo,
+lo que en semiconductores es una descripción razonable de lo que ocurrió, dada
+la expansión del mercado, del gasto en I+D y del capital por planta:
+
+\begin{equation}
+  x(t) = x_0\, e^{\,g t}
+  \label{eq:esfuerzo}
+\end{equation}
+
+Sustituyendo \eqref{eq:esfuerzo} en \eqref{eq:wright}:
+
+\begin{equation}
+  \boxed{\;y(t) = y_0\, e^{-w g t}\;}
+  \label{eq:moore}
+\end{equation}
+
+La ecuación~\eqref{eq:moore} \textbf{es} la ley de Moore. Su ritmo de mejora es
+el producto $m = w \cdot g$ de dos factores de naturaleza completamente
+distinta: una elasticidad técnica de aprendizaje y una tasa económica de
+crecimiento del esfuerzo. De aquí se siguen tres conclusiones que resuelven la
+paradoja sin necesidad de abandonar ninguno de los dos modelos:
+
+\begin{enumerate}
+  \item \textbf{La exponencialidad en el tiempo no es una propiedad de la
+    tecnología.} Es el producto de una propiedad de la tecnología ($w$) y una
+    decisión de la industria ($g$). Una tecnología con excelente aprendizaje y
+    esfuerzo estancado no exhibirá ninguna ley de Moore.
+  \item \textbf{La curva S y la ley de Moore son el mismo modelo con distintos
+    supuestos sobre $x(t)$.} Si el esfuerzo acumulado crece exponencialmente, se
+    observa una exponencial en el tiempo. Si el esfuerzo acumulado sigue una
+    difusión logística, que es lo habitual en tecnologías con mercados que
+    saturan, se observa una curva S en el tiempo aunque el aprendizaje $w$ sea
+    constante. La forma temporal la impone la trayectoria de la inversión, no la
+    física del dispositivo.
+  \item \textbf{Hay tres formas independientes de matar una exponencial.} Que
+    $w \to 0$, porque la figura de mérito se acerca a su límite físico y el
+    aprendizaje se agota. Que $g \to 0$, porque el mercado o el capital dejan de
+    crecer exponencialmente. O que el paradigma actual se agote sin sucesor
+    disponible, rompiendo la cascada de la Figura~\ref{fig:envolvente}. Las tres
+    son visibles hoy en semiconductores, y la segunda es la menos discutida: el
+    costo de una planta de nodo avanzado superó los veinte mil millones de
+    dólares, contra unos pocos cientos de millones a comienzos de los años
+    noventa, y el número de empresas capaces de fabricar en el nodo más avanzado
+    cayó de más de veinte a tres. Moore mismo anticipó esa restricción económica
+    \parencite{moore1995,waldrop2016}.
+\end{enumerate}
+
+\subsection*{04. Desajuste de figura de mérito: la curva S ya llegó, solo que no
+a la métrica que se cita}
+
+El cuarto desajuste es empírico y es, en mi opinión, el más contundente. La
+premisa de que la ley de Moore \enquote{sigue vigente} solo se sostiene si se
+elige una figura de mérito muy específica: transistores por chip. En cuanto se
+examinan las otras métricas de la misma tecnología, la saturación predicha por la
+curva S aparece con puntualidad, en algunos casos hace veinte años.
+
+\begin{table}[ht]
+  \centering
+  \small
+  \caption{Saturación diferencial por figura de mérito en semiconductores. La
+  curva S no falló: llegó a distinto tiempo a cada métrica.}
+  \label{tab:saturacion}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}X l l l@{}}
+    \toprule
+    \textbf{Figura de mérito} & \textbf{Ritmo histórico} &
+    \textbf{Ritmo reciente} & \textbf{Estado} \\
+    \midrule
+    Transistores por chip
+      & $\times 2$ / 2 años & $\times 2$ / 3 años aprox. & Activo, desacelerando \\
+    Escalado de Dennard (densidad de potencia constante)
+      & Vigente 1974--2004 & Roto & Terminado \\
+    Frecuencia de reloj
+      & $\times 2$ / 2,5 años & Plana en 3--5 GHz & Saturado desde 2004 \\
+    Rendimiento de un solo hilo
+      & \SI{52}{\percent}/año (1986--2003) & \SI{3.5}{\percent}/año (2015--2018)
+      & Saturado \\
+    Costo por transistor
+      & Descenso sostenido & Plano o creciente & Invertido \\
+    Costo de capital por planta
+      & Creciente & $>$ 20.000 M USD & Límite económico \\
+    Densidad areal en disco magnético
+      & \SI{40}{\percent}/año (años 1990) & $<$ \SI{10}{\percent}/año & Roto \\
+    Rendimiento por watt en aceleradores especializados
+      & Curva nueva & Alto & Activo \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Los datos de la Tabla~\ref{tab:saturacion} son elocuentes. El escalado de
+Dennard, que era el mecanismo físico que convertía la miniaturización en
+velocidad sin aumentar la densidad de potencia, dejó de funcionar alrededor de
+2005 al volverse dominantes las corrientes de fuga \parencite{dennard1974}. La
+frecuencia de reloj se detuvo en el mismo momento. El rendimiento de un solo
+hilo, que creció al \SI{52}{\percent} anual entre 1986 y 2003, cayó al
+\SI{23}{\percent} entre 2003 y 2011, al \SI{12}{\percent} entre 2011 y 2015 y al
+\SI{3.5}{\percent} entre 2015 y 2018 \parencite{hennessy2019}. Ese perfil, un
+factor de quince en la tasa de mejora en tres décadas, es exactamente el tramo
+superior de una curva S.
+
+Lo que ocurrió después es, además, la respuesta canónica de la teoría de la curva
+S: la industria \textbf{cambió de curva}. Abandonó la mejora del procesador de
+propósito general y se movió a la especialización de la arquitectura, a los
+aceleradores de dominio específico, al apilamiento tridimensional, a los
+\emph{chiplets} y a la optimización del software
+\parencite{hennessy2019,leiserson2020,thompson2021}. La aparente continuidad de
+la ley de Moore en los últimos quince años no es la prolongación de una curva:
+es la superposición de una nueva.
+
+\section{La ley de Moore no es un caso especial}
+
+La segunda parte del planteamiento pide identificar otra ley o teoría que
+muestre que la ley de Moore no es excepcional. La respuesta corta es que la ley
+de Moore es \textbf{un caso particular de la ley de Wright}, que es anterior en
+veintinueve años, más general y con mejor desempeño predictivo. La respuesta
+larga incluye la evidencia sistemática acumulada sobre docenas de dominios
+tecnológicos.
+
+\subsection*{01. La ley de Wright y la evidencia sistemática}
+
+Wright publicó su curva de aprendizaje en 1936, estudiando el costo de
+fabricación de fuselajes, y encontró una reducción cercana al
+\SI{20}{\percent} del costo unitario por cada duplicación de la producción
+acumulada \parencite{wright1936}. No es una ley sobre electrónica: es una ley
+sobre el aprendizaje organizacional y tecnológico en general.
+
+La comparación directa entre ambas formulaciones ha sido hecha con rigor
+estadístico. Nagy y colaboradores contrastaron las dos hipótesis sobre una base
+de \num{62} tecnologías y encontraron que ambas se ajustan bien, con una ligera
+ventaja para Wright, y que las dos son consistentes entre sí precisamente por la
+identidad de la ecuación~\eqref{eq:moore} \parencite{nagy2013}. Farmer y Lafond
+formalizaron después los intervalos de predicción sobre \num{53} tecnologías y
+mostraron que el error de pronóstico crece con el horizonte de una manera
+estimable, lo que convierte estas curvas en herramientas de planificación con
+incertidumbre cuantificada y no en profecías \parencite{farmer2016}. Magee y
+colaboradores midieron las tasas anuales de mejora en \num{28} dominios
+tecnológicos y encontraron mejora exponencial sostenida en todos ellos, con
+ritmos que van de unos pocos puntos porcentuales anuales hasta bastante más del
+\SI{30}{\percent}, siendo las tecnologías de información las más rápidas pero no
+las únicas \parencite{magee2016,koh2006}.
+
+El hallazgo agregado de esa literatura es el que interesa aquí: \textbf{la mejora
+exponencial sostenida es el comportamiento típico de una tecnología en su tramo
+de despegue, no la excepción}. Lo excepcional de los semiconductores es la
+magnitud del ritmo y su duración, no su forma funcional.
+
+\subsection*{02. Un catálogo de exponenciales}
+
+La Tabla~\ref{tab:leyes} recoge regularidades del mismo tipo en dominios muy
+distintos. Se incluye deliberadamente tanto casos vigentes como casos
+interrumpidos, porque los segundos son los que demuestran que la curva S termina
+imponiéndose.
+
+\begin{table}[ht]
+  \centering
+  \small
+  \caption{Regularidades exponenciales documentadas en distintos dominios
+  tecnológicos.}
+  \label{tab:leyes}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.19\textwidth} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{0.20\textwidth} l@{}}
+    \toprule
+    \textbf{Regularidad} & \textbf{Figura de mérito y ritmo} &
+    \textbf{Dominio} & \textbf{Estado} \\
+    \midrule
+    Ley de Wright (1936)
+      & Costo unitario, $-$\SI{20}{\percent} por duplicación acumulada
+      & Fuselajes de aeronaves & Vigente como modelo general \\
+    Ley de Moore (1965)
+      & Transistores por chip, $\times 2$ cada 2 años
+      & Circuitos integrados & Desacelerando \\
+    Ley de Koomey
+      & Cómputo por unidad de energía, $\times 2$ cada 1,57 años (1946--2009)
+      & Eficiencia energética del cómputo & Desacelerando \\
+    Ley de Kryder
+      & Densidad areal, cerca del \SI{40}{\percent} anual en los años 1990
+      & Almacenamiento magnético & Roto tras 2010 \\
+    Ley de Butter
+      & Costo por bit transmitido, mitad cada 9 meses aprox.
+      & Fibra óptica & Vigente \\
+    Ley de Haitz
+      & Costo por lumen $/10$ y flujo por dispositivo $\times 20$ por década
+      & Iluminación de estado sólido & Vigente \\
+    Curva de Carlson
+      & Costo por genoma secuenciado, más rápido que Moore desde 2007
+      & Secuenciación de ADN & Desacelerando \\
+    Ley de Swanson
+      & Precio por watt, cerca de $-$\SI{20}{\percent} por duplicación
+      & Módulos fotovoltaicos & Vigente \\
+    Aprendizaje en baterías
+      & Precio por kWh, $-$\SI{20}{\percent} a $-$\SI{25}{\percent} por duplicación
+      & Celdas de ion litio & Vigente \\
+    Precio de la luz
+      & Precio real por lumen-hora, descenso sostenido durante siete siglos
+      & Servicios de iluminación & Vigente \\
+    Velocidad de crucero
+      & Estancada cerca de Mach 0,85 desde 1958
+      & Aviación comercial & Saturado \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Cuatro de estas entradas merecen comentario porque cada una aporta un argumento
+distinto contra la excepcionalidad de la ley de Moore.
+
+\textbf{La ley de Koomey} \parencite{koomey2011} muestra que el cómputo por
+unidad de energía se duplicó cada \num{1.57} años entre 1946 y 2009, un intervalo
+que abarca válvulas, transistores discretos y circuitos integrados. Es decir: la
+regularidad es anterior al objeto que la ley de Moore describe y sobrevive al
+cambio de paradigma físico. Eso es una envolvente en el sentido de la
+Figura~\ref{fig:envolvente}, y es una evidencia fuerte de que lo que se está
+midiendo es una trayectoria funcional y no una tecnología.
+
+\textbf{La ley de Kryder} es el contraejemplo decisivo. La densidad areal del
+disco magnético creció a un ritmo comparable o superior al de la ley de Moore
+durante los años noventa, hasta que las limitaciones del límite superparamagnético
+la frenaron por debajo del \SI{10}{\percent} anual en la década de 2010
+\parencite{fontana2018}. Una exponencial de la misma familia, en la misma
+industria y en el mismo período, terminó. Quien sostenga que la ley de Moore es
+inmune al techo de la curva S debe explicar por qué la ley de Kryder no lo fue.
+
+\textbf{El precio de la luz artificial} es el ejemplo histórico más largo y, para
+mi propósito, el más ilustrativo. Nordhaus reconstruyó el precio real del
+servicio de iluminación desde la antigüedad y mostró un descenso de varios
+órdenes de magnitud, con una caída del orden de mil veces solo entre 1800 y 1992
+\parencite{nordhaus1996}. Fouquet y Pearson extendieron el ejercicio al Reino
+Unido entre 1300 y 2000 y encontraron un descenso del orden de tres mil veces en
+el precio real por lumen-hora \parencite{fouquet2006}. Esa trayectoria de siete
+siglos es exponencial en su conjunto y está compuesta por una sucesión limpia de
+curvas S: vela de sebo, vela de cera, aceite de ballena, gas de hulla, queroseno,
+arco eléctrico, incandescencia, fluorescencia y diodo emisor de luz. Cada una
+saturó; la envolvente no. Es la ley de Moore, seiscientos años antes y sin
+silicio. Y su capítulo actual, el LED, tiene su propia formulación exponencial en
+la ley de Haitz \parencite{haitz2011}.
+
+\textbf{La aviación comercial} cierra el argumento por el lado opuesto. La
+velocidad de crucero de los aviones de pasajeros creció de forma acelerada
+durante medio siglo y se detuvo cerca de Mach 0,85 con la generación del Boeing
+707, a finales de los años cincuenta, donde permanece. El límite no fue una
+imposibilidad física, dado que el Concorde voló, sino la combinación de la
+barrera transónica de arrastre con la economía del combustible. La industria
+cambió de figura de mérito, de velocidad a costo por asiento-kilómetro, que es
+exactamente lo que hicieron los semiconductores en 2005 al pasar de frecuencia de
+reloj a rendimiento por watt.
+
+\subsection*{03. Un elemento adicional: el componente social de la ley de Moore}
+
+Hay una razón, ajena a la física y a la economía, por la que la ley de Moore
+parece más robusta de lo que es: durante décadas funcionó como \textbf{mecanismo
+de coordinación de una industria entera}. La hoja de ruta sectorial, primero la
+ITRS y después la IRDS, convirtió la proyección en un objetivo compartido por
+fabricantes de equipos, de materiales, de herramientas de diseño y de chips
+\parencite{mack2011,irds2022}. Cuando miles de organizaciones planifican su
+inversión para cumplir una curva, la curva se cumple. Eso hace de la ley de
+Moore, en parte, una profecía autocumplida, y explica por qué el término $g$ de
+la ecuación~\eqref{eq:moore} se mantuvo alto tanto tiempo. También explica por
+qué su desaceleración coincide con el momento en que la coordinación se volvió
+demasiado costosa para casi todos los participantes.
+
+\section{Dónde está el techo de la ley de Moore}
+
+Si la ley de Moore es una curva S en su tramo recto, cabe preguntar dónde está su
+asíntota. La respuesta se obtiene con el mismo método que se emplea para calcular
+el mínimo termodinámico de un proceso industrial: identificar la barrera física y
+medir la distancia que separa el desempeño actual de ella.
+
+Para la lógica digital irreversible, el límite fundamental es el de Landauer:
+borrar un bit de información disipa como mínimo una energía
+$E_{min} = k_B T \ln 2$ \parencite{landauer1961}. A temperatura ambiente
+($T = \SI{300}{\kelvin}$):
+
+\begin{equation}
+  E_{min} = \SI{1.38e-23}{\joule\per\kelvin} \times \SI{300}{\kelvin}
+  \times \ln 2 \approx \SI{2.9e-21}{\joule}
+  \label{eq:landauer}
+\end{equation}
+
+Un conmutador CMOS actual disipa del orden de \SI{1e-17}{\joule} por transición,
+lo que sitúa la tecnología entre tres y cuatro órdenes de magnitud por encima de
+su límite fundamental \parencite{zhirnov2003}. La lectura correcta de ese
+resultado es doble y aparentemente ambivalente, pero no lo es:
+
+\begin{itemize}
+  \item \textbf{El techo existe.} No es una conjetura de gestión, es
+    termodinámica. La ley de Moore tiene una asíntota, igual que el consumo
+    eléctrico del horno de arco eléctrico tiene un mínimo de fusión.
+  \item \textbf{El techo está lejos en términos de física y cerca en términos de
+    ingeniería.} Quedan tres o cuatro órdenes de magnitud teóricos, pero el
+    escalado dimensional que los entregaba ya se agotó, y las barreras efectivas
+    que detuvieron el progreso desde 2005 fueron la densidad de potencia, la
+    litografía y el costo de capital, no el límite de Landauer. Es la distinción
+    clásica entre el límite físico y el límite económicamente accesible.
+\end{itemize}
+
+Esta es, en el fondo, la misma lección que ofrece el cálculo del mínimo
+termodinámico de cualquier proceso: el límite teórico define el espacio de lo
+posible, pero el límite relevante para la decisión de inversión es aquel a partir
+del cual el costo marginal de la siguiente unidad de mejora crece más rápido que
+su valor.
+
+\section{Síntesis: cómo resolvería la paradoja}
+
+Mi resolución, formulada como marco operativo, tiene cinco reglas.
+
+\begin{enumerate}
+  \item \textbf{Distinguir el nivel de análisis antes de dibujar la curva.} Una
+    curva S describe un paradigma; una ley exponencial describe una envolvente.
+    Nunca deben trazarse en el mismo gráfico sin decir cuál es cuál. El error de
+    la paradoja consiste en comparar el ciclo de vida de un componente con la
+    trayectoria agregada de una industria.
+  \item \textbf{Elegir la figura de mérito antes de opinar sobre madurez.} La
+    Tabla~\ref{tab:saturacion} demuestra que la misma tecnología puede estar
+    saturada en una métrica y en pleno despegue en otra. La pregunta
+    \enquote{¿está madura esta tecnología?} está mal planteada; la correcta es
+    \enquote{¿qué figura de mérito está madura y cuál no?}.
+  \item \textbf{Calcular el límite físico y medir la brecha.} Sin un cálculo del
+    techo, la Figura~\ref{fig:escalas} muestra que no es posible distinguir un
+    despegue de una recta indefinida. El límite de Landauer, el mínimo
+    termodinámico de fusión o el límite de Shannon para un canal cumplen esa
+    función: convierten una extrapolación en una medición de recorrido restante.
+  \item \textbf{Descomponer el ritmo observado en aprendizaje e inversión.} La
+    ecuación~\eqref{eq:moore} indica que $m = w \cdot g$. Un ritmo exponencial
+    sostenido por $g$ alto y $w$ decreciente es frágil, porque depende de que la
+    inversión siga creciendo. Distinguir los dos términos permite anticipar la
+    inflexión antes de verla en la serie.
+  \item \textbf{Vigilar la cascada, no la envolvente.} La envolvente solo
+    continúa si existe un paradigma sucesor en desarrollo. La señal de alerta
+    útil no es la desaceleración de la envolvente, que llega tarde, sino la
+    ausencia de un sucesor viable en el momento en que el paradigma actual entra
+    en su tramo superior. Es la formulación operativa de la advertencia de Foster
+    y el mismo mecanismo que explica la disrupción en Christensen
+    \parencite{foster1986,christensen1997}.
+\end{enumerate}
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[
+    node distance=4mm,
+    caja/.style={draw, rounded corners, align=center, minimum height=13mm,
+      text width=0.205\textwidth, font=\small},
+    flecha/.style={-{Stealth[length=2.2mm]}, thick}
+  ]
+    \node[caja, fill=blue!6] (nivel) {¿Paradigma\\ o envolvente?};
+    \node[caja, right=of nivel, fill=blue!8] (fom) {¿Qué figura\\ de mérito?};
+    \node[caja, right=of fom, fill=orange!12] (limite) {¿Cuál es el\\ límite físico?};
+    \node[caja, right=of limite, fill=green!10] (decision) {$m = w \cdot g$:\\
+      ¿optimizar o saltar?};
+    \draw[flecha] (nivel) -- (fom);
+    \draw[flecha] (fom) -- (limite);
+    \draw[flecha] (limite) -- (decision);
+  \end{tikzpicture}
+  \caption{Secuencia de decisión para resolver la paradoja en un caso concreto.
+  Elaboración propia.}
+  \label{fig:marco}
+\end{figure}
+
+\section{Limitaciones del argumento}
+
+Cuatro precisiones honestas sobre el alcance de lo expuesto.
+
+\begin{enumerate}
+  \item \textbf{Sesgo de supervivencia en la evidencia.} Las bases de datos de
+    curvas de progreso recogen tecnologías que prosperaron lo suficiente para ser
+    medidas durante décadas \parencite{nagy2013,farmer2016}. Las tecnologías que
+    se estancaron temprano están subrepresentadas, de modo que la afirmación
+    \enquote{la mejora exponencial es común} está probablemente sobreestimada en
+    magnitud, aunque no en su punto central: la ley de Moore no es única.
+  \item \textbf{La identidad de la ecuación~\eqref{eq:moore} es una explicación
+    parcial.} Requiere conocer $x(t)$, y el esfuerzo acumulado en I+D es difícil
+    de medir de forma consistente entre industrias. La derivación aclara la
+    lógica de la relación mejor de lo que permite calibrarla numéricamente.
+  \item \textbf{La elección de la figura de mérito condiciona la conclusión.}
+    Este trabajo la usa como instrumento analítico, pero también podría usarse
+    para fabricar la respuesta deseada. Un cambio de métrica puede prolongar
+    artificialmente una envolvente que, para el usuario final, ya se detuvo. La
+    disciplina consiste en fijar la métrica que importa al cliente antes de
+    evaluar la madurez, no después.
+  \item \textbf{El futuro de la cascada es una hipótesis, no un dato.} La
+    computación cuántica, la fotónica integrada, los materiales bidimensionales o
+    la computación reversible podrían constituir el próximo paradigma de la
+    envolvente. Ninguno está hoy en condiciones de sostenerla, y afirmar lo
+    contrario sería repetir el error de extrapolar la envolvente que se critica
+    en este documento.
+\end{enumerate}
+
+\section*{Conclusiones}
+
+La paradoja entre la curva S y la ley de Moore se disuelve al advertir que los
+dos modelos no compiten por describir el mismo objeto. La curva S describe un
+paradigma tecnológico en función del esfuerzo acumulado; la ley de Moore describe
+la envolvente de una sucesión de paradigmas en función del tiempo.
+
+La relación entre ambas es analítica y no meramente conceptual. Combinando la ley
+de Wright con un crecimiento exponencial del esfuerzo acumulado se obtiene
+exactamente una exponencial en el tiempo, con ritmo $m = w \cdot g$. La ley de
+Moore es, por tanto, un caso particular de la curva de aprendizaje bajo un
+supuesto específico sobre la trayectoria de la inversión. Cuando ese supuesto
+falla, y $g$ deja de crecer, la exponencial temporal se convierte en una curva S
+sin que la física del dispositivo haya cambiado.
+
+La evidencia de que la ley de Moore no es especial es abundante. La ley de Wright
+la antecede en veintinueve años y la generaliza. Los estudios sistemáticos sobre
+decenas de dominios muestran mejora exponencial como comportamiento típico del
+tramo de despegue. La ley de Koomey documenta la misma trayectoria a través de
+tres paradigmas físicos distintos. La ley de Kryder recorrió una trayectoria
+equivalente y se detuvo. Y el precio de la luz artificial describe, durante siete
+siglos y sin electrónica alguna, la misma envolvente exponencial construida sobre
+una cascada de curvas S sucesivas.
+
+Finalmente, la curva S ya se manifestó en los semiconductores: en el escalado de
+Dennard hacia 2005, en la frecuencia de reloj, en el rendimiento de un solo hilo
+que pasó del \SI{52}{\percent} al \SI{3.5}{\percent} anual, y en el costo por
+transistor. Lo que se mantuvo fue el conteo de transistores, sostenido primero
+por cambios de arquitectura del dispositivo y luego por la especialización de la
+computación, es decir, por curvas nuevas. Para la gestión tecnológica la
+conclusión es que ningún modelo debe aplicarse sin declarar antes el nivel de
+análisis, la figura de mérito y el límite físico. Hecho eso, la curva S y la ley
+de Moore dejan de contradecirse y pasan a ser dos vistas del mismo fenómeno: una
+mira el componente, la otra mira la cadena de reemplazos que lo sustituye.
+
+\printbibliography[title={Referencias bibliográficas}]
+
+\end{document}
