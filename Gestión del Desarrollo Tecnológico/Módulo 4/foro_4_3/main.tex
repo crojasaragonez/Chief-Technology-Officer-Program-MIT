@@ -1,0 +1,247 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,backgrounds}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.3cm}
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlist{nosep}
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy}
+
+\sisetup{
+  output-decimal-marker = {,},
+  group-separator = {.},
+  group-minimum-digits = 4,
+  detect-all
+}
+
+\title{\vspace{-1.2cm}\textbf{Patentes y globalización: colaborar no es lo mismo
+que controlar}\\
+\large Por qué considero que la patente es un mal necesario}
+\author{Carlos Luis Rojas Aragonés\\
+\small Gestión del Desarrollo Tecnológico}
+\date{\small 7 de agosto de 2026}
+
+\begin{document}
+
+\maketitle
+\vspace{-0.8em}
+
+\section*{Qué mide realmente la tendencia}
+
+Que la patente sirva como indicador de globalización no es una intuición: es una
+propiedad del documento, que registra dónde se inventó, quién es el titular y en
+qué mercados se busca protección \parencite{guellec2001,oecd2009}. Eso permite
+separar tres fenómenos que el enunciado del foro agrupa en uno solo, siguiendo
+la taxonomía de \textcite{archibugi1995}: explotación global de tecnología
+nacional, colaboración tecnológica global y generación global de innovación.
+
+La distinción importa. La \textbf{co-invención internacional} es cooperación:
+equipos de países distintos firman juntos la misma invención. El \textbf{control
+transfronterizo} es propiedad: quién termina siendo titular, con frecuencia una
+matriz extranjera sobre una invención generada en un centro de I+D local. Lo
+primero reparte capacidades; lo segundo reparte rentas. Pueden ir juntos, pero
+no son el mismo hecho ni merecen el mismo juicio. La escala del sistema ayuda a
+dimensionar lo que está en juego: en 2024 se presentaron \num{3.7} millones de
+solicitudes de patente en el mundo, un \SI{4.9}{\percent} más que en 2023, y la
+oficina china recibió \num{1.8} millones, el \SI{49.1}{\percent} del total
+mundial frente al \SI{34.6}{\percent} de 2014 \parencite{wipo2025}.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[xscale=1.02,yscale=0.60]
+    \draw[-{Stealth[length=2mm]}] (0,0) -- (10.9,0);
+    \node[font=\scriptsize] at (10.55,-0.85) {Año};
+    \draw[-{Stealth[length=2mm]}] (0,0) -- (0,7.1)
+      node[above right=-1mm and -1.4cm, font=\scriptsize]
+      {Solicitudes PCT (miles)};
+    \foreach \y/\lab in {0/0, 1/50, 2/100, 3/150, 4/200, 5/250, 6/300} {
+      \draw[gray!25] (0,\y) -- (10.4,\y);
+      \node[left, font=\scriptsize] at (-0.08,\y) {\lab};
+    }
+    \foreach \x/\lab in {0/2000, 2/2005, 4/2010, 6/2015, 8/2020, 10/2025} {
+      \draw (\x,0) -- (\x,-0.18);
+      \node[below, font=\scriptsize] at (\x,-0.18) {\lab};
+    }
+    \fill[orange!13] (8,0) rectangle (9.6,6.3);
+    \node[font=\scriptsize, color=orange!60!black] at (8.8,6.75)
+      {meseta 2020--2024};
+    \draw[very thick, blue!60!black]
+      (0,1.82) -- (2,2.68) -- (4,3.29) -- (6,4.36) -- (8,5.50) -- (8.8,5.55)
+      -- (9.2,5.45) -- (9.6,5.48);
+    \foreach \x/\y in {0/1.82, 2/2.68, 4/3.29, 6/4.36, 8/5.50, 9.6/5.48} {
+      \fill[blue!60!black] (\x,\y) circle (1.6pt);
+    }
+    \node[font=\scriptsize, above right=0.4mm and 0.8mm, blue!60!black]
+      at (0,1.82) {91};
+    \node[font=\scriptsize, below right=0mm and 0.8mm, blue!60!black]
+      at (4,3.29) {164};
+    \node[font=\scriptsize, above=1mm, blue!60!black] at (8,5.50) {275};
+    \node[font=\scriptsize, above right=0.8mm and -1mm, blue!60!black]
+      at (9.6,5.48) {274};
+  \end{tikzpicture}
+  \caption{Solicitudes internacionales por la vía PCT, en miles y redondeadas:
+  \num{90948} en 2000, unas \num{134000} en 2005, \num{164355} en 2010,
+  \num{218000} en 2015, \num{274889} en 2020 y \num{273900} en 2024. Triplicarse
+  en veinte años es la señal de globalización; el tramo sombreado es lo que la
+  propia OMPI llama una meseta de cinco años, con una caída media del
+  \SI{0.1}{\percent} anual entre 2020 y 2024 frente al \SI{5.3}{\percent} anual
+  de la década previa. Elaboración propia a partir de
+  \textcite{wipo2025pct,wipo2001,wipo2006}.}
+  \label{fig:pct}
+\end{figure}
+
+\section*{Colaboración y control no son la misma noticia}
+
+Cruzando el lugar de la invención con la titularidad del derecho aparecen cuatro
+situaciones distintas (Figura~\ref{fig:cuadrantes}), y el debate mejora cuando
+se dice en cuál se está.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[
+    celda/.style={draw, rounded corners, align=center,
+      text width=0.325\textwidth, minimum height=13mm, font=\small}
+  ]
+    \node[celda, fill=blue!7]   (a) at (0,0)    {\textbf{Explotación global}\\
+      \scriptsize Invención nacional protegida en mercados externos};
+    \node[celda, fill=green!12] (b) at (6.4,0)  {\textbf{Colaboración global}\\
+      \scriptsize Co-invención y co-titularidad entre países};
+    \node[celda, fill=gray!12]  (c) at (0,-2.1) {\textbf{Cesión del derecho}\\
+      \scriptsize Invención local, titular extranjero por compra o contrato};
+    \node[celda, fill=orange!14](d) at (6.4,-2.1){\textbf{Generación global}\\
+      \scriptsize I+D deslocalizada, titularidad en la matriz};
+    \draw[-{Stealth[length=2mm]}, thick] (-3.0,-3.1) -- (9.2,-3.1)
+      node[below left=0.5mm and 0mm, font=\scriptsize]
+      {Invención: nacional $\rightarrow$ internacional};
+    \draw[-{Stealth[length=2mm]}, thick] (-3.0,-3.1) -- (-3.0,0.9);
+    \node[font=\scriptsize, align=center, rotate=90] at (-3.45,-1.1)
+      {Titularidad: extranjera $\rightarrow$ local o compartida};
+  \end{tikzpicture}
+  \caption{Cuatro lecturas posibles de una misma estadística de patentes, según
+  la taxonomía de \textcite{archibugi1995}. Solo el cuadrante superior derecho
+  describe colaboración en sentido estricto. Elaboración propia.}
+  \label{fig:cuadrantes}
+\end{figure}
+
+Mi lectura es optimista en el eje horizontal y prudente en el vertical. La
+co-invención internacional es una buena noticia casi sin matices: obliga a
+divulgar, crea vínculos entre laboratorios y acerca a los países pequeños a
+fronteras técnicas que no alcanzarían solos; además, un marco de propiedad
+intelectual creíble aumenta la transferencia efectiva de tecnología dentro de
+las multinacionales, y no solo el papeleo \parencite{branstetter2006}. El eje
+vertical es más delicado: un país puede exhibir excelentes cifras de invención
+local y ver, al mismo tiempo, cómo la titularidad migra al exterior. Ahí la
+estadística celebra una integración que, vista desde dentro, se parece más a una
+maquila de conocimiento.
+
+\section*{Mi posición: un mal necesario}
+
+Creo que la patente es un mal necesario. No discuto sus beneficios, que son
+reales: obliga a publicar lo que de otro modo sería secreto industrial, da un
+plazo defendible para recuperar la inversión y crea un activo transable que hace
+posibles las licencias y las alianzas, es decir, buena parte de la colaboración
+internacional que este foro celebra. Lo que no consigo justificar es \textbf{el
+costo del proceso, en dinero y en tiempo}.
+
+Ese costo no es una impresión personal. Proteger una invención en los mercados
+que importan obliga a repetir el trámite jurisdicción por jurisdicción, con
+traducciones, agentes locales y anualidades: la estimación clásica sitúa una
+patente europea validada en una decena de países varias veces por encima del
+costo de su equivalente estadounidense \parencite{vanpottelsberghe2009}. Con el
+tiempo pasa lo mismo: el PCT compra treinta meses de plazo, pero la concesión
+suele llegar entre dos y cinco años después del depósito, un horizonte posterior
+al ciclo de vida comercial de casi cualquier producto de software. Y lo que se
+compra es incierto: los límites del derecho a menudo solo se conocen tras
+litigar \parencite{bessen2008,jaffe2004}, la superposición de derechos genera
+marañas que encarecen innovar \parencite{shapiro2001,heller1998}, las empresas
+manufactureras declaran que fuera de farmacia y química protegen mejor con el
+secreto y la ventaja de ser primeras \parencite{cohen2000}, y la evidencia
+histórica sugiere que los sistemas de patentes influyen más en la
+\emph{dirección} de la innovación que en su cantidad \parencite{moser2013}.
+
+Digo \enquote{mal necesario} y no \enquote{mal} a secas porque es el instrumento
+que tenemos. No conozco un mecanismo con alcance global que cumpla a la vez las
+tres funciones de divulgar, recompensar y permitir transar. Los sustitutos
+resuelven una parte y empeoran otra: el secreto industrial elimina el costo del
+trámite y también la divulgación, que es justamente el bien público que la
+patente produce; los premios y la compra pública funcionan cuando el Estado sabe
+por adelantado qué quiere comprar, y casi nunca lo sabe.
+
+De ahí mi aporte principal al debate, que es la parte que veo menos discutida:
+\textbf{la globalización multiplica el defecto que me molesta}. Un sistema caro
+se vuelve mucho más caro cuando la protección relevante deja de ser nacional, y
+ese costo actúa como un filtro que no selecciona por calidad inventiva sino por
+capacidad de pago. Por eso las reformas que reducen fricción, como la patente
+unitaria europea vigente desde junio de 2023 \parencite{epo2023}, me parecen más
+valiosas que cualquier endurecimiento adicional de los derechos.
+
+\begin{table}[ht]
+  \centering
+  \small
+  \caption{Balance de la internacionalización de las patentes, por dimensión.}
+  \label{tab:balance}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.15\textwidth}
+    >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{Dimensión} & \textbf{Ventaja} & \textbf{Inconveniente} \\
+    \midrule
+    Divulgación
+      & Publica la enseñanza técnica en todos los mercados donde se protege
+      & Redacción defensiva y reivindicaciones amplias dificultan replicar lo
+        divulgado \\
+    Colaboración
+      & La co-titularidad hace contratables las alianzas entre laboratorios
+      & Negociar quién es titular de qué retrasa el proyecto más que la propia
+        investigación \\
+    Acceso a mercados
+      & Una pyme puede licenciar en economías donde nunca operará
+      & El derecho vale lo que valga su ejecución judicial local, muy desigual \\
+    Costo y tiempo
+      & El PCT unifica el depósito y aplaza la decisión treinta meses
+      & Multiplica traducciones, agentes y anualidades; la concesión llega tarde
+        para ciclos cortos \\
+    Control
+      & Atrae I+D de multinacionales hacia centros locales
+      & La titularidad tiende a concentrarse fuera del país donde se inventó \\
+    Equidad
+      & Las licencias obligatorias y los consorcios ofrecen válvulas de escape
+      & Se activan tarde y con alto costo político, como en el debate sobre los
+        ADPIC de 2022 \parencite{wto2022} \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Cierro con dos preguntas para el grupo. Primera: antes de afirmar que un país se
+\enquote{globalizó tecnológicamente}, ¿en qué cuadrante de la
+Figura~\ref{fig:cuadrantes} está, si el mismo aumento de solicitudes puede
+significar cooperación o transferencia de rentas al exterior? Segunda: si la
+tendencia ya no es monótona, y la OMPI misma se pregunta en el título de su
+revisión anual si lo que muestra la Figura~\ref{fig:pct} es una meseta o solo
+una pausa \parencite{wipo2025pct}, ¿la discusión útil sigue siendo \enquote{patentar o no patentar}, o pasa a ser
+cuándo el secreto, la velocidad de ejecución o la publicación defensiva rinden
+más que una cartera internacional que se paga en efectivo durante veinte años?
+
+\printbibliography[title={Referencias bibliográficas}]
+
+\end{document}
