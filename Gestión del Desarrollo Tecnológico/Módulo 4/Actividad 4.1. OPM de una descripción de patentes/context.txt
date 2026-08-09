@@ -1,0 +1,20 @@
+OPM de una descripción de patentes
+
+Esta actividad es de carácter obligatorio y, por tanto, evaluable, a desarrollar individualmente. Es necesario estudiar los contenidos del módulo antes de completarla.
+
+En este módulo, hemos visto el ejemplo de la patente de una trampa para ratones. A continuación, lea el siguiente fragmento de la patente original con la descripción de su tecnología. Enseguida, siga los pasos:
+
+    Elabore un modelo conceptual con un diagrama OPM (metodología objeto-proceso) en OPM Sandbox Links to an external site..
+    Haga una captura de pantalla del diagrama y súbala en esta actividad.
+
+Patente 528,671, concedida en EE. UU., página 2: 21-22 (fragmento). 
+
+La imagen 1 es una vista en perspectiva de la trampa montada. La imagen 2 es una vista en sección longitudinal de la misma. [...] Los números de referencia corresponden a las partes señaladas en dichas representaciones. 
+
+Sobre la base (1), se arma un martillo (2) que será impulsado por un muelle en espiral. Está adaptado para que se vea forzado a golpear la parte frontal de la base y, por tanto, entre en contacto con el animal. El alambre flexible, donde están colocados tanto el muelle como el martillo, se dobla adquiriendo la forma de una palanca (3). Después, se enrolla para crear un muelle transversal (4), que se extiende desde un lado para darle forma de espiral o martillo hasta terminar en el otro lado. Luego, pasa a través de una apertura longitudinal del muelle y termina en una extensión hacia el interior (5), que se coloca por debajo de la barra y sirve como apoyo. El martillo y el muelle se mantienen fijos gracias a las sujeciones mediante vástagos (7) perforadas en la base (6), que pasan a través de ella y se doblan hacia arriba contra la parte posterior de la misma. Las perforaciones de las sujeciones reciben la extensión (5) y la parte final de uno de los lados del martillo. 
+
+La parte posterior de la palanca (3) se dobla hacia abajo y se inserta en la base, que se suele ser de madera. El muelle tiene la fuerza suficiente para que el martillo caiga de forma contundente sobre el animal y la parte frontal (8) de la base, haciendo una forma parecida a una uve. Se dobla hacia abajo en cierto ángulo del martillo para que quede por encima de la base, de manera que forme un agarre máximo que impida la salida del animal capturado y se mantenga inmóvil en la trampa. El martillo permanece fijo hacia atrás cuando la trampa está armada, frente al mecanismo del muelle, gracias a una barra de sujeción (9) que pasa por encima del martillo, con la parte trasera vagamente conectada a la base. La parte frontal de la barra de sujeción se adapta para colocar el cierre (10) del gatillo (11), que está colocado en el centro de la parte frontal de la base. 
+
+El cierre consiste en un trozo de una hoja de metal, con la mitad encima del gatillo, doblada hacia atrás para formar un borde, extendido por debajo del gatillo y doblado formando un pivote (13) que acoge un perno (14). Por otro lado, el extremo de la hoja de metal se extiende hacia delante formando una placa de protección. Existe la posibilidad de que sus extremos se doblen para formar vástagos que atraviesen la base. La parte superior de la barra de sujeción se dobla para formar un ojo, que está unido a una grapa o perno (14) en la parte posterior de la base. 
+
+La particular construcción del cierre construye una trampa muy sensible; esta última se puede colocar fácilmente al invertir y colocar la parte frontal de la barra de sujeción por encima del borde del cierre, que se enganchará automáticamente. La más mínima presión sobre el gatillo puede activar la trampa. El gatillo suele estar hecho de madera, pero puede fabricarse con cualquier material compatible. 
