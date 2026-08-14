@@ -1,0 +1,798 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,backgrounds,patterns}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.3cm}
+% Los rótulos de las figuras usan nodos de ancho fijo con texto alineado a la
+% derecha, y la bibliografía compone en modo sloppy: ambos generan avisos de
+% línea holgada que son cosméticos y no indican un problema de composición.
+% Se silencian para que `make check` siga siendo sensible a los desbordes reales.
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlist{nosep}
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy}
+
+\sisetup{
+  output-decimal-marker = {,},
+  group-separator = {.},
+  group-minimum-digits = 4,
+  detect-all
+}
+
+% Colores de las cuatro generaciones tecnológicas
+\definecolor{cImpresa}{RGB}{31,78,121}
+\definecolor{cEncarta}{RGB}{191,110,30}
+\definecolor{cWiki}{RGB}{40,124,70}
+\definecolor{cLLM}{RGB}{116,66,150}
+
+% ---------------------------------------------------------------------------
+% Perfil de figuras de mérito: eje logarítmico común de 10^-3 a 10^9.
+% Posición horizontal: x = 0,92 * (log10(valor) + 3)
+% ---------------------------------------------------------------------------
+\newcommand{\fomgrid}[1]{%
+  \foreach \e in {-3,-2,...,9} {%
+    \pgfmathsetmacro{\xg}{0.92*(\e+3)}%
+    \draw[gray!16] (\xg,-0.45) -- (\xg,#1);%
+  }%
+  \foreach \e/\lab in {-3/{$10^{-3}$}, -1/{$10^{-1}$}, 1/{$10^{1}$},
+                       3/{$10^{3}$}, 5/{$10^{5}$}, 7/{$10^{7}$}, 9/{$10^{9}$}} {%
+    \pgfmathsetmacro{\xg}{0.92*(\e+3)}%
+    \draw[gray!45] (\xg,-0.45) -- (\xg,#1);%
+    \node[below, font=\tiny, gray!55!black] at (\xg,-0.45) {\lab};%
+  }%
+}
+
+\newcommand{\fombar}[5]{%
+  \node[left, text width=3.5cm, align=right, font=\scriptsize] at (-0.12,#1) {#4};%
+  \fill[#3] (0,#1-0.17) rectangle (#2,#1+0.17);%
+  \node[right, font=\scriptsize] at (#2+0.10,#1) {#5};%
+}
+
+% Rótulos de fila comunes a las cuatro fichas de FOM
+\newcommand{\rCob}{Cobertura\\\tiny (artículos)}
+\newcommand{\rPro}{Profundidad\\\tiny (palabras por artículo)}
+\newcommand{\rLat}{Latencia de actualización\\\tiny (segundos)}
+\newcommand{\rAcc}{Latencia de acceso\\\tiny (segundos)}
+\newcommand{\rCos}[1]{Coste marginal\\por #1\\\tiny (dólares)}
+\newcommand{\notafom}{En las tres últimas filas, un valor menor indica mejor
+  desempeño.}
+
+\title{\vspace{-1.2cm}\textbf{Tecnologías invasoras: de la enciclopedia impresa
+a los modelos de lenguaje}\\
+\large Cuatro curvas en S sobre un mismo eje de mérito, 1768--2026}
+\author{Carlos Luis Rojas Aragonés\\
+\small Gestión del Desarrollo Tecnológico}
+\date{\small 14 de agosto de 2026}
+
+\begin{document}
+
+\maketitle
+\vspace{-0.6em}
+
+\section{Introducción}
+
+El caso que analizo es la sustitución de \textbf{la enciclopedia impresa}, con la
+\emph{Encyclopædia Britannica} como testigo, publicada de forma continuada desde
+1768 en Edimburgo hasta que el 13 de marzo de 2012 la compañía anunció que
+dejaba de imprimirla, después de 244 años \parencite{britannica2012,npr2012}.
+
+El relato popular dice que la mató Wikipedia. Los datos dicen algo más
+interesante y más útil para la gestión tecnológica: no hubo un relevo entre dos
+tecnologías, sino una \textbf{cadena de cuatro}, y cada eslabón ganó en una
+figura de mérito distinta de la que el titular sabía optimizar.
+
+\begin{enumerate}
+  \item \textbf{La enciclopedia impresa} (1768--2012): el titular. Insuperable en
+    profundidad y autoridad, prisionera del papel en latencia y coste.
+  \item \textbf{Microsoft Encarta} (1993--2009): el primer invasor, sobre soporte
+    CD-ROM. Peor en contenido, mejor en coste y en acceso.
+  \item \textbf{Wikipedia} (2001 hasta hoy): el segundo invasor, sobre la web y
+    el modelo wiki. Ganó primero en cobertura y después en casi todo lo demás.
+  \item \textbf{Los modelos de lenguaje} (2022 hasta hoy): el tercer invasor.
+    Redefine la pregunta: ya no entrega el artículo, entrega la respuesta.
+\end{enumerate}
+
+Hay un dato que ordena todo el análisis y que conviene adelantar: \textbf{Encarta
+cerró en octubre de 2009, casi tres años antes de que la Britannica dejara de
+imprimirse} \parencite{techcrunch2009}. El primer invasor murió antes que su
+víctima, eliminado por el segundo invasor. Un caso de sustitución tecnológica
+no es, por tanto, un duelo, sino una secuencia en la que los invasores también
+son invadidos, y cada vez más rápido: la impresa resistió 244 años, Encarta 16 y
+Wikipedia lleva 25 con su tráfico humano ya en descenso.
+
+\section{Marco de análisis}
+
+Una \textbf{figura de mérito} (FOM) es una medida cuantitativa del desempeño de
+una tecnología en la función que presta, independiente de la implementación
+concreta que la realiza \parencite{deweck2022}. Cada tecnología recorre en su
+FOM una \textbf{curva en S}: arranque lento, mejora rápida y saturación al
+acercarse a un límite físico o económico \parencite{foster1986,utterback1994}.
+
+Una \textbf{tecnología invasora} es la que aparece sobre una curva en S distinta
+y termina cruzando la del titular. Tres propiedades del proceso, que este caso
+ilustra con una nitidez poco común, conviene tener presentes:
+
+\begin{enumerate}
+  \item \textbf{El invasor casi nunca gana en el FOM del titular.} Entra por
+    debajo en el atributo que el titular considera decisivo y muy por encima en
+    otros que el titular no mide \parencite{christensen1997}.
+  \item \textbf{El invasor redefine el FOM.} Cuando la comparación deja de ser
+    posible en las mismas unidades, la sustitución ya está decidida.
+  \item \textbf{El cruce de las curvas precede a la muerte comercial en años.}
+    El titular sigue vendiendo mucho después de haber perdido la superioridad
+    técnica, porque su activo real no es la tecnología, sino el canal.
+\end{enumerate}
+
+\section{Panorama: cuatro curvas sobre un mismo eje}
+
+La Figura~\ref{fig:curvas} representa el proceso completo con un eje de tiempo y
+un eje de FOM. Como FOM principal uso la \textbf{cobertura}, es decir el número
+de artículos enciclopédicos que el lector puede consultar, porque es el único
+atributo medible en las mismas unidades a lo largo de dos siglos y medio.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    % --- rejilla y eje vertical ---
+    \foreach \yv/\lab in {0/{$10^{3}$}, 1.3/{$10^{4}$}, 2.6/{$10^{5}$},
+                          3.9/{$10^{6}$}, 5.2/{$10^{7}$}} {
+      \draw[gray!20] (-0.1,\yv) -- (13.55,\yv);
+      \node[left, font=\scriptsize, gray!55!black] at (-0.15,\yv) {\lab};
+    }
+    \draw[-{Stealth[length=2mm]}, gray!60!black] (-0.1,-0.05) -- (-0.1,5.6);
+    \node[rotate=90, font=\scriptsize, gray!55!black, align=center]
+      at (-1.15,2.6) {Artículos accesibles (escala log.)};
+    % --- eje de tiempo con corte ---
+    \draw[gray!60!black] (-0.1,0) -- (3.60,0);
+    \draw[-{Stealth[length=2mm]}, gray!60!black] (3.95,0) -- (13.55,0);
+    \draw[gray!60!black] (3.68,-0.12) -- (3.80,0.12);
+    \draw[gray!60!black] (3.76,-0.12) -- (3.88,0.12);
+    \foreach \xv/\lab in {0.295/1889, 1.015/1911, 1.833/1936, 3.076/1974} {
+      \draw[gray!60!black] (\xv,0) -- (\xv,-0.13);
+      \node[below, font=\tiny, gray!55!black] at (\xv,-0.13) {\lab};
+    }
+    \foreach \xv/\lab in {5.20/1995, 6.45/2000, 7.70/2005, 8.95/2010,
+                          10.20/2015, 11.45/2020, 12.70/2025} {
+      \draw[gray!60!black] (\xv,0) -- (\xv,-0.13);
+      \node[below, font=\tiny, gray!55!black] at (\xv,-0.13) {\lab};
+    }
+    \node[font=\tiny, gray!55!black, align=center] at (1.9,-0.62)
+      {escala comprimida};
+    % --- Britannica impresa ---
+    \draw[very thick, cImpresa] (0.295,1.600) -- (1.015,2.083) -- (3.436,2.357)
+      -- (3.60,2.357);
+    \draw[very thick, cImpresa] (3.95,2.357) -- (9.50,2.357);
+    \foreach \x/\y in {0.295/1.600, 1.015/2.083, 3.436/2.357} {
+      \fill[cImpresa] (\x,\y) circle (1.7pt);
+    }
+    \draw[thick, cImpresa] (9.38,2.24) -- (9.62,2.48);
+    \draw[thick, cImpresa] (9.62,2.24) -- (9.38,2.48);
+    \node[font=\tiny, cImpresa, above right=-0.6mm and -1mm] at (1.015,2.083)
+      {\num{40000} (1911)};
+    \node[font=\tiny, cImpresa, right] at (4.05,2.50) {\num{65000} artículos};
+    % --- Encarta ---
+    \draw[thick, cEncarta, dashed] (4.70,1.75)
+      .. controls (6.0,2.15) and (7.0,2.30) .. (8.45,2.330);
+    \fill[cEncarta] (8.45,2.330) circle (1.7pt);
+    \draw[cEncarta!70, thin] (8.45,2.28) -- (8.62,1.92);
+    \node[font=\tiny, cEncarta, right] at (8.58,1.83)
+      {\num{62000} (2008)};
+    \draw[thick, cEncarta] (8.79,2.21) -- (9.03,2.45);
+    \draw[thick, cEncarta] (9.03,2.21) -- (8.79,2.45);
+    % --- Wikipedia ---
+    \draw[very thick, cWiki] (6.71,0) -- (6.89,1.3) -- (7.215,2.6)
+      -- (7.7525,3.509) -- (7.9925,3.9) -- (8.3725,4.291) -- (8.855,4.520)
+      -- (9.5825,4.683) -- (10.4075,4.809) -- (11.465,4.912)
+      -- (12.8025,4.999) -- (13.105,5.017);
+    \foreach \x/\y in {6.71/0, 6.89/1.3, 7.215/2.6, 7.7525/3.509, 7.9925/3.9,
+                       8.3725/4.291, 8.855/4.520, 9.5825/4.683, 10.4075/4.809,
+                       11.465/4.912, 12.8025/4.999} {
+      \fill[cWiki] (\x,\y) circle (1.7pt);
+    }
+    \node[font=\tiny, cWiki, right=0.5mm] at (13.105,5.017)
+      {\num{7224454}};
+    \node[font=\tiny, cWiki, above left=-0.8mm and -1.2mm] at (6.71,0)
+      {\num{1000}};
+    % --- cruce ---
+    \draw[red!65!black, thick] (7.154,2.357) circle (3.2pt);
+    \draw[red!65!black, thin] (7.02,2.50) -- (6.75,2.82);
+    \node[font=\scriptsize, red!65!black, align=center, above left=-0.5mm and -1mm]
+      at (6.75,2.82) {cruce del FOM\\[-0.3em] \tiny (2002)};
+    % --- LLM ---
+    \draw[cLLM, dotted, thick] (12.18,0) -- (12.18,4.7);
+    \node[font=\tiny, cLLM, rotate=90, above right=0mm and 0.4mm] at (12.18,2.9)
+      {ChatGPT, nov. 2022};
+    \fill[cLLM] (12.905,3.831) circle (1.7pt);
+    \node[font=\tiny, cLLM, below right=-0.2mm and 0.2mm] at (12.905,3.831)
+      {\num{885279}};
+    \draw[-{Stealth[length=2mm]}, thick, cLLM, dashed]
+      (12.98,3.95) -- (13.30,4.83);
+    \node[font=\tiny, cLLM, left] at (11.85,4.40) {cobertura no acotada};
+    % --- eventos ---
+    \foreach \xv/\lab in {%
+      4.70/{1993: Encarta},
+      6.20/{1999: britannica.com gratuito},
+      6.71/{2001: Wikipedia},
+      7.7525/{2005: estudio de \emph{Nature}},
+      8.9075/{2009: cierre de Encarta},
+      9.50/{2012: fin de la impresión},
+      12.18/{2022: ChatGPT},
+      12.905/{2025: Grokipedia}} {
+      \draw[gray!55] (\xv,0) -- (\xv,-0.3);
+      \node[rotate=60, anchor=east, font=\tiny, gray!35!black] at (\xv,-0.34)
+        {\lab};
+    }
+    % --- leyenda ---
+    \begin{scope}[shift={(3.20,5.35)}]
+      \draw[very thick, cImpresa] (0,0) -- (0.45,0);
+      \node[right, font=\tiny] at (0.5,0) {impresa};
+      \draw[thick, cEncarta, dashed] (1.95,0) -- (2.40,0);
+      \node[right, font=\tiny] at (2.45,0) {Encarta};
+      \draw[very thick, cWiki] (3.85,0) -- (4.30,0);
+      \node[right, font=\tiny] at (4.35,0) {Wikipedia};
+      \draw[thick, cLLM, dashed] (5.95,0) -- (6.40,0);
+      \node[right, font=\tiny] at (6.45,0) {modelos de lenguaje};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Curvas en S de las cuatro generaciones sobre el FOM de cobertura.
+  Puntos verificados: \num{17000} artículos en la novena edición de la
+  Britannica, \num{40000} en la undécima (1910--1911) y \num{65000} en la
+  Micropædia de la decimoquinta; \num{62000} en Encarta Premium 2008
+  \parencite{encartawiki}; los once hitos de la Wikipedia en inglés desde
+  \num{1000} artículos en febrero de 2001 hasta \num{7000000} el 28 de mayo de
+  2025, y \num{7224454} el 13 de agosto de 2026 \parencite{wikistats2026}; y
+  \num{885279} entradas de Grokipedia el 27 de octubre de 2025
+  \parencite{yasseri2025}. Se dibujan de forma esquemática, por falta de una
+  serie anual pública, el tramo de la Britannica anterior a 1889 (no
+  representado) y el de Encarta entre 1993 y 2008. Elaboración propia.}
+  \label{fig:curvas}
+\end{figure}
+
+Dos lecturas inmediatas de la figura, que las secciones siguientes desarrollan.
+
+\textbf{Primera: el cruce ocurrió en 2002, no en 2012.} Wikipedia pasó de
+\num{10000} artículos en octubre de 2001 a \num{100000} en enero de 2003, de
+modo que en algún momento de 2002 superó los \num{65000} de la Micropædia y los
+\num{62000} de Encarta. La superioridad técnica en cobertura cambió de manos
+\textbf{diez años antes} de que la impresión terminara y siete antes de que
+Encarta cerrara. El retraso entre el cruce del FOM y la muerte comercial es la
+medida de la inercia del canal de distribución.
+
+\textbf{Segunda: la curva de Wikipedia ya saturó.} El tramo posterior a 2010 es
+visiblemente plano en escala logarítmica: pasar de 6 a 7 millones de artículos
+tomó cinco años y cuatro meses, frente a los diecinueve meses que tomó pasar de
+1 a 2 millones. Una tecnología en la parte alta de su curva en S es
+precisamente el objetivo natural del siguiente invasor.
+
+\section{La tecnología establecida: la enciclopedia impresa}
+
+\subsection*{01. El desempeño que la hizo dominante}
+
+La decimoquinta edición, publicada en 1974 y reorganizada en 1985, costó
+32 millones de dólares en trabajo editorial, la mayor inversión privada en
+publicación de su época, y reunió a más de \num{4000} autores de más de cien
+países. Su estructura final ofrecía unos \num{65000} artículos breves en la
+Micropædia y unos setecientos tratados extensos en la Macropædia, con más de
+40 millones de palabras en 32 volúmenes \parencite{britannica3,evans1997}.
+
+Esa cifra define el FOM en el que la impresa era imbatible: \textbf{profundidad
+por artículo}, con unas 615 palabras de media, y autoridad verificable, con
+autores identificados y responsables. Todavía en 2005, cuando ya había perdido
+la cobertura, seguía ganando en exactitud: en una muestra de 42 artículos
+científicos revisados por especialistas, \emph{Nature} contó 123 errores en la
+Britannica frente a 162 en Wikipedia \parencite{giles2005}.
+
+\subsection*{02. El desempeño que la condenó}
+
+En 1936 la Britannica adoptó la política de \textbf{revisión continua}: en lugar
+de esperar una edición nueva cada veinticinco años, reimprimía cada año y
+revisaba al menos el diez por ciento de los artículos, de modo que cada entrada
+se reconsideraba unas dos veces por década \parencite{ebwiki}. Fue una mejora
+real de su FOM de latencia, de unos veinticinco años a unos cinco, y también el techo de su curva:
+por debajo de ese valor el papel no podía bajar.
+
+La economía era todavía más rígida. Un juego se vendía entre \num{1500} y
+\num{2200} dólares según la encuadernación, y su coste marginal se
+descomponía en unos 250 dólares de producción más entre 500 y 600 dólares de
+comisión para el vendedor \parencite{evans1997}. El activo real de la compañía no
+era el contenido: era una fuerza de venta directa a domicilio. En 1990, el año
+de su máximo histórico, las ventas de juegos multivolumen alcanzaron unos
+650 millones de dólares, con \num{120000} juegos colocados en Estados Unidos.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    \fomgrid{4.55}
+    \fombar{4}{7.188}{cImpresa}{\rCob}{\num{65000}}
+    \fombar{3}{5.326}{cImpresa}{\rPro}{$\approx$ 615}
+    \fombar{2}{10.303}{cImpresa!75}{\rLat}{$1{,}6\times10^{8}$ (5 años)}
+    \fombar{1}{4.673}{cImpresa!75}{\rAcc}{$\approx$ 120 (supuesto)}
+    \fombar{0}{5.431}{cImpresa!75}{\rCos{copia}}{750 a 850}
+  \end{tikzpicture}
+  \caption{Perfil de figuras de mérito de la enciclopedia impresa
+  (\emph{Encyclopædia Britannica}, edición vigente entre 1985 y 2010) sobre un
+  eje logarítmico común. \notafom{} Las barras oscuras marcan los FOM en los que
+  la tecnología era superior y las claras aquellos en los que era vulnerable. La
+  profundidad es el cociente entre más de 40 millones de palabras y
+  \num{65000} artículos \parencite{evans1997}; el coste marginal suma producción
+  y comisión de venta; la latencia de acceso es un supuesto explícito de orden
+  de magnitud, no un dato medido. Elaboración propia.}
+  \label{fig:fomimpresa}
+\end{figure}
+
+La Figura~\ref{fig:fomimpresa} muestra el perfil completo. Leída de arriba a
+abajo describe con precisión el punto ciego del titular: era excelente en las dos
+primeras filas y estaba entre cinco y ocho órdenes de magnitud por detrás de lo
+posible en las tres últimas.
+
+\section{Primer invasor: Microsoft Encarta}
+
+\subsection*{01. Cuándo y con qué desempeño entró}
+
+Microsoft cerró en 1989 un acuerdo de derechos no exclusivos con los editores de
+la \emph{Funk \& Wagnalls Encyclopedia}, una obra de segundo nivel, y en 1993
+lanzó Encarta \parencite{smith2017}. El contenido era claramente inferior:
+7 millones de palabras frente a más de 40 millones de la Britannica
+\parencite{evans1997}. En su FOM propio, el titular ganaba por un factor de casi
+seis.
+
+En todos los demás la relación se invertía. Encarta se lanzó a 395 dólares,
+bajó pronto a 99 y con frecuencia se incluía sin coste adicional en la compra de
+un ordenador nuevo. Su coste marginal era de 1,50 dólares por disco
+\parencite{evans1997}, unas quinientas veces menos que el del juego impreso, lo
+que hacía económicamente racional regalarla. El resultado fue inmediato: unas
+\num{350000} copias a finales de 1993 y más de un millón en su segundo año
+\parencite{encartawiki}.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    \fomgrid{4.55}
+    \fombar{4}{7.169}{cEncarta!75}{\rCob}{\num{62000} \tiny(2008)}
+    \fombar{3}{4.734}{cEncarta!75}{\rPro}{$\approx$ 140}
+    \fombar{2}{9.659}{cEncarta}{\rLat}{$3{,}2\times10^{7}$ (1 año)}
+    \fombar{1}{3.403}{cEncarta}{\rAcc}{$\approx$ 5}
+    \fombar{0}{2.922}{cEncarta}{\rCos{copia}}{1,50}
+    % marcadores de la posición del titular
+    \draw[cImpresa, thick, densely dotted] (7.188,3.78) -- (7.188,4.22);
+    \draw[cImpresa, thick, densely dotted] (5.326,2.78) -- (5.326,3.22);
+    \draw[cImpresa, thick, densely dotted] (10.303,1.78) -- (10.303,2.22);
+    \draw[cImpresa, thick, densely dotted] (4.673,0.78) -- (4.673,1.22);
+    \draw[cImpresa, thick, densely dotted] (5.431,-0.22) -- (5.431,0.22);
+  \end{tikzpicture}
+  \caption{Perfil de figuras de mérito de Encarta. \notafom{} Las líneas
+  punteadas azules marcan la posición de la enciclopedia impresa en cada FOM.
+  Encarta pierde en las dos primeras filas y gana entre uno y tres órdenes de
+  magnitud en las tres últimas. La profundidad es el cociente entre 7 millones
+  de palabras
+  \parencite{evans1997} y unos \num{50000} artículos de la edición estándar
+  \parencite{encartawiki}; las
+  dos cifras no proceden del mismo año, por lo que el valor es aproximado.
+  Elaboración propia.}
+  \label{fig:fomencarta}
+\end{figure}
+
+\subsection*{02. La reacción del titular y por qué no bastó}
+
+Britannica no se quedó quieta, y esto merece subrayarse porque contradice la
+caricatura del titular pasivo. Publicó su propio CD-ROM en 1994 a 995 dólares y
+lo bajó a 200 en 1995, a 150 en 1997 y a 85 en 1998; ese mismo 1994 lanzó
+Britannica Online, la primera enciclopedia de internet, con suscripciones de 150
+y luego 85 dólares anuales; y en 1999 abrió britannica.com con el texto completo
+gratuito y financiado con publicidad \parencite{smith2017}.
+
+Reaccionó en producto y en precio con notable rapidez. Lo que no podía hacer era
+sostener una comisión de 500 a 600 dólares por venta con un producto de 99
+dólares. El obstáculo no era técnico ni cognitivo, era estructural: el canal que
+había construido su dominio era incompatible con el nuevo punto de precio, que
+es exactamente el mecanismo descrito por \textcite{christensen1997}. Las ventas
+de enciclopedias impresas en Estados Unidos cayeron más del ochenta por ciento
+desde 1990; en mayo de 1995 la Benton Foundation puso la compañía en venta y en
+1996 el financiero Jacob Safra la compró por menos de la mitad de su valor en
+libros \parencite{evans1997}.
+
+\begin{quote}
+\textbf{Consecuencia para el caso.} El golpe mortal a la enciclopedia impresa lo
+dio el CD-ROM entre 1993 y 1996, cuando Wikipedia todavía no existía. Wikipedia
+llegó a un mercado que ya estaba destruido y su víctima real fue Encarta.
+\end{quote}
+
+\section{Segundo invasor: Wikipedia}
+
+\subsection*{01. El experimento de control: Nupedia}
+
+Antes de Wikipedia, los mismos fundadores intentaron lo contrario. Nupedia
+salió en línea el 9 de marzo de 2000 con un proceso editorial de siete pasos,
+revisión por pares y expertos acreditados, es decir replicando el FOM del
+titular. Produjo 24 artículos aprobados en tres años y medio, más unos 150 en
+curso, y su servidor cayó definitivamente el 26 de septiembre de 2003
+\parencite{nupediawiki}.
+
+El contraste es el mejor argumento del caso: en ese mismo periodo, Wikipedia,
+lanzada el 15 de enero de 2001, pasó de cero a más de \num{100000} artículos. La
+diferencia no estaba en el contenido, en la financiación ni en las personas, que
+eran las mismas. Estaba en el \textbf{coste de coordinación}: el wiki eliminó la
+necesidad de asignar, aprobar y sincronizar el trabajo antes de publicarlo, lo
+que \textcite{benkler2002} describe como producción entre pares, una forma de
+organizar el esfuerzo que no es ni la empresa ni el mercado.
+
+\subsection*{02. El desempeño actual}
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    \fomgrid{4.55}
+    \fombar{4}{9.071}{cWiki}{\rCob}{\num{7224454}}
+    \fombar{3}{5.389}{cWiki}{\rPro}{$\approx$ 720}
+    \fombar{2}{4.396}{cWiki}{\rLat}{$\approx$ 60 (minutos)}
+    \fombar{1}{3.403}{cWiki}{\rAcc}{$\approx$ 5}
+    \fombar{0}{0.049}{cWiki}{\rCos{consulta}}{$\approx$ 0,001}
+    \draw[cImpresa, thick, densely dotted] (7.188,3.78) -- (7.188,4.22);
+    \draw[cImpresa, thick, densely dotted] (5.326,2.78) -- (5.326,3.22);
+    \draw[cImpresa, thick, densely dotted] (10.303,1.78) -- (10.303,2.22);
+    \draw[cImpresa, thick, densely dotted] (4.673,0.78) -- (4.673,1.22);
+    \draw[cImpresa, thick, densely dotted] (5.431,-0.22) -- (5.431,0.22);
+    \draw[cEncarta, thick, densely dotted] (7.169,3.78) -- (7.169,4.22);
+    \draw[cEncarta, thick, densely dotted] (4.734,2.78) -- (4.734,3.22);
+    \draw[cEncarta, thick, densely dotted] (9.659,1.78) -- (9.659,2.22);
+    \draw[cEncarta, thick, densely dotted] (3.403,0.78) -- (3.403,1.22);
+    \draw[cEncarta, thick, densely dotted] (2.922,-0.22) -- (2.922,0.22);
+    \node[font=\tiny, cImpresa, above=0.6mm] at (10.303,2.22) {impresa};
+    \node[font=\tiny, cEncarta, below=0.6mm] at (9.659,1.78) {Encarta};
+  \end{tikzpicture}
+  \caption{Perfil de figuras de mérito de Wikipedia en agosto de 2026.
+  \notafom{} Las líneas punteadas azules marcan la posición de la enciclopedia
+  impresa y las naranjas la de Encarta. Es la primera
+  tecnología de la cadena que gana en las cinco filas a la vez. La profundidad
+  es el cociente entre más de \num{5000} millones de palabras
+  \parencite{pew2026} y \num{7224454} artículos \parencite{wikistats2026}; el
+  coste marginal es el gasto anual de la Fundación Wikimedia, 190,9 millones de
+  dólares \parencite{wmf2025}, dividido entre las visitas anuales estimadas a
+  partir de un promedio de 508 millones diarias \parencite{pew2026}. Elaboración
+  propia.}
+  \label{fig:fomwiki}
+\end{figure}
+
+Wikipedia es el único eslabón de la cadena que llegó a ganar en todos los FOM
+del cuadro, incluida la profundidad: sus 720 palabras por artículo superan las
+615 de la Britannica, resultado que en 2001 nadie habría anticipado. La brecha
+de exactitud, el último refugio del titular, se había estrechado ya en 2005 a
+una diferencia de 3,9 frente a 2,9 errores por artículo \parencite{giles2005}.
+
+La escala actual es de otro orden: más de 66 millones de artículos en 342
+idiomas, más de \num{600000} usuarios activos, unos \num{500} artículos nuevos al
+día solo en inglés y una media de 5,7 ediciones por segundo en 2024
+\parencite{pew2026,wikistats2026}. Y todo ello con un gasto anual de 190,9
+millones de dólares \parencite{wmf2025}, menos de la tercera parte de lo que la
+Britannica facturaba en 1990 en un solo país.
+
+Microsoft cerró Encarta el 31 de octubre de 2009 con una explicación que es un
+manual de gestión tecnológica en dos líneas: \enquote{la categoría de las
+enciclopedias tradicionales y del material de referencia ha cambiado} y
+\enquote{hoy la gente busca y consume información de maneras
+considerablemente distintas a las del pasado} \parencite{techcrunch2009}.
+
+\section{Tercer invasor: los modelos de lenguaje}
+
+\subsection*{01. Cuándo entró y qué FOM redefine}
+
+ChatGPT se publicó el 30 de noviembre de 2022, alcanzó 100 millones de usuarios
+en dos meses y 800 millones de usuarios semanales en octubre de 2025
+\parencite{altman2025}. La novedad, en términos de FOM, no es la cobertura ni el
+coste: es que \textbf{deja de entregar el artículo y entrega la respuesta}. El
+lector ya no tiene que localizar la entrada correcta, leerla y extraer de ella lo
+que preguntaba. Cuando eso ocurre, el número de artículos deja de ser la unidad
+relevante y la comparación en las mismas unidades se vuelve imposible, que es la
+segunda propiedad enunciada en el marco.
+
+El caso Grokipedia permite, por una vez, medirlo. Lanzada el 27 de octubre de
+2025 con unas \num{885279} entradas generadas por un modelo,
+\textcite{yasseri2025} la comparó con Wikipedia y encontró artículos
+sistemáticamente más largos, \num{14200} palabras de media frente a \num{9400},
+con una similitud semántica de 0,825 y, a la vez, 21,4 referencias por cada
+\num{1000} palabras frente a 90,2, y 16,8 enlaces frente a 428. Su conclusión es
+que la obra \enquote{reempaqueta en gran medida contenido humano ya curado a
+través de una lente de inteligencia artificial que privilegia la fluidez y la
+narrativa sobre la atribución}.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    \fomgrid{4.55}
+    \fill[cLLM] (0,3.83) rectangle (8.231,4.17);
+    \draw[-{Stealth[length=1.8mm]}, thick, cLLM] (8.30,4.0) -- (9.55,4.0);
+    \node[left, text width=3.5cm, align=right, font=\scriptsize] at (-0.12,4)
+      {\rCob};
+    \node[right, font=\scriptsize] at (9.62,4) {\num{885279}, no acotada};
+    \fombar{3}{6.580}{cLLM}{\rPro}{\num{14200}}
+    \node[left, text width=3.5cm, align=right, font=\scriptsize] at (-0.12,2)
+      {\rLat};
+    \fill[pattern=north east lines, pattern color=cLLM]
+      (2.76,1.83) rectangle (9.38,2.17);
+    \draw[cLLM] (2.76,1.83) rectangle (9.38,2.17);
+    \node[right, font=\scriptsize] at (9.48,2) {\tiny según la fuente};
+    \fombar{1}{3.403}{cLLM}{\rAcc}{$\approx$ 5, ya sintetizada}
+    \node[left, text width=3.5cm, align=right, font=\scriptsize] at (-0.12,0)
+      {\rCos{consulta}};
+    \node[right, font=\scriptsize, gray!45!black] at (0.1,0)
+      {no divulgado por los proveedores};
+    \draw[cWiki, thick, densely dotted] (9.071,3.78) -- (9.071,4.22);
+    \draw[cWiki, thick, densely dotted] (5.389,2.78) -- (5.389,3.22);
+    \draw[cWiki, thick, densely dotted] (3.403,0.78) -- (3.403,1.22);
+  \end{tikzpicture}
+
+  \vspace{0.4em}
+  \begin{tikzpicture}
+    \path (-3.62,-0.95) (12.20,3.55);
+    \node[font=\scriptsize\itshape, gray!35!black, right] at (-3.62,3.35)
+      {El FOM que empeora: fiabilidad de las respuestas};
+    \foreach \xp/\lab in {0/0, 1.875/25, 3.75/50, 5.625/75, 7.5/100} {
+      \draw[gray!25] (\xp,-0.42) -- (\xp,2.92);
+      \node[below, font=\tiny, gray!55!black] at (\xp,-0.42) {\lab\,\%};
+    }
+    \foreach \y/\xv/\v/\lab in {%
+      2.5/6.075/81/{Con algún problema},
+      1.667/3.375/45/{Con al menos un\\problema significativo},
+      0.833/2.325/31/{Con problemas graves\\de atribución de fuentes},
+      0/1.500/20/{Con errores importantes\\de exactitud}} {
+      \node[left, text width=3.45cm, align=right, font=\scriptsize]
+        at (-0.15,\y) {\lab};
+      \fill[cLLM!80] (0,\y-0.16) rectangle (\xv,\y+0.16);
+      \node[right, font=\scriptsize] at (\xv+0.12,\y) {\v\,\%};
+    }
+  \end{tikzpicture}
+  \caption{Perfil de figuras de mérito de los modelos de lenguaje como
+  sustituto de la enciclopedia. \notafom{} Las líneas punteadas verdes marcan la
+  posición de Wikipedia, que en la latencia de actualización queda dentro del
+  intervalo rayado. Panel
+  superior: los valores medibles proceden de Grokipedia \parencite{yasseri2025};
+  la latencia de actualización se hereda de la fuente consultada, desde segundos
+  cuando el modelo busca en la web hasta la fecha de corte de su entrenamiento
+  cuando no lo hace. Panel inferior: el FOM que empeora. Corresponde al estudio
+  de la \textcite{ebu2025} sobre \num{3000} respuestas en catorce idiomas.
+  Elaboración propia.}
+  \label{fig:fomllm}
+\end{figure}
+
+\subsection*{02. La paradoja del invasor parásito}
+
+Este tercer invasor tiene una particularidad que no se dio en los dos anteriores:
+\textbf{depende del titular al que desplaza}. Wikipedia aportó \num{3000}
+millones de tokens al entrenamiento de GPT-3, apenas el 0,6 por ciento del corpus
+en bruto, pero se le asignó el 3 por ciento de la mezcla de entrenamiento, de
+modo que el modelo recorrió ese corpus 3,4 veces frente a las 0,44 veces que
+recorrió Common Crawl: fue, con diferencia, la fuente más sobremuestreada del
+conjunto \parencite{brown2020}. Y sigue siéndolo en la fase de uso: en un
+análisis de unos 680 millones de citas de sistemas de IA entre agosto de 2024 y
+junio de 2025, Wikipedia representó el 47,9 por ciento de los diez dominios más
+citados por ChatGPT \parencite{profound2025}.
+
+Al mismo tiempo, la sustitución ya se mide en el tráfico. Entre marzo y agosto de
+2025 las visitas humanas a Wikipedia cayeron alrededor del 8 por ciento respecto
+al mismo periodo de 2024, y la Fundación Wikimedia atribuye la caída a los
+resúmenes generados por IA en los buscadores y al vídeo social
+\parencite{miller2025}. El mecanismo está cuantificado: con un resumen de IA en
+la página de resultados, los usuarios hacen clic en algún enlace en el 8 por
+ciento de las visitas, frente al 15 por ciento cuando no lo hay, y solo en el 1
+por ciento pulsan un enlace del propio resumen \parencite{pew2025}.
+
+La respuesta del titular reproduce el patrón de 1994. Wikipedia adoptó el 4 de
+agosto de 2025 un criterio de borrado rápido, el G15, para artículos claramente
+generados por un modelo sin revisión humana \parencite{wikig15}, y la Fundación
+monetiza al invasor a través de Wikimedia Enterprise, que facturó 8,3 millones de
+dólares en el ejercicio 2024--2025, un 148 por ciento más que el anterior
+\parencite{wmf2025}. Es la misma jugada que el CD-ROM de 1994: defender el activo
+y cobrar por el acceso, sin poder cambiar la unidad de medida que el mercado
+empieza a usar.
+
+\section{¿Cuándo y por qué ocurrió?}
+
+El Cuadro~\ref{tab:crono} responde al \enquote{cuándo} y el
+Cuadro~\ref{tab:matriz} al \enquote{por qué}, comparando las cuatro
+generaciones en el mismo conjunto de FOM.
+
+\begin{table}[ht]
+  \centering
+  \small
+  \caption{Cronología verificada del proceso de sustitución.}
+  \label{tab:crono}
+  \begin{tabularx}{\textwidth}{@{}l >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{Fecha} & \textbf{Hecho} \\
+    \midrule
+    1768 & Primera edición de la \emph{Encyclopædia Britannica}, en Edimburgo \\
+    1936 & Política de revisión continua: la latencia baja de unos 25 años a
+      unos 5 \\
+    1974 y 1985 & Decimoquinta edición y su reorganización: \num{65000}
+      artículos, 32 millones de dólares de inversión editorial \\
+    1990 & Máximo histórico: unos 650 millones de dólares de ventas y
+      \num{120000} juegos en Estados Unidos \\
+    1993 & Lanzamiento de Encarta a 395 dólares, luego 99 y con frecuencia
+      incluida con el ordenador \\
+    1994 & Britannica responde con CD-ROM a 995 dólares y con Britannica
+      Online, la primera enciclopedia de internet \\
+    1995 y 1996 & La compañía se pone en venta y se vende por menos de la mitad
+      de su valor en libros \\
+    1999 & britannica.com se abre gratis con publicidad \\
+    2000 & Nupedia: 24 artículos en tres años y medio con revisión de siete
+      pasos \\
+    15/01/2001 & Lanzamiento de Wikipedia \\
+    2002 & \textbf{Cruce del FOM de cobertura}: Wikipedia supera los
+      \num{65000} artículos de la Micropædia \\
+    2005 & \emph{Nature}: 162 errores en Wikipedia frente a 123 en Britannica
+      en 42 artículos científicos \\
+    31/10/2009 & Cierre de Encarta \\
+    13/03/2012 & Fin de la edición impresa de la Britannica, tras 244 años \\
+    30/11/2022 & Lanzamiento de ChatGPT \\
+    28/05/2025 & Wikipedia en inglés alcanza 7 millones de artículos \\
+    2025 & Caída del 8\,\% en visitas humanas a Wikipedia; criterio G15 contra
+      contenido generado por IA; Grokipedia con \num{885279} entradas \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\begin{table}[ht]
+  \centering
+  \small
+  \caption{Matriz de figuras de mérito de las cuatro generaciones.}
+  \label{tab:matriz}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.20\textwidth}
+    >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X
+    >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{FOM} & \textbf{Impresa} & \textbf{Encarta} & \textbf{Wikipedia}
+      & \textbf{Modelos de lenguaje} \\
+    \midrule
+    Cobertura (artículos)
+      & \num{65000} & \num{62000} & \num{7224454} & no acotada \\
+    Profundidad (palabras por artículo)
+      & $\approx$ 615 & $\approx$ 140 & $\approx$ 720 & \num{14200} \\
+    Latencia de actualización
+      & 5 años & 1 año & minutos & según la fuente \\
+    Latencia de acceso
+      & minutos & segundos & segundos & segundos, ya sintetizada \\
+    Coste para el lector
+      & \num{1500} a \num{2200} USD & 99 USD o incluida & 0 & 0 o suscripción \\
+    Coste marginal
+      & 750 a 850 USD & 1,50 USD & $\approx$ 0,001 USD & no divulgado \\
+    Idiomas
+      & 1 & varios & 342 & prácticamente cualquiera \\
+    Verificabilidad
+      & autor identificado & editorial & historial y referencias públicas
+      & 21,4 referencias por \num{1000} palabras \\
+    Modelo de producción
+      & \num{4000} autores contratados & licencia de contenido de terceros
+      & producción entre pares & síntesis a partir de las tres anteriores \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Cinco mecanismos explican el \enquote{por qué}, y ninguno de ellos es la calidad
+del contenido.
+
+\textbf{01. El coste marginal cae hasta desaparecer.} De 750 a 850 dólares por
+copia impresa a 1,50 en CD y a una milésima de dólar por consulta en la web. Un
+coste marginal casi nulo no solo abarata: cambia lo que es racional hacer con el
+producto, y regalar la enciclopedia para vender ordenadores pasa a ser una buena
+decisión.
+
+\textbf{02. El soporte fija el techo de la latencia.} El papel no podía bajar de
+unos años, el CD no podía bajar de una edición anual, la web bajó a minutos y el
+modelo de lenguaje responde en segundos. Cada generación heredó de su soporte un
+límite que ninguna mejora incremental podía superar, que es la definición de
+techo de curva en S \parencite{foster1986}.
+
+\textbf{03. El cuello de botella era coordinar, no escribir.} Nupedia y
+Wikipedia tuvieron el mismo objetivo, el mismo fundador y diez meses de
+diferencia entre sus lanzamientos. La diferencia de resultado, 24 artículos frente a más de \num{100000},
+mide el coste de la coordinación jerárquica frente a la producción entre pares
+\parencite{benkler2002}.
+
+\textbf{04. El modelo de negocio ancla al titular.} Britannica podía fabricar un
+CD-ROM, y lo hizo antes de que Encarta fuera dominante, pero no podía pagar una
+comisión de 500 dólares con un producto de 99. El titular no perdió por no ver
+la tecnología: perdió porque adoptarla implicaba destruir su propio canal
+\parencite{christensen1997}.
+
+\textbf{05. El invasor cambia la unidad de medida.} El paso decisivo no es
+mejorar el FOM del titular, sino sustituirlo. Encarta cambió \enquote{palabras
+por obra} por \enquote{coste de acceso}; Wikipedia cambió \enquote{autoridad del
+autor} por \enquote{cobertura y actualidad}; los modelos de lenguaje cambian
+\enquote{artículos disponibles} por \enquote{respuestas a mi pregunta}. Cuando
+el titular ya no puede puntuar en el nuevo eje, la discusión sobre calidad deja
+de ser relevante para el mercado.
+
+\section{Precisiones y limitaciones}
+
+\begin{enumerate}
+  \item \textbf{Los FOM no son estrictamente conmensurables entre
+    generaciones.} Un artículo de la Micropædia, uno de Wikipedia y una entrada
+    generada por un modelo no son la misma unidad de producto, aunque compartan
+    el nombre. Las comparaciones de las Figuras \ref{fig:fomimpresa} a
+    \ref{fig:fomllm} son válidas como órdenes de magnitud y no como medidas
+    exactas.
+  \item \textbf{Dos valores del cuadro son supuestos declarados.} La latencia de
+    acceso de la enciclopedia impresa, unos 120 segundos, es una estimación de
+    orden de magnitud, y la latencia de actualización de los modelos de lenguaje
+    es un intervalo, no un valor, porque depende de si el sistema consulta la web
+    en el momento de responder.
+  \item \textbf{Dos tramos de la Figura~\ref{fig:curvas} son esquemáticos.} No
+    existe una serie anual pública del recuento de artículos de Encarta entre
+    1993 y 2008, ni una serie homogénea de la Britannica anterior a 1889.
+  \item \textbf{El efecto vela es un fenómeno discutido.} Es tentador presentar
+    la decimoquinta edición de 1974, la mayor inversión editorial de su historia,
+    o el CD-ROM de 1994, como una aceleración defensiva del titular ante la
+    amenaza. Conviene ser prudente: \textcite{howells2002} reexaminó los casos
+    clásicos, la vela frente al vapor y el proceso Leblanc frente al Solvay, y
+    concluyó que el efecto no existió en ninguno de los dos, y
+    \textcite{mendonca2013} matiza que lo que suele observarse es una mejora
+    continua ya en marcha, no una reacción. Aplicado a este caso: la revisión
+    continua de 1936 y la decimoquinta edición son anteriores a la amenaza
+    digital y no pueden leerse como respuesta a ella.
+  \item \textbf{La cuarta sustitución está en curso, no consumada.} Wikipedia no
+    ha muerto: sigue creciendo unos \num{500} artículos diarios en inglés y es la
+    fuente más citada por los propios modelos que la desplazan. Lo que cae es su
+    tráfico humano, no su corpus. Los datos disponibles describen el comienzo de
+    una invasión, no su desenlace.
+  \item \textbf{La tecnología murió, la empresa no.} Britannica abandonó la
+    imprenta y se convirtió en un proveedor de software educativo con IA, con
+    ingresos que apuntaban a los 100 millones de dólares y una valoración buscada
+    de unos mil millones en una salida a bolsa \parencite{bloomberg2024,
+    delamerced2024}. Sobrevivir a la muerte de la propia tecnología exige
+    cambiar de curva, y no todos los titulares de esta historia lo consiguieron:
+    Encarta no cambió de curva y desapareció.
+\end{enumerate}
+
+\section*{Conclusiones}
+
+La enciclopedia impresa fue reemplazada, y el proceso admite una respuesta
+precisa a las dos preguntas del enunciado.
+
+\textbf{Cuándo.} La superioridad técnica cambió de manos en dos momentos
+distintos, ninguno de los cuales coincide con el hecho que suele citarse. En
+coste y accesibilidad, entre 1993 y 1996, cuando el CD-ROM redujo el coste
+marginal de una copia de unos 800 dólares a 1,50 y hundió las ventas de la
+impresa más del ochenta por ciento. En cobertura, en 2002, cuando Wikipedia
+superó los \num{65000} artículos de la Micropædia. El fin de la impresión, en
+marzo de 2012, es el último acto administrativo de una sustitución que se había
+decidido diez años antes.
+
+\textbf{Por qué.} Porque el titular era excelente en las dos figuras de mérito
+que él mismo consideraba decisivas, profundidad y autoridad, y estaba entre cinco
+y ocho órdenes de magnitud por detrás de lo posible en las tres que acabaron
+decidiendo el mercado: latencia de actualización, latencia de acceso y coste
+marginal. Y porque esas tres no podían mejorarse sin destruir el canal de venta
+directa que constituía su verdadero activo.
+
+La lección que me llevo como CTO no es que convenga vigilar a los invasores, que
+es obvio, sino algo más incómodo: \textbf{el FOM en el que uno es mejor suele ser
+el que el mercado está a punto de dejar de usar}. La Britannica ganaba en
+palabras por artículo y perdió en dólares por consulta. Wikipedia ganó en
+artículos accesibles y hoy compite contra sistemas a los que el recuento de
+artículos no se les puede aplicar. En una cadena de sustituciones, quien mide su
+posición solo con el eje heredado ya está midiendo la carrera equivocada.
+
+\printbibliography[title={Referencias bibliográficas}]
+
+\end{document}
