@@ -1,0 +1,803 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,backgrounds,patterns}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.3cm}
+% Los rótulos de las figuras usan nodos de ancho fijo con texto alineado a la
+% derecha, y la bibliografía compone en modo sloppy: ambos generan avisos de
+% línea holgada que son cosméticos y no indican un problema de composición.
+% Se silencian para que `make check` siga siendo sensible a los desbordes reales.
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlist{nosep}
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy}
+
+\sisetup{
+  output-decimal-marker = {,},
+  group-separator = {.},
+  group-minimum-digits = 4,
+  detect-all
+}
+
+% Colores: titular, invasor, remiendo del titular y segunda medición
+\definecolor{cIPv4}{RGB}{31,78,121}
+\definecolor{cIPv6}{RGB}{116,66,150}
+\definecolor{cNAT}{RGB}{191,110,30}
+\definecolor{cApnic}{RGB}{40,124,70}
+
+% ---------------------------------------------------------------------------
+% Barras de razón sobre eje logarítmico. La paridad (razón igual a 1) está en
+% x = 4,909 y la escala es de 4,0909 cm por década, de 10^-1,2 a 10^1.
+% ---------------------------------------------------------------------------
+\newcommand{\razonbar}[5]{%
+  \node[left, text width=4.7cm, align=right, font=\scriptsize] at (-0.22,#1) {#4};%
+  \fill[#3] (4.909,#1-0.17) rectangle (#2,#1+0.17);%
+  \node[right, font=\scriptsize] at (9.14,#1) {#5};%
+}
+\newcommand{\notarazon}{Una razón mayor que uno indica que IPv6 es superior en
+  esa figura de mérito; menor que uno, que es inferior.}
+
+\title{\vspace{-1.2cm}\textbf{¿Siempre gana la mejor tecnología? El caso de
+IPv6}\\
+\large Treinta años de superioridad técnica sin sustitución, 1981 a 2026}
+\author{Carlos Luis Rojas Aragonés\\
+\small Gestión del Desarrollo Tecnológico}
+\date{\small 15 de agosto de 2026}
+
+\begin{document}
+
+\maketitle
+\vspace{-0.6em}
+
+\section{Introducción}
+
+El avance que analizo es \textbf{IPv6}, la versión 6 del Protocolo de Internet.
+Se especificó en diciembre de 1995 \parencite{rfc1883}, se reeditó en diciembre
+de 1998 \parencite{rfc2460} y alcanzó la categoría de norma de Internet, STD 86,
+en julio de 2017 \parencite{rfc8200}. Su predecesor, IPv4, se publicó en
+septiembre de 1981 \parencite{rfc791} y sigue siendo, cuarenta y cinco años
+después, el protocolo que todo usuario de Internet necesita.
+
+El 12 de agosto de 2026, la medición de Google situaba el uso de IPv6 en el
+\textbf{47,0 por ciento} de sus usuarios \parencite{googlev6} y la de APNIC Labs
+en el \textbf{43,2 por ciento} \parencite{apnicv6}. Treinta años después de su
+publicación, el sucesor no ha sustituido a nada: convive.
+
+Este caso es exactamente el inverso del que suele estudiarse en gestión
+tecnológica. No se trata de un titular excelente que pierde ante un invasor
+mediocre pero barato. Se trata de un invasor que es superior en casi todas las
+figuras de mérito medibles, que fue diseñado por el mismo organismo que diseñó
+al titular, que no tiene competidor alguno y que aun así no consigue desplazarlo.
+La pregunta del enunciado, por tanto, admite aquí una respuesta más incómoda que
+un simple \enquote{no}: \textbf{la mejor tecnología ni siquiera pierde, se queda
+esperando}.
+
+Hay un dato que ordena todo el análisis y conviene adelantar: \textbf{el remiendo
+que salvó a IPv4 se publicó antes que IPv6}. La traducción de direcciones de red,
+NAT, apareció en mayo de 1994 \parencite{rfc1631} y el direccionamiento sin
+clases, CIDR, en septiembre de 1993 \parencite{rfc1519}, mientras que IPv6 no se
+especificó hasta diciembre de 1995. Cuando el sucesor llegó, el problema que
+justificaba su existencia ya tenía una solución en producción.
+
+\section{Marco de análisis}
+
+Una \textbf{figura de mérito} (FOM) es una medida cuantitativa del desempeño de
+una tecnología en la función que presta, independiente de la implementación
+concreta que la realiza \parencite{deweck2022}. Cada tecnología recorre en su FOM
+una \textbf{curva en S}: arranque lento, mejora rápida y saturación al acercarse
+a un límite físico o económico \parencite{foster1986,utterback1994}.
+
+El caso de IPv6 obliga a añadir una segunda familia de conceptos, porque un
+protocolo de red no es un producto de consumo individual. Su valor para cada
+adoptante depende de cuántos otros lo hayan adoptado ya, que es la definición de
+\textbf{externalidad de red} \parencite{katz1985}. Tres consecuencias, todas
+documentadas en la literatura y todas visibles en los datos, estructuran el
+análisis.
+
+\begin{enumerate}
+  \item \textbf{En un mercado con externalidades de red, el FOM que decide no es
+    el desempeño del artefacto, sino el número de interlocutores alcanzables.}
+    IPv6 nació con ese valor en cero y IPv4 lo tenía en el cien por cien. Ninguna
+    ventaja en las demás figuras de mérito compensa esa diferencia inicial
+    \parencite{arthur1989,david1985}.
+  \item \textbf{Sin compatibilidad hacia atrás no hay adopción incremental.}
+    Cuando el adoptante paga el coste completo y no obtiene beneficio hasta que
+    el otro extremo también migra, la decisión racional individual es esperar,
+    aunque la migración colectiva sea óptima. \textcite{farrell1985} llaman a
+    esto \emph{inercia excesiva}, y es el resultado de equilibrio, no una
+    patología de gestión.
+  \item \textbf{El titular puede mover su propia curva.} La respuesta del
+    incumbente no tiene por qué ser adoptar al invasor: puede ser mejorar
+    precisamente en el FOM que justificaba al invasor. Es el llamado
+    \emph{efecto vela}, un fenómeno discutido en sus casos clásicos
+    \parencite{howells2002,mendonca2013}, pero que aquí aparece fechado,
+    documentado y con número de norma.
+\end{enumerate}
+
+\section{Panorama: dos curvas en S que nunca se cruzan}
+
+La Figura~\ref{fig:curvas} representa el proceso completo. Como FOM del eje
+vertical uso la \textbf{fracción de usuarios que puede utilizar el protocolo de
+forma nativa}, porque es el único atributo comparable entre las dos transiciones
+y porque es, precisamente, el atributo que gobierna las externalidades de red.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    % --- rejilla y eje vertical ---
+    \foreach \yv/\lab in {0/{0}, 1.25/{25}, 2.5/{50}, 3.75/{75}, 5.0/{100}} {
+      \draw[gray!20] (-0.1,\yv) -- (13.60,\yv);
+      \node[left, font=\scriptsize, gray!55!black] at (-0.15,\yv) {\lab\,\%};
+    }
+    \draw[-{Stealth[length=2mm]}, gray!60!black] (-0.1,-0.05) -- (-0.1,5.55);
+    \node[rotate=90, font=\scriptsize, gray!55!black, align=center]
+      at (-1.15,2.5) {Usuarios que pueden usar\\el protocolo de forma nativa};
+    % --- eje de tiempo con corte ---
+    \draw[gray!60!black] (-0.1,0) -- (3.20,0);
+    \draw[-{Stealth[length=2mm]}, gray!60!black] (3.60,0) -- (13.60,0);
+    \draw[gray!60!black] (3.28,-0.12) -- (3.40,0.12);
+    \draw[gray!60!black] (3.36,-0.12) -- (3.48,0.12);
+    \foreach \xv/\lab in {0.237/1983, 1.067/1990, 1.659/1995, 2.252/2000,
+                          2.844/2005} {
+      \draw[gray!60!black] (\xv,0) -- (\xv,-0.13);
+      \node[below, font=\tiny, gray!55!black] at (\xv,-0.13) {\lab};
+    }
+    \foreach \xv/\lab in {4.213/2010, 5.744/2015, 7.275/2020, 8.806/2025,
+                          10.338/2030, 11.869/2035, 13.400/2040} {
+      \draw[gray!60!black] (\xv,0) -- (\xv,-0.13);
+      \node[below, font=\tiny, gray!55!black] at (\xv,-0.13) {\lab};
+    }
+    \node[font=\tiny, gray!55!black, align=center] at (1.75,-0.62)
+      {escala comprimida};
+    \node[font=\tiny, gray!55!black, align=center] at (11.60,-0.62)
+      {proyección};
+    % --- IPv4 ---
+    \draw[very thick, cIPv4] (0,0) -- (0.178,0.50) -- (0.296,5.0) -- (3.20,5.0);
+    \draw[very thick, cIPv4] (3.60,5.0) -- (13.60,5.0);
+    \draw[cIPv4!70, thin] (0.296,4.55) -- (0.80,3.55);
+    \node[font=\tiny, cIPv4, align=left, right] at (0.72,3.30)
+      {1 de enero de 1983: unos 400 servidores\\[-0.25em]
+       cambian de protocolo en un solo día};
+    \node[font=\scriptsize, cIPv4, below] at (11.35,4.96)
+      {IPv4: 100\,\% desde 1983, sin descenso};
+    % --- publicación de IPv6 ---
+    \draw[cIPv6!70, densely dotted, thick] (1.659,0) -- (1.659,1.45);
+    \node[font=\tiny, cIPv6, align=center, above] at (1.659,1.45)
+      {RFC 1883\\[-0.3em] dic. 1995};
+    % --- IPv6, medición de Google ---
+    \draw[very thick, cIPv6] (3.6000,0.0082) -- (3.9062,0.0110)
+      -- (4.2125,0.0122) -- (4.5187,0.0157) -- (4.8250,0.0342)
+      -- (5.1312,0.0778) -- (5.4375,0.1798) -- (5.7438,0.3348)
+      -- (6.0500,0.5492) -- (6.3563,0.8406) -- (6.6625,1.0597)
+      -- (6.9688,1.2744) -- (7.2750,1.4971) -- (7.5813,1.6668)
+      -- (7.8875,1.8807) -- (8.1937,2.0509) -- (8.5000,2.1714)
+      -- (8.8063,2.2920) -- (9.1125,2.3561);
+    \foreach \x/\y in {5.7438/0.3348, 6.3563/0.8406, 6.9688/1.2744,
+                       7.5813/1.6668, 8.1937/2.0509, 8.8063/2.2920,
+                       9.1125/2.3561} {
+      \fill[cIPv6] (\x,\y) circle (1.7pt);
+    }
+    % --- IPv6, medición de APNIC ---
+    \draw[thick, cApnic, dashed] (5.1312,0.0699) -- (5.4375,0.1108)
+      -- (5.7438,0.2055) -- (6.0500,0.3239) -- (6.3563,0.6741)
+      -- (6.6625,0.8723) -- (6.9688,1.0847) -- (7.2750,1.2856)
+      -- (7.5813,1.3995) -- (7.8875,1.5531) -- (8.1937,1.7432)
+      -- (8.5000,1.9010) -- (8.8063,2.0385) -- (9.1125,2.1487);
+    \fill[cApnic] (9.1125,2.1487) circle (1.7pt);
+    \node[font=\tiny, cApnic, below right=-0.4mm and 0.3mm] at (9.1125,2.1487)
+      {43,0\,\%};
+    \node[font=\tiny, cIPv6, above left=-0.5mm and -0.5mm] at (9.1125,2.3561)
+      {47,1\,\%};
+    % --- proyecciones ---
+    \draw[thick, cIPv6, densely dashed] (9.1125,2.3561) -- (13.40,4.3379);
+    \draw[-{Stealth[length=2mm]}, thick, cIPv6, densely dashed]
+      (13.40,4.3379) -- (13.60,4.43);
+    \node[font=\tiny, cIPv6, rotate=27, above] at (11.60,3.30)
+      {extrapolación lineal: 100\,\% en 2045};
+    \draw[cIPv6!55, dotted, thick] (9.1125,2.3775) -- (13.55,2.3775);
+    \node[font=\tiny, cIPv6!75!black, below right] at (10.60,2.36)
+      {asíntota del ajuste logístico: 47,6\,\%};
+    % --- umbral del 50% ---
+    \draw[red!65!black, thick, densely dotted] (9.05,2.5) -- (13.55,2.5);
+    \draw[red!65!black, thick] (9.186,2.5) circle (3.0pt);
+    \draw[red!65!black, thin] (9.10,2.66) -- (8.55,3.30);
+    \node[font=\scriptsize, red!65!black, align=center, above left=-0.5mm and -1mm]
+      at (8.55,3.30) {28 de marzo de 2026:\\[-0.3em] \tiny primer día por encima
+      del 50\,\%};
+    % --- leyenda ---
+    \begin{scope}[shift={(3.90,5.38)}]
+      \draw[very thick, cIPv4] (0,0) -- (0.45,0);
+      \node[right, font=\tiny] at (0.5,0) {IPv4};
+      \draw[very thick, cIPv6] (1.55,0) -- (2.00,0);
+      \node[right, font=\tiny] at (2.05,0) {IPv6, medición de Google};
+      \draw[thick, cApnic, dashed] (5.30,0) -- (5.75,0);
+      \node[right, font=\tiny] at (5.80,0) {IPv6, medición de APNIC Labs};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Curvas en S de las dos transiciones de protocolo de Internet sobre un
+  mismo FOM. La curva de IPv4 recoge el cambio de NCP a TCP/IP planificado en
+  \textcite{rfc801} y ejecutado el 1 de enero de 1983 sobre unos 400 servidores.
+  La de IPv6 son las medias anuales de las dos series públicas de medición: la
+  de Google, diaria desde el 4 de septiembre de 2008 \parencite{googlev6}, y la
+  de APNIC Labs, suavizada a 30 días desde el 7 de octubre de 2013
+  \parencite{apnicv6}, ambas descargadas el 15 de agosto de 2026. La
+  extrapolación lineal es la regresión de los últimos cinco años de la serie de
+  Google, con pendiente de 2,73 puntos porcentuales por año. La asíntota
+  logística procede de ajustar $L/(1+e^{-k(t-t_0)})$ a los \num{6552} datos
+  diarios por mínimos cuadrados. Ambas extrapolaciones se discuten en la
+  sección de precisiones y limitaciones. Elaboración propia.}
+  \label{fig:curvas}
+\end{figure}
+
+Tres lecturas inmediatas de la figura, que las secciones siguientes desarrollan.
+
+\textbf{Primera: el cruce no ha ocurrido, y la comparación de las dos
+transiciones es de otro orden.} El paso de NCP a TCP/IP se planificó en noviembre
+de 1981 \parencite{rfc801} y se ejecutó el 1 de enero de 1983, en un día
+señalado, sobre unos 400 servidores. La transición a IPv6 lleva desde 1995 y
+alcanza al 47 por ciento de unos \num{6100} millones de usuarios
+\parencite{itu2025}. La diferencia entre las dos curvas no mide la calidad de los
+protocolos: mide el tamaño de la red que hay que coordinar.
+
+\textbf{Segunda: la curva del titular nunca baja.} Esta es la anomalía central
+del caso. En una sustitución tecnológica normal, la curva del invasor sube
+mientras la del titular cae. Aquí IPv6 sube y IPv4 sigue en el cien por cien,
+porque el 47 por ciento que usa IPv6 lo hace en \emph{doble pila}, manteniendo
+IPv4 en paralelo, o bien atravesando un traductor hacia IPv4. En ambos casos IPv4
+sigue haciendo falta. No hay sustitución, hay adición, y la adición cuesta dinero
+en lugar de ahorrarlo.
+
+\textbf{Tercera: la curva de IPv6 ya perdió velocidad.} El incremento anual
+máximo se alcanzó entre 2016 y 2017, con 5,83 puntos porcentuales, y en los dos
+últimos años ha sido de 2,41 puntos. Un ajuste logístico a la serie completa de
+Google sitúa el punto de inflexión en abril de 2019 y la asíntota en el 47,6 por
+ciento; el mismo ajuste sobre la serie independiente de APNIC Labs sitúa la
+inflexión en octubre de 2019 y la asíntota en el 43,3 por ciento. Es decir, dos
+sistemas de medición distintos, con metodologías distintas, coinciden en que la
+curvatura ya es negativa.
+
+\section{La tecnología establecida: IPv4 con traducción de direcciones}
+
+\subsection*{01. El desempeño que la hizo dominante}
+
+IPv4 define una dirección de 32 bits, lo que produce un espacio de
+\num{4294967296} direcciones \parencite{rfc791}. Con unos \num{6100} millones de
+usuarios de Internet en 2026 \parencite{itu2025}, eso equivale a 0,70 direcciones
+por usuario antes de contar servidores, routers, sensores ni teléfonos. El
+espacio es, en sentido estricto, insuficiente, y lo es desde hace más de una
+década: IANA agotó su reserva central el 3 de febrero de 2011 y las cinco
+autoridades regionales fueron agotando la suya a partir de esa fecha, empezando
+por APNIC en abril de 2011 \parencite{nro2026}.
+
+Lo relevante para la gestión tecnológica no es que se agotara, sino lo poco que
+pasó cuando se agotó. La razón es que el FOM que decide no era el número de
+direcciones asignables, sino el número de dispositivos que se pueden conectar, y
+esos dos números dejaron de ser el mismo en 1994.
+
+\subsection*{02. El titular que mejora en el FOM del invasor}
+
+La secuencia de remiendos de IPv4 está fechada y numerada, y es el argumento más
+fuerte del caso:
+
+\begin{itemize}
+  \item \textbf{Septiembre de 1993}: CIDR elimina las clases de direcciones y
+    permite asignar bloques del tamaño realmente necesario \parencite{rfc1519}.
+  \item \textbf{Mayo de 1994}: NAT permite que muchas máquinas compartan una sola
+    dirección pública multiplexando puertos \parencite{rfc1631}, formalizado
+    después en \textcite{rfc3022}.
+  \item \textbf{Febrero de 1996}: RFC 1918 reserva tres bloques privados, de modo
+    que el direccionamiento interno deja de consumir espacio público
+    \parencite{rfc1918}.
+  \item \textbf{Abril de 2012}: RFC 6598 reserva el bloque \texttt{100.64.0.0/10}
+    para NAT de operador, la CGNAT, que lleva el mismo truco al nivel del
+    proveedor de acceso \parencite{rfc6598}.
+\end{itemize}
+
+Las dos primeras son anteriores a IPv6 y la tercera es prácticamente simultánea.
+El efecto agregado es que IPv4 dejó de tener un techo duro de direcciones: un
+operador que asigna una dirección pública por cada 64 abonados multiplica por 64
+su capacidad, y la penalización principal es el número de puertos disponibles por
+abonado, que cae de unos \num{64512} a unos \num{1024}
+\parencite{rfc7021,ipv4global2025}.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    % ---------------- panel A: cronología comparada ----------------
+    \node[font=\scriptsize\itshape, gray!35!black, right] at (-0.1,2.55)
+      {Panel A. La carrera entre el sucesor y el remiendo};
+    \draw[gray!60!black] (0,0.75) -- (13.30,0.75);
+    \foreach \xv/\lab in {0/1990, 2.321/1995, 4.643/2000, 6.964/2005,
+                          9.286/2010, 11.607/2015} {
+      \draw[gray!60!black] (\xv,0.75) -- (\xv,0.62);
+      \node[below, font=\tiny, gray!55!black] at (\xv,0.62) {\lab};
+    }
+    % --- pista superior: IPv6 ---
+    \foreach \xv/\lab in {2.763/{RFC 1883\\IPv6}, 4.156/{RFC 2460},
+                          10.415/{World IPv6\\Launch}, 12.771/{RFC 8200\\STD 86}} {
+      \draw[cIPv6, thick] (\xv,0.75) -- (\xv,1.15);
+      \fill[cIPv6] (\xv,1.15) circle (1.7pt);
+      \node[above, font=\tiny, cIPv6, align=center] at (\xv,1.20) {\lab};
+    }
+    % --- pista inferior: remiendos de IPv4, a dos profundidades ---
+    \foreach \xv/\lab in {2.833/{RFC 1918\\privadas},
+                          5.108/{RFC 3022}, 10.354/{RFC 6598\\CGNAT}} {
+      \draw[cNAT, thick] (\xv,0.75) -- (\xv,0.42);
+      \fill[cNAT] (\xv,0.42) circle (1.7pt);
+      \node[below, font=\tiny, cNAT, align=center] at (\xv,0.37) {\lab};
+    }
+    \draw[cNAT, thick] (1.718,0.75) -- (1.718,0.42);
+    \fill[cNAT] (1.718,0.42) circle (1.7pt);
+    \node[anchor=north east, font=\tiny, cNAT, align=right] at (1.80,0.37)
+      {RFC 1519\\CIDR};
+    \draw[cNAT, very thick] (2.042,0.75) -- (2.042,-0.34);
+    \fill[cNAT] (2.042,-0.34) circle (2.2pt);
+    \node[below, font=\tiny, cNAT, align=center] at (2.042,-0.39)
+      {RFC 1631\\\textbf{NAT}};
+    \draw[gray!55, thick] (9.797,0.75) -- (9.797,2.00);
+    \fill[gray!55!black] (9.797,2.00) circle (1.7pt);
+    \node[above, font=\tiny, gray!35!black, align=center] at (9.797,2.05)
+      {agotamiento de IANA};
+    % --- llave del adelanto ---
+    \draw[red!45, dotted] (2.042,0.78) -- (2.042,2.05);
+    \draw[red!45, dotted] (2.763,1.66) -- (2.763,2.05);
+    \draw[{Stealth[length=1.6mm]}-{Stealth[length=1.6mm]}, red!65!black, thick]
+      (2.042,2.10) -- (2.763,2.10);
+    \node[font=\tiny, red!65!black, align=left, right] at (2.86,2.10)
+      {NAT se publicó \textbf{diecinueve meses antes} que IPv6};
+
+    % ---------------- panel B: precio de una dirección IPv4 ----------
+    \begin{scope}[shift={(0,-4.55)}]
+      \node[font=\scriptsize\itshape, gray!35!black, right] at (-0.1,3.00)
+        {Panel B. Precio de mercado de una dirección IPv4, en dólares};
+      \foreach \yv/\lab in {0/0, 0.867/20, 1.733/40, 2.600/60} {
+        \draw[gray!20] (0,\yv) -- (13.30,\yv);
+        \node[left, font=\tiny, gray!55!black] at (-0.05,\yv) {\lab};
+      }
+      \draw[gray!60!black] (0,0) -- (13.30,0);
+      \foreach \xv/\lab in {1.857/2021, 3.714/2022, 5.571/2023, 7.429/2024,
+                            9.286/2025, 11.143/2026} {
+        \draw[gray!60!black] (\xv,0) -- (\xv,-0.13);
+        \node[below, font=\tiny, gray!55!black] at (\xv,-0.13) {\lab};
+      }
+      \fill[cNAT!14] (1.764,1.170) -- (3.621,2.383) -- (5.571,2.253)
+        -- (9.471,1.430) -- (11.050,0.953) -- (11.886,0.848)
+        -- (11.886,0) -- (1.764,0) -- cycle;
+      \draw[very thick, cNAT] (1.764,1.170) -- (3.621,2.383) -- (5.571,2.253)
+        -- (9.471,1.430) -- (11.050,0.953) -- (11.886,0.848);
+      \foreach \x/\y in {1.764/1.170, 3.621/2.383, 5.571/2.253, 9.471/1.430,
+                         11.050/0.953, 11.886/0.848} {
+        \fill[cNAT] (\x,\y) circle (1.7pt);
+      }
+      \node[font=\tiny, cNAT, above] at (3.621,2.44) {máximo: 55};
+      \node[font=\tiny, cNAT, right] at (11.98,0.848) {19,57};
+      \node[font=\scriptsize, red!65!black, align=center]
+        at (9.55,2.32) {la escasez se relaja,\\[-0.3em] no se agrava};
+      \draw[-{Stealth[length=2mm]}, thick, red!65!black]
+        (10.35,1.98) -- (11.30,1.05);
+    \end{scope}
+  \end{tikzpicture}
+  \caption{El contrainvasor. Panel A: fechas de publicación de las normas del
+  IETF. Las de la pista inferior mejoran a IPv4 en la única figura de mérito que
+  justificaba a IPv6, y dos de ellas son anteriores a la especificación del
+  sucesor. Panel B: precio medio de una dirección IPv4 en el mercado secundario.
+  Los valores de 2020 a 2025 proceden del análisis anual de
+  \textcite{huston2026a}, que informa de máximos de 45 a 60 dólares en 2023, de
+  26 a 40 a comienzos de 2025 y de una media de unos 22 dólares al cierre de
+  2025; los de 2026 proceden de los informes mensuales elaborados sobre los datos
+  de transacciones de IPv4.Global \parencite{ipv4center2026,circleid2026}. Es un
+  mercado opaco, con precios muy dispersos según el tamaño del bloque, hasta el
+  punto de que los bloques de \texttt{/16} o mayores cotizaban por debajo de 10
+  dólares en febrero de 2026: los valores deben leerse como orden de magnitud y
+  tendencia, no como una serie de precio único. Elaboración propia.}
+  \label{fig:contra}
+\end{figure}
+
+El Panel B de la Figura~\ref{fig:contra} cierra el argumento económico. Si la
+escasez de direcciones IPv4 fuera creciente, el precio subiría y en algún momento
+haría racional migrar. Lo que muestran los datos de mercado es lo contrario: el
+precio tocó techo alrededor de los 55 dólares por dirección a finales de 2021 y
+ha caído desde entonces hasta unos 20 dólares en 2026, un descenso interanual del
+39 por ciento en enero de ese año \parencite{ipv4center2026}. El único motor
+económico que quedaba para la migración se está apagando.
+
+\section{El invasor: IPv6}
+
+\subsection*{01. En qué es superior, y por cuánto}
+
+IPv6 gana en casi todo lo que se puede medir. El espacio de direcciones pasa de
+32 a 128 bits, de \num{4294967296} a $3{,}40\times10^{38}$, un factor de
+$2^{96}$, es decir $7{,}92\times10^{28}$. La cabecera pasa de doce campos de
+longitud variable a ocho campos de longitud fija de 40 octetos, elimina la suma
+de comprobación que IPv4 obliga a recalcular en cada salto y prohíbe que los
+routers intermedios fragmenten paquetes \parencite{rfc791,rfc8200}. Añade
+autoconfiguración sin servidor \parencite{rfc4862}. Y la agregación funciona:
+el 15 de agosto de 2026 la tabla de rutas global de IPv4 tenía \num{1116753}
+entradas frente a \num{260375} de IPv6 \parencite{potaroo2026}, es decir IPv6
+transporta $7{,}9\times10^{28}$ veces más espacio de direcciones con una cuarta parte de las
+entradas de encaminamiento.
+
+\subsection*{02. En qué no es superior, y por qué eso lo decidió todo}
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    % ---------------- panel A: espacio de direcciones ----------------
+    \node[font=\scriptsize\itshape, gray!35!black, right] at (-4.95,1.35)
+      {Panel A. La figura de mérito que no cabe en el mismo eje};
+    \foreach \e in {0,5,...,30} {
+      \pgfmathsetmacro{\xg}{0.30*\e}
+      \draw[gray!25] (\xg,-0.40) -- (\xg,0.90);
+      \node[below, font=\tiny, gray!55!black] at (\xg,-0.40) {$10^{\e}$};
+    }
+    \node[left, text width=4.7cm, align=right, font=\scriptsize] at (-0.22,0.32)
+      {Espacio de direcciones\\\tiny (razón entre IPv6 e IPv4)};
+    \fill[cIPv6] (0,0.15) rectangle (8.670,0.49);
+    \node[right, font=\scriptsize] at (8.77,0.32) {$7{,}92\times10^{28}$};
+
+    % ---------------- panel B: las demás ----------------
+    \begin{scope}[shift={(0,-5.35)}]
+      \node[font=\scriptsize\itshape, gray!35!black, right] at (-4.95,3.55)
+        {Panel B. Las figuras de mérito que sí caben, y que decidieron el
+         resultado};
+      \foreach \xv/\lab in {0.818/{0,1}, 2.446/{0,25}, 3.677/{0,5},
+                            4.909/{1}, 6.140/{2}, 7.771/{5}, 9.000/{10}} {
+        \draw[gray!22] (\xv,-0.50) -- (\xv,3.15);
+        \node[below, font=\tiny, gray!55!black] at (\xv,-0.50) {\lab};
+      }
+      \draw[gray!60!black, thick] (4.909,-0.50) -- (4.909,3.15);
+      \node[above, font=\tiny, gray!45!black] at (4.909,3.17) {paridad};
+      \razonbar{2.85}{7.494}{cIPv6}{Tabla de rutas global\\\tiny
+        (\num{1116753} frente a \num{260375} entradas; menor es mejor)}{4,29}
+      \razonbar{1.90}{5.629}{cIPv6}{Campos de la cabecera\\\tiny (12 frente a 8;
+        menor es mejor)}{1,50}
+      \razonbar{0.95}{4.840}{cIPv6!45}{Tiempo de ida y vuelta\\\tiny (medido en
+        redes de doble pila nativo)}{$\approx$ 1,0}
+      \razonbar{0.00}{3.677}{cNAT}{Sobrecarga por paquete\\\tiny (20 frente a 40
+        octetos de cabecera; menor es mejor)}{0,50}
+      \node[left, text width=4.7cm, align=right, font=\scriptsize]
+        at (-0.22,-1.15) {Interlocutores alcanzables en 1995\\\tiny (el FOM que
+        gobierna la adopción)};
+      \draw[-{Stealth[length=2mm]}, very thick, red!65!black]
+        (4.909,-1.15) -- (0.30,-1.15);
+      \node[right, font=\scriptsize, red!65!black] at (5.05,-1.15)
+        {$\rightarrow$ 0: fuera de escala por la izquierda};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Perfil de figuras de mérito de IPv6 expresado como razón frente a
+  IPv4, sobre ejes logarítmicos. \notarazon{} Las razones se han orientado de
+  modo que un valor mayor que uno signifique siempre ventaja de IPv6. Panel A: la
+  ventaja en espacio de direcciones es de 29 órdenes de magnitud y no cabe en el
+  mismo eje que las demás. Panel B: el resto de las figuras de mérito se mueve
+  entre 0,5 y 4,3, y en dos de ellas IPv6 empata o pierde. La sobrecarga de
+  cabecera es peor por diseño, porque la cabecera fija de 40 octetos duplica los
+  20 octetos mínimos de IPv4 \parencite{rfc791,rfc8200}. El tiempo de ida y
+  vuelta se sitúa en la paridad: \textcite{howard2019} encuentra que las
+  operadoras de doble pila nativo miden esencialmente la misma velocidad en los
+  dos protocolos. La última fila no es una razón medida sino el valor que tomaba
+  el FOM decisivo el día en que se publicó IPv6. Elaboración propia.}
+  \label{fig:razon}
+\end{figure}
+
+La Figura~\ref{fig:razon} contiene, a mi juicio, la explicación completa del
+caso. Leída de arriba a abajo dice tres cosas.
+
+\textbf{La ventaja de IPv6 está concentrada en una sola figura de mérito.} Es
+enorme, 29 órdenes de magnitud, pero es una sola, y es además la única que el
+usuario final no puede percibir. Nadie nota que su proveedor tiene direcciones de
+sobra.
+
+\textbf{En las demás, IPv6 empata o pierde.} La cabecera fija de 40 octetos
+duplica los 20 octetos mínimos de IPv4, de modo que en enlaces con paquetes
+pequeños IPv6 desperdicia más ancho de banda. En velocidad no hay diferencia
+apreciable en redes de doble pila nativo \parencite{howard2019}. Geoff Huston, el
+científico jefe de APNIC, lo resume sin rodeos: IPv6 \enquote{no era más rápido,
+ni más versátil, ni más seguro que IPv4} \parencite{huston2024}. Su único
+beneficio real era mitigar un riesgo futuro, y los riesgos futuros no se
+presupuestan.
+
+\textbf{La figura de mérito que decidió el resultado valía cero.} IPv6 no es
+compatible hacia atrás con IPv4: una máquina que solo hable IPv6 no puede
+comunicarse con una que solo hable IPv4 sin un traductor intermedio. Esto no es
+una consecuencia imprevista, sino una decisión de diseño que el propio organismo
+reconoció después. En un panel del IETF en San Francisco en marzo de 2009, Leslie
+Daigle, entonces directora de tecnología de Internet de la Internet Society,
+declaró que \enquote{la falta de compatibilidad real hacia atrás con IPv4 fue el
+único fallo crítico} \parencite{daigle2009}.
+
+\subsection*{03. La consecuencia: nadie migra, todos suman}
+
+La estrategia de transición prevista era la doble pila: añadir IPv6 sin quitar
+IPv4 y apagar IPv4 más adelante. La primera mitad se ha cumplido, la segunda no.
+El resultado es que el adoptante de IPv6 no ahorra nada: sigue necesitando su
+parque de direcciones IPv4, sigue manteniendo la CGNAT y ahora además opera un
+segundo protocolo, con su propio plan de direccionamiento, sus propias reglas de
+cortafuegos y su propia formación. El coste es individual, inmediato y cierto; el
+beneficio es colectivo, futuro e incierto. Es la definición de inercia excesiva
+de \textcite{farrell1985}, y la conclusión a la que llega también el análisis
+económico de la \textcite{oecd2014} y el estudio de adopción por actores de
+\textcite{nikkhah2016}.
+
+\section{La distribución que la media esconde}
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    \foreach \xv/\lab in {0/0, 1.455/10, 2.910/20, 4.365/30, 5.820/40,
+                          7.275/50} {
+      \draw[gray!22] (\xv,-0.40) -- (\xv,3.40);
+      \node[below, font=\tiny, gray!55!black] at (\xv,-0.40) {\lab\,\%};
+    }
+    \draw[red!65!black, thick, densely dashed] (6.294,-0.40) -- (6.294,3.40);
+    \foreach \y/\x/\lab/\v in {%
+      3.0/7.319/{Asia}/{50,30},
+      2.4/7.222/{Américas}/{49,64},
+      1.8/6.012/{Oceanía}/{41,32},
+      1.2/5.110/{Europa}/{35,12},
+      0.6/0.968/{África}/{6,65}} {
+      \node[left, font=\scriptsize] at (-0.12,\y) {\lab};
+      \fill[cIPv6] (0,\y-0.18) rectangle (\x,\y+0.18);
+      \node[right, font=\scriptsize] at (7.45,\y) {\v\,\%};
+    }
+    \node[left, font=\scriptsize\bfseries] at (-0.12,0) {Mundo};
+    \fill[cIPv6!45] (0,-0.18) rectangle (6.294,0.18);
+    \node[right, font=\scriptsize\bfseries] at (7.45,0) {43,26\,\%};
+  \end{tikzpicture}
+  \caption{Usuarios con capacidad IPv6 por región, según la medición de APNIC
+  Labs del 15 de agosto de 2026 \parencite{apnicv6}. La línea discontinua marca
+  la media mundial. La distribución no es unimodal: Asia y las Américas han
+  superado el 49 por ciento mientras África se queda en el 6,65, de modo que la
+  media mundial no describe a ninguna región concreta. Elaboración propia.}
+  \label{fig:regiones}
+\end{figure}
+
+La media del 43 por ciento oculta una distribución muy desigual, que además
+invierte la intuición habitual: Asia y las Américas van por delante de Europa. La
+explicación que da \textcite{huston2026b} es económica y no técnica. Las redes que
+más han desplegado IPv6 son las móviles y las de incorporación reciente, como
+Reliance Jio en la India, porque nacieron sin una base instalada de direcciones
+IPv4 que amortizar. Quien ya tenía direcciones tenía un incentivo para
+rentabilizarlas; quien no las tenía encontraba más barato empezar en IPv6. La
+adopción no sigue al desarrollo económico, sigue a la ausencia de activos
+heredados.
+
+\section{¿Cuándo y por qué ocurrió?}
+
+El Cuadro~\ref{tab:crono} responde al \enquote{cuándo} y el
+Cuadro~\ref{tab:matriz} al \enquote{por qué}.
+
+\begin{table}[ht]
+  \centering
+  \small
+  \caption{Cronología verificada del proceso.}
+  \label{tab:crono}
+  \begin{tabularx}{\textwidth}{@{}l >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{Fecha} & \textbf{Hecho} \\
+    \midrule
+    09/1981 & RFC 791: especificación de IPv4, 32 bits de dirección
+      \parencite{rfc791} \\
+    11/1981 & RFC 801: plan de transición de NCP a TCP/IP, con fecha límite
+      \parencite{rfc801} \\
+    01/01/1983 & Día de la bandera: unos 400 servidores de ARPANET cambian de
+      protocolo \\
+    09/1993 & RFC 1519: CIDR elimina las clases de direcciones
+      \parencite{rfc1519} \\
+    05/1994 & \textbf{RFC 1631: NAT}, diecinueve meses antes que IPv6
+      \parencite{rfc1631} \\
+    12/1995 & RFC 1883: primera especificación de IPv6 \parencite{rfc1883} \\
+    02/1996 & RFC 1918: bloques de direccionamiento privado
+      \parencite{rfc1918} \\
+    12/1998 & RFC 2460: segunda especificación de IPv6 \parencite{rfc2460} \\
+    04/09/2008 & Google publica el primer dato de su serie: 0,14 por ciento
+      \parencite{googlev6} \\
+    03/02/2011 & IANA agota su reserva central de direcciones IPv4
+      \parencite{nro2026} \\
+    08/06/2011 & World IPv6 Day: prueba coordinada de 24 horas \\
+    06/06/2012 & World IPv6 Launch: activación permanente \parencite{isoc2012} \\
+    04/2012 & RFC 6598: bloque reservado para CGNAT \parencite{rfc6598} \\
+    07/2017 & RFC 8200: IPv6 pasa a ser norma de Internet, STD 86
+      \parencite{rfc8200} \\
+    12/2021 & Máximo histórico del precio de una dirección IPv4, unos 55 dólares \\
+    12/2025 & IPv6 cumple treinta años con menos de la mitad de los usuarios
+      \parencite{register2025} \\
+    28/03/2026 & \textbf{Primer día} en que la medición de Google supera el 50
+      por ciento, con 50,10 \parencite{googlev6} \\
+    12/08/2026 & Google mide 47,03 por ciento y APNIC Labs 43,16 por ciento
+      \parencite{googlev6,apnicv6} \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\begin{table}[ht]
+  \centering
+  \small
+  \caption{Matriz de figuras de mérito de los dos protocolos.}
+  \label{tab:matriz}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.27\textwidth}
+    >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X
+    >{\raggedright\arraybackslash}p{0.12\textwidth}@{}}
+    \toprule
+    \textbf{FOM} & \textbf{IPv4 (1981)} & \textbf{IPv6 (1995)}
+      & \textbf{Ventaja} \\
+    \midrule
+    Espacio de direcciones
+      & \num{4294967296} & $3{,}40\times10^{38}$ & IPv6, $\times 7{,}9\times10^{28}$ \\
+    Direcciones por usuario de Internet
+      & 0,70 & $5{,}6\times10^{28}$ & IPv6 \\
+    Longitud de la cabecera
+      & 20 a 60 octetos, variable & 40 octetos, fija & mixta \\
+    Campos de la cabecera
+      & 12 más opciones & 8 & IPv6 \\
+    Suma de comprobación por salto
+      & sí, se recalcula & no existe & IPv6 \\
+    Fragmentación en tránsito
+      & la hacen los routers & solo el origen & IPv6 \\
+    Autoconfiguración sin servidor
+      & no & sí (SLAAC) & IPv6 \\
+    Entradas en la tabla global
+      & \num{1116753} & \num{260375} & IPv6 \\
+    Sobrecarga por paquete
+      & 20 octetos mínimo & 40 octetos siempre & \textbf{IPv4} \\
+    Tiempo de ida y vuelta
+      & referencia & equivalente & ninguna \\
+    Compatibilidad con la base instalada
+      & total & \textbf{ninguna} & \textbf{IPv4} \\
+    Coste de una dirección
+      & unos 20 dólares & prácticamente cero & IPv6 \\
+    Usuarios que lo pueden usar
+      & 100 por ciento & 43 a 47 por ciento & \textbf{IPv4} \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Cinco mecanismos explican el \enquote{por qué}, y ninguno de ellos es la calidad
+del protocolo.
+
+\textbf{01. La compatibilidad hacia atrás es una figura de mérito, y era la
+única que importaba.} Un protocolo de red no vale por lo que hace, sino por con
+cuántos permite hablar. En ese eje IPv6 salió al mercado con el valor cero y su
+predecesor estaba en el cien por cien. Es el fallo que el propio IETF reconoció
+en 2009 \parencite{daigle2009}.
+
+\textbf{02. El beneficio es colectivo y el coste es individual.} Cada operador
+que despliega IPv6 asume el gasto completo y no puede apagar IPv4, porque sus
+clientes seguirían necesitando llegar a la mitad larga de los usuarios y de los
+servidores que aún no tienen IPv6. Esperar es la respuesta racional de cada actor por separado y el
+peor resultado para el conjunto \parencite{farrell1985,oecd2014,nikkhah2016}.
+
+\textbf{03. El titular mejoró justo en el FOM que justificaba al invasor.} CIDR
+en 1993, NAT en 1994, direccionamiento privado en 1996 y CGNAT en 2012
+convirtieron un techo duro de \num{4294967296} direcciones en un techo elástico.
+Este es el efecto vela en su forma más nítida, y con una precisión que los casos
+clásicos no tienen: aquí el remiendo lleva número de norma y fecha de
+publicación, y se adelantó diecinueve meses al sucesor.
+
+\textbf{04. El invasor no ganaba en ningún FOM perceptible por el usuario.} Ni
+más rápido, ni más seguro, ni más funcional \parencite{huston2024}. Una
+tecnología cuya única ventaja es evitar un problema que el usuario no ha sufrido
+todavía carece de argumento de venta.
+
+\textbf{05. El único motor económico se está apagando.} El precio de una
+dirección IPv4 cayó de unos 55 dólares a finales de 2021 a unos 20 en 2026
+\parencite{huston2026a,ipv4center2026}. La escasez, que era la última fuerza
+capaz de empujar la migración, se relaja en lugar de agravarse.
+
+\section{Precisiones y limitaciones}
+
+\begin{enumerate}
+  \item \textbf{Las dos extrapolaciones de la Figura~\ref{fig:curvas} se
+    contradicen y no puedo elegir entre ellas con estos datos.} El ajuste
+    logístico da una asíntota del 47,6 por ciento con la serie de Google y del
+    43,3 con la de APNIC Labs, es decir predice que la curva se detiene
+    aproximadamente donde ya está. La regresión lineal de los últimos cinco años
+    da 2,73 puntos porcentuales anuales y llega al cien por cien en 2045.
+    Sobre esos mismos cinco años, la recta ajusta ligeramente mejor que la
+    logística, con un error cuadrático medio de 1,81 puntos frente a 1,98. Además
+    la logística presenta sesgo positivo en los dos últimos años, de $+0{,}92$ y
+    $+1{,}42$ puntos, lo que indica que su asíntota está subestimada: ajustar una
+    logística a datos que acaban de pasar el punto de inflexión sitúa siempre la
+    asíntota cerca del valor actual. \textbf{La asíntota debe leerse como una
+    advertencia, no como un pronóstico.} Lo robusto es lo otro: el ritmo anual
+    cayó de 5,83 puntos en 2016 y 2017 a 2,41 en los dos últimos años, y a ese
+    ritmo la transición necesitaría veinte años más, esto es, más de cincuenta
+    desde la RFC 1883. Esa proyección coincide con la de \textcite{huston2024},
+    que sitúa el final en 2045 con datos y método distintos.
+  \item \textbf{Las tres mediciones públicas no coinciden y miden cosas
+    distintas.} Google mide accesos de usuarios a sus servicios, APNIC Labs
+    muestrea mediante anuncios publicitarios con ponderación por población y
+    Cloudflare mide tráfico transportado. En agosto de 2026 dan 47, 43 y unos 40
+    por ciento respectivamente. He usado las dos primeras porque publican la
+    serie completa en bruto; las conclusiones no dependen de cuál se elija,
+    porque la forma de las dos curvas es la misma.
+  \item \textbf{El titular del 50 por ciento es un pico de fin de semana, no un
+    nivel.} La serie de Google tiene un ciclo semanal marcado, con los sábados y
+    domingos 2,92 puntos por encima de los días laborables, porque en casa se
+    navega desde redes domésticas y móviles con más IPv6 que en las corporativas.
+    De los \num{6552} días de la serie, solo 15 superan el 50 por ciento y todos
+    son fines de semana; el 28 de marzo de 2026 fue sábado. La media móvil de 30
+    días nunca ha llegado al 50: su máximo histórico es 48,49 por ciento, el 9 de
+    agosto de 2026.
+  \item \textbf{El tramo de IPv4 anterior a 1990 es esquemático.} No existe una
+    serie continua del porcentaje de servidores migrados durante 1982 y 1983. La
+    forma casi vertical de la curva refleja el hecho documentado de que la
+    transición fue un cambio con fecha señalada \parencite{rfc801}, pero la
+    pendiente exacta no está medida.
+  \item \textbf{IPv6 no es un fracaso en términos absolutos.} Cuarenta y tres de
+    cada cien usuarios de un universo de \num{6100} millones son unos
+    \num{2600} millones de personas: es uno de los despliegues de infraestructura
+    más grandes de la historia. Lo que ha fracasado es la \emph{sustitución}, no
+    el despliegue. John Curran, presidente de ARIN, defiende justamente esa
+    lectura: IPv6 \enquote{no iba de apagar IPv4, sino de asegurar que Internet
+    pudiera seguir creciendo sin romperse} \parencite{register2025}.
+  \item \textbf{No puedo contrastar el contrafactual.} La tesis de que la
+    incompatibilidad hacia atrás fue la causa decisiva es coherente con la
+    teoría, con los datos y con el reconocimiento explícito del IETF, pero no es
+    comprobable: no existe una segunda Internet en la que se publicara un IPv6
+    compatible y podamos medir si se adoptó más rápido.
+  \item \textbf{El caso está abierto.} \textcite{huston2026a} señala que si la
+    presión de escasez volviera a crecer lo suficiente, la base con IPv6 podría
+    alcanzar el dominio de mercado y entonces el mercado de direcciones IPv4 se
+    hundiría rápidamente. Los datos actuales apuntan en la dirección contraria,
+    pero un cambio de régimen sigue siendo posible.
+\end{enumerate}
+
+\section*{Conclusiones}
+
+IPv6 es, casi con seguridad, el mejor ejemplo disponible de avance técnicamente
+superior que no se implementó a gran escala, y el enunciado admite una respuesta
+precisa.
+
+\textbf{Cuándo.} Nunca, y esa es la respuesta literal. En los \num{6552} días de
+la serie de Google, IPv6 ha superado el 50 por ciento de los usuarios en quince,
+todos ellos fines de semana, y la media móvil de 30 días nunca lo ha alcanzado.
+Treinta años después de su especificación, y nueve después de convertirse en
+norma de Internet, el sucesor no ha sustituido al predecesor en ningún momento
+de su historia. El titular no ha cedido un solo punto: sigue en el cien por
+cien.
+
+\textbf{Por qué.} Porque IPv6 era superior en la figura de mérito del artefacto y
+no en la figura de mérito del sistema. Ganaba por 29 órdenes de magnitud en
+espacio de direcciones, un atributo que el usuario no percibe, y valía cero en
+compatibilidad con la base instalada, el único atributo que gobierna la adopción
+de un protocolo de red. Mientras tanto, el titular no se defendió compitiendo en
+el terreno del invasor: mejoró en el suyo. CIDR, NAT y CGNAT convirtieron el
+techo de direcciones de IPv4 de rígido en elástico, y lo hicieron antes de que
+el sucesor existiera. Hoy, treinta años después, el precio de una dirección IPv4
+baja en lugar de subir, que es la señal de mercado de que la escasez que
+justificaba la migración ha dejado de apretar.
+
+La lección que me llevo como CTO se puede formular en una frase:
+\textbf{una tecnología que exige que todos se muevan a la vez no tiene una curva
+de adopción, tiene un problema de coordinación}, y los problemas de coordinación
+no se resuelven mejorando el producto. IPv6 dedicó treinta años a ser mejor
+cuando lo que necesitaba era ser compatible. Y hay un corolario todavía más
+incómodo para quien decide una hoja de ruta: \textbf{el paliativo que llega
+primero fija el calendario del sucesor}. NAT se publicó diecinueve meses antes
+que IPv6 y esos diecinueve meses de ventaja llevan tres décadas decidiendo el
+resultado.
+
+\printbibliography[title={Referencias bibliográficas}]
+
+\end{document}
