@@ -56,10 +56,41 @@ comprobaciones que cambiaron el contenido:
 Los años de introducción de cada molécula se declaran en la leyenda de la figura
 con una incertidumbre de uno o dos años.
 
+## Versión para el foro (TinyMCE)
+
+La plataforma del foro usa un editor WYSIWYG TinyMCE, que acepta contenido
+pegado desde el portapapeles con formato e imágenes incrustadas. El flujo es el
+mismo del Foro 5.3:
+
+```bash
+make html
+```
+
+`exportar-figuras.py` extrae los entornos `tikzpicture` de `main.tex`, los
+compila con la clase `standalone`, los convierte a PNG a 190 ppp, los optimiza
+con `pngquant` y `optipng` e incrusta el resultado en base64 dentro de
+`foro-5.4-tinymce.html`. Las imágenes del HTML no pueden desincronizarse del
+informe porque se regeneran siempre desde la misma fuente.
+
+Para publicar: abrir `foro-5.4-tinymce.html` en el navegador, seleccionar todo
+(Ctrl+A), copiar (Ctrl+C) y pegar en el editor del foro. La imagen viaja dentro
+del HTML, así que no hace falta subirla por separado.
+
+`foro-5.4.html` es la fuente editable, con la imagen referenciada como archivo.
+`foro-5.4-tinymce.html` es el artefacto generado y no debe editarse a mano.
+
+Diferencias respecto al PDF: las citas van resueltas en texto al estilo APA en
+lugar de generarse con Biber, y los estilos son inline en el `<head>` para que
+TinyMCE los conserve al pegar.
+
 ## Archivos
 
 - `main.tex`: comentario del foro.
 - `referencias.bib`: bibliografía (Biber/APA), 18 entradas.
+- `foro-5.4.html`: versión HTML editable, con la figura como archivo externo.
+- `foro-5.4-tinymce.html`: generado por `make html`, con la figura en base64.
+- `exportar-figuras.py`: exportador de figuras y ensamblador del HTML.
+- `figuras/figura-1.png`: figura exportada desde `main.tex`.
 - `notas-investigacion.md`: cifras verificadas con su fuente, base de redacción.
 - `context.txt`: enunciado del foro.
 - `Makefile`: tareas de compilación.
@@ -76,7 +107,10 @@ con una incertidumbre de uno o dos años.
 fc-match "Source Serif Pro"
 ```
 
-- `make`, `grep` y `poppler-tools` (`pdfinfo`) para las tareas automatizadas.
+- `make`, `grep` y `poppler-tools` (`pdfinfo`, `pdftoppm`) para las tareas
+  automatizadas.
+- Para `make html`: Python 3 y, de forma opcional, `pngquant` y `optipng`. Sin
+  ellos el HTML se genera igual, con las imágenes sin optimizar.
 
 La opción `es-noshorthands` de Babel evita una incompatibilidad conocida entre
 los caracteres abreviados de `babel-spanish` y `biblatex-apa`.
@@ -86,11 +120,13 @@ los caracteres abreviados de `babel-spanish` y `biblatex-apa`.
 ```bash
 make pdf
 make check
+make html
 ```
 
 El primer comando ejecuta la secuencia completa de LuaLaTeX y Biber. El segundo
 falla si el registro contiene advertencias, referencias sin resolver o problemas
-de composición. Para eliminar solo los archivos auxiliares:
+de composición. El tercero regenera la figura y el HTML para el foro. Para
+eliminar solo los archivos auxiliares:
 
 ```bash
 make clean
