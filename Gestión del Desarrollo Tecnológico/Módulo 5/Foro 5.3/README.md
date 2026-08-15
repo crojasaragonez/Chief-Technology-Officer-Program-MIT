@@ -70,13 +70,48 @@ Los precios del mercado de direcciones IPv4 se declaran como orden de magnitud y
 tendencia, no como serie de precio único, porque las fuentes disponibles son
 informes de intermediarios con dispersión alta según el tamaño del bloque.
 
+## Versión para el foro (TinyMCE)
+
+El foro se edita con TinyMCE, que acepta HTML pegado desde el navegador.
+
+1. Abrir **`foro-5.3-tinymce.html`** en el navegador.
+2. Seleccionar todo (`Ctrl+A`) y copiar (`Ctrl+C`).
+3. Pegar en el cuadro de texto del foro (`Ctrl+V`).
+
+Las cuatro figuras van incrustadas en base64 dentro del propio HTML, de modo que
+viajan con el portapapeles y no hay que subirlas por separado. Si la instalación
+concreta de TinyMCE filtra las imágenes en base64, están también sueltas en
+`figuras/figura-1.png` a `figura-4.png` para insertarlas con el botón de imagen
+del editor.
+
+El estilo va en un bloque `<style>`: al copiar desde el navegador, este aplica
+los estilos calculados a cada elemento, así que el formato (negritas, listas,
+bordes de las tablas) sobrevive al pegado.
+
+Los dos HTML **no se editan a mano**. `foro-5.3.html` es el maestro legible, con
+rutas relativas a las imágenes, y el que se pega se genera con:
+
+```bash
+make html
+```
+
+Esa orden extrae los entornos `tikzpicture` de `main.tex`, los compila con la
+clase `standalone`, los convierte a PNG, los optimiza con `pngquant` y `optipng`
+y los incrusta en `foro-5.3-tinymce.html`. Las figuras del foro no pueden, por
+tanto, desincronizarse de las del informe.
+
 ## Archivos
 
 - `main.tex`: informe.
 - `referencias.bib`: bibliografía (Biber/APA), 38 entradas, todas citadas.
 - `context.txt`: enunciado de la actividad.
-- `Makefile`: tareas de compilación.
+- `Makefile`: tareas de compilación (`pdf`, `html`, `check`, `clean`).
 - `main.pdf`: documento generado, 11 páginas.
+- `foro-5.3.html`: versión HTML del informe (maestro, con rutas relativas).
+- `foro-5.3-tinymce.html`: versión generada, con las imágenes incrustadas, para
+  copiar y pegar en el foro.
+- `exportar-figuras.py`: genera las dos cosas anteriores desde `main.tex`.
+- `figuras/`: las cuatro figuras en PNG, por si hay que subirlas a mano.
 
 ## Requisitos
 

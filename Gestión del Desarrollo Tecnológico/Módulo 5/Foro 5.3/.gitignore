@@ -27,3 +27,7 @@
 *~
 *.swp
 .DS_Store
+
+# Fuente intermedia de las figuras (la regenera `make html` desde main.tex)
+figuras.tex
+figuras.pdf
