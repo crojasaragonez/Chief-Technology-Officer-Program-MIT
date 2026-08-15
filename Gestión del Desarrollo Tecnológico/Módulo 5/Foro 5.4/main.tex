@@ -1,0 +1,403 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.3cm}
+% Los rótulos de la figura usan nodos de ancho fijo con texto alineado a la
+% derecha, y la bibliografía compone en modo sloppy: ambos generan avisos de
+% línea holgada que son cosméticos y no indican un problema de composición.
+% Se silencian para que `make check` siga siendo sensible a los desbordes reales.
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlist{nosep}
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy}
+
+\sisetup{
+  output-decimal-marker = {,},
+  group-separator = {.},
+  group-minimum-digits = 4,
+  detect-all
+}
+
+% Colores de las dos generaciones químicas
+\definecolor{cVieja}{RGB}{140,58,32}
+\definecolor{cNueva}{RGB}{40,110,120}
+
+% ---------------------------------------------------------------------------
+% Figura de uso aparente: eje logarítmico de 10^2 a 10^7 kg de ingrediente
+% activo. Posición horizontal: x = 1,9 * (log10(kg) - 2)
+% ---------------------------------------------------------------------------
+\newcommand{\molbar}[5]{%
+  \node[left, text width=3.9cm, align=right, font=\scriptsize] at (-0.15,#1) {#4};%
+  \fill[#3] (0,#1-0.15) rectangle (#2,#1+0.15);%
+  \node[right, font=\scriptsize] at (#2+0.10,#1) {#5};%
+}
+
+\title{\vspace{-1.2cm}\textbf{Química de 1962 aplicada en 2022}\\
+\large Por qué el registro de agroquímicos de Costa Rica mantiene viva
+una tecnología obsoleta}
+\author{Carlos Luis Rojas Aragonés\\
+\small Gestión del Desarrollo Tecnológico}
+\date{\small 15 de agosto de 2026}
+
+\begin{document}
+
+\maketitle
+\vspace{-0.6em}
+
+\section{Cómo la encontré}
+
+Partí de un titular que se repite cada año en la prensa costarricense: según
+FAOSTAT, Costa Rica encabeza el mundo en uso de plaguicidas por hectárea
+\parencite{semanario2023}. El titular por sí solo no dice nada sobre tecnología,
+así que fui a la fuente primaria, el informe de \emph{uso aparente} que publica
+el Servicio Fitosanitario del Estado con las importaciones y exportaciones de
+cada ingrediente activo \parencite{sfe2022}.
+
+Al abrir el cuadro por molécula apareció el caso. No es que Costa Rica use
+mucho plaguicida: es que \textbf{usa plaguicida antiguo}. De los 9,13 millones de
+kilogramos de ingrediente activo de uso aparente en 2022, \textbf{el 70\,\%
+corresponde a once moléculas comercializadas entre 1944 y 1974}. La química posterior
+a 1995, que es la que la industria considera el estado del arte, aparece en el
+mismo cuadro en cantidades de tres cifras. Es una tecnología teóricamente
+jubilada que sigue siendo, en la práctica, la única que se aplica.
+
+\section{La tecnología «obsoleta»}
+
+Hablo de la primera generación de plaguicidas orgánicos de síntesis, la que se
+desarrolló entre el final de la Segunda Guerra Mundial y los primeros años
+setenta. Sus tres familias representativas en Costa Rica son:
+
+\begin{itemize}
+  \item \textbf{Ditiocarbamatos}, con el \textbf{mancozeb} (1962) como fungicida
+    de contacto y acción multisitio.
+  \item \textbf{Organofosforados y carbamatos}, con el \textbf{diazinón} (1952),
+    el \textbf{clorpirifós} (1965), el \textbf{etoprofós} (1967) y el
+    \textbf{oxamil} (1974), inhibidores de la acetilcolinesterasa.
+  \item \textbf{Bipiridilos y fenilureas}, con el \textbf{paraquat} (1962) y el
+    \textbf{diurón} (1954) como herbicidas.
+\end{itemize}
+
+Sus figuras de mérito \parencite{deweck2022} son las propias de un diseño
+anterior a la biología molecular aplicada: actúan sobre procesos comunes a
+muchos organismos, no sobre una diana concreta de la plaga; por eso hay que
+aplicarlos en dosis de kilogramos por hectárea y por eso su toxicidad no
+discrimina entre la plaga, el aplicador y el organismo acuático. El informe del
+PNUD encuentra que 19 de los 21 plaguicidas más usados en el país, el 80\,\% del
+volumen total, califican como altamente peligrosos según los criterios FAO/OMS,
+y que de los 95 ingredientes activos asociados a efectos adversos para la salud
+que se usan en Costa Rica, \textbf{56 no están autorizados en la Unión Europea}
+\parencite{vargas2021}. Los dos fungicidas más representativos del bloque
+perdieron allí su aprobación por vía reglamentaria: el clorotalonil en 2019 y el
+mancozeb con vencimiento el 31 de enero de 2021
+\parencite{ue2019677,ue20202087}.
+
+\section{La tecnología llamada a reemplazarla}
+
+La sustituta lleva treinta años disponible. Es la química de \textbf{sitio
+único}, diseñada a partir del conocimiento del receptor concreto sobre el que
+actúa: las diamidas antranílicas como el \textbf{clorantraniliprol}, que abre el
+receptor de rianodina del insecto; los inhibidores de la biosíntesis de lípidos
+como el \textbf{espirotetramato}; las espinosinas de origen fermentativo como el
+\textbf{espinosad}; o las oxadiazinas como el \textbf{indoxacarb}. A su lado
+corre el control biológico y la aplicación de precisión.
+
+La mejora es de uno a dos órdenes de magnitud en la figura de mérito que importa,
+la \textbf{dosis de ingrediente activo por hectárea necesaria para obtener
+control}: entre \num{1500} y \num{2000} gramos por hectárea en el caso del
+mancozeb frente a entre 10 y 50 gramos en el del clorantraniliprol, según las
+dosis de etiqueta habituales. A eso se añade una toxicidad para mamíferos
+sustancialmente menor y una persistencia ambiental más corta.
+
+\section{El dato}
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    % --- rejilla logarítmica ---
+    \foreach \e in {2,3,4,5,6,7} {
+      \pgfmathsetmacro{\xg}{1.9*(\e-2)}
+      \draw[gray!22] (\xg,-0.30) -- (\xg,7.80);
+      \node[below, font=\tiny, gray!55!black] at (\xg,-0.32)
+        {$10^{\e}$};
+    }
+    \draw[gray!60!black] (0,-0.30) -- (9.5,-0.30);
+    % --- generación anterior a 1975 ---
+    \molbar{7.44}{8.590}{cVieja}{\textbf{Mancozeb} (1962)}{\num{3317217}}
+    \molbar{7.00}{7.456}{cVieja}{2,4-D (1944)}{\num{840053}}
+    \molbar{6.56}{7.194}{cVieja}{Diazinón (1952)}{\num{611566}}
+    \molbar{6.12}{6.820}{cVieja}{Diurón (1954)}{\num{388649}}
+    \molbar{5.68}{6.779}{cVieja}{Glifosato (1974)}{\num{369711}}
+    \molbar{5.24}{6.334}{cVieja}{Oxamil (1974)}{\num{215538}}
+    \molbar{4.80}{6.276}{cVieja}{Etoprofós (1967)}{\num{201096}}
+    \molbar{4.36}{6.073}{cVieja}{Paraquat (1962)}{\num{157245}}
+    \molbar{3.92}{6.019}{cVieja}{Clorpirifós (1965)}{\num{147258}}
+    \molbar{3.48}{5.832}{cVieja}{Carbendazina (1972)}{\num{117367}}
+    \molbar{3.04}{5.441}{cVieja}{Clorotalonil (1967)}{\num{73036}}
+    % --- separador ---
+    \draw[gray!45, densely dashed] (-4.15,2.71) -- (9.5,2.71);
+    % --- generación posterior a 1995 ---
+    \molbar{2.38}{3.655}{cNueva}{Espirotetramato (2007)}{\num{8385}}
+    \molbar{1.94}{1.897}{cNueva}{Flupiradifurona (2015)}{997}
+    \molbar{1.50}{1.367}{cNueva}{Espinosad (1997)}{524}
+    \molbar{1.06}{1.365}{cNueva}{\textbf{Clorantraniliprol} (2008)}{523}
+    \molbar{0.62}{1.037}{cNueva}{Acetamiprid (1995)}{351}
+    \molbar{0.18}{0.874}{cNueva}{Indoxacarb (2000)}{288}
+    % --- rótulos de bloque ---
+    \node[right, font=\scriptsize\itshape, cVieja] at (6.7,3.04)
+      {generación anterior a 1975};
+    \node[right, font=\scriptsize\itshape, cNueva] at (5.9,1.94)
+      {generación posterior a 1995};
+    \node[below, font=\scriptsize, gray!45!black] at (4.75,-0.72)
+      {Uso aparente en 2022, kilogramos de ingrediente activo (escala
+       logarítmica)};
+  \end{tikzpicture}
+  \caption{Uso aparente de ingredientes activos en Costa Rica durante 2022,
+  ordenado por volumen y separado por generación tecnológica. Elaboración propia
+  con los datos del cuadro 2 del informe AE-REG-INF-001 del Servicio
+  Fitosanitario del Estado \parencite{sfe2022}. Los años entre paréntesis
+  corresponden a la primera comercialización o al primer registro de la molécula
+  y tienen una incertidumbre de uno o dos años en varios casos; ninguna
+  conclusión del artículo depende de esa precisión.}
+  \label{fig:usoaparente}
+\end{figure}
+
+La Figura~\ref{fig:usoaparente} es el argumento entero en una imagen. El
+fungicida más usado del país es una molécula de 1962 y absorbe por sí solo el
+\textbf{36,3\,\%} de todo el ingrediente activo del año. La diamida moderna
+equivalente, clorantraniliprol, registra 523 kilogramos. La razón entre ambas es
+de \textbf{\num{6344} a 1} en masa.
+
+Esa razón exagera la diferencia real de superficie tratada, porque la dosis por
+hectárea de las dos moléculas no es comparable. Corregida por las dosis de
+etiqueta señaladas antes, la relación cae a un orden de \textbf{50 a 100
+hectáreas tratadas con química de 1962 por cada hectárea tratada con química de
+2008}. Sigue siendo un país que, cuarenta y seis años después de que existiera
+la alternativa, no la ha adoptado.
+
+\section{Por qué no se ha abandonado}
+
+\subsection*{01. La razón institucional: un registro asimétrico}
+
+Esta es la causa dominante y la que hace el caso interesante para la gestión
+tecnológica. En Costa Rica no existe una ley que prohíba importar moléculas
+nuevas. Existe algo más eficaz: un régimen de registro que \textbf{no le pide
+nada al producto viejo y se lo pide todo al producto nuevo}.
+
+\begin{itemize}
+  \item Los decretos ejecutivos 17557 (1986) y 24337 (1995) inscribieron
+    plaguicidas \textbf{sin fecha de vencimiento} y con requisitos de información
+    sobre peligrosidad que la propia Contraloría General de la República calificó
+    de omisos. Sobre el segundo dictaminó que \enquote{se torna prácticamente
+    inaplicable, por cuanto en muchas formas contradice, violenta, disminuye,
+    sustituye o elimina los principios y normas establecidas en el ordenamiento
+    jurídico} \parencite[citado en][]{vargas2021}.
+  \item El decreto 33495 de 2006 introdujo por fin la exigencia del paquete
+    completo de datos para el análisis de riesgo, pero \textbf{solo se aplica a
+    los registros nuevos} \parencite{decreto33495}.
+  \item La Ley 8702 de 2009 registró más de 400 plaguicidas con vigencia de diez
+    años \textbf{sin evaluación ambiental ni sanitaria}, y otorgó al primer
+    registrante diez años de protección de los datos de prueba, lo que cerró
+    también la entrada de los genéricos \parencite{ley8702,vargas2021}.
+\end{itemize}
+
+Conviene precisar que el Estado sí actúa, pero solo en una dirección. En 2004 se
+prohibieron por decreto 68 ingredientes activos y entre 2007 y 2008 se
+publicaron diez decretos más de prohibición o restricción
+\parencite{rojas2016}. El catálogo legal se encoge por un extremo sin que entre
+nada por el otro, que es la forma más rápida de convertir un régimen de
+protección en un régimen de congelación.
+
+El resultado, según los oficios del propio Servicio Fitosanitario, es que
+\textbf{\num{1884} plaguicidas formulados siguen comercializándose con el
+registro vencido o sin fecha de vencimiento}, sin una segunda revisión ni de su
+peligrosidad ni de su \emph{eficacia biológica}, pese a llevar quince, veinte,
+treinta y más años en el mercado \parencite{vargas2021}. Del otro lado, el
+Ministerio de Agricultura reconoció que el país pasó \textbf{veintiún años sin
+poder registrar moléculas nuevas más eficientes} \parencite{delfino2024}.
+
+\textcite{castrovargas2023} llaman a este equilibrio \emph{regulation by
+impasse}: no es una decisión de política, es un atasco que se reproduce solo,
+sostenido por la disputa entre ministerios, tribunales y autoridades
+regulatorias, y que ninguna de las partes tiene incentivo suficiente para
+resolver. Es exactamente el mecanismo de \emph{lock-in} descrito por
+\textcite{arthur1989}, con la diferencia de que aquí el rendimiento creciente
+que fija la trayectoria no es de mercado, sino administrativo.
+
+La reforma llegó en diciembre de 2022 con el decreto 43838, que permite
+homologar el registro ya otorgado en países de la OCDE \parencite{decreto43838}.
+El tamaño de su efecto mide el tamaño del atasco previo: a octubre de 2024 se
+habían registrado 39 productos, de los cuales 34 por homologación y
+\textbf{solo 6 eran moléculas nuevas} \parencite{delfino2024}.
+
+\subsection*{02. La razón económica: el genérico fuera de patente}
+
+Las once moléculas del bloque superior de la figura están fuera de patente desde
+hace décadas, se fabrican en varias plantas asiáticas y compiten solo por precio.
+Las seis del bloque inferior son productos propietarios. El diferencial de coste
+por hectárea tratada es de varias veces, y se compara contra un ingreso por
+hectárea que no ha crecido en la misma proporción. Para el productor, el cálculo
+es inmediato y correcto.
+
+La oferta comercial refuerza el sesgo: el mancozeb acumula 839 registros de
+producto formulado en el país y el paraquat 712 \parencite{vargas2021}. Cambiar
+de molécula significa cambiar de proveedor, de distribuidor y de crédito de
+insumos, no solo de envase.
+
+\subsection*{03. La razón de conocimiento: 1 extensionista por cada 1.415
+productores}
+
+La química de sitio único exige saber qué plaga se tiene y en qué estadio, porque
+fuera de su espectro simplemente no funciona. El producto de amplio espectro
+perdona el error de diagnóstico. Y Costa Rica cuenta con unos 200 extensionistas
+para unos \num{238000} productores, es decir un agente por cada \num{1415}
+\parencite{delfino2023}. Cuando el servicio de extensión no existe, la tecnología
+que sobrevive es la que tolera la ignorancia sobre la plaga.
+
+\subsection*{04. La razón de riesgo percibido}
+
+El coste de un fallo de control no es simétrico. Perder una cosecha de banano o
+de piña por probar una molécula nueva es un daño concreto e inmediato; el daño
+que causa la molécula vieja es difuso, diferido y lo paga en parte un tercero.
+El país registró 58 muertes por intoxicación con plaguicidas entre 2010 y 2020 y
+unos ₡\num{5000} millones anuales en costes sanitarios \parencite{delfino2023},
+y el clorotalonil solo se prohibió en noviembre de 2023, después de que la
+contaminación de nacientes obligara a abastecer a \num{10000} personas con
+cisternas \parencite{delfino2023clorotalonil}.
+
+\section{Por qué además ha renacido}
+
+Hay una segunda respuesta, y es la que más me interesa como gestor de tecnología,
+porque no tiene nada que ver con la inercia.
+
+Las moléculas modernas deben su ventaja a que actúan sobre una sola diana. Esa
+misma propiedad las hace frágiles: una única mutación en el patógeno anula el
+producto. Las estrobilurinas, lanzadas a finales de los noventa como la
+generación que jubilaba a los fungicidas de contacto, quedaron en buena medida
+sin eficacia frente a \emph{Septoria} a comienzos de los años dos mil, y los
+inhibidores SDHI tienen un riesgo de resistencia calificado de medio a alto
+\parencite{ahdb2023}.
+
+El mancozeb, en cambio, actúa sobre múltiples sitios a la vez. Está clasificado
+como M03 en la lista del FRAC, el grupo de riesgo de resistencia bajo, y tras
+seis décadas de uso intensivo los casos documentados de resistencia se limitan a
+unas pocas poblaciones de \emph{Plasmopara viticola} en Europa
+\parencite{gullino2010,frac2024}. Por eso la recomendación técnica actual no es
+sustituirlo, sino \textbf{mezclarlo}: usar el multisitio de 1962 como socio de
+mezcla que protege la vida útil de la molécula de sitio único
+\parencite{ahdb2023}.
+
+El atributo que hacía primitivo al mancozeb, su falta de selectividad, resultó
+ser la ventaja decisiva en un eje que nadie estaba midiendo en 1990: la
+\textbf{durabilidad de la eficacia}. El Cuadro~\ref{tab:fom} resume la
+comparación completa.
+
+\begin{table}[ht]
+  \centering
+  \small
+  \caption{Comparación de las dos generaciones en las figuras de mérito
+  relevantes.}
+  \label{tab:fom}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.24\textwidth}
+    >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{Figura de mérito} & \textbf{Generación 1944--1974}
+      & \textbf{Generación 1995--2015} \\
+    \midrule
+    Dosis para obtener control
+      & \num{1500} a \num{2000} g ia/ha (mancozeb)
+      & 10 a 50 g ia/ha (clorantraniliprol) \\
+    Modo de acción
+      & Multisitio, espectro amplio & Sitio único, selectivo \\
+    Riesgo de resistencia
+      & Bajo (FRAC M03) & Medio a alto \\
+    Toxicidad y persistencia
+      & 19 de los 21 más usados son altamente peligrosos (FAO/OMS)
+      & Perfil toxicológico sustancialmente menor \\
+    Estado en la Unión Europea
+      & 56 de 95 ingredientes activos no autorizados
+      & Autorizados \\
+    Coste por hectárea
+      & Genérico fuera de patente, varios oferentes
+      & Producto propietario \\
+    Exigencia de diagnóstico
+      & Baja, tolera el error & Alta, exige identificar la plaga \\
+    Estatus registral en Costa Rica
+      & \num{1884} formulados sin vencimiento ni reválida
+      & 21 años de bloqueo; 6 moléculas nuevas desde 2023 \\
+    Uso aparente en 2022
+      & 6,44 millones de kg ia (11 moléculas)
+      & \num{11068} kg ia (6 moléculas) \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\section{Precisiones y limitaciones}
+
+\begin{enumerate}
+  \item \textbf{Las cifras de kg/ha que circulan no son comparables entre sí.}
+    El SFE calcula 8,84 kg ia/ha porque divide entre \num{1032320} hectáreas de
+    uso agropecuario, pastos incluidos \parencite{sfe2022}; el informe del PNUD
+    obtiene 34,45 kg ia/ha al dividir solo entre el área efectivamente cultivada
+    \parencite{vargas2021}; FAOSTAT publica 23,4. Las tres son correctas con su
+    denominador. Cito el dato oficial y señalo el desacuerdo en lugar de escoger
+    el más llamativo.
+  \item \textbf{El uso aparente no es uso.} Es importación menos exportación, sin
+    considerar los saldos en bodega, y el informe de 2022 está marcado como
+    preliminar \parencite{sfe2022}. Sirve para comparar órdenes de magnitud entre
+    moléculas, no como medida de aplicación en campo.
+  \item \textbf{La razón de \num{6344} a 1 es de masa, no de superficie.}
+    Corregida por dosis de etiqueta cae a un orden de 50 a 100 a 1. Las dosis de
+    etiqueta varían por cultivo y por plaga, de modo que esa corrección es una
+    estimación de orden de magnitud, no un cálculo cerrado.
+  \item \textbf{El glifosato y el 2,4-D siguen aprobados en la Unión Europea} y
+    aparecen en el bloque antiguo solo por su año de introducción. La antigüedad
+    de una molécula y su peligrosidad son dos ejes distintos, y el artículo
+    sostiene el primero, no una equivalencia entre ambos.
+  \item \textbf{El caso está en curso.} El decreto 43838 lleva tres años y medio
+    vigente y su efecto todavía se mide en decenas de registros. Con los datos
+    disponibles no puede afirmarse si la reforma desatasca el sistema o solo lo
+    alivia.
+\end{enumerate}
+
+\section*{Lo que me llevo}
+
+El caso obliga a corregir la intuición habitual sobre por qué sobrevive una
+tecnología obsoleta. La respuesta cómoda es la inercia del usuario. Aquí la
+respuesta es otra: durante veintiún años \textbf{el sistema regulatorio fue más
+restrictivo con la tecnología mejor que con la peor}, porque la exigencia de
+evidencia se aplicó a la entrada y no a la permanencia. Cualquier régimen que
+evalúe lo nuevo con rigor y deje lo viejo sin caducidad produce el mismo
+resultado, sea en agroquímicos, en dispositivos médicos o en sistemas
+informáticos certificados.
+
+Y una segunda lección, más incómoda: no todo lo que sobrevive lo hace por
+inercia. El mancozeb también sigue ahí porque el eje en el que la generación
+moderna es imbatible, la dosis por hectárea, deja fuera el eje en el que es
+frágil, la durabilidad de la eficacia. Antes de declarar obsoleta una tecnología
+conviene comprobar si el sucesor gana en todas las figuras de mérito o solo en
+la que hoy resulta más visible.
+
+\printbibliography[title={Referencias bibliográficas}]
+
+\end{document}
