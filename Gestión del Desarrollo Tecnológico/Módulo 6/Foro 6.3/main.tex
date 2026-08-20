@@ -1,0 +1,702 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,backgrounds,patterns}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.3cm}
+% Los rótulos de las figuras usan nodos de ancho fijo con texto alineado a la
+% derecha, y la bibliografía compone en modo sloppy: ambos generan avisos de
+% línea holgada que son cosméticos y no indican un problema de composición.
+% Se silencian para que `make check` siga siendo sensible a los desbordes reales.
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlist{nosep}
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy}
+
+\sisetup{
+  output-decimal-marker = {,},
+  group-separator = {.},
+  group-minimum-digits = 4,
+  detect-all
+}
+
+% Colores: vehículo privado, transporte público, modos a pie, mi propio caso
+\definecolor{cAuto}{RGB}{191,110,30}
+\definecolor{cTP}{RGB}{31,78,121}
+\definecolor{cPie}{RGB}{40,124,70}
+\definecolor{cCR}{RGB}{150,40,55}
+\definecolor{cGris}{RGB}{140,140,140}
+
+% ---------------------------------------------------------------------------
+% Barra horizontal de cuota modal. #1 fila, #2 longitud, #3 color, #4 rótulo,
+% #5 valor. La escala es de 0,13 cm por punto porcentual.
+% ---------------------------------------------------------------------------
+\newcommand{\cuotabar}[5]{%
+  \node[left, text width=4.6cm, align=right, font=\scriptsize] at (-0.18,#1) {#4};%
+  \fill[#3] (0,#1-0.19) rectangle (#2,#1+0.19);%
+  \node[right, font=\scriptsize] at (#2+0.12,#1) {#5};%
+}
+
+\title{\vspace{-1.2cm}\textbf{¿Un mundo sin automóviles? La respuesta no la
+da el motor, la da el mapa}\\
+\large Por qué la misma tecnología produce cuotas del 20 al 71 por ciento
+según dónde se mida}
+\author{Carlos Luis Rojas Aragonés\\
+\small Gestión del Desarrollo Tecnológico}
+\date{\small 19 de agosto de 2026}
+
+\begin{document}
+
+\maketitle
+\vspace{-0.6em}
+
+\section{Mi respuesta, y por qué no habla de mí}
+
+Sí, conduzco. Y no, hoy no puedo imaginarme una vida sin vehículo privado en
+la Gran Área Metropolitana de Costa Rica, donde vivo. Pero esa respuesta no
+dice nada interesante sobre mis preferencias: dice cuánto mide la distancia
+entre las cosas que necesito. En Costa Rica el 41,6 por ciento de los viajes
+se hace en vehículo privado motorizado y el 49,8 en autobús
+\parencite{allen2024}; en la almendra central de Madrid el vehículo privado
+baja al 20,3 por ciento y en la corona regional de la misma comunidad autónoma
+sube al 56,2 \parencite{crtm2019}. Mismo país, misma flota, mismo precio del
+combustible, misma tecnología: la cuota se multiplica por 2,8 al cambiar de
+código postal.
+
+El enunciado ya contiene la observación clave, que su entorno influye e
+incluso determina la respuesta, y conviene tomarla en serio hasta el final:
+\textbf{si el mismo artefacto produce resultados que van del 20 al 71 por
+ciento según dónde se mida, entonces la variable explicativa no es el
+artefacto}. La pregunta \enquote{¿puede vivir sin coche?} está mal planteada
+como pregunta tecnológica. Bien planteada es una pregunta de accesibilidad:
+¿cuántos de mis destinos habituales caben dentro de mi presupuesto diario de
+tiempo de viaje sin usar un coche?
+
+Esa reformulación tiene una consecuencia incómoda para quien decide sobre
+tecnología. Mejorar el automóvil, hacerlo eléctrico, autónomo o compartido, no
+mueve la variable que decide. La cambia el uso del suelo, y el uso del suelo se
+fija con decisiones de infraestructura cuyo plazo de maduración es de décadas.
+En mi caso esa fecha ya está puesta en un calendario: la ley de financiamiento
+del tren eléctrico de pasajeros de la GAM se firmó el 25 de mayo de 2026
+\parencite{incofer2026} y el sistema completo no operará antes de 2031
+\parencite{teletica2026}. Mi respuesta de hoy es \enquote{no puedo}, y la
+fecha más temprana en que podría cambiar no la decido yo.
+
+\section{Marco de análisis: la figura de mérito equivocada}
+
+Una \textbf{figura de mérito} (FOM) es una medida cuantitativa del desempeño de
+una tecnología en la función que presta \parencite{deweck2022}. El automóvil
+gana en casi todas las FOM del artefacto: velocidad punta, autonomía,
+protección frente a la lluvia, disponibilidad a cualquier hora, capacidad de
+carga. Si la comparación se hiciera ahí, el debate estaría cerrado. La
+discusión de este foro sólo tiene sentido porque la FOM que decide es otra, y
+es del sistema, no del vehículo. Tres resultados de la literatura la delimitan.
+
+\begin{enumerate}
+  \item \textbf{El presupuesto de tiempo de viaje es aproximadamente
+    constante.} \textcite{zahavi1974} documentó que los hogares asignan al
+    desplazamiento una fracción estable de su tiempo, y \textcite{marchetti1994}
+    la resumió en la cifra que hoy lleva su nombre: alrededor de una hora
+    diaria por persona, un valor que reaparece en sociedades muy distintas.
+    Si el tiempo es fijo y la velocidad sube, lo que crece no es el tiempo
+    libre: es el radio. Y el área accesible crece con el cuadrado de la
+    velocidad.
+  \item \textbf{La capacidad vial genera su propia demanda.}
+    \textcite{duranton2011} estimaron con datos de ciudades estadounidenses que
+    los kilómetros recorridos crecen de forma aproximadamente proporcional a
+    los kilómetros de carril construidos, con una elasticidad cercana a uno.
+    Su conclusión es explícita: ampliar la red, e incluso ampliar el transporte
+    público, no reduce la congestión. Este es el resultado que convierte
+    \enquote{construir más carriles} en una estrategia sin punto de llegada.
+  \item \textbf{Lo que explica cuánto se conduce es el entorno construido, no
+    la preferencia.} El metaanálisis de \textcite{ewing2010} sobre decenas de
+    estudios concluye que los kilómetros recorridos por habitante dependen
+    sobre todo de la accesibilidad a destinos y, en segundo lugar, del diseño
+    de la red de calles, y que caminar depende de la mezcla de usos y de la
+    densidad de intersecciones. Es la formalización empírica de las tres
+    \enquote{d} de \textcite{cervero1997}: densidad, diversidad y diseño.
+\end{enumerate}
+
+Juntando las tres piezas aparece el mecanismo completo, y es un bucle:
+el automóvil multiplica el radio accesible en un tiempo dado; la ciudad usa ese
+radio para separar la vivienda del trabajo y del comercio; una vez separados,
+el automóvil deja de ser una opción y pasa a ser un requisito de acceso al
+empleo. Es \textbf{dependencia de trayectoria} en el sentido estricto de
+\textcite{david1985} y \textcite{arthur1989}: cada decisión individual
+racional refuerza la configuración que hace obligatoria la siguiente. Lo que
+\textcite{newman1999} llamaron dependencia del automóvil no es un hábito
+cultural, es una propiedad geométrica del territorio ya construido.
+
+\section{La evidencia: una escalera del 20 al 71 por ciento}
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    % escala: 0,13 cm por punto porcentual
+    \foreach \xv/\lab in {0/0, 2.6/20, 5.2/40, 7.8/60, 10.4/80} {
+      \draw[gray!22] (\xv,-0.10) -- (\xv,5.85);
+      \node[below, font=\tiny, gray!55!black] at (\xv,-0.12) {\lab\,\%};
+    }
+    \draw[red!65!black, thick, densely dotted] (6.5,-0.10) -- (6.5,5.85);
+    \node[font=\tiny, red!65!black, above right] at (6.52,5.60)
+      {la mitad de los desplazamientos};
+    \cuotabar{5.40}{9.256}{cTP}{Los Ángeles, ciudad\\\tiny (al trabajo, ACS
+      2024)}{71,2\,\%}
+    \cuotabar{4.80}{8.775}{cTP}{Gran Adelaida\\\tiny (al trabajo, censo
+      2021)}{67,5\,\%}
+    \cuotabar{4.20}{7.306}{cAuto}{Madrid, corona regional\\\tiny (todos los
+      viajes, EDM 2018)}{56,2\,\%}
+    \cuotabar{3.60}{6.201}{cAuto}{Madrid, corona metropolitana\\\tiny (todos
+      los viajes, EDM 2018)}{47,7\,\%}
+    \cuotabar{3.00}{5.408}{cCR}{\textbf{Costa Rica}\\\tiny (todos los viajes,
+      CGR 2023)}{\textbf{41,6\,\%}}
+    \cuotabar{2.40}{5.070}{cAuto}{Comunidad de Madrid\\\tiny (todos los viajes,
+      EDM 2018)}{39,0\,\%}
+    \cuotabar{1.80}{4.212}{cAuto}{Madrid, periferia del municipio\\\tiny (todos
+      los viajes, EDM 2018)}{32,4\,\%}
+    \cuotabar{1.20}{3.263}{cTP}{Nueva York, ciudad\\\tiny (al trabajo, ACS
+      2024)}{25,1\,\%}
+    \cuotabar{0.60}{2.639}{cAuto}{Madrid, almendra central\\\tiny (todos los
+      viajes, EDM 2018)}{20,3\,\%}
+    \begin{scope}[shift={(0,-0.75)}]
+      \fill[cAuto] (0,-0.09) rectangle (0.45,0.09);
+      \node[right, font=\tiny] at (0.5,0) {cuota sobre todos los viajes};
+      \fill[cTP] (4.30,-0.09) rectangle (4.75,0.09);
+      \node[right, font=\tiny] at (4.80,0)
+        {cuota sobre los desplazamientos al trabajo};
+      \fill[cCR] (9.30,-0.09) rectangle (9.75,0.09);
+      \node[right, font=\tiny] at (9.80,0) {mi entorno};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Cuota del vehículo privado motorizado en nueve ámbitos. Las cuatro
+  filas de Madrid y la de la Comunidad proceden de la encuesta domiciliaria de
+  movilidad de 2018, sobre \num{15800000} desplazamientos diarios
+  \parencite{crtm2019}; la de Costa Rica, de la Encuesta Nacional de Percepción
+  de los Servicios Públicos de la Contraloría General de la República de 2023,
+  recogida en \textcite{allen2024}; las de Nueva York y Los Ángeles, de la
+  tabla B08301 de la American Community Survey de 2024 \parencite{acs2024};
+  la de Gran Adelaida, del censo australiano de 2021, sumando conductor
+  (63,3\,\%) y acompañante (4,2\,\%) \parencite{abs2021}. Las dos métricas no
+  son intercambiables y por eso se distinguen con color; la discusión de esa
+  limitación está en la sección de precisiones. Elaboración propia.}
+  \label{fig:escalera}
+\end{figure}
+
+La Figura~\ref{fig:escalera} ordena las cuotas del vehículo privado en los
+cuatro entornos que menciona el enunciado y en los míos. El resultado es una
+escalera continua, sin escalón entre \enquote{ciudades donde se puede} y
+\enquote{ciudades donde no}, y con un rango de 3,5 veces entre el extremo
+inferior y el superior.
+
+Dos lecturas conviene fijar antes de seguir.
+
+\textbf{La primera es que Nueva York y Los Ángeles no se diferencian por la
+tecnología disponible.} Son el mismo país, el mismo mercado de automóviles, el
+mismo precio del combustible y prácticamente la misma regulación federal. En
+Nueva York el 48,7 por ciento de los ocupados va al trabajo en transporte
+público y el 25,1 en coche; en Los Ángeles esas cifras son 6,2 y 71,2
+\parencite{acs2024}. La misma fuente da el dato patrimonial, que es todavía
+más elocuente: el 56,7 por ciento de los hogares neoyorquinos no dispone de
+ningún vehículo, frente al 12,0 por ciento de los angelinos. La diferencia
+entre ambas ciudades es de forma urbana, no de artefacto.
+
+\textbf{La segunda es que el enunciado acierta al no oponer ciudad y campo.}
+Gran Adelaida es una capital estatal con 1,4 millones de habitantes y una cuota
+del vehículo privado de 67,5 por ciento, superior a la de la corona regional de
+Madrid, que es el ámbito más periférico y menos urbano de la muestra española.
+Lo que separa a Adelaida de Madrid no es ser más o menos urbana, sino la
+densidad y la mezcla de usos con que se construyó.
+
+\section{El experimento natural de Madrid}
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    % ---------------- panel A: reparto modal por corona ----------------
+    \node[font=\scriptsize\itshape, gray!35!black, right] at (-4.30,3.78)
+      {Panel A. Reparto modal según corona de residencia, día laborable};
+    \foreach \xv/\lab in {0/0, 2.5/25, 5.0/50, 7.5/75, 10.0/100} {
+      \draw[gray!22] (\xv,-0.15) -- (\xv,2.95);
+      \node[below, font=\tiny, gray!55!black] at (\xv,-0.17) {\lab\,\%};
+    }
+    \foreach \y/\lab/\a/\b/\c in {%
+      2.60/{Almendra central}/4.00/7.48/9.51,
+      1.95/{Periferia del municipio}/3.22/6.50/9.74,
+      1.30/{Corona metropolitana}/3.40/5.04/9.81,
+      0.65/{Corona regional}/2.96/4.04/9.66,
+      0.00/{\textbf{Comunidad de Madrid}}/3.40/5.83/9.73} {
+      \node[left, font=\scriptsize] at (-0.12,\y) {\lab};
+      \fill[cPie] (0,\y-0.20) rectangle (\a,\y+0.20);
+      \fill[cTP] (\a,\y-0.20) rectangle (\b,\y+0.20);
+      \fill[cAuto] (\b,\y-0.20) rectangle (\c,\y+0.20);
+      \fill[gray!45] (\c,\y-0.20) rectangle (10.0,\y+0.20);
+    }
+    \node[font=\tiny, white] at (2.00,2.60) {40,0};
+    \node[font=\tiny, white] at (5.74,2.60) {34,8};
+    \node[font=\tiny, white] at (8.50,2.60) {20,3};
+    \node[font=\tiny, white] at (1.61,1.95) {32,2};
+    \node[font=\tiny, white] at (4.86,1.95) {32,8};
+    \node[font=\tiny, white] at (8.12,1.95) {32,4};
+    \node[font=\tiny, white] at (1.70,1.30) {34,0};
+    \node[font=\tiny, white] at (4.22,1.30) {16,4};
+    \node[font=\tiny, white] at (7.43,1.30) {47,7};
+    \node[font=\tiny, white] at (1.48,0.65) {29,6};
+    \node[font=\tiny, white] at (3.50,0.65) {10,8};
+    \node[font=\tiny, white] at (6.85,0.65) {56,2};
+    \node[font=\tiny, white] at (1.70,0.00) {34,0};
+    \node[font=\tiny, white] at (4.62,0.00) {24,3};
+    \node[font=\tiny, white] at (7.78,0.00) {39,0};
+    \begin{scope}[shift={(0.10,3.25)}]
+      \fill[cPie] (0,-0.09) rectangle (0.40,0.09);
+      \node[right, font=\tiny] at (0.45,0) {a pie};
+      \fill[cTP] (1.55,-0.09) rectangle (1.95,0.09);
+      \node[right, font=\tiny] at (2.00,0) {transporte público};
+      \fill[cAuto] (4.60,-0.09) rectangle (5.00,0.09);
+      \node[right, font=\tiny] at (5.05,0) {vehículo privado};
+      \fill[gray!45] (7.35,-0.09) rectangle (7.75,0.09);
+      \node[right, font=\tiny] at (7.80,0) {otros modos};
+    \end{scope}
+    % ---------------- panel B: hogares sin turismo ----------------
+    \begin{scope}[shift={(0,-4.15)}]
+      \node[font=\scriptsize\itshape, gray!35!black, right] at (-4.30,3.30)
+        {Panel B. Hogares que no tienen ningún turismo, misma encuesta};
+      \foreach \xv/\lab in {0/0, 2.2/10, 4.4/20, 6.6/30, 8.8/40} {
+        \draw[gray!22] (\xv,-0.15) -- (\xv,2.95);
+        \node[below, font=\tiny, gray!55!black] at (\xv,-0.17) {\lab\,\%};
+      }
+      \foreach \y/\lab/\x/\v in {%
+        2.60/{Almendra central}/8.272/{37,6},
+        1.95/{Periferia del municipio}/6.600/{30,0},
+        1.30/{Corona metropolitana}/3.718/{16,9},
+        0.65/{Corona regional}/2.640/{12,0},
+        0.00/{\textbf{Comunidad de Madrid}}/5.456/{24,8}} {
+        \node[left, font=\scriptsize] at (-0.12,\y) {\lab};
+        \fill[cTP!80] (0,\y-0.20) rectangle (\x,\y+0.20);
+        \node[right, font=\scriptsize] at (\x+0.12,\y) {\v\,\%};
+      }
+      \draw[-{Stealth[length=2mm]}, thick, red!65!black]
+        (9.90,2.60) -- (9.90,0.65);
+      \node[right, font=\tiny, red!65!black, align=left, text width=2.4cm]
+        at (9.98,1.62) {Hacia fuera, los hogares sin coche caen a un\\ tercio};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{El mismo territorio administrativo, la misma flota y el mismo
+  precio del combustible, con cuatro resultados distintos. Datos de la encuesta
+  domiciliaria de movilidad de la Comunidad de Madrid de 2018, publicada en
+  noviembre de 2019 sobre \num{85064} encuestas y \num{15800000} viajes diarios
+  \parencite{crtm2019}. La almendra central es el interior de la M-30. Los
+  porcentajes del Panel A suman cien por fila; los de \enquote{otros modos}
+  incluyen moto, bicicleta, taxi y transporte discrecional, que en el conjunto
+  de la región representan el 2,7 por ciento. Elaboración propia.}
+  \label{fig:madrid}
+\end{figure}
+
+La Figura~\ref{fig:madrid} es, a mi juicio, la pieza que resuelve el debate,
+porque se acerca todo lo que permite el mundo real a un experimento
+controlado. Dentro de una sola comunidad autónoma, con la misma oferta de
+vehículos, los mismos impuestos, el mismo clima y la misma cultura, la cuota
+del vehículo privado pasa del 20,3 al 56,2 por ciento y la proporción de
+hogares sin ningún turismo cae del 37,6 al 12,0 por ciento
+\parencite{crtm2019}. Lo único que cambia es la distancia a la que están las
+cosas.
+
+Dos detalles refuerzan la lectura. El primero es que en la almendra central el
+transporte público (34,8 por ciento) supera al vehículo privado (20,3), y el
+modo más usado es simplemente caminar (40,0): en un entorno denso y mezclado,
+la alternativa dominante al coche no es otro vehículo, es la proximidad. El
+segundo es que el 37,6 por ciento de los hogares del centro de Madrid ya vive
+sin automóvil. No es una hipótesis de futuro ni una preferencia militante: es
+la conducta observada de más de un tercio de los hogares cuando el entorno lo
+permite.
+
+\section{Por qué mejorar el automóvil no cambia la respuesta}
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    % ---------------- panel A: el radio de media hora ----------------
+    \node[font=\scriptsize\itshape, gray!35!black, right] at (-2.20,6.45)
+      {Panel A. Lo que compran treinta minutos de viaje a cada velocidad};
+    \begin{scope}[shift={(-2.20,0)}]
+      \draw[gray!55!black] (0,0) -- (6.60,0);
+      \draw[gray!55!black] (0,0) -- (0,6.10);
+      \foreach \r/\col in {0.5/cPie, 1.5/cPie, 3.0/cTP, 6.0/cAuto} {
+        \draw[\col, thick] (\r,0) arc (0:90:\r);
+      }
+      \fill[cAuto!10] (0,0) -- (6.0,0) arc (0:90:6.0) -- cycle;
+      \fill[cTP!14] (0,0) -- (3.0,0) arc (0:90:3.0) -- cycle;
+      \fill[cPie!22] (0,0) -- (1.5,0) arc (0:90:1.5) -- cycle;
+      \fill[cPie!45] (0,0) -- (0.5,0) arc (0:90:0.5) -- cycle;
+      \foreach \r/\col in {0.5/cPie, 1.5/cPie, 3.0/cTP, 6.0/cAuto} {
+        \draw[\col, thick] (\r,0) arc (0:90:\r);
+      }
+      \node[font=\tiny, cPie, right] at (0.40,0.42)
+        {a pie, 5 km/h: 2,5 km};
+      \node[font=\tiny, cPie, right] at (1.14,1.18)
+        {bicicleta, 15 km/h: 7,5 km};
+      \node[font=\tiny, cTP, right] at (2.24,2.28)
+        {autobús, 30 km/h: 15 km};
+      \node[font=\tiny, cAuto, right] at (4.37,4.40)
+        {automóvil, 60 km/h: 30 km};
+      \node[font=\scriptsize, align=left, right] at (6.75,5.10)
+        {A presupuesto de tiempo constante,\\ el radio crece con la velocidad
+         y\\ el área con su cuadrado:};
+      \node[font=\scriptsize, align=left, right] at (6.75,3.90)
+        {$A = \pi (v\,t)^2$, con $t = 0{,}5$ h};
+      \node[font=\scriptsize, align=left, right] at (6.75,2.95)
+        {a pie: \SI{20}{\kilo\metre\squared}\\
+         bicicleta: \SI{177}{\kilo\metre\squared}\\
+         autobús: \SI{707}{\kilo\metre\squared}\\
+         automóvil: \SI{2827}{\kilo\metre\squared}};
+      \node[font=\scriptsize, align=left, right, red!65!black] at (6.75,1.30)
+        {El automóvil multiplicó por 144 el\\ área alcanzable frente a caminar.
+         \\ La ciudad gastó ese factor en\\ separarse, no en ahorrar tiempo.};
+    \end{scope}
+    % ---------------- panel B: capacidad de un carril ----------------
+    \begin{scope}[shift={(0,-3.30)}]
+      \node[font=\scriptsize\itshape, gray!35!black, right] at (0,2.55)
+        {Panel B. Personas por hora que puede mover un carril, según a qué se
+         dedique};
+      \foreach \xv/\lab in {0/0, 1.8/{5.000}, 3.6/{10.000}, 5.4/{15.000},
+                            7.2/{20.000}, 9.0/{25.000}} {
+        \draw[gray!22] (\xv,-0.35) -- (\xv,2.20);
+        \node[below, font=\tiny, gray!55!black] at (\xv,-0.37) {\lab};
+      }
+      \node[left, text width=3.5cm, align=right, font=\scriptsize]
+        at (-0.15,1.90) {Tráfico general de vehículos privados};
+      \fill[cAuto] (0,1.71) rectangle (0.216,2.09);
+      \fill[cAuto!45] (0.216,1.71) rectangle (0.576,2.09);
+      \node[right, font=\scriptsize] at (0.70,1.90) {600 a 1.600};
+      \node[left, text width=3.5cm, align=right, font=\scriptsize]
+        at (-0.15,1.10) {Carril exclusivo de autobús};
+      \fill[cTP] (0,0.91) rectangle (2.88,1.29);
+      \node[right, font=\scriptsize] at (3.00,1.10) {hasta 8.000};
+      \node[left, text width=3.5cm, align=right, font=\scriptsize]
+        at (-0.15,0.30) {Corredor segregado de transporte};
+      \fill[cTP!70] (0,0.11) rectangle (9.00,0.49);
+      \node[right, font=\scriptsize] at (9.12,0.30) {hasta 25.000};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Las dos restricciones que ninguna mejora del vehículo levanta.
+  Panel A: identidad geométrica, no medición; las velocidades son ilustrativas
+  y el presupuesto de media hora por sentido procede de
+  \textcite{zahavi1974} y \textcite{marchetti1994}. Panel B: capacidades por
+  carril y sentido de la guía de diseño de calles con transporte público de
+  \textcite{nacto2016}, que estima entre 600 y 1.600 personas por hora para un
+  carril de tráfico general, hasta 8.000 para un carril exclusivo de autobús y
+  hasta 25.000 para un corredor segregado. Elaboración propia.}
+  \label{fig:geometria}
+\end{figure}
+
+Aquí es donde el debate suele desviarse. La respuesta habitual a los problemas
+del automóvil es una mejora del automóvil: eléctrico, autónomo, conectado,
+compartido. Es una respuesta razonable para una de las externalidades y
+completamente inocua para las demás, y la Figura~\ref{fig:geometria} explica
+por qué.
+
+\textbf{La electrificación resuelve el tubo de escape y nada más.} En Costa
+Rica el transporte genera el 41,55 por ciento de las emisiones nacionales de
+gases de efecto invernadero y el 75,4 por ciento de las del sector energía, y
+es la categoría que más ha crecido desde 1990, con un 243 por ciento
+\parencite{dcc2021,pnud2022}. Cambiar la flota corrige ese problema, y por eso
+el Plan Nacional de Descarbonización lo prioriza \parencite{descarbonizacion2019}.
+Pero un vehículo eléctrico ocupa el mismo espacio en el carril, exige el mismo
+aparcamiento y produce prácticamente la misma congestión. En 2026 el país
+supera las \num{47000} unidades eléctricas \parencite{infobae2026}, en torno al
+2 por ciento de una flota de unos dos millones: incluso al cien por cien, la
+geometría del Panel B no se movería un milímetro.
+
+\textbf{La geometría es implacable y no depende del motor.} Un carril dedicado
+a tráfico general mueve entre 600 y 1.600 personas por hora; el mismo carril
+dedicado a autobuses mueve hasta 8.000, y como corredor segregado hasta 25.000
+\parencite{nacto2016}. La diferencia es de un factor de quince a cuarenta, y no
+la produce ninguna innovación de producto: la produce la decisión de repartir
+el espacio. A esto se añade que el activo está inmovilizado casi todo el
+tiempo: el automóvil medio británico permanece aparcado el 96 por ciento de
+las horas, el 80 en el domicilio y el 16 fuera de él \parencite{bates2012}.
+Ninguna tecnología de propulsión mejora esa cifra de utilización.
+
+\textbf{Y la demanda inducida cierra el bucle.} Si la mejora consiste en hacer
+más agradable o más barato conducir, el resultado previsible según
+\textcite{duranton2011} no es menos tráfico, sino más kilómetros recorridos.
+El vehículo autónomo, tema del foro anterior de este mismo módulo, es el caso
+extremo: al eliminar el coste de conducir, elimina también el principal freno
+al kilometraje.
+
+\section{Mi entorno: la Gran Área Metropolitana de Costa Rica}
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    % ---------------- panel A: flota frente a autobús ----------------
+    \node[font=\scriptsize\itshape, gray!35!black, right] at (-0.10,5.55)
+      {Panel A. Dos series que se separan, base 100 en su primer dato};
+    \foreach \yv/\lab in {0/0, 0.96/50, 1.92/100, 2.88/150, 3.84/200,
+                          4.81/250} {
+      \draw[gray!20] (0,\yv) -- (12.20,\yv);
+      \node[left, font=\tiny, gray!55!black] at (-0.05,\yv) {\lab};
+    }
+    \draw[gray!60!black] (0,0) -- (12.20,0);
+    \foreach \xv/\lab in {0/2005, 2.86/2010, 5.71/2015, 8.57/2020,
+                          11.43/2025} {
+      \draw[gray!60!black] (\xv,0) -- (\xv,-0.13);
+      \node[below, font=\tiny, gray!55!black] at (\xv,-0.13) {\lab};
+    }
+    \draw[very thick, cAuto] (0,1.92) -- (11.43,4.81);
+    \fill[cAuto] (0,1.92) circle (2pt);
+    \fill[cAuto] (11.43,4.81) circle (2pt);
+    \node[font=\tiny, cAuto, above left] at (0.35,1.98)
+      {\num{751332} vehículos (2005)};
+    \node[font=\tiny, cAuto, above left, align=right] at (11.35,4.90)
+      {\num{1879790} vehículos (2025)\\[-0.25em] con derecho de circulación:
+       \textbf{+150\,\%}};
+    \draw[very thick, cTP, dashed] (4.00,1.92) -- (10.86,1.11);
+    \fill[cTP] (4.00,1.92) circle (2pt);
+    \fill[cTP] (10.86,1.11) circle (2pt);
+    \node[font=\tiny, cTP, above right] at (4.10,1.95) {uso del autobús (2012)};
+    \node[font=\tiny, cTP, below left, align=right] at (10.80,1.05)
+      {\textbf{-42\,\%} en 2024};
+    \node[font=\tiny, gray!45!black, align=left, right] at (0.15,0.55)
+      {Trazo esquemático: sólo están documentados los extremos de cada serie,
+       no su forma intermedia};
+    % ---------------- panel B: calendario del tren eléctrico ----------
+    \begin{scope}[shift={(0,-3.70)}]
+      \node[font=\scriptsize\itshape, gray!35!black, right] at (-0.10,2.72)
+        {Panel B. El calendario que decide cuándo puede cambiar mi respuesta};
+      \draw[gray!60!black] (0,0.85) -- (12.20,0.85);
+      \foreach \xv/\lab in {0/2025, 1.74/2026, 3.49/2027, 5.23/2028,
+                            6.97/2029, 8.71/2030, 10.46/2031, 12.20/2032} {
+        \draw[gray!60!black] (\xv,0.85) -- (\xv,0.72);
+        \node[below, font=\tiny, gray!55!black] at (\xv,0.72) {\lab};
+      }
+      \fill[cTP!22] (5.23,0.90) rectangle (8.71,1.20);
+      \node[font=\tiny, cTP!80!black] at (6.97,1.05) {diseño y construcción};
+      \foreach \xv/\lab in {1.48/{créditos por USD 800\\millones al Congreso},
+                            4.35/{adjudicación\\prevista}} {
+        \draw[cAuto, thick] (\xv,0.85) -- (\xv,0.35);
+        \fill[cAuto] (\xv,0.35) circle (1.7pt);
+        \node[below, font=\tiny, cAuto, align=center] at (\xv,0.30) {\lab};
+      }
+      \draw[cTP, very thick] (2.44,0.85) -- (2.44,1.95);
+      \fill[cTP] (2.44,1.95) circle (2.0pt);
+      \node[above, font=\tiny, cTP, align=center] at (2.44,2.00)
+        {ley firmada\\25 de mayo de 2026};
+      \draw[cTP, thick] (2.90,0.85) -- (2.90,1.45);
+      \fill[cTP] (2.90,1.45) circle (1.7pt);
+      \node[right, font=\tiny, cTP, align=left] at (2.98,1.50)
+        {licitación internacional};
+      \foreach \xv/\lab in {8.71/{línea 2\\San José--Alajuela},
+                            10.46/{línea 1\\San José--Paraíso}} {
+        \draw[cPie, very thick] (\xv,0.85) -- (\xv,1.70);
+        \fill[cPie] (\xv,1.70) circle (2.0pt);
+        \node[above, font=\tiny, cPie, align=center] at (\xv,1.75) {\lab};
+      }
+      \draw[red!65!black, thick, densely dashed] (2.79,-0.35) -- (2.79,0.85);
+      \node[below, font=\tiny, red!65!black, align=center] at (2.79,-0.37)
+        {hoy};
+      \draw[{Stealth[length=1.8mm]}-{Stealth[length=1.8mm]}, red!65!black,
+        thick] (2.79,-1.00) -- (10.46,-1.00);
+      \node[font=\tiny, red!65!black, above] at (6.60,-0.98)
+        {cinco años hasta el sistema completo};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Panel A: los vehículos con derecho de circulación pasaron de
+  \num{751332} en 2005 a \num{1879790} en 2025, un crecimiento del 150 por
+  ciento \parencite{observador2025}, mientras el uso del autobús cayó un 42 por
+  ciento entre 2012 y 2024 \parencite{allen2026}; una medición independiente de
+  la Universidad Nacional cifra la caída de pasajeros en 42,2 por ciento entre
+  octubre de 2018 y mayo de 2025, con un 24,2 por ciento menos de operadores y
+  cerca de cien rutas abandonadas \parencite{una2026}. Sólo se conocen los
+  extremos de ambas series, de modo que el trazo intermedio es esquemático.
+  Panel B: hitos del Tren Eléctrico de Pasajeros de la GAM, con 51,5 kilómetros
+  de doble vía, 28 trenes y una capacidad proyectada superior a \num{100000}
+  pasajeros diarios \parencite{semanario2025,incofer2026,teletica2026}.
+  Elaboración propia.}
+  \label{fig:costarica}
+\end{figure}
+
+Mi entorno está en el tramo alto de la escalera, y empeorando. La
+Figura~\ref{fig:costarica} muestra las dos series que definen el problema:
+la flota crece y el autobús se vacía al mismo tiempo. Es la señal más clara de
+que no estamos ante una elección de consumo sino ante una degradación de la
+alternativa, porque los dos movimientos se refuerzan: menos pasajeros implican
+menos frecuencia, menos frecuencia implica menos pasajeros, y unas cien rutas
+ya han desaparecido \parencite{una2026}.
+
+El coste agregado está cuantificado y es de primer orden. El Programa Estado de
+la Nación estimó que el tiempo perdido por congestión en la GAM equivale al 3,8
+por ciento del producto interno bruto, del orden de \num{2500} millones de
+dólares al año \parencite{semanario2018,allen2026}; la Universidad Nacional
+eleva la cifra al 4 por ciento y la traduce a 400 millones de horas laborales
+anuales \parencite{una2026}. En el plano doméstico, las familias
+costarricenses destinan el 15,6 por ciento de su ingreso mensual a
+transportarse \parencite{allen2024}. Y en el plano humano, 2025 cerró con 572
+muertes en sitio por siniestros de tránsito, la cifra más alta de la serie
+histórica, con los motociclistas concentrando el 46 por ciento de las víctimas
+\parencite{observador2026}; la Organización Mundial de la Salud sitúa el total
+mundial en 1,19 millones de muertes anuales y recuerda que son la principal
+causa de muerte entre los 5 y los 29 años \parencite{who2023}.
+
+Frente a eso, la respuesta institucional es la correcta en el papel: 51,5
+kilómetros de tren eléctrico a doble vía entre Paraíso de Cartago y Alajuela,
+28 trenes, 30 estaciones y una capacidad proyectada superior a \num{100000}
+pasajeros diarios, financiados con unos 800 millones de dólares
+\parencite{semanario2025}. Pero el Panel B de la figura contiene la parte
+incómoda: la ley se firmó en mayo de 2026, la licitación empieza este año, la
+adjudicación se espera en 2027 y la operación completa no llega antes de 2031
+\parencite{teletica2026}. Cinco años es el plazo mínimo, y sólo si nada se
+atrasa.
+
+\section{¿Qué haría cambiar mi respuesta?}
+
+Formulada como pregunta de gestión tecnológica, la cuestión del foro tiene una
+respuesta operativa: mi respuesta cambia cuando se cumplan condiciones
+medibles, no cuando aparezca un vehículo mejor. Enumero las que considero
+necesarias, con el orden de magnitud que las haría creíbles.
+
+\begin{enumerate}
+  \item \textbf{Que el destino esté dentro del presupuesto de tiempo.} Si el
+    trayecto puerta a puerta en transporte público supera en más del 50 por
+    ciento al del automóvil, la sustitución no ocurre, por convicción que
+    tenga el usuario. Es la consecuencia directa de
+    \textcite{zahavi1974,marchetti1994}.
+  \item \textbf{Que la densidad y la mezcla de usos alrededor de las
+    estaciones cambien.} Un tren en una ciudad dispersa transporta poca gente,
+    porque el problema no es el tramo central del viaje sino el primero y el
+    último kilómetro. Las elasticidades de \textcite{ewing2010} y las tres
+    \enquote{d} de \textcite{cervero1997} indican dónde hay que actuar:
+    densidad, diversidad y diseño en el entorno de cada estación. Sin un plan
+    regulador que lo permita, el tren será una obra cara con demanda pobre.
+  \item \textbf{Que el espacio se reasigne, no sólo se añada.} Añadir capacidad
+    sin retirar espacio al automóvil no reduce la congestión
+    \parencite{duranton2011}. El factor de quince a cuarenta del Panel B de la
+    Figura~\ref{fig:geometria} sólo se materializa si los carriles se dedican.
+  \item \textbf{Que la alternativa deje de degradarse.} Mientras el autobús
+    siga perdiendo pasajeros al ritmo del 42 por ciento por década, cada mejora
+    del tren llegará a un sistema con menos capilaridad de la que tenía cuando
+    se diseñó.
+\end{enumerate}
+
+El horizonte razonable, si todo lo anterior avanza, es el de la ciudad de
+proximidad que describe \textcite{moreno2021}: no un mundo sin automóviles,
+sino un mundo en el que el automóvil deja de ser la condición de acceso al
+empleo. Nótese que esa es exactamente la situación que ya viven el 37,6 por
+ciento de los hogares de la almendra de Madrid y el 56,7 por ciento de los
+hogares de Nueva York \parencite{crtm2019,acs2024}.
+
+\section{Precisiones y limitaciones}
+
+\begin{enumerate}
+  \item \textbf{Las dos métricas de la Figura~\ref{fig:escalera} no son
+    intercambiables.} La cuota sobre todos los viajes y la cuota sobre los
+    desplazamientos al trabajo miden cosas distintas: la segunda excluye los
+    viajes cortos de compra y acompañamiento, que son los más fáciles de hacer
+    a pie, y por eso tiende a dar valores más altos para el automóvil. He
+    conservado ambas porque las fuentes disponibles para las cuatro ciudades
+    del enunciado no publican la misma métrica, y las he distinguido con color
+    para que la comparación no se lea como si fuera homogénea. El ordenamiento
+    general, sin embargo, es robusto: los extremos están separados por un
+    factor de 3,5, muy por encima del sesgo que introduce la diferencia de
+    definición.
+  \item \textbf{El censo australiano de 2021 se levantó en pandemia.} El 10 de
+    agosto de 2021 varias capitales australianas estaban confinadas, lo que
+    infló el trabajo desde casa hasta el 21 por ciento nacional
+    \parencite{abs2021}. Australia del Sur no estaba confinada ese día, de modo
+    que la cifra de Adelaida es de las menos afectadas, pero conviene tomarla
+    como orden de magnitud.
+  \item \textbf{Los datos de Madrid son de 2018 y los de Nueva York y Los
+    Ángeles de 2024.} Entre ambas fechas está la pandemia, que en Estados
+    Unidos elevó el trabajo desde casa al 12,5 por ciento en Nueva York y al
+    16,0 en Los Ángeles \parencite{acs2024}. Eso reduce mecánicamente todas las
+    cuotas de desplazamiento, incluida la del automóvil, y por tanto juega en
+    contra de mi argumento, no a favor: la diferencia real entre las dos
+    ciudades estadounidenses es probablemente mayor que la medida.
+  \item \textbf{La flota costarricense se cuenta de tres maneras distintas.}
+    El Instituto Nacional de Seguros puso al cobro \num{1879790} derechos de
+    circulación para 2025 \parencite{observador2025}, el registro total de
+    automotores supera los 3,1 millones porque no se desinscriben las unidades
+    en desuso, y \textcite{allen2026} trabaja con unos 2,1 millones de
+    vehículos registrados. He usado la serie de derechos de circulación por ser
+    la única que se aproxima a la flota efectivamente en uso, y advierto que la
+    comparación entre fuentes no es directa.
+  \item \textbf{La afirmación de que San José tiene el segundo peor tránsito
+    del mundo no es utilizable.} Circula ampliamente, pero procede del índice
+    de Numbeo, que se construye con respuestas voluntarias de usuarios y no con
+    mediciones de sondas de tráfico; el índice de TomTom, que sí las usa, no
+    cubre San José por falta de datos granulares. Lo que sí resiste el
+    escrutinio son las estimaciones de coste del Programa Estado de la Nación y
+    de la Universidad Nacional, que proceden de encuestas de empleo y de
+    matrices de origen y destino.
+  \item \textbf{El Panel A de la Figura~\ref{fig:geometria} es una identidad
+    geométrica, no una medición.} Las velocidades puerta a puerta reales son
+    menores que las nominales y el presupuesto de tiempo de viaje es estable,
+    no rigurosamente constante: el propio \textcite{zahavi1974} advirtió que
+    debe medirse en cada lugar antes de usarse. El argumento no depende del
+    valor exacto, sino de que el tiempo esté acotado y la velocidad no.
+  \item \textbf{No puedo contrastar el contrafactual.} La tesis de que la forma
+    urbana determina la dependencia del automóvil es coherente con la teoría y
+    con todas las mediciones que he podido reunir, pero la causalidad podría
+    ir, al menos en parte, en sentido contrario: es posible que quien prefiere
+    no conducir se mude al centro. \textcite{ewing2010} discuten esa
+    autoselección residencial y concluyen que atenúa las elasticidades pero no
+    las anula. Con datos agregados como los míos, el efecto no es separable.
+\end{enumerate}
+
+\section*{Conclusiones}
+
+\textbf{¿Puedo imaginarme una vida sin vehículo privado?} Puedo imaginarla con
+precisión, porque está documentada: la viven el 37,6 por ciento de los hogares
+del centro de Madrid \parencite{crtm2019}, el 56,7 por ciento de los de Nueva
+York \parencite{acs2024} y, en la práctica
+cotidiana, el 49,8 por ciento de los viajes que en mi propio país se hacen en
+autobús. Lo que no puedo es vivirla yo hoy, en la GAM, sin renunciar a una
+parte sustancial de mi acceso al trabajo y a los servicios.
+
+\textbf{Y esa asimetría es el punto.} La diferencia entre unos y otros no está
+en el vehículo, que es el mismo en todas partes, ni en la convicción ambiental,
+que se distribuye de forma bastante pareja. Está en cuántos destinos caben
+dentro de media hora sin coche, y eso lo fijó quien decidió el uso del suelo
+hace veinte, cuarenta o setenta años. La escalera del 20 al 71 por ciento de la
+Figura~\ref{fig:escalera} no mide preferencias: mide urbanismo.
+
+La lección que me llevo como CTO se puede formular en una frase:
+\textbf{cuando el desempeño observado de una tecnología varía por un factor de
+tres según el entorno donde se despliega, el objeto de la gestión ya no es la
+tecnología, es el entorno}. Es el mismo error de nivel que discutimos en el
+foro del módulo anterior a propósito de IPv6: optimizar la figura de mérito del
+artefacto mientras la que decide el resultado es la del sistema. Aquí el sistema se llama
+densidad, mezcla de usos y reparto del espacio, y su constante de tiempo se
+mide en décadas, no en ciclos de producto.
+
+\textbf{Pregunta para el foro.} Me interesa contrastar el dato con el resto del
+grupo, porque venimos de entornos muy distintos: en su ciudad, ¿cuánto tarda
+puerta a puerta el mismo trayecto en transporte público y en automóvil? Si la
+razón entre ambos supera el 1,5, mi hipótesis es que ustedes también conducen,
+con independencia de lo que opinen del automóvil. Y una segunda pregunta para
+quienes trabajan en industrias reguladas: ¿han visto algún caso en el que la
+mejora del producto haya conseguido, por sí sola, cambiar un resultado que en
+realidad estaba determinado por la infraestructura?
+
+\printbibliography[title={Referencias bibliográficas}]
+
+\end{document}
