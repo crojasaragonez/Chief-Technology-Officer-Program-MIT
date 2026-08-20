@@ -284,7 +284,8 @@ autoridad de homologación, no una cifra de millas \parencite{eu2022reg}.
                                 10.370/2.70/{GB 44721-2026\\(China)}} {
       \draw[cReg, thick] (\xv,0.85) -- (\xv,0.85+\prof);
       \fill[cReg] (\xv,0.85+\prof) circle (1.6pt);
-      \node[above, font=\tiny, cReg, align=center] at (\xv,0.92+\prof) {\lab};
+      \node[above, font=\tiny, cReg, align=center, fill=white,
+        inner sep=1.5pt] at (\xv,0.92+\prof) {\lab};
     }
     \draw[cReg, thick] (0,0.85) -- (0,1.40);
     \fill[cReg] (0,1.40) circle (1.6pt);
@@ -297,7 +298,8 @@ autoridad de homologación, no una cifra de millas \parencite{eu2022reg}.
                                 10.210/0.55/{exención a Zoox\\y guía provisional}} {
       \draw[cUSA, thick] (\xv,0.85) -- (\xv,0.85-\prof);
       \fill[cUSA] (\xv,0.85-\prof) circle (1.6pt);
-      \node[below, font=\tiny, cUSA, align=center] at (\xv,0.78-\prof) {\lab};
+      \node[below, font=\tiny, cUSA, align=center, fill=white,
+        inner sep=1.5pt] at (\xv,0.78-\prof) {\lab};
     }
     \draw[cReg, thick] (0.15,-1.85) -- (0.75,-1.85);
     \node[right, font=\tiny, cReg] at (0.85,-1.85)
@@ -588,8 +590,8 @@ de siniestros del regulador californiano no resuelve responsabilidades
       tractocamión}{2,24}{1.48}
     \node[right, text width=9.6cm, font=\tiny, align=left, gray!25!black]
       at (-0.10,-0.98) {y aun así la proyección oficial para 2024 a 2034 es de
-      crecimiento: $+4\,\%$ en camión de gran tonelaje, $+8\,\%$ en reparto y
-      $+9\,\%$ en taxi y vehículo con conductor};
+      crecimiento: +4\,\% en camión de gran tonelaje, +8\,\% en reparto y
+      +9\,\% en taxi y vehículo con conductor};
 
     % ---------------- panel B: efectos ya medidos ----------------
     \begin{scope}[shift={(0,-5.05)}]
@@ -614,7 +616,7 @@ de siniestros del regulador californiano no resuelve responsabilidades
       }
       \node[right, text width=5.9cm, font=\tiny, align=left, gray!25!black]
         at (5.85,1.60) {para comparar, los viajes por hora cayeron un
-        $2{,}6\,\%$ en el conjunto del país: la mitad de la caída registrada en
+        2,6\,\% en el conjunto del país: la mitad de la caída registrada en
         las ciudades con robotaxi};
     \end{scope}
   \end{tikzpicture}

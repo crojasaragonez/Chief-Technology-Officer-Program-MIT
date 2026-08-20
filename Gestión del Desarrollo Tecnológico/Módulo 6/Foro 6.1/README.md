@@ -1,94 +1,112 @@
-# Foro 5.3: ¿Siempre gana la mejor tecnología?
+# Foro 6.1: Vehículos autónomos
 
-Caso de estudio sobre **IPv6**, especificado en diciembre de 1995 y elevado a
-norma de Internet (STD 86) en julio de 2017, que treinta años después alcanza al
-47 por ciento de los usuarios sin haber sustituido a IPv4 en ningún momento.
-
-El informe responde a las dos preguntas del enunciado, cuándo y por qué ocurrió,
-con figuras de mérito y curvas en S de los dos protocolos.
+Respuesta a las cuatro preguntas del enunciado (certificación, tránsito mixto,
+responsabilidad legal y empleo) con los datos disponibles en agosto de 2026:
+**220,6 millones de millas sin conductor a bordo** acumuladas por el mayor
+operador hasta marzo de 2026, la primera exención de despliegue comercial de la
+NHTSA a un vehículo sin volante (31 de julio de 2026) y la norma china
+obligatoria GB 44721-2026 (4 de agosto de 2026).
 
 ## Tesis
 
-IPv6 es superior a IPv4 en casi todas las figuras de mérito medibles, pero valía
-cero en la única que gobierna la adopción de un protocolo de red: la
-compatibilidad con la base instalada. Mientras tanto, el titular no compitió en
-el terreno del invasor, mejoró en el suyo. CIDR (1993), NAT (1994) y CGNAT (2012)
-convirtieron el techo de direcciones de IPv4 de rígido en elástico, y **NAT se
-publicó diecinueve meses antes que IPv6**.
+**Lo que hay que certificar no es un vehículo, es un proceso.** El umbral
+estadístico que haría creíble una certificación por kilometraje está fuera de
+alcance: 275 millones de millas sin una sola muerte para acreditar la tasa de
+mortalidad al 95 por ciento y 8.800 millones para demostrar una mejora del 20
+por ciento (Kalra y Paddock, 2016), y cada actualización de software reinicia la
+cuenta. De ahí se derivan las otras tres respuestas:
+
+- **Tránsito mixto**, con el dominio de diseño operativo (ODD) como valla: es una
+  restricción real, auditable, ampliable por tramos y revocable, a diferencia de
+  la infraestructura dedicada.
+- **La responsabilidad se traslada** del conductor al operador y al fabricante,
+  con pago en primera instancia por el seguro y repetición posterior, que es el
+  diseño británico. Entre dos autónomos deciden los registros de datos, no los
+  testimonios.
+- **El empleo pierde y gana a distinto ritmo**: poco en el agregado y en treinta
+  años, mucho en unas pocas ciudades y en dos o tres años, lo que ya se está
+  midiendo.
 
 ## Contenido gráfico
 
-Las cuatro figuras están compuestas en TikZ dentro de `main.tex`, sin imágenes
+Las cinco figuras están compuestas en TikZ dentro de `main.tex`, sin imágenes
 externas:
 
-- **Figura 1**: las dos curvas en S sobre un mismo FOM (fracción de usuarios que
-  puede usar el protocolo de forma nativa). IPv4 sube de 0 a 100 por ciento en un
-  día, el 1 de enero de 1983 sobre unos 400 servidores; IPv6 lleva desde 2008
-  midiéndose y no llega al 50. Incluye las dos series de medición independientes
-  (Google y APNIC Labs) y las dos extrapolaciones. Es el diagrama que pide el
-  enunciado.
-- **Figura 2**: el contrainvasor. Panel A, cronología comparada de las normas del
-  IETF, que muestra el adelanto del remiendo sobre el sucesor. Panel B, precio de
-  mercado de una dirección IPv4, que cae desde 2021.
-- **Figura 3**: perfil de figuras de mérito expresado como razón entre IPv6 e
-  IPv4, en dos paneles porque la ventaja en espacio de direcciones (29 órdenes de
-  magnitud) no cabe en el mismo eje que las demás.
-- **Figura 4**: adopción de IPv6 por región, que muestra que la media mundial del
-  43 por ciento no describe a ninguna región concreta.
+- **Figura 1**: el límite estadístico de la certificación por millas. Panel A,
+  los dos umbrales de Kalra y Paddock frente a lo acumulado por Waymo y frente a
+  la exposición anual de los conductores humanos de EE. UU. ($3{,}3\times10^{12}$
+  millas). Panel B, la serie de millas acumuladas sin conductor, de 7,1 millones
+  a finales de 2023 a 220,6 millones en marzo de 2026, con el cruce del primer
+  umbral hacia julio de 2026.
+- **Figura 2**: los dos regímenes de autorización. Panel A, cronología comparada
+  de la homologación de tipo con auditoría (UNECE, UE, Alemania, Reino Unido,
+  China) frente a la autocertificación estadounidense con exenciones. Panel B, la
+  autorización por capas que propongo, de la norma del vehículo a la vigilancia
+  continua.
+- **Figura 3**: la evidencia del tránsito mixto. Panel A, reducciones del 94, 82
+  y 93 por ciento frente al conductor humano de la misma zona. Panel B, los 78
+  siniestros con lesión o airbag comunicados a la NHTSA: 72 originados por otro
+  conductor y 48 alcances por detrás.
+- **Figura 4**: quién responde en cada régimen, con las tres cadenas de
+  responsabilidad (EE. UU., Reino Unido, UE y Alemania) y el escenario de dos
+  autónomos entre sí.
+- **Figura 5**: empleo expuesto (15,5 y 3,8 millones de trabajadores) y efectos
+  ya medidos en los mercados con robotaxi en el cuarto trimestre de 2025.
 
-Los dos cuadros recogen la cronología verificada y la matriz completa de FOM.
+Los dos cuadros recogen la cronología verificada y la matriz de responsabilidad
+por escenario y por jurisdicción.
 
 ## Verificación de datos
 
-Las series de adopción **no se tomaron de fuentes secundarias**, que resultaron
-contradictorias entre sí, sino descargando los datos crudos de las dos
-mediciones públicas el 15 de agosto de 2026:
+Los datos se tomaron de fuentes primarias siempre que existían:
 
-- Google: `www.google.com/intl/en_ALL/ipv6/statistics/data/adoption.js`,
-  6.552 datos diarios desde el 4 de septiembre de 2008.
-- APNIC Labs: `data1.labs.apnic.net/v6stats/v6region/XA.json`,
-  4.639 datos con suavizado de 30 días desde el 7 de octubre de 2013.
-- Tabla de rutas global: `bgp.potaroo.net`, AS6447.
+- Millas y reducciones de siniestralidad: página de impacto de seguridad de Waymo
+  (datos a 31 de marzo de 2026) y la actualización del 24 de junio de 2026,
+  contrastadas con el estudio revisado por pares de *Traffic Injury Prevention*
+  (56,7 millones de millas) y con el análisis de reclamaciones de Swiss Re (25,3
+  millones de millas), que es independiente del operador.
+- Siniestralidad humana de referencia: `DOT HS 813 829` de la NHTSA, julio de
+  2026, que da 36.640 muertes estimadas en 2025 y una tasa de 1,10 por cada 100
+  millones de millas. La exposición anual de $3{,}3\times10^{12}$ millas es un
+  cálculo propio a partir de esas dos cifras.
+- Regulación: textos y publicaciones oficiales (Reglamento UNECE 157, Reglamento
+  de Ejecución (UE) 2022/1426, Directiva (UE) 2024/2853, leyes británicas de 2018
+  y 2024, *Federal Register* del 31 de julio de 2026).
+- Empleo: *Occupational Outlook Handbook* del BLS y los dos estudios académicos
+  de referencia (Beede et al., 2017; Groshen et al., 2018).
 
-Cuatro comprobaciones cambiaron el contenido:
+Tres comprobaciones cambiaron el contenido:
 
-- Las fuentes secundarias daban el cruce del 50 por ciento el 28 de marzo, el 13
-  de abril y el 23 de abril de 2026, con valores distintos. El dato crudo
-  confirma el **28 de marzo de 2026 con 50,10 por ciento**, que además fue
-  **sábado**: los quince días en que la serie supera el 50 son todos fines de
-  semana, y la media móvil de 30 días nunca lo ha alcanzado.
-- El ajuste logístico y la extrapolación lineal se contradicen (asíntota en el
-  47,6 por ciento frente a llegada al 100 en 2045). Se comprobó cuál ajusta mejor
-  los últimos cinco años y se declara la contradicción en lugar de elegir.
-- El artículo de The Register sobre los treinta años de IPv6 lo firma **Simon
-  Sharwood**, no el autor que sugería la búsqueda.
-- El número de campos de la cabecera IPv4 (doce antes de las opciones) y la
-  longitud mínima (20 octetos) se contrastaron con la RFC 791 original, no con
-  resúmenes.
+- La cifra de 220,6 millones de millas corresponde a **marzo de 2026** y a cinco
+  áreas metropolitanas, no al total histórico de la empresa en todas sus
+  operaciones. La serie de la Figura 1 usa solo puntos con fuente identificable
+  y descarta los hitos que solo aparecían en agregadores.
+- Los dos fallecimientos con vehículos sin conductor implicados (San Francisco,
+  enero de 2025, y Dallas, 2026) **no se atribuyeron al sistema**: la
+  reconstrucción sitúa la causa en terceros. Se declara así en las limitaciones.
+- El reparto de culpa de los 78 siniestros es una **lectura de los relatos** hecha
+  por un analista externo, no una resolución oficial: los informes de la orden
+  general de la NHTSA acreditan que hubo choque, no quién tuvo la culpa.
 
-Los precios del mercado de direcciones IPv4 se declaran como orden de magnitud y
-tendencia, no como serie de precio único, porque las fuentes disponibles son
-informes de intermediarios con dispersión alta según el tamaño del bloque.
+Los datos de ingresos de los conductores de plataforma proceden de un panel
+privado y se declaran como dirección, no como magnitud. Los dos hitos chinos se
+apoyan en prensa especializada porque no hay versión oficial verificable.
 
 ## Versión para el foro (TinyMCE)
 
 El foro se edita con TinyMCE, que acepta HTML pegado desde el navegador.
 
-1. Abrir **`foro-5.3-tinymce.html`** en el navegador.
+1. Abrir **`foro-6.1-tinymce.html`** en el navegador.
 2. Seleccionar todo (`Ctrl+A`) y copiar (`Ctrl+C`).
 3. Pegar en el cuadro de texto del foro (`Ctrl+V`).
 
-Las cuatro figuras van incrustadas en base64 dentro del propio HTML, de modo que
+Las cinco figuras van incrustadas en base64 dentro del propio HTML, de modo que
 viajan con el portapapeles y no hay que subirlas por separado. Si la instalación
 concreta de TinyMCE filtra las imágenes en base64, están también sueltas en
-`figuras/figura-1.png` a `figura-4.png` para insertarlas con el botón de imagen
+`figuras/figura-1.png` a `figura-5.png` para insertarlas con el botón de imagen
 del editor.
 
-El estilo va en un bloque `<style>`: al copiar desde el navegador, este aplica
-los estilos calculados a cada elemento, así que el formato (negritas, listas,
-bordes de las tablas) sobrevive al pegado.
-
-Los dos HTML **no se editan a mano**. `foro-5.3.html` es el maestro legible, con
+Los dos HTML **no se editan a mano**. `foro-6.1.html` es el maestro legible, con
 rutas relativas a las imágenes, y el que se pega se genera con:
 
 ```bash
@@ -97,21 +115,21 @@ make html
 
 Esa orden extrae los entornos `tikzpicture` de `main.tex`, los compila con la
 clase `standalone`, los convierte a PNG, los optimiza con `pngquant` y `optipng`
-y los incrusta en `foro-5.3-tinymce.html`. Las figuras del foro no pueden, por
+y los incrusta en `foro-6.1-tinymce.html`. Las figuras del foro no pueden, por
 tanto, desincronizarse de las del informe.
 
 ## Archivos
 
 - `main.tex`: informe.
-- `referencias.bib`: bibliografía (Biber/APA), 38 entradas, todas citadas.
-- `context.txt`: enunciado de la actividad.
+- `referencias.bib`: bibliografía (Biber/APA), 40 entradas, todas citadas.
+- `contexto.txt`: enunciado de la actividad.
 - `Makefile`: tareas de compilación (`pdf`, `html`, `check`, `clean`).
-- `main.pdf`: documento generado, 11 páginas.
-- `foro-5.3.html`: versión HTML del informe (maestro, con rutas relativas).
-- `foro-5.3-tinymce.html`: versión generada, con las imágenes incrustadas, para
+- `main.pdf`: documento generado, 14 páginas.
+- `foro-6.1.html`: versión HTML del informe (maestro, con rutas relativas).
+- `foro-6.1-tinymce.html`: versión generada, con las imágenes incrustadas, para
   copiar y pegar en el foro.
 - `exportar-figuras.py`: genera las dos cosas anteriores desde `main.tex`.
-- `figuras/`: las cuatro figuras en PNG, por si hay que subirlas a mano.
+- `figuras/`: las cinco figuras en PNG, por si hay que subirlas a mano.
 
 ## Requisitos
 
@@ -124,10 +142,14 @@ tanto, desincronizarse de las del informe.
 fc-match "Source Serif Pro"
 ```
 
-- `make`, `grep` y `poppler-tools` (`pdfinfo`) para las tareas automatizadas.
+- `make`, `grep` y `poppler-tools` (`pdfinfo`, `pdftoppm`) para las tareas
+  automatizadas.
 
 La opción `es-noshorthands` de Babel evita una incompatibilidad conocida entre
-los caracteres abreviados de `babel-spanish` y `biblatex-apa`.
+los caracteres abreviados de `babel-spanish` y `biblatex-apa`. Por la misma razón
+los porcentajes de las figuras se escriben en modo texto (`+4\,\%`) y no en modo
+matemático: `babel-spanish` redefine `\%` y la versión en modo matemático rompe la
+compilación de las figuras con la clase `standalone`.
 
 ## Compilación
 
