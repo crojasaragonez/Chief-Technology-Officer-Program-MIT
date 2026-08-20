@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Foro 5.3. ¿Siempre gana la mejor tecnología? El caso de IPv6</title>
+<style>
+  body { font-family: Georgia, "Times New Roman", serif; font-size: 16px;
+         line-height: 1.55; color: #1a1a1a; max-width: 780px;
+         margin: 2rem auto; padding: 0 1rem; }
+  h1 { font-size: 1.6em; line-height: 1.25; margin: 0 0 .2em; }
+  h2 { font-size: 1.25em; margin: 1.8em 0 .5em; }
+  h3 { font-size: 1.05em; margin: 1.4em 0 .4em; }
+  p  { margin: 0 0 .9em; }
+  ul, ol { margin: 0 0 .9em; padding-left: 1.5em; }
+  li { margin-bottom: .45em; }
+  img { max-width: 100%; height: auto; display: block; margin: .6em auto .3em; }
+  table { border-collapse: collapse; width: 100%; margin: .8em 0 1em;
+          font-size: .88em; }
+  th, td { border: 1px solid #b8b8b8; padding: 5px 8px; vertical-align: top;
+           text-align: left; }
+  th { background: #eeeaf3; }
+  .sub { font-size: 1.05em; color: #444; margin: 0 0 1.6em; }
+  .cap { font-size: .82em; color: #555; line-height: 1.4; margin: 0 0 1.6em; }
+  .ref { font-size: .85em; line-height: 1.45; }
+  .ref p { margin: 0 0 .5em; padding-left: 1.6em; text-indent: -1.6em; }
+</style>
+</head>
+<body>
+
+<h1>¿Siempre gana la mejor tecnología? El caso de IPv6</h1>
+<p class="sub"><em>Treinta años de superioridad técnica sin sustitución, 1981 a 2026</em><br>
+Carlos Luis Rojas Aragonés</p>
+
+<h2>1. Introducción</h2>
+
+<p>El avance que analizo es <strong>IPv6</strong>, la versión 6 del Protocolo de Internet. Se especificó en diciembre de 1995 (Deering y Hinden, 1995), se reeditó en diciembre de 1998 (Deering y Hinden, 1998) y alcanzó la categoría de norma de Internet, STD 86, en julio de 2017 (Deering y Hinden, 2017). Su predecesor, IPv4, se publicó en septiembre de 1981 (Postel, 1981a) y sigue siendo, cuarenta y cinco años después, el protocolo que todo usuario de Internet necesita.</p>
+
+<p>El 12 de agosto de 2026, la medición de Google situaba el uso de IPv6 en el <strong>47,0 por ciento</strong> de sus usuarios (Google, 2026) y la de APNIC Labs en el <strong>43,2 por ciento</strong> (APNIC Labs, 2026). Treinta años después de su publicación, el sucesor no ha sustituido a nada: convive.</p>
+
+<p>Este caso es exactamente el inverso del que suele estudiarse en gestión tecnológica. No se trata de un titular excelente que pierde ante un invasor mediocre pero barato. Se trata de un invasor que es superior en casi todas las figuras de mérito medibles, que fue diseñado por el mismo organismo que diseñó al titular, que no tiene competidor alguno y que aun así no consigue desplazarlo. La pregunta del enunciado, por tanto, admite aquí una respuesta más incómoda que un simple «no»: <strong>la mejor tecnología ni siquiera pierde, se queda esperando</strong>.</p>
+
+<p>Hay un dato que ordena todo el análisis y conviene adelantar: <strong>el remiendo que salvó a IPv4 se publicó antes que IPv6</strong>. La traducción de direcciones de red, NAT, apareció en mayo de 1994 (Egevang y Francis, 1994) y el direccionamiento sin clases, CIDR, en septiembre de 1993 (Fuller et al., 1993), mientras que IPv6 no se especificó hasta diciembre de 1995. Cuando el sucesor llegó, el problema que justificaba su existencia ya tenía una solución en producción.</p>
+
+<h2>2. Marco de análisis</h2>
+
+<p>Una <strong>figura de mérito</strong> (FOM) es una medida cuantitativa del desempeño de una tecnología en la función que presta, independiente de la implementación concreta que la realiza (de Weck, 2022). Cada tecnología recorre en su FOM una <strong>curva en S</strong>: arranque lento, mejora rápida y saturación al acercarse a un límite físico o económico (Foster, 1986; Utterback, 1994).</p>
+
+<p>El caso de IPv6 obliga a añadir una segunda familia de conceptos, porque un protocolo de red no es un producto de consumo individual. Su valor para cada adoptante depende de cuántos otros lo hayan adoptado ya, que es la definición de <strong>externalidad de red</strong> (Katz y Shapiro, 1985). Tres consecuencias, todas documentadas en la literatura y todas visibles en los datos, estructuran el análisis.</p>
+
+<ol>
+  <li><strong>En un mercado con externalidades de red, el FOM que decide no es el desempeño del artefacto, sino el número de interlocutores alcanzables.</strong> IPv6 nació con ese valor en cero y IPv4 lo tenía en el cien por cien. Ninguna ventaja en las demás figuras de mérito compensa esa diferencia inicial (Arthur, 1989; David, 1985).</li>
+  <li><strong>Sin compatibilidad hacia atrás no hay adopción incremental.</strong> Cuando el adoptante paga el coste completo y no obtiene beneficio hasta que el otro extremo también migra, la decisión racional individual es esperar, aunque la migración colectiva sea óptima. Farrell y Saloner (1985) llaman a esto <em>inercia excesiva</em>, y es el resultado de equilibrio, no una patología de gestión.</li>
+  <li><strong>El titular puede mover su propia curva.</strong> La respuesta del incumbente no tiene por qué ser adoptar al invasor: puede ser mejorar precisamente en el FOM que justificaba al invasor. Es el llamado <em>efecto vela</em>, un fenómeno discutido en sus casos clásicos (Howells, 2002; Mendonça, 2013), pero que aquí aparece fechado, documentado y con número de norma.</li>
+</ol>
+
+<h2>3. Panorama: dos curvas en S que nunca se cruzan</h2>
+
+<p>La Figura 1 representa el proceso completo. Como FOM del eje vertical uso la <strong>fracción de usuarios que puede utilizar el protocolo de forma nativa</strong>, porque es el único atributo comparable entre las dos transiciones y porque es, precisamente, el atributo que gobierna las externalidades de red.</p>
+
+<img src="figuras/figura-1.png" width="740" alt="Curvas en S de IPv4 e IPv6 sobre un mismo eje de figura de mérito, 1981 a 2040">
+<p class="cap"><strong>Figura 1.</strong> Curvas en S de las dos transiciones de protocolo de Internet sobre un mismo FOM. La curva de IPv4 recoge el cambio de NCP a TCP/IP planificado en Postel (1981b) y ejecutado el 1 de enero de 1983 sobre unos 400 servidores. La de IPv6 son las medias anuales de las dos series públicas de medición: la de Google, diaria desde el 4 de septiembre de 2008 (Google, 2026), y la de APNIC Labs, suavizada a 30 días desde el 7 de octubre de 2013 (APNIC Labs, 2026), ambas descargadas el 15 de agosto de 2026. La extrapolación lineal es la regresión de los últimos cinco años de la serie de Google, con pendiente de 2,73 puntos porcentuales por año. La asíntota logística procede de ajustar <em>L</em> / (1 + e<sup>−k(t−t₀)</sup>) a los 6.552 datos diarios por mínimos cuadrados. Ambas extrapolaciones se discuten en la sección de precisiones y limitaciones. Elaboración propia.</p>
+
+<p>Tres lecturas inmediatas de la figura.</p>
+
+<p><strong>Primera: el cruce no ha ocurrido, y la comparación de las dos transiciones es de otro orden.</strong> El paso de NCP a TCP/IP se planificó en noviembre de 1981 (Postel, 1981b) y se ejecutó el 1 de enero de 1983, en un día señalado, sobre unos 400 servidores. La transición a IPv6 lleva desde 1995 y alcanza al 47 por ciento de unos 6.100 millones de usuarios (International Telecommunication Union, 2025). La diferencia entre las dos curvas no mide la calidad de los protocolos: mide el tamaño de la red que hay que coordinar.</p>
+
+<p><strong>Segunda: la curva del titular nunca baja.</strong> Esta es la anomalía central del caso. En una sustitución tecnológica normal, la curva del invasor sube mientras la del titular cae. Aquí IPv6 sube y IPv4 sigue en el cien por cien, porque el 47 por ciento que usa IPv6 lo hace en <em>doble pila</em>, manteniendo IPv4 en paralelo, o bien atravesando un traductor hacia IPv4. En ambos casos IPv4 sigue haciendo falta. No hay sustitución, hay adición, y la adición cuesta dinero en lugar de ahorrarlo.</p>
+
+<p><strong>Tercera: la curva de IPv6 ya perdió velocidad.</strong> El incremento anual máximo se alcanzó entre 2016 y 2017, con 5,83 puntos porcentuales, y en los dos últimos años ha sido de 2,41 puntos. Un ajuste logístico a la serie completa de Google sitúa el punto de inflexión en abril de 2019 y la asíntota en el 47,6 por ciento; el mismo ajuste sobre la serie independiente de APNIC Labs sitúa la inflexión en octubre de 2019 y la asíntota en el 43,3 por ciento. Es decir, dos sistemas de medición distintos, con metodologías distintas, coinciden en que la curvatura ya es negativa.</p>
+
+<h2>4. La tecnología establecida: IPv4 con traducción de direcciones</h2>
+
+<h3>4.1. El desempeño que la hizo dominante</h3>
+
+<p>IPv4 define una dirección de 32 bits, lo que produce un espacio de 4.294.967.296 direcciones (Postel, 1981a). Con unos 6.100 millones de usuarios de Internet en 2026 (International Telecommunication Union, 2025), eso equivale a 0,70 direcciones por usuario antes de contar servidores, routers, sensores ni teléfonos. El espacio es, en sentido estricto, insuficiente, y lo es desde hace más de una década: IANA agotó su reserva central el 3 de febrero de 2011 y las cinco autoridades regionales fueron agotando la suya a partir de esa fecha, empezando por APNIC en abril de 2011 (Number Resource Organization, 2026).</p>
+
+<p>Lo relevante para la gestión tecnológica no es que se agotara, sino lo poco que pasó cuando se agotó. La razón es que el FOM que decide no era el número de direcciones asignables, sino el número de dispositivos que se pueden conectar, y esos dos números dejaron de ser el mismo en 1994.</p>
+
+<h3>4.2. El titular que mejora en el FOM del invasor</h3>
+
+<p>La secuencia de remiendos de IPv4 está fechada y numerada, y es el argumento más fuerte del caso:</p>
+
+<ul>
+  <li><strong>Septiembre de 1993</strong>: CIDR elimina las clases de direcciones y permite asignar bloques del tamaño realmente necesario (Fuller et al., 1993).</li>
+  <li><strong>Mayo de 1994</strong>: NAT permite que muchas máquinas compartan una sola dirección pública multiplexando puertos (Egevang y Francis, 1994), formalizado después en Srisuresh y Egevang (2001).</li>
+  <li><strong>Febrero de 1996</strong>: RFC 1918 reserva tres bloques privados, de modo que el direccionamiento interno deja de consumir espacio público (Rekhter et al., 1996).</li>
+  <li><strong>Abril de 2012</strong>: RFC 6598 reserva el bloque 100.64.0.0/10 para NAT de operador, la CGNAT, que lleva el mismo truco al nivel del proveedor de acceso (Weil et al., 2012).</li>
+</ul>
+
+<p>Las dos primeras son anteriores a IPv6 y la tercera es prácticamente simultánea. El efecto agregado es que IPv4 dejó de tener un techo duro de direcciones: un operador que asigna una dirección pública por cada 64 abonados multiplica por 64 su capacidad, y la penalización principal es el número de puertos disponibles por abonado, que cae de unos 64.512 a unos 1.024 (Donley et al., 2013; IPv4.Global, 2025).</p>
+
+<img src="figuras/figura-2.png" width="700" alt="Cronología comparada de las normas del IETF y precio de mercado de una dirección IPv4">
+<p class="cap"><strong>Figura 2.</strong> El contrainvasor. Panel A: fechas de publicación de las normas del IETF. Las de la pista inferior mejoran a IPv4 en la única figura de mérito que justificaba a IPv6, y dos de ellas son anteriores a la especificación del sucesor. Panel B: precio medio de una dirección IPv4 en el mercado secundario. Los valores de 2020 a 2025 proceden del análisis anual de Huston (2026c), que informa de máximos de 45 a 60 dólares en 2023, de 26 a 40 a comienzos de 2025 y de una media de unos 22 dólares al cierre de 2025; los de 2026 proceden de los informes mensuales elaborados sobre los datos de transacciones de IPv4.Global (IPv4Center, 2026; IPv4.Global, 2026). Es un mercado opaco, con precios muy dispersos según el tamaño del bloque, hasta el punto de que los bloques de /16 o mayores cotizaban por debajo de 10 dólares en febrero de 2026: los valores deben leerse como orden de magnitud y tendencia, no como una serie de precio único. Elaboración propia.</p>
+
+<p>El Panel B de la Figura 2 cierra el argumento económico. Si la escasez de direcciones IPv4 fuera creciente, el precio subiría y en algún momento haría racional migrar. Lo que muestran los datos de mercado es lo contrario: el precio tocó techo alrededor de los 55 dólares por dirección a finales de 2021 y ha caído desde entonces hasta unos 20 dólares en 2026, un descenso interanual del 39 por ciento en enero de ese año (IPv4Center, 2026). El único motor económico que quedaba para la migración se está apagando.</p>
+
+<h2>5. El invasor: IPv6</h2>
+
+<h3>5.1. En qué es superior, y por cuánto</h3>
+
+<p>IPv6 gana en casi todo lo que se puede medir. El espacio de direcciones pasa de 32 a 128 bits, de 4.294.967.296 a 3,40 × 10<sup>38</sup>, un factor de 2<sup>96</sup>, es decir 7,92 × 10<sup>28</sup>. La cabecera pasa de doce campos de longitud variable a ocho campos de longitud fija de 40 octetos, elimina la suma de comprobación que IPv4 obliga a recalcular en cada salto y prohíbe que los routers intermedios fragmenten paquetes (Deering y Hinden, 2017; Postel, 1981a). Añade autoconfiguración sin servidor (Thomson et al., 2007). Y la agregación funciona: el 15 de agosto de 2026 la tabla de rutas global de IPv4 tenía 1.116.753 entradas frente a 260.375 de IPv6 (Huston, 2026a), es decir IPv6 transporta 7,9 × 10<sup>28</sup> veces más espacio de direcciones con una cuarta parte de las entradas de encaminamiento.</p>
+
+<h3>5.2. En qué no es superior, y por qué eso lo decidió todo</h3>
+
+<img src="figuras/figura-3.png" width="740" alt="Perfil de figuras de mérito de IPv6 expresado como razón frente a IPv4">
+<p class="cap"><strong>Figura 3.</strong> Perfil de figuras de mérito de IPv6 expresado como razón frente a IPv4, sobre ejes logarítmicos. Una razón mayor que uno indica que IPv6 es superior en esa figura de mérito; menor que uno, que es inferior. Las razones se han orientado de modo que un valor mayor que uno signifique siempre ventaja de IPv6. Panel A: la ventaja en espacio de direcciones es de 29 órdenes de magnitud y no cabe en el mismo eje que las demás. Panel B: el resto de las figuras de mérito se mueve entre 0,5 y 4,3, y en dos de ellas IPv6 empata o pierde. La sobrecarga de cabecera es peor por diseño, porque la cabecera fija de 40 octetos duplica los 20 octetos mínimos de IPv4 (Deering y Hinden, 2017; Postel, 1981a). El tiempo de ida y vuelta se sitúa en la paridad: Howard (2019) encuentra que las operadoras de doble pila nativo miden esencialmente la misma velocidad en los dos protocolos. La última fila no es una razón medida sino el valor que tomaba el FOM decisivo el día en que se publicó IPv6. Elaboración propia.</p>
+
+<p>La Figura 3 contiene, a mi juicio, la explicación completa del caso. Leída de arriba a abajo dice tres cosas.</p>
+
+<p><strong>La ventaja de IPv6 está concentrada en una sola figura de mérito.</strong> Es enorme, 29 órdenes de magnitud, pero es una sola, y es además la única que el usuario final no puede percibir. Nadie nota que su proveedor tiene direcciones de sobra.</p>
+
+<p><strong>En las demás, IPv6 empata o pierde.</strong> La cabecera fija de 40 octetos duplica los 20 octetos mínimos de IPv4, de modo que en enlaces con paquetes pequeños IPv6 desperdicia más ancho de banda. En velocidad no hay diferencia apreciable en redes de doble pila nativo (Howard, 2019). Geoff Huston, el científico jefe de APNIC, lo resume sin rodeos: IPv6 «no era más rápido, ni más versátil, ni más seguro que IPv4» (Huston, 2024). Su único beneficio real era mitigar un riesgo futuro, y los riesgos futuros no se presupuestan.</p>
+
+<p><strong>La figura de mérito que decidió el resultado valía cero.</strong> IPv6 no es compatible hacia atrás con IPv4: una máquina que solo hable IPv6 no puede comunicarse con una que solo hable IPv4 sin un traductor intermedio. Esto no es una consecuencia imprevista, sino una decisión de diseño que el propio organismo reconoció después. En un panel del IETF en San Francisco en marzo de 2009, Leslie Daigle, entonces directora de tecnología de Internet de la Internet Society, declaró que «la falta de compatibilidad real hacia atrás con IPv4 fue el único fallo crítico» (Marsan, 2009).</p>
+
+<h3>5.3. La consecuencia: nadie migra, todos suman</h3>
+
+<p>La estrategia de transición prevista era la doble pila: añadir IPv6 sin quitar IPv4 y apagar IPv4 más adelante. La primera mitad se ha cumplido, la segunda no. El resultado es que el adoptante de IPv6 no ahorra nada: sigue necesitando su parque de direcciones IPv4, sigue manteniendo la CGNAT y ahora además opera un segundo protocolo, con su propio plan de direccionamiento, sus propias reglas de cortafuegos y su propia formación. El coste es individual, inmediato y cierto; el beneficio es colectivo, futuro e incierto. Es la definición de inercia excesiva de Farrell y Saloner (1985), y la conclusión a la que llega también el análisis económico de la Organisation for Economic Co-operation and Development (2014) y el estudio de adopción por actores de Nikkhah y Guérin (2016).</p>
+
+<h2>6. La distribución que la media esconde</h2>
+
+<img src="figuras/figura-4.png" width="620" alt="Usuarios con capacidad IPv6 por región según APNIC Labs">
+<p class="cap"><strong>Figura 4.</strong> Usuarios con capacidad IPv6 por región, según la medición de APNIC Labs del 15 de agosto de 2026 (APNIC Labs, 2026). La línea discontinua marca la media mundial. La distribución no es unimodal: Asia y las Américas han superado el 49 por ciento mientras África se queda en el 6,65, de modo que la media mundial no describe a ninguna región concreta. Elaboración propia.</p>
+
+<p>La media del 43 por ciento oculta una distribución muy desigual, que además invierte la intuición habitual: Asia y las Américas van por delante de Europa. La explicación que da Huston (2026b) es económica y no técnica. Las redes que más han desplegado IPv6 son las móviles y las de incorporación reciente, como Reliance Jio en la India, porque nacieron sin una base instalada de direcciones IPv4 que amortizar. Quien ya tenía direcciones tenía un incentivo para rentabilizarlas; quien no las tenía encontraba más barato empezar en IPv6. La adopción no sigue al desarrollo económico, sigue a la ausencia de activos heredados.</p>
+
+<h2>7. ¿Cuándo y por qué ocurrió?</h2>
+
+<p><strong>Cuadro 1. Cronología verificada del proceso.</strong></p>
+
+<table>
+<thead>
+<tr><th style="width:16%">Fecha</th><th>Hecho</th></tr>
+</thead>
+<tbody>
+<tr><td>09/1981</td><td>RFC 791: especificación de IPv4, 32 bits de dirección (Postel, 1981a)</td></tr>
+<tr><td>11/1981</td><td>RFC 801: plan de transición de NCP a TCP/IP, con fecha límite (Postel, 1981b)</td></tr>
+<tr><td>01/01/1983</td><td>Día de la bandera: unos 400 servidores de ARPANET cambian de protocolo</td></tr>
+<tr><td>09/1993</td><td>RFC 1519: CIDR elimina las clases de direcciones (Fuller et al., 1993)</td></tr>
+<tr><td>05/1994</td><td><strong>RFC 1631: NAT</strong>, diecinueve meses antes que IPv6 (Egevang y Francis, 1994)</td></tr>
+<tr><td>12/1995</td><td>RFC 1883: primera especificación de IPv6 (Deering y Hinden, 1995)</td></tr>
+<tr><td>02/1996</td><td>RFC 1918: bloques de direccionamiento privado (Rekhter et al., 1996)</td></tr>
+<tr><td>12/1998</td><td>RFC 2460: segunda especificación de IPv6 (Deering y Hinden, 1998)</td></tr>
+<tr><td>04/09/2008</td><td>Google publica el primer dato de su serie: 0,14 por ciento (Google, 2026)</td></tr>
+<tr><td>03/02/2011</td><td>IANA agota su reserva central de direcciones IPv4 (Number Resource Organization, 2026)</td></tr>
+<tr><td>08/06/2011</td><td>World IPv6 Day: prueba coordinada de 24 horas</td></tr>
+<tr><td>06/06/2012</td><td>World IPv6 Launch: activación permanente (Internet Society, 2012)</td></tr>
+<tr><td>04/2012</td><td>RFC 6598: bloque reservado para CGNAT (Weil et al., 2012)</td></tr>
+<tr><td>07/2017</td><td>RFC 8200: IPv6 pasa a ser norma de Internet, STD 86 (Deering y Hinden, 2017)</td></tr>
+<tr><td>12/2021</td><td>Máximo histórico del precio de una dirección IPv4, unos 55 dólares</td></tr>
+<tr><td>12/2025</td><td>IPv6 cumple treinta años con menos de la mitad de los usuarios (Sharwood, 2025)</td></tr>
+<tr><td>28/03/2026</td><td><strong>Primer día</strong> en que la medición de Google supera el 50 por ciento, con 50,10 (Google, 2026)</td></tr>
+<tr><td>12/08/2026</td><td>Google mide 47,03 por ciento y APNIC Labs 43,16 por ciento (APNIC Labs, 2026; Google, 2026)</td></tr>
+</tbody>
+</table>
+
+<p><strong>Cuadro 2. Matriz de figuras de mérito de los dos protocolos.</strong></p>
+
+<table>
+<thead>
+<tr><th style="width:28%">FOM</th><th style="width:24%">IPv4 (1981)</th><th style="width:26%">IPv6 (1995)</th><th>Ventaja</th></tr>
+</thead>
+<tbody>
+<tr><td>Espacio de direcciones</td><td>4.294.967.296</td><td>3,40 × 10<sup>38</sup></td><td>IPv6, × 7,9 × 10<sup>28</sup></td></tr>
+<tr><td>Direcciones por usuario de Internet</td><td>0,70</td><td>5,6 × 10<sup>28</sup></td><td>IPv6</td></tr>
+<tr><td>Longitud de la cabecera</td><td>20 a 60 octetos, variable</td><td>40 octetos, fija</td><td>mixta</td></tr>
+<tr><td>Campos de la cabecera</td><td>12 más opciones</td><td>8</td><td>IPv6</td></tr>
+<tr><td>Suma de comprobación por salto</td><td>sí, se recalcula</td><td>no existe</td><td>IPv6</td></tr>
+<tr><td>Fragmentación en tránsito</td><td>la hacen los routers</td><td>solo el origen</td><td>IPv6</td></tr>
+<tr><td>Autoconfiguración sin servidor</td><td>no</td><td>sí (SLAAC)</td><td>IPv6</td></tr>
+<tr><td>Entradas en la tabla global</td><td>1.116.753</td><td>260.375</td><td>IPv6</td></tr>
+<tr><td>Sobrecarga por paquete</td><td>20 octetos mínimo</td><td>40 octetos siempre</td><td><strong>IPv4</strong></td></tr>
+<tr><td>Tiempo de ida y vuelta</td><td>referencia</td><td>equivalente</td><td>ninguna</td></tr>
+<tr><td>Compatibilidad con la base instalada</td><td>total</td><td><strong>ninguna</strong></td><td><strong>IPv4</strong></td></tr>
+<tr><td>Coste de una dirección</td><td>unos 20 dólares</td><td>prácticamente cero</td><td>IPv6</td></tr>
+<tr><td>Usuarios que lo pueden usar</td><td>100 por ciento</td><td>43 a 47 por ciento</td><td><strong>IPv4</strong></td></tr>
+</tbody>
+</table>
+
+<p>Cinco mecanismos explican el «por qué», y ninguno de ellos es la calidad del protocolo.</p>
+
+<p><strong>1. La compatibilidad hacia atrás es una figura de mérito, y era la única que importaba.</strong> Un protocolo de red no vale por lo que hace, sino por con cuántos permite hablar. En ese eje IPv6 salió al mercado con el valor cero y su predecesor estaba en el cien por cien. Es el fallo que el propio IETF reconoció en 2009 (Marsan, 2009).</p>
+
+<p><strong>2. El beneficio es colectivo y el coste es individual.</strong> Cada operador que despliega IPv6 asume el gasto completo y no puede apagar IPv4, porque sus clientes seguirían necesitando llegar a la mitad larga de los usuarios y de los servidores que aún no tienen IPv6. Esperar es la respuesta racional de cada actor por separado y el peor resultado para el conjunto (Farrell y Saloner, 1985; Nikkhah y Guérin, 2016; Organisation for Economic Co-operation and Development, 2014).</p>
+
+<p><strong>3. El titular mejoró justo en el FOM que justificaba al invasor.</strong> CIDR en 1993, NAT en 1994, direccionamiento privado en 1996 y CGNAT en 2012 convirtieron un techo duro de 4.294.967.296 direcciones en un techo elástico. Este es el efecto vela en su forma más nítida, y con una precisión que los casos clásicos no tienen: aquí el remiendo lleva número de norma y fecha de publicación, y se adelantó diecinueve meses al sucesor.</p>
+
+<p><strong>4. El invasor no ganaba en ningún FOM perceptible por el usuario.</strong> Ni más rápido, ni más seguro, ni más funcional (Huston, 2024). Una tecnología cuya única ventaja es evitar un problema que el usuario no ha sufrido todavía carece de argumento de venta.</p>
+
+<p><strong>5. El único motor económico se está apagando.</strong> El precio de una dirección IPv4 cayó de unos 55 dólares a finales de 2021 a unos 20 en 2026 (Huston, 2026c; IPv4Center, 2026). La escasez, que era la última fuerza capaz de empujar la migración, se relaja en lugar de agravarse.</p>
+
+<h2>8. Precisiones y limitaciones</h2>
+
+<ol>
+  <li><strong>Las dos extrapolaciones de la Figura 1 se contradicen y no puedo elegir entre ellas con estos datos.</strong> El ajuste logístico da una asíntota del 47,6 por ciento con la serie de Google y del 43,3 con la de APNIC Labs, es decir predice que la curva se detiene aproximadamente donde ya está. La regresión lineal de los últimos cinco años da 2,73 puntos porcentuales anuales y llega al cien por cien en 2045. Sobre esos mismos cinco años, la recta ajusta ligeramente mejor que la logística, con un error cuadrático medio de 1,81 puntos frente a 1,98. Además la logística presenta sesgo positivo en los dos últimos años, de +0,92 y +1,42 puntos, lo que indica que su asíntota está subestimada: ajustar una logística a datos que acaban de pasar el punto de inflexión sitúa siempre la asíntota cerca del valor actual. <strong>La asíntota debe leerse como una advertencia, no como un pronóstico.</strong> Lo robusto es lo otro: el ritmo anual cayó de 5,83 puntos en 2016 y 2017 a 2,41 en los dos últimos años, y a ese ritmo la transición necesitaría veinte años más, esto es, más de cincuenta desde la RFC 1883. Esa proyección coincide con la de Huston (2024), que sitúa el final en 2045 con datos y método distintos.</li>
+  <li><strong>Las tres mediciones públicas no coinciden y miden cosas distintas.</strong> Google mide accesos de usuarios a sus servicios, APNIC Labs muestrea mediante anuncios publicitarios con ponderación por población y Cloudflare mide tráfico transportado. En agosto de 2026 dan 47, 43 y unos 40 por ciento respectivamente. He usado las dos primeras porque publican la serie completa en bruto; las conclusiones no dependen de cuál se elija, porque la forma de las dos curvas es la misma.</li>
+  <li><strong>El titular del 50 por ciento es un pico de fin de semana, no un nivel.</strong> La serie de Google tiene un ciclo semanal marcado, con los sábados y domingos 2,92 puntos por encima de los días laborables, porque en casa se navega desde redes domésticas y móviles con más IPv6 que en las corporativas. De los 6.552 días de la serie, solo 15 superan el 50 por ciento y todos son fines de semana; el 28 de marzo de 2026 fue sábado. La media móvil de 30 días nunca ha llegado al 50: su máximo histórico es 48,49 por ciento, el 9 de agosto de 2026.</li>
+  <li><strong>El tramo de IPv4 anterior a 1990 es esquemático.</strong> No existe una serie continua del porcentaje de servidores migrados durante 1982 y 1983. La forma casi vertical de la curva refleja el hecho documentado de que la transición fue un cambio con fecha señalada (Postel, 1981b), pero la pendiente exacta no está medida.</li>
+  <li><strong>IPv6 no es un fracaso en términos absolutos.</strong> Cuarenta y tres de cada cien usuarios de un universo de 6.100 millones son unos 2.600 millones de personas: es uno de los despliegues de infraestructura más grandes de la historia. Lo que ha fracasado es la <em>sustitución</em>, no el despliegue. John Curran, presidente de ARIN, defiende justamente esa lectura: IPv6 «no iba de apagar IPv4, sino de asegurar que Internet pudiera seguir creciendo sin romperse» (Sharwood, 2025).</li>
+  <li><strong>No puedo contrastar el contrafactual.</strong> La tesis de que la incompatibilidad hacia atrás fue la causa decisiva es coherente con la teoría, con los datos y con el reconocimiento explícito del IETF, pero no es comprobable: no existe una segunda Internet en la que se publicara un IPv6 compatible y podamos medir si se adoptó más rápido.</li>
+  <li><strong>El caso está abierto.</strong> Huston (2026c) señala que si la presión de escasez volviera a crecer lo suficiente, la base con IPv6 podría alcanzar el dominio de mercado y entonces el mercado de direcciones IPv4 se hundiría rápidamente. Los datos actuales apuntan en la dirección contraria, pero un cambio de régimen sigue siendo posible.</li>
+</ol>
+
+<h2>Conclusiones</h2>
+
+<p>IPv6 es, casi con seguridad, el mejor ejemplo disponible de avance técnicamente superior que no se implementó a gran escala, y el enunciado admite una respuesta precisa.</p>
+
+<p><strong>Cuándo.</strong> Nunca, y esa es la respuesta literal. En los 6.552 días de la serie de Google, IPv6 ha superado el 50 por ciento de los usuarios en quince, todos ellos fines de semana, y la media móvil de 30 días nunca lo ha alcanzado. Treinta años después de su especificación, y nueve después de convertirse en norma de Internet, el sucesor no ha sustituido al predecesor en ningún momento de su historia. El titular no ha cedido un solo punto: sigue en el cien por cien.</p>
+
+<p><strong>Por qué.</strong> Porque IPv6 era superior en la figura de mérito del artefacto y no en la figura de mérito del sistema. Ganaba por 29 órdenes de magnitud en espacio de direcciones, un atributo que el usuario no percibe, y valía cero en compatibilidad con la base instalada, el único atributo que gobierna la adopción de un protocolo de red. Mientras tanto, el titular no se defendió compitiendo en el terreno del invasor: mejoró en el suyo. CIDR, NAT y CGNAT convirtieron el techo de direcciones de IPv4 de rígido en elástico, y lo hicieron antes de que el sucesor existiera. Hoy, treinta años después, el precio de una dirección IPv4 baja en lugar de subir, que es la señal de mercado de que la escasez que justificaba la migración ha dejado de apretar.</p>
+
+<p>La lección que me llevo como CTO se puede formular en una frase: <strong>una tecnología que exige que todos se muevan a la vez no tiene una curva de adopción, tiene un problema de coordinación</strong>, y los problemas de coordinación no se resuelven mejorando el producto. IPv6 dedicó treinta años a ser mejor cuando lo que necesitaba era ser compatible. Y hay un corolario todavía más incómodo para quien decide una hoja de ruta: <strong>el paliativo que llega primero fija el calendario del sucesor</strong>. NAT se publicó diecinueve meses antes que IPv6 y esos diecinueve meses de ventaja llevan tres décadas decidiendo el resultado.</p>
+
+<h2>Referencias bibliográficas</h2>
+
+<div class="ref">
+<p>APNIC Labs. (2026). <em>IPv6 measurement maps: serie mundial y por regiones (v6stats/v6region/XA.json)</em> [Serie de 4.639 datos con suavizado de 30 días, del 7 de octubre de 2013 al 12 de agosto de 2026]. Asia Pacific Network Information Centre. https://stats.labs.apnic.net/ipv6</p>
+<p>Arthur, W. B. (1989). Competing technologies, increasing returns, and lock-in by historical small events. <em>The Economic Journal, 99</em>(394), 116-131. https://doi.org/10.2307/2234208</p>
+<p>David, P. A. (1985). Clio and the economics of QWERTY. <em>American Economic Review, 75</em>(2), 332-337.</p>
+<p>de Weck, O. L. (2022). <em>Technology roadmapping and development: A quantitative approach to the management of technology</em>. Springer. https://doi.org/10.1007/978-3-030-88346-1</p>
+<p>Deering, S. E., y Hinden, R. M. (1995). <em>Internet Protocol, version 6 (IPv6) specification</em> (Request for Comments N.º 1883). Internet Engineering Task Force. https://doi.org/10.17487/RFC1883</p>
+<p>Deering, S. E., y Hinden, R. M. (1998). <em>Internet Protocol, version 6 (IPv6) specification</em> (Request for Comments N.º 2460). Internet Engineering Task Force. https://doi.org/10.17487/RFC2460</p>
+<p>Deering, S. E., y Hinden, R. M. (2017). <em>Internet Protocol, version 6 (IPv6) specification</em> (Request for Comments N.º 8200). Internet Engineering Task Force. https://doi.org/10.17487/RFC8200</p>
+<p>Donley, C., Howard, L., Kuarsingh, V., Berg, J., y Doshi, J. (2013). <em>Assessing the impact of carrier-grade NAT on network applications</em> (Request for Comments N.º 7021). Internet Engineering Task Force. https://doi.org/10.17487/RFC7021</p>
+<p>Egevang, K., y Francis, P. (1994). <em>The IP network address translator (NAT)</em> (Request for Comments N.º 1631). Internet Engineering Task Force. https://doi.org/10.17487/RFC1631</p>
+<p>Farrell, J., y Saloner, G. (1985). Standardization, compatibility, and innovation. <em>The RAND Journal of Economics, 16</em>(1), 70-83. https://doi.org/10.2307/2555589</p>
+<p>Foster, R. N. (1986). <em>Innovation: The attacker's advantage</em>. Summit Books.</p>
+<p>Fuller, V., Li, T., Yu, J., y Varadhan, K. (1993). <em>Classless Inter-Domain Routing (CIDR): An address assignment and aggregation strategy</em> (Request for Comments N.º 1519). Internet Engineering Task Force. https://doi.org/10.17487/RFC1519</p>
+<p>Google. (2026). <em>IPv6 adoption statistics: serie diaria (ipv6/statistics/data/adoption.js)</em> [Serie de 6.552 datos diarios, del 4 de septiembre de 2008 al 12 de agosto de 2026]. https://www.google.com/intl/en/ipv6/statistics.html</p>
+<p>Howard, L. (2019, julio). <em>Why is IPv6 faster?</em> APNIC Blog. https://blog.apnic.net/2019/07/24/why-is-ipv6-faster/</p>
+<p>Howells, J. (2002). The response of old technology incumbents to technological competition: Does the sailing ship effect exist? <em>Journal of Management Studies, 39</em>(7), 887-906. https://doi.org/10.1111/1467-6486.00316</p>
+<p>Huston, G. (2024, octubre). <em>The IPv6 transition</em>. APNIC Blog. https://blog.apnic.net/2024/10/22/the-ipv6-transition/</p>
+<p>Huston, G. (2026a). <em>BGP routing table analysis reports, AS6447</em>. Asia Pacific Network Information Centre. https://bgp.potaroo.net/index-bgp.html</p>
+<p>Huston, G. (2026b, abril). <em>Google hits 50 % IPv6</em>. APNIC Blog. https://blog.apnic.net/2026/04/28/google-hits-50-ipv6/</p>
+<p>Huston, G. (2026c, enero). <em>IP addresses through 2025</em>. APNIC Blog. https://blog.apnic.net/2026/01/20/ip-addresses-through-2025/</p>
+<p>International Telecommunication Union. (2025, diciembre). <em>Facts and figures 2025: statistics update</em>. ITU. https://www.itu.int/en/ITU-D/Statistics/Pages/StatisticsUpdate/December2025.aspx</p>
+<p>Internet Society. (2012). <em>World IPv6 Launch solidifies global support for new Internet protocol</em>. Internet Society. https://www.internetsociety.org/news/press-releases/2012/world-ipv6-launch-solidifies-global-support-for-new-internet-protocol/</p>
+<p>IPv4.Global. (2025). <em>Carrier grade NAT</em>. IPv4.Global by Hilco Streambank. https://www.ipv4.global/shorts/carrier-nat/</p>
+<p>IPv4.Global. (2026). <em>IPv4 market enters 2026 with softer prices but durable demand</em>. CircleID. https://circleid.com/posts/ipv4-market-enters-2026-with-softer-prices-but-durable-demand</p>
+<p>IPv4Center. (2026, enero). <em>IPv4 market report, enero de 2026: media de 20,70 dólares por dirección, un 39 % menos interanual</em>. IPv4Center. https://ipv4center.com/blog/ipv4-market-report-january-2026</p>
+<p>Katz, M. L., y Shapiro, C. (1985). Network externalities, competition, and compatibility. <em>American Economic Review, 75</em>(3), 424-440.</p>
+<p>Marsan, C. D. (2009, marzo). <em>Biggest mistake for IPv6: it's not backwards compatible, developers admit</em>. Network World. https://www.networkworld.com/article/789774/lan-wan-biggest-mistake-for-ipv6-it-s-not-backwards-compatible-developers-admit.html</p>
+<p>Mendonça, S. (2013). The «sailing ship effect»: Reassessing history as a source of insight on technical change. <em>Research Policy, 42</em>(10), 1724-1738. https://doi.org/10.1016/j.respol.2012.11.009</p>
+<p>Nikkhah, M., y Guérin, R. (2016). Migrating the Internet to IPv6: An exploration of the when and why. <em>IEEE/ACM Transactions on Networking, 24</em>(4), 2291-2304. https://doi.org/10.1109/TNET.2015.2453338</p>
+<p>Number Resource Organization. (2026). <em>IPv4 exhaustion FAQs</em>. NRO. https://www.nro.net/about/rirs/internet-number-resources/ipv6/ipv4-exhaustion-faqs/</p>
+<p>Organisation for Economic Co-operation and Development. (2014). <em>The economics of transition to Internet Protocol version 6 (IPv6)</em> (OECD Digital Economy Papers N.º 244). OECD Publishing. https://doi.org/10.1787/5jxt46d07bhc-en</p>
+<p>Postel, J. (1981a). <em>Internet Protocol</em> (Request for Comments N.º 791). Internet Engineering Task Force. https://doi.org/10.17487/RFC0791</p>
+<p>Postel, J. (1981b). <em>NCP/TCP transition plan</em> (Request for Comments N.º 801). Internet Engineering Task Force. https://doi.org/10.17487/RFC0801</p>
+<p>Rekhter, Y., Moskowitz, R. G., Karrenberg, D., de Groot, G. J., y Lear, E. (1996). <em>Address allocation for private internets</em> (Request for Comments N.º 1918). Internet Engineering Task Force. https://doi.org/10.17487/RFC1918</p>
+<p>Sharwood, S. (2025, diciembre). <em>IPv6 just turned 30 and still hasn't taken over the world, but don't call it a failure</em>. The Register. https://www.theregister.com/2025/12/31/ipv6_at_30/</p>
+<p>Srisuresh, P., y Egevang, K. (2001). <em>Traditional IP network address translator (traditional NAT)</em> (Request for Comments N.º 3022). Internet Engineering Task Force. https://doi.org/10.17487/RFC3022</p>
+<p>Thomson, S., Narten, T., y Jinmei, T. (2007). <em>IPv6 stateless address autoconfiguration</em> (Request for Comments N.º 4862). Internet Engineering Task Force. https://doi.org/10.17487/RFC4862</p>
+<p>Utterback, J. M. (1994). <em>Mastering the dynamics of innovation</em>. Harvard Business School Press.</p>
+<p>Weil, J., Kuarsingh, V., Donley, C., Liljenstolpe, C., y Azinger, M. (2012). <em>IANA-reserved IPv4 prefix for shared address space</em> (Request for Comments N.º 6598). Internet Engineering Task Force. https://doi.org/10.17487/RFC6598</p>
+</div>
+
+</body>
+</html>

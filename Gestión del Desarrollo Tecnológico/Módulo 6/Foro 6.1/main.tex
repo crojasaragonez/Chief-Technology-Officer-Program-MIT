@@ -1,0 +1,848 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,backgrounds,patterns}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.3cm}
+% Los rótulos de las figuras usan nodos de ancho fijo con texto alineado a la
+% derecha, y la bibliografía compone en modo sloppy: ambos generan avisos de
+% línea holgada que son cosméticos y no indican un problema de composición.
+% Se silencian para que `make check` siga siendo sensible a los desbordes reales.
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlist{nosep}
+% Las figuras ocupan entre el 60 y el 70 por ciento de la caja de texto.
+% Sin estos parámetros LaTeX las difiere todas al final del documento.
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.06}
+\renewcommand{\floatpagefraction}{0.72}
+\setcounter{topnumber}{2}
+\setcounter{totalnumber}{3}
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy}
+
+\sisetup{
+  output-decimal-marker = {,},
+  group-separator = {.},
+  group-minimum-digits = 4,
+  detect-all
+}
+
+% Colores: sistema autónomo, conductor humano, regulador por homologación,
+% regulador por autocertificación y señal de alerta
+\definecolor{cADS}{RGB}{31,78,121}
+\definecolor{cHum}{RGB}{191,110,30}
+\definecolor{cReg}{RGB}{40,124,70}
+\definecolor{cUSA}{RGB}{116,66,150}
+\definecolor{cRiesgo}{RGB}{176,42,42}
+
+% Barra horizontal con rótulo a la izquierda y valor a la derecha.
+% #1 y, #2 fin de la barra, #3 color, #4 rótulo, #5 valor, #6 x del valor
+\newcommand{\barrarot}[6]{%
+  \node[left, text width=3.7cm, align=right, font=\scriptsize] at (-0.15,#1) {#4};%
+  \fill[#3] (0,#1-0.17) rectangle (#2,#1+0.17);%
+  \node[right, font=\scriptsize] at (#6,#1) {#5};%
+}
+
+\title{\vspace{-1.2cm}\textbf{Vehículos autónomos: certificar un proceso, no un
+vehículo}\\
+\large Cuatro preguntas con datos de agosto de 2026}
+\author{Carlos Luis Rojas Aragonés\\
+\small Gestión del Desarrollo Tecnológico}
+\date{\small 19 de agosto de 2026}
+
+\begin{document}
+
+\maketitle
+\vspace{-0.6em}
+
+\section{Introducción}
+
+Las cuatro preguntas del foro ya no son hipotéticas, y eso cambia cómo hay que
+responderlas. A finales de marzo de 2026 el sistema de conducción de Waymo
+acumulaba \textbf{\num{220.6} millones de millas recorridas sin conductor a
+bordo} en cinco áreas metropolitanas de los Estados Unidos
+\parencite{waymoimpact2026}, con del orden de medio millón de viajes pagados por
+semana \parencite{cnbc2025rides}. El 31 de julio de 2026 la NHTSA concedió a Zoox
+la primera exención de despliegue comercial para un vehículo construido en los
+Estados Unidos sin volante ni pedales, con un límite de \num{2500} unidades al
+año y dispensa de ocho normas federales \parencite{fr2026zoox}. El 4 de agosto de
+2026 China publicó su norma obligatoria de seguridad para sistemas de conducción
+automatizada, la GB 44721-2026, exigible desde el 1 de julio de 2027
+\parencite{techtimes2026}. Y el Reino Unido tenía abierta, hasta el 9 de
+septiembre de 2026, la consulta sobre el enunciado de principios de seguridad que
+la Ley de Vehículos Automatizados de 2024 exige antes de autorizar el primer
+vehículo \parencite{dft2026,ukavact2024}.
+
+Mi respuesta a las cuatro preguntas parte de una sola idea, que anticipo aquí:
+\textbf{lo que hay que certificar no es un vehículo, es un proceso}. La razón es
+cuantitativa y la desarrollo en la sección siguiente: ninguna cantidad realista
+de millas de prueba permite demostrar estadísticamente que un sistema de
+conducción es seguro, y cada actualización de software reinicia esa cuenta. De
+ahí se derivan las otras tres respuestas: la restricción que sirve no es la valla
+física sino el dominio de diseño operativo autorizado; la responsabilidad tiene
+que desplazarse del conductor a una entidad identificable que responda por cómo
+conduce el vehículo; y el efecto sobre el empleo será pequeño en el agregado y
+muy concentrado en el tiempo y en el territorio, lo que es precisamente lo que
+hace que duela.
+
+\section{Marco de análisis}
+
+Uso tres conceptos y una unidad de medida.
+
+\textbf{Nivel y dominio de diseño operativo.} La norma SAE J3016 define seis
+niveles de automatización y, sobre todo, define el \emph{dominio de diseño
+operativo} (ODD): el conjunto de condiciones (zona, vía, velocidad,
+meteorología, hora) en las que el sistema está diseñado para funcionar
+\parencite{sae2021}. Un nivel 4 no es \enquote{un coche que conduce solo}, es un
+coche que conduce solo \emph{dentro de un ODD declarado}. Toda la discusión de
+certificación y de zonas cerradas es, en realidad, una discusión sobre quién
+autoriza y verifica ese ODD.
+
+\textbf{Figura de mérito.} Una figura de mérito es una medida cuantitativa del
+desempeño de una tecnología en la función que presta
+\parencite{deweck2022}. Aquí la figura de mérito relevante no es la comodidad ni
+el consumo, sino la tasa de siniestros con lesión por millón de millas, y su
+comparación con la del conductor humano en la misma zona.
+
+\textbf{El límite estadístico.} \textcite{kalra2016} calcularon cuántas millas
+haría falta recorrer para demostrar que un sistema autónomo es más seguro que un
+conductor humano. Para acreditar con un 95 por ciento de confianza una tasa de
+1,09 muertes por cada 100 millones de millas hacen falta \textbf{275 millones de
+millas sin una sola muerte}; para demostrar una mejora del 20 por ciento con el
+mismo nivel de confianza, \textbf{\num{8800} millones de millas}. La conclusión
+de los autores es que las pruebas de carretera, por sí solas, nunca serán
+suficientes, y que la evaluación tiene que apoyarse en expedientes de seguridad,
+simulación y auditoría del proceso de ingeniería, que es exactamente el enfoque
+de la norma ISO 21448 sobre seguridad de la funcionalidad prevista y de la
+ANSI/UL 4600 \parencite{iso21448,ul4600,koopman2017}.
+
+\textbf{Y el marco jurídico.} En economía del derecho, la elección entre
+responsabilidad por culpa y responsabilidad objetiva depende de quién controla el
+riesgo y de quién puede reducirlo a menor coste \parencite{shavell1980}. Cuando
+el conductor desaparece, el que controla el riesgo es quien escribe y actualiza
+el software. La consecuencia es que el régimen tiene que virar de la culpa del
+conductor a la responsabilidad del producto y del operador, y eso es literalmente
+lo que están haciendo el Reino Unido y la Unión Europea.
+
+\section{¿Cómo certificar y autorizar? El problema no cabe en millas}
+
+\begin{figure}[tbp]
+  \centering
+  \begin{tikzpicture}
+    % ---------------- panel A: umbrales de validación ----------------
+    \node[font=\scriptsize\itshape, gray!35!black, right] at (0,4.10)
+      {Panel A. Millas necesarias para demostrar la seguridad, en escala
+       logarítmica};
+    \foreach \e/\lab in {0/{$10^{8}$}, 1/{$10^{9}$}, 2/{$10^{10}$},
+                         3/{$10^{11}$}, 4/{$10^{12}$}, 5/{$10^{13}$}} {
+      \pgfmathsetmacro{\xg}{2.6*\e}
+      \draw[gray!22] (\xg,-0.28) -- (\xg,3.30);
+      \node[below, font=\tiny, gray!55!black] at (\xg,-0.28) {\lab};
+    }
+    \fill[cADS] (0,2.98) rectangle (0.894,3.32);
+    \node[above right, font=\scriptsize, cADS] at (0,3.36)
+      {Waymo sin conductor, acumulado a marzo de 2026};
+    \node[right, font=\scriptsize] at (1.00,3.15) {\num{220.6} millones};
+    \fill[cRiesgo] (0,1.98) rectangle (1.142,2.32);
+    \node[above right, font=\scriptsize, cRiesgo] at (0,2.36)
+      {umbral de Kalra y Paddock: acreditar la tasa de mortalidad al 95\,\%};
+    \node[right, font=\scriptsize] at (1.25,2.15) {275 millones};
+    \fill[cRiesgo!70] (0,0.98) rectangle (5.056,1.32);
+    \node[above right, font=\scriptsize, cRiesgo] at (0,1.36)
+      {umbral para demostrar una mejora del 20\,\% sobre el conductor humano};
+    \node[right, font=\scriptsize] at (5.16,1.15) {\num{8800} millones};
+    \fill[cHum] (0,-0.02) rectangle (11.758,0.32);
+    \node[above right, font=\scriptsize, cHum] at (0,0.36)
+      {millas que recorren los conductores humanos de EE. UU. en un año};
+    \node[right, font=\scriptsize] at (11.86,0.15) {$3{,}3\times10^{12}$};
+
+    % ---------------- panel B: trayectoria acumulada ----------------
+    \begin{scope}[shift={(0,-6.70)}]
+      \node[font=\scriptsize\itshape, gray!35!black, right] at (0,5.05)
+        {Panel B. Millas acumuladas sin conductor y cruce del primer umbral};
+      \foreach \yv/\lab in {0/0, 1.286/100, 2.571/200, 3.857/300} {
+        \draw[gray!20] (0,\yv) -- (13.10,\yv);
+        \node[left, font=\tiny, gray!55!black] at (-0.05,\yv) {\lab};
+      }
+      \node[rotate=90, font=\tiny, gray!55!black, align=center]
+        at (-0.95,2.2) {millones de millas\\acumuladas};
+      \draw[gray!60!black] (0,0) -- (13.10,0);
+      \foreach \xv/\lab in {0/{2023}, 3.36/{2024}, 6.72/{2025}, 10.08/{2026}} {
+        \draw[gray!60!black] (\xv,0) -- (\xv,-0.13);
+        \node[below, font=\tiny, gray!55!black] at (\xv,-0.13) {\lab};
+      }
+      \draw[cRiesgo, thick, densely dotted] (0,3.536) -- (13.10,3.536);
+      \node[above right, font=\tiny, cRiesgo] at (0.15,3.55)
+        {275 millones: umbral de Kalra y Paddock};
+      \draw[very thick, cADS] (3.08,0.091) -- (4.76,0.325) -- (6.44,0.643)
+        -- (6.72,0.729) -- (8.40,1.286) -- (10.64,2.836);
+      \foreach \x/\y in {3.08/0.091, 4.76/0.325, 6.44/0.643, 6.72/0.729,
+                         8.40/1.286, 10.64/2.836} {
+        \fill[cADS] (\x,\y) circle (1.8pt);
+      }
+      \node[right, font=\tiny, cADS] at (3.20,0.16) {7,1};
+      \node[right, font=\tiny, cADS] at (4.88,0.22) {25,3};
+      \node[left, font=\tiny, cADS] at (6.36,0.80) {50};
+      \node[right, font=\tiny, cADS] at (6.86,0.66) {56,7};
+      \node[right, font=\tiny, cADS] at (8.50,1.24) {100};
+      \node[above left, font=\tiny, cADS] at (10.62,2.86) {220,6};
+      \draw[thick, cADS, densely dashed] (10.64,2.836) -- (12.60,4.40);
+      \draw[cRiesgo, thick] (11.52,3.536) circle (3.2pt);
+      \draw[cRiesgo, thin] (11.60,3.40) -- (12.10,2.55);
+      \node[font=\tiny, cRiesgo, align=center, below] at (12.10,2.55)
+        {a 4 millones de millas\\[-0.3em] por semana, el umbral\\[-0.3em]
+         se cruza hacia julio de 2026};
+      \node[font=\tiny, cADS, rotate=38, above left] at (12.62,4.42)
+        {extrapolación};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{El límite estadístico de la certificación por millas. Panel A: los
+  dos umbrales de \textcite{kalra2016} frente a lo acumulado por el mayor
+  operador del mundo y frente a la exposición anual de los conductores humanos
+  de los Estados Unidos, calculada a partir de las \num{36640} muertes estimadas
+  de 2025 y de la tasa de 1,10 por cada 100 millones de millas
+  \parencite{nhtsa2026early}. Panel B: serie de millas acumuladas sin conductor
+  a bordo, con los puntos documentados de 7,1 millones a finales de 2023
+  \parencite{kusano2024}, 25,3 millones a mediados de 2024
+  \parencite{dilillo2024}, 50 millones al cierre de 2024 y 100 millones en julio
+  de 2025 \parencite{robotreport2025}, 56,7 millones del estudio revisado por
+  pares \parencite{kusano2025} y \num{220.6} millones a marzo de 2026
+  \parencite{waymoimpact2026}. La extrapolación usa el ritmo declarado de cuatro
+  millones de millas semanales y es mía, no del operador. Elaboración propia.}
+  \label{fig:validacion}
+\end{figure}
+
+La Figura~\ref{fig:validacion} contiene el argumento central de mi respuesta a
+la primera pregunta. El operador más grande del mundo, después de una década de
+desarrollo, está cruzando en estos meses el \emph{primero} de los dos umbrales
+que hacen falta para una demostración estadística, y lo está cruzando en un ODD
+muy concreto: cinco áreas metropolitanas de clima benigno. El segundo umbral, el
+que permitiría afirmar con solidez estadística una mejora del 20 por ciento,
+está cuarenta veces más lejos. Y hay un detalle que agrava el problema: cada
+actualización relevante del software cambia el sistema evaluado, de modo que la
+cuenta de millas no se acumula sobre un objeto fijo. Certificar por millas
+recorridas es, por construcción, imposible.
+
+Lo que sí se puede certificar es el proceso: el expediente de seguridad, la
+trazabilidad de las decisiones de ingeniería, la validación en simulación, la
+gestión de la seguridad de la organización y la vigilancia posterior al
+despliegue. Es el enfoque de la ISO 21448 y de la UL 4600, y es también lo que ya
+hace el Reglamento de Ejecución (UE) 2022/1426, que exige auditoría del sistema
+de gestión de la seguridad y evaluación del concepto de seguridad del ADS ante la
+autoridad de homologación, no una cifra de millas \parencite{eu2022reg}.
+
+\begin{figure}[tbp]
+  \centering
+  \begin{tikzpicture}
+    % ---------------- panel A: dos regímenes ----------------
+    \node[right, text width=13.0cm, align=left, font=\scriptsize\itshape,
+      gray!35!black] at (0,4.62)
+      {Panel A. Dos maneras de autorizar, 2021 a 2027. Arriba, las
+       jurisdicciones que homologan por tipo con auditoría previa; abajo, la
+       autocertificación del fabricante con exenciones caso por caso};
+    \draw[gray!60!black] (0,0.85) -- (13.20,0.85);
+    \foreach \xv/\lab in {0/2021, 1.857/2022, 3.714/2023, 5.571/2024,
+                          7.429/2025, 9.286/2026, 11.143/2027} {
+      \draw[gray!60!black] (\xv,0.85) -- (\xv,0.72);
+      \node[below, font=\tiny, gray!55!black, fill=white, inner sep=1.2pt]
+        at (\xv,0.72) {\lab};
+    }
+    \fill[cReg!12] (11.143,0.92) rectangle (13.20,2.55);
+    \node[font=\tiny, cReg, align=center] at (12.17,2.05)
+      {2027: entran\\[-0.3em] en vigor el\\[-0.3em] enunciado\\[-0.3em]
+       británico y la\\[-0.3em] norma china};
+    % --- pista superior: homologación por tipo y auditoría ---
+    \foreach \xv/\prof/\lab in {0.930/1.65/{Alemania: nivel 4\\con supervisor
+                                  técnico},
+                                3.170/0.55/{UE 2022/1426:\\homologación del ADS},
+                                3.714/1.65/{R157 hasta\\130 km/h},
+                                6.190/0.55/{Ley británica\\de 2024},
+                                9.130/1.65/{primeros permisos\\de nivel 3 en
+                                  China},
+                                10.060/0.55/{consulta de\\principios (RU)},
+                                10.370/2.70/{GB 44721-2026\\(China)}} {
+      \draw[cReg, thick] (\xv,0.85) -- (\xv,0.85+\prof);
+      \fill[cReg] (\xv,0.85+\prof) circle (1.6pt);
+      \node[above, font=\tiny, cReg, align=center] at (\xv,0.92+\prof) {\lab};
+    }
+    \draw[cReg, thick] (0,0.85) -- (0,1.40);
+    \fill[cReg] (0,1.40) circle (1.6pt);
+    \node[above right, font=\tiny, cReg, align=left] at (-0.12,1.47)
+      {UNECE R157:\\[-0.2em] mantenimiento\\[-0.2em] de carril};
+    % --- pista inferior: autocertificación con exenciones ---
+    \foreach \xv/\prof/\lab in {7.890/0.55/{marco de la NHTSA\\y AVEP ampliado},
+                                9.590/1.55/{dos propuestas de\\reforma de las
+                                  FMVSS},
+                                10.210/0.55/{exención a Zoox\\y guía provisional}} {
+      \draw[cUSA, thick] (\xv,0.85) -- (\xv,0.85-\prof);
+      \fill[cUSA] (\xv,0.85-\prof) circle (1.6pt);
+      \node[below, font=\tiny, cUSA, align=center] at (\xv,0.78-\prof) {\lab};
+    }
+    \draw[cReg, thick] (0.15,-1.85) -- (0.75,-1.85);
+    \node[right, font=\tiny, cReg] at (0.85,-1.85)
+      {homologación de tipo con auditoría};
+    \draw[cUSA, thick] (5.30,-1.85) -- (5.90,-1.85);
+    \node[right, font=\tiny, cUSA] at (6.00,-1.85)
+      {autocertificación con exenciones};
+
+    % ---------------- panel B: autorización por capas ----------------
+    \begin{scope}[shift={(0,-7.60)}]
+      \node[font=\scriptsize\itshape, gray!35!black, right] at (0,4.45)
+        {Panel B. La autorización por capas que propondría};
+      \foreach \i/\tit/\des in {%
+        0/{1. Norma del vehículo}/{frenos, luces, visibilidad, protección de
+           ocupantes: FMVSS o reglamentos UNECE, con exenciones motivadas y
+           publicadas},
+        1/{2. Expediente del ADS}/{concepto de seguridad auditado por un tercero
+           acreditado: ISO 21448, UL 4600, anexo 3 del Reglamento (UE) 2022/1426},
+        2/{3. ODD autorizado}/{zona, vías, velocidad, meteorología y horario
+           concretos, con ampliación por tramos y revisión ante cada cambio de
+           software},
+        3/{4. Operación}/{supervisor técnico identificable, asistencia remota
+           dimensionada, protocolo con bomberos y policía, formación del
+           personal},
+        4/{5. Vigilancia continua}/{telemetría y registro de datos obligatorios,
+           publicación de siniestros, potestad de suspender la autorización sin
+           tener que retirar el modelo}} {
+        \pgfmathsetmacro{\yv}{0.80*\i}
+        \fill[cReg!10] (0,\yv) rectangle (13.20,\yv+0.72);
+        \fill[cReg] (0,\yv) rectangle (0.11,\yv+0.72);
+        \node[right, text width=3.15cm, align=left, font=\scriptsize\bfseries,
+          cReg!60!black] at (0.22,\yv+0.36) {\tit};
+        \node[right, text width=8.55cm, font=\tiny, align=left]
+          at (3.55,\yv+0.36) {\des};
+      }
+      \draw[-{Stealth[length=2mm]}, gray!60!black] (13.45,0.05) -- (13.45,4.25);
+      \node[rotate=90, font=\tiny, gray!45!black, align=center]
+        at (13.80,2.15) {del artefacto\\a la operación};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Los dos regímenes vigentes y la propuesta. Panel A: en la pista
+  superior, las jurisdicciones que autorizan por homologación de tipo con
+  auditoría previa, con el Reglamento UNECE 157 de 2021 y su ampliación a
+  \qty{130}{\kilo\meter\per\hour} de enero de 2023
+  \parencite{unr157,unece2022}, el Reglamento de Ejecución (UE) 2022/1426
+  \parencite{eu2022reg}, la ley alemana de conducción autónoma de 2021 con su
+  reglamento de 2022, que exige un supervisor técnico
+  \parencite{hoganlovells2021,taylorwessing2026}, la Ley británica de Vehículos
+  Automatizados de 2024 con su consulta de principios de seguridad de junio de
+  2026 \parencite{ukavact2024,dft2026} y los primeros permisos chinos de nivel 3
+  de diciembre de 2025 seguidos de la norma obligatoria GB 44721-2026
+  \parencite{cnevpost2025,techtimes2026}. En la pista inferior, el régimen
+  estadounidense de autocertificación: el marco de la NHTSA de abril de 2025
+  \parencite{nhtsa2025marco}, las dos propuestas de reforma de las FMVSS 102,
+  103 y 104 de marzo de 2026 \parencite{sidley2026} y la exención a Zoox con la
+  guía provisional del 31 de julio de 2026
+  \parencite{fr2026zoox,fr2026guia}. Panel B: elaboración propia.}
+  \label{fig:regimenes}
+\end{figure}
+
+Mi respuesta concreta a la primera pregunta es el Panel B de la
+Figura~\ref{fig:regimenes}: \textbf{autorización por capas, con la última capa
+siempre abierta}. Las cuatro primeras son las que ya existen, repartidas entre
+regímenes distintos. La quinta es la que decide, y es la que menos se discute: si
+la autoridad puede suspender una autorización de ODD en cuarenta y ocho horas
+ante un patrón anómalo, sin tener que abrir un expediente de retirada del modelo,
+entonces puede permitirse autorizar antes y con menos certeza. La reversibilidad
+barata es lo que hace aceptable la incertidumbre. Ese es también el punto débil
+del régimen estadounidense: funciona por exenciones puntuales de dos años
+\parencite{fr2026zoox} y por guías no vinculantes \parencite{fr2026guia},
+mientras la vigilancia depende de una orden general de comunicación de siniestros
+cuyos informes, además, no determinan culpa \parencite{nhtsasgo2026}.
+
+\section{¿Zonas cerradas o tránsito mixto? La valla útil ya existe y no es
+física}
+
+\begin{figure}[tbp]
+  \centering
+  \begin{tikzpicture}
+    % ---------------- panel A: reducciones medidas ----------------
+    \node[font=\scriptsize\itshape, gray!35!black, right] at (-3.9,3.95)
+      {Panel A. Reducción de la tasa de choques frente al conductor humano de la
+       misma zona, en \num{220.6} millones de millas};
+    \foreach \xv/\lab in {0/0, 2/20, 4/40, 6/60, 8/80, 10/100} {
+      \draw[gray!22] (\xv,-0.35) -- (\xv,3.45);
+      \node[below, font=\tiny, gray!55!black] at (\xv,-0.35) {\lab\,\%};
+    }
+    \barrarot{3.10}{9.4}{cADS}{Lesión grave o mortal}{94\,\%}{9.5}
+    \barrarot{2.48}{8.2}{cADS}{Despliegue de airbag}{82\,\%}{9.5}
+    \barrarot{1.86}{8.2}{cADS}{Cualquier lesión}{82\,\%}{9.5}
+    \barrarot{1.24}{9.3}{cADS!80}{Peatón con lesión}{93\,\%}{9.5}
+    \barrarot{0.62}{8.4}{cADS!80}{Ciclista con lesión}{84\,\%}{9.5}
+    \barrarot{0.00}{8.4}{cADS!80}{Motorista con lesión}{84\,\%}{9.5}
+
+    % ---------------- panel B: quién provocó el choque ----------------
+    \begin{scope}[shift={(0,-4.30)}]
+      \node[font=\scriptsize\itshape, gray!35!black, right] at (-3.9,2.05)
+        {Panel B. Los 78 siniestros con lesión o airbag comunicados entre agosto
+         de 2025 y marzo de 2026};
+      \node[left, text width=3.7cm, align=right, font=\scriptsize]
+        at (-0.15,1.00) {Responsabilidad aparente};
+      \fill[cHum] (0,0.83) rectangle (11.82,1.17);
+      \fill[gray!45] (11.82,0.83) rectangle (12.47,1.17);
+      \fill[cADS] (12.47,0.83) rectangle (12.80,1.17);
+      \node[font=\tiny, white] at (5.9,1.00) {otro conductor: 72 de 78 (92\,\%)};
+      \node[above, font=\tiny, gray!35!black] at (11.80,1.21) {4 dudosos};
+      \node[above left, font=\tiny, cADS] at (12.80,1.48) {1 o 2 de Waymo};
+      \draw[cADS, thin] (12.63,1.21) -- (12.68,1.46);
+      \node[left, text width=3.7cm, align=right, font=\scriptsize]
+        at (-0.15,0.15) {Tipo de impacto};
+      \fill[cHum!85] (0,-0.02) rectangle (7.88,0.32);
+      \fill[cHum!35] (7.88,-0.02) rectangle (12.80,0.32);
+      \node[font=\tiny, white] at (3.94,0.15)
+        {alcances por detrás: 48 de 78};
+      \node[font=\tiny, gray!25!black] at (10.34,0.15)
+        {resto: cruces, giros y adelantamientos, 30};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{La evidencia del tránsito mixto. Panel A: reducciones medidas por el
+  operador sobre \num{220.6} millones de millas sin conductor, comparadas con la
+  siniestralidad humana de las mismas zonas
+  \parencite{waymoimpact2026,waymoblog2026}; el estudio revisado por pares con
+  56,7 millones de millas obtiene reducciones del mismo orden desglosadas por
+  tipo de choque \parencite{kusano2025}, y el análisis de reclamaciones de seguro
+  de Swiss Re, del 88 por ciento en daños materiales y del 92 por ciento en daños
+  personales sobre 25,3 millones de millas, es independiente del operador
+  \parencite{dilillo2024}. Panel B: reparto de los 78 informes remitidos a la
+  NHTSA, con la responsabilidad aparente leída de los relatos y sin resolución
+  oficial de culpa, entre el 15 de agosto de 2025 y el 16 de marzo de 2026, según la lectura
+  de los relatos hecha por \textcite{lee2026}; los informes de la orden general
+  acreditan que hubo choque, no quién tuvo la culpa \parencite{nhtsasgo2026}.
+  Elaboración propia.}
+  \label{fig:mixto}
+\end{figure}
+
+Mi respuesta a la segunda pregunta es que \textbf{la separación física no es la
+variable de control correcta, y además ya está superada por los hechos}. Tres
+argumentos.
+
+\textbf{Primero: el tránsito mixto ya se está midiendo, y el resultado no
+sostiene la prohibición.} Sobre \num{220.6} millones de millas en tránsito
+urbano abierto, con peatones, ciclistas y conductores humanos, las reducciones
+son del 94 por ciento en choques con lesión grave o mortal y del 82 por ciento en
+choques con cualquier lesión \parencite{waymoimpact2026}. Un estudio revisado por
+pares con 56,7 millones de millas llega a magnitudes equivalentes desglosadas por
+tipo de choque \parencite{kusano2025} y una aseguradora, con datos de
+reclamaciones y no de la propia empresa, obtiene un 88 y un 92 por ciento
+\parencite{dilillo2024}. Prohibir la mezcla exigiría demostrar que la mezcla es
+peor que lo que ya tenemos, y la evidencia disponible apunta al contrario.
+
+\textbf{Segundo: en la mezcla, el eslabón que falla es el humano.} De los 78
+siniestros con lesión o airbag comunicados entre agosto de 2025 y marzo de 2026,
+72 se originaron en la conducta de otro conductor y 48 fueron alcances por
+detrás, muchos de ellos contra un vehículo detenido en un semáforo o cediendo el
+paso a un peatón \parencite{lee2026}. Esto es coherente con el dato clásico de
+que en el 94 por ciento de los choques la última causa de la cadena se atribuye
+al conductor \parencite{singh2015}. Segregar los vehículos autónomos, en este
+escenario, equivaldría a apartar al conductor que no comete la infracción.
+
+\textbf{Tercero: la restricción sí existe, pero es el ODD.} Ningún robotaxi
+circula hoy por donde quiere: circula por una zona geovallada, a velocidades
+acotadas y con condiciones meteorológicas declaradas. Eso es una restricción real
+y auditable, y tiene la propiedad de poder ampliarse por tramos, cosa que una
+infraestructura dedicada no tiene: los carriles exclusivos exigen inversión
+irreversible, no escalan al conjunto de la red y no resuelven el problema de las
+intersecciones, que es donde ocurren los choques graves. Dicho esto, la
+ampliación no puede ser automática. El caso del menor golpeado en un paso escolar
+de Santa Mónica, investigado por la NHTSA desde enero de 2026
+\parencite{cnbc2026}, es el tipo de suceso que justifica condiciones específicas
+por microzona (entornos escolares, obras, eventos) antes que vallas generales.
+
+\section{Implicaciones legales: la responsabilidad se traslada al que actualiza
+el software}
+
+\begin{figure}[tbp]
+  \centering
+  \begin{tikzpicture}[
+      caja/.style={draw=gray!55, rounded corners=1.6pt, align=left,
+        font=\tiny, text width=3.85cm, inner sep=3.2pt, minimum height=1.15cm},
+      flecha/.style={-{Stealth[length=1.7mm]}, gray!55!black}]
+    \foreach \i/\reg/\uno/\dos/\tres in {%
+      0/{Dos sistemas autónomos entre sí}%
+        /{Sin precedente publicado hasta agosto de 2026: los registros de las
+          dos partes son la prueba}%
+        /{Litigio o subrogación entre fabricantes y aseguradoras, sin conductor
+          al que imputar}%
+        /{El usuario queda fuera de la cadena; decide la telemetría, no el
+          testimonio},
+      1/{Unión Europea y Alemania}%
+        /{Seguro obligatorio del titular: indemniza a la víctima}%
+        /{Acción contra el fabricante por producto defectuoso, Directiva
+          2024/2853}%
+        /{Presunción de defecto y exhibición de pruebas si la complejidad
+          técnica lo exige},
+      2/{Reino Unido}%
+        /{La aseguradora del vehículo paga en primera instancia, ley de 2018}%
+        /{Repetición contra la entidad autorizada de conducción, ley de 2024}%
+        /{El usuario al mando no responde de cómo conduce el vehículo},
+      3/{Estados Unidos}%
+        /{Demanda civil de la víctima: negligencia y producto defectuoso}%
+        /{El jurado reparte porcentajes de culpa entre las partes}%
+        /{\emph{Benavides contra Tesla} (2025): 33\,\% al fabricante, en
+          apelación}} {
+      \pgfmathsetmacro{\yv}{2.05*\i}
+      \node[right, font=\scriptsize\bfseries, cADS] at (0,\yv+1.55) {\reg};
+      \node[caja, anchor=south west] at (0,\yv) {\uno};
+      \node[caja, anchor=south west] at (4.55,\yv) {\dos};
+      \node[caja, anchor=south west] at (9.10,\yv) {\tres};
+      \draw[flecha] (4.00,\yv+0.575) -- (4.50,\yv+0.575);
+      \draw[flecha] (8.55,\yv+0.575) -- (9.05,\yv+0.575);
+    }
+    \node[font=\tiny, gray!45!black, above right] at (0,8.30)
+      {quién indemniza primero $\rightarrow$ contra quién se repite
+       $\rightarrow$ qué decide el caso};
+  \end{tikzpicture}
+  \caption{Quién responde en cada régimen. Estados Unidos no tiene una regla
+  especial para vehículos autónomos: la asignación la hace el jurado caso por
+  caso, como en el veredicto de \emph{Benavides contra Tesla} de agosto de 2025,
+  que atribuyó al fabricante el 33 por ciento de la responsabilidad y está
+  recurrido \parencite{wshb2025}. El Reino Unido separa el pago de la
+  imputación: la aseguradora indemniza de entrada \parencite{ukaeva2018} y luego
+  repite contra la entidad autorizada de conducción, que es la responsable de
+  cómo conduce el vehículo \parencite{ukavact2024,cms2024}. En la Unión Europea
+  el seguro obligatorio del titular convive con la nueva directiva de productos
+  defectuosos, que incluye el software y las actualizaciones, invierte de hecho
+  la carga de la prueba cuando la complejidad técnica lo justifica y obliga a
+  exhibir pruebas \parencite{eupld2024,reedsmith2025}; Alemania añade la figura
+  del supervisor técnico, cubierta por el seguro
+  \parencite{hoganlovells2021,taylorwessing2026}. Elaboración propia.}
+  \label{fig:responsabilidad}
+\end{figure}
+
+La tercera pregunta tiene, a mi juicio, una respuesta clara en cuanto al
+principio y complicada en cuanto a la prueba.
+
+\textbf{El principio: donde no hay conductor, no puede haber culpa del
+conductor.} Quien controla el riesgo es quien diseña, entrena y actualiza el
+sistema, de modo que la responsabilidad debe recaer sobre el operador y el
+fabricante, no sobre el ocupante \parencite{shavell1980}. El Reino Unido lo ha
+resuelto de la forma más limpia: el usuario al mando no responde de cómo conduce
+el vehículo, la aseguradora indemniza en primera instancia y luego repite contra
+la entidad autorizada de conducción \parencite{ukaeva2018,ukavact2024,cms2024}. La
+víctima no tiene que averiguar quién falló para cobrar, que es exactamente lo que
+hay que conseguir.
+
+\textbf{Contra un conductor convencional} el resultado depende del régimen. En la
+Unión Europea el seguro obligatorio del titular paga y la acción posterior se
+dirige contra el fabricante por producto defectuoso, con dos novedades que
+importan mucho: la Directiva (UE) 2024/2853 considera producto al software y a
+sus actualizaciones, y permite presumir el defecto y el nexo causal cuando la
+complejidad técnica hace excesivamente difícil la prueba, además de obligar al
+demandado a exhibir la información técnica \parencite{eupld2024,reedsmith2025}.
+En los Estados Unidos, sin regla especial, el reparto lo hace un jurado, con la
+volatilidad que muestra el 33 por ciento imputado al fabricante en
+\emph{Benavides contra Tesla} \parencite{wshb2025}.
+
+\textbf{Entre dos vehículos autónomos} no hay precedente publicado hasta agosto
+de 2026, y no es casualidad: son pocos, están concentrados y sus siniestros con
+otros vehículos son casi siempre alcances provocados por humanos
+\parencite{lee2026,dmv2026}. Cuando ocurra, el caso se decidirá por los registros
+de datos de los dos sistemas, no por testimonios, y se resolverá entre
+fabricantes y aseguradoras sin que ningún usuario tenga nada que declarar. Esto
+tiene una consecuencia práctica que sí depende de nosotros: \textbf{el registro
+de datos del suceso tiene que ser obligatorio, normalizado e independiente del
+fabricante}. Sin eso, el régimen de responsabilidad es teórico. Los informes de
+la orden general estadounidense sirven para vigilar tendencias, pero
+explícitamente no determinan culpa \parencite{nhtsasgo2026}, y el propio Cuadro
+de siniestros del regulador californiano no resuelve responsabilidades
+\parencite{dmv2026}.
+
+\section{¿Empleo? Poco en el agregado, mucho en cada barrio afectado}
+
+\begin{figure}[tbp]
+  \centering
+  \begin{tikzpicture}
+    % ---------------- panel A: empleo expuesto ----------------
+    \node[font=\scriptsize\itshape, gray!35!black, right] at (-3.9,2.70)
+      {Panel A. Empleo expuesto en los Estados Unidos, en millones de personas};
+    \foreach \xv/\lab in {0/0, 2.4/4, 4.8/8, 7.2/12, 9.6/16} {
+      \draw[gray!22] (\xv,-0.30) -- (\xv,2.30);
+      \node[below, font=\tiny, gray!55!black] at (\xv,-0.30) {\lab};
+    }
+    \barrarot{1.80}{9.30}{cHum!45}{Ocupaciones afectadas en algún
+      grado}{15,5}{9.45}
+    \barrarot{1.00}{2.28}{cHum!75}{Operadores de vehículos de
+      motor}{3,8}{2.42}
+    \barrarot{0.20}{1.34}{cHum}{Camión de gran tonelaje y
+      tractocamión}{2,24}{1.48}
+    \node[right, text width=9.6cm, font=\tiny, align=left, gray!25!black]
+      at (-0.10,-0.98) {y aun así la proyección oficial para 2024 a 2034 es de
+      crecimiento: $+4\,\%$ en camión de gran tonelaje, $+8\,\%$ en reparto y
+      $+9\,\%$ en taxi y vehículo con conductor};
+
+    % ---------------- panel B: efectos ya medidos ----------------
+    \begin{scope}[shift={(0,-5.05)}]
+      \node[font=\scriptsize\itshape, gray!35!black, right] at (-3.9,2.90)
+        {Panel B. Variación interanual en el cuarto trimestre de 2025, en puntos
+         porcentuales};
+      \foreach \xv/\lab in {0/{$-6$}, 1.2/{$-4$}, 2.4/{$-2$}, 3.6/{0},
+                            4.8/{$+2$}} {
+        \draw[gray!22] (\xv,-0.55) -- (\xv,2.50);
+        \node[below, font=\tiny, gray!55!black] at (\xv,-0.55) {\lab};
+      }
+      \draw[gray!60!black, thick] (3.6,-0.55) -- (3.6,2.50);
+      \foreach \y/\x/\lab/\v/\col in {%
+        2.10/4.68/{Ingreso por hora,\\media nacional}/{$+1{,}8$}/{cReg},
+        1.35/3.36/{Ingreso por hora,\\Phoenix}/{$-0{,}4$}/{cRiesgo!70},
+        0.60/2.58/{Ingreso por hora,\\Los Ángeles}/{$-3{,}7$}/{cRiesgo},
+        -0.15/1.62/{Viajes por hora,\\mercados con robotaxi}/{$-5{,}3$}/{cRiesgo}} {
+        \node[left, text width=3.7cm, align=right, font=\scriptsize]
+          at (-0.15,\y) {\lab};
+        \fill[\col] (3.6,\y-0.16) rectangle (\x,\y+0.16);
+        \node[right, font=\scriptsize] at (4.95,\y) {\v};
+      }
+      \node[right, text width=5.9cm, font=\tiny, align=left, gray!25!black]
+        at (5.85,1.60) {para comparar, los viajes por hora cayeron un
+        $2{,}6\,\%$ en el conjunto del país: la mitad de la caída registrada en
+        las ciudades con robotaxi};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Empleo expuesto y efectos ya observables. Panel A: \num{15.5}
+  millones de trabajadores en ocupaciones afectadas en algún grado y 3,8
+  millones de operadores de vehículos de motor \parencite{beede2017}, frente a
+  los \num{2235100} conductores de camión de gran tonelaje contabilizados en 2024
+  y a proyecciones oficiales que siguen siendo de crecimiento
+  \parencite{bls2026camion,bls2026taxi}. Panel B: variación interanual del cuarto
+  trimestre de 2025 en los mercados con robotaxi frente al conjunto del país,
+  según los datos propios de una plataforma de análisis para conductores
+  \parencite{gridwise2026}; es un panel no representativo y así hay que leerlo.
+  Elaboración propia.}
+  \label{fig:empleo}
+\end{figure}
+
+Creo que la pregunta está mal planteada cuando se formula como pérdida
+\emph{o} incremento, porque las dos cosas ocurren y no a la misma velocidad.
+
+\textbf{En el agregado, el efecto medido es pequeño.} El estudio más cuidadoso
+que conozco estima entre 1,3 y 2,3 millones de empleos afectados en treinta años
+en los Estados Unidos, con un efecto sobre la tasa de desempleo de entre 0,06 y
+0,13 puntos porcentuales en la década de mayor impacto \parencite{groshen2018}.
+Esa magnitud es la mitad de lo que supuso la pérdida de empleo industrial y está
+repartida en tres décadas. La proyección oficial de empleo, entretanto, sigue
+siendo de crecimiento en las tres ocupaciones de conducción más numerosas
+\parencite{bls2026camion,bls2026taxi}, lo que da una idea de lo lento que el
+regulador espera que sea el proceso.
+
+\textbf{En lo local, el efecto ya se nota.} En el cuarto trimestre de 2025, los
+viajes por hora de los conductores de plataforma cayeron un 5,3 por ciento en los
+mercados con robotaxi frente a un 2,6 por ciento en el conjunto del país, y el
+ingreso por hora bajó en Los Ángeles, San Francisco y Phoenix mientras subía un
+1,8 por ciento a escala nacional \parencite{gridwise2026}. Es exactamente el
+patrón que describe la literatura de automatización: el efecto de
+desplazamiento llega antes y más concentrado que el de recomposición
+\parencite{acemoglu2020,autor2015}.
+
+\textbf{Y los empleos nuevos existen, pero no son los mismos ni están en el
+mismo sitio.} La operación de una flota sin conductor necesita asistencia remota,
+mantenimiento, limpieza, gestión de depósitos, cartografía, anotación de datos y
+respuesta a incidentes. Cruise declaró un asistente remoto por cada 15 a 20
+vehículos \parencite{cnbc2023cruise} y Alemania exige por ley una supervisión
+técnica humana capaz de detener el vehículo y hablar con los ocupantes
+\parencite{hoganlovells2021,taylorwessing2026}. Son puestos reales, pero con una
+razón de sustitución desfavorable, con otro perfil de cualificación y
+concentrados en las sedes del operador, no en las ciudades donde se pierde el
+turno de taxi.
+
+\section{Cronología y matriz de respuestas}
+
+El Cuadro~\ref{tab:crono} ordena los hechos que sostienen las cuatro
+respuestas y el Cuadro~\ref{tab:matriz} las resume en forma de matriz, por
+escenario de siniestro y por régimen jurídico.
+
+\begin{table}[tbp]
+  \centering
+  \small
+  \caption{Cronología verificada del proceso regulatorio y del despliegue.}
+  \label{tab:crono}
+  \begin{tabularx}{\textwidth}{@{}l >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{Fecha} & \textbf{Hecho} \\
+    \midrule
+    01/2021 & Entra en vigor el Reglamento UNECE 157 para el mantenimiento
+      automatizado de carril \parencite{unr157} \\
+    04/2021 & SAE J3016: última revisión de la taxonomía de niveles y del
+      dominio de diseño operativo \parencite{sae2021} \\
+    07/2021 & Alemania aprueba la ley de conducción autónoma de nivel 4 con
+      supervisor técnico \parencite{hoganlovells2021} \\
+    09/2022 & Reglamento de Ejecución (UE) 2022/1426: homologación del ADS con
+      auditoría del sistema de gestión \parencite{eu2022reg} \\
+    01/2023 & El Reglamento 157 se amplía a \qty{130}{\kilo\meter\per\hour} y
+      permite cambio de carril \parencite{unece2022} \\
+    05/2024 & Ley británica de Vehículos Automatizados: entidad autorizada de
+      conducción y usuario al mando \parencite{ukavact2024} \\
+    10/2024 & Directiva (UE) 2024/2853: el software es producto y se presume el
+      defecto si la prueba es excesivamente difícil \parencite{eupld2024} \\
+    24/04/2025 & La NHTSA publica su marco de vehículos autónomos y amplía el
+      programa de exenciones a los vehículos nacionales
+      \parencite{nhtsa2025marco} \\
+    15/07/2025 & Waymo alcanza 100 millones de millas sin conductor, el doble que
+      seis meses antes \parencite{robotreport2025} \\
+    01/08/2025 & Veredicto en \emph{Benavides contra Tesla}: 33 por ciento de
+      responsabilidad al fabricante, recurrido \parencite{wshb2025} \\
+    12/2025 & China concede los primeros permisos de nivel 3 a turismos, en
+      rutas designadas \parencite{cnevpost2025} \\
+    08/12/2025 & Waymo supera los \num{450000} viajes pagados por semana
+      \parencite{cnbc2025rides} \\
+    29/01/2026 & La NHTSA abre investigación por el atropello de un menor en un
+      entorno escolar de Santa Mónica \parencite{cnbc2026} \\
+    16/03/2026 & Dos propuestas de reforma de las FMVSS 102, 103 y 104 para
+      vehículos sin mandos manuales \parencite{sidley2026} \\
+    31/03/2026 & \textbf{\num{220.6} millones de millas} acumuladas sin conductor
+      a bordo \parencite{waymoimpact2026} \\
+    17/06/2026 & El Reino Unido abre la consulta del enunciado de principios de
+      seguridad, con plazo hasta el 9 de septiembre \parencite{dft2026} \\
+    31/07/2026 & Primera exención de despliegue comercial a un vehículo sin
+      volante fabricado en EE. UU., hasta \num{2500} unidades al año
+      \parencite{fr2026zoox} \\
+    04/08/2026 & China publica la norma obligatoria GB 44721-2026, exigible desde
+      julio de 2027 \parencite{techtimes2026} \\
+    2.º sem. 2027 & Fecha prevista de plena aplicación del régimen británico
+      \parencite{dft2026} \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\begin{table}[tbp]
+  \centering
+  \small
+  \caption{Quién responde según el escenario y el régimen.}
+  \label{tab:matriz}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.19\textwidth}
+    >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X
+    >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{Escenario} & \textbf{Estados Unidos} & \textbf{Reino Unido}
+      & \textbf{UE y Alemania} \\
+    \midrule
+    Autónomo contra conductor humano
+      & jurado: negligencia y producto, reparto por porcentajes
+      & aseguradora primero, repetición contra la entidad autorizada
+      & seguro del titular primero, luego producto defectuoso \\
+    Autónomo contra autónomo
+      & sin precedente: litigio entre fabricantes
+      & dos entidades autorizadas frente a frente
+      & dos fabricantes, con exhibición de pruebas obligatoria \\
+    Atropello de peatón
+      & responsabilidad civil, con riesgo de daños punitivos
+      & igual que el primer escenario, sin culpa del usuario
+      & igual, más responsabilidad penal del supervisor si desatiende \\
+    Nivel 3 con conductor presente
+      & zona gris: la transferencia de control decide el caso
+      & el usuario al mando responde solo fuera del modo autónomo
+      & el conductor responde tras la petición de recuperación \\
+    Fallo de la asistencia remota
+      & operador, por negligencia en la operación
+      & la entidad autorizada, por incumplir sus obligaciones
+      & el supervisor técnico y el operador, con seguro obligatorio \\
+    Prueba que decide
+      & la que consiga el litigio
+      & los registros exigidos a la entidad autorizada
+      & registro del suceso más presunción a favor de la víctima \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\section{Precisiones y limitaciones}
+
+\begin{enumerate}
+  \item \textbf{Las reducciones del 94 y del 82 por ciento las publica el propio
+    operador.} Están construidas con una referencia humana ajustada a la misma
+    zona y tipo de vía, hay una versión revisada por pares con 56,7 millones de
+    millas \parencite{kusano2025} y hay una tercera fuente independiente, la
+    aseguradora \parencite{dilillo2024}, pero no hay una auditoría pública de los
+    denominadores. Lo trato como evidencia fuerte, no como dato oficial.
+  \item \textbf{El ODD no es comparable con el del conductor humano.} Las millas
+    acumuladas se han recorrido en cinco áreas de clima mayoritariamente benigno
+    y a velocidades urbanas. Nada de esto acredita desempeño en nieve, en
+    carretera secundaria sin señalizar ni en autopista a
+    \qty{120}{\kilo\meter\per\hour}.
+  \item \textbf{El reparto de culpa del Panel B de la Figura~\ref{fig:mixto} es
+    una lectura de relatos, no una resolución.} La hizo un analista externo sobre
+    los informes remitidos al regulador \parencite{lee2026}, y esos informes
+    acreditan que hubo choque, no quién tuvo la culpa \parencite{nhtsasgo2026}.
+  \item \textbf{Los umbrales de Kalra y Paddock suponen un sistema fijo y
+    ausencia total de fallos.} Ninguna de las dos condiciones se cumple: hay
+    siniestros y hay actualizaciones frecuentes. Por eso los uso como argumento
+    de imposibilidad de la certificación por millas, no como una meta que
+    alguien deba alcanzar.
+  \item \textbf{Los datos de empleo de plataforma proceden de un panel privado.}
+    Los porcentajes de \textcite{gridwise2026} vienen de los conductores que usan
+    una aplicación concreta, con sesgo de selección desconocido y sin ajuste por
+    la evolución de la demanda. Marcan una dirección, no una magnitud.
+  \item \textbf{Los dos fallecimientos con vehículos sin conductor implicados no
+    se atribuyeron al sistema.} En el choque múltiple de San Francisco de enero
+    de 2025 y en el atropello de Dallas de 2026, la reconstrucción sitúa la causa
+    en terceros \parencite{nbcbay2025,templeton2026}. Lo señalo porque la
+    ausencia de una muerte imputada al sistema es la razón por la que el debate
+    sigue siendo técnico y no político, y eso puede cambiar con un solo caso.
+  \item \textbf{No hay contraste posible del escenario de dos autónomos.} Mi
+    respuesta a esa parte de la pregunta es un razonamiento sobre los regímenes
+    vigentes, no una descripción de la práctica: la práctica todavía no existe.
+  \item \textbf{China entra en el análisis con fuentes de prensa
+    especializada.} Ni el texto de la GB 44721-2026 ni los permisos de nivel 3
+    están disponibles en una versión oficial que yo pueda verificar, de modo que
+    esos dos hitos tienen menos solidez que los europeos y estadounidenses
+    \parencite{cnevpost2025,techtimes2026}.
+\end{enumerate}
+
+\section*{Conclusiones}
+
+\textbf{Certificación.} Por proceso y por capas, no por millas ni por modelo. El
+umbral estadístico que haría creíble una certificación basada en kilometraje está
+fuera de alcance \parencite{kalra2016}, de modo que hay que auditar el expediente
+de seguridad, autorizar un ODD explícito, exigir supervisión y telemetría y
+conservar la potestad de suspender esa autorización de un día para otro. La
+homologación europea con auditoría se acerca más a ese modelo que la
+autocertificación con exenciones puntuales.
+
+\textbf{Zonas cerradas o tránsito mixto.} Mixto, con el ODD como valla. La
+segregación física es caro, irreversible y no ataca el punto donde se producen
+los choques graves; la geovalla, en cambio, es una restricción real que se puede
+ampliar por tramos y revocar. La evidencia disponible sobre \num{220.6} millones
+de millas en tránsito abierto no sostiene la prohibición de mezclar, y sí sostiene
+condiciones específicas para microzonas sensibles.
+
+\textbf{Responsabilidad.} Del conductor al operador y al fabricante, con pago en
+primera instancia por el seguro y repetición posterior, que es el diseño
+británico. Entre dos vehículos autónomos, la disputa será entre fabricantes y se
+decidirá por los registros de datos, lo que convierte al registro obligatorio y
+normalizado en el requisito jurídico más importante de todo el paquete.
+
+\textbf{Empleo.} Las dos cosas, pero desalineadas. Poco en el agregado y en
+treinta años \parencite{groshen2018}, mucho en unas pocas ciudades y en dos o
+tres años, lo que ya se está midiendo \parencite{gridwise2026}. Los puestos
+nuevos son reales y necesarios, pero con razones de uno por cada quince o veinte
+vehículos y con otro perfil.
+
+La lección que me llevo como CTO es de gobierno de la tecnología, no de
+tecnología: \textbf{cuando no se puede demostrar que un sistema es seguro antes
+de desplegarlo, la única alternativa responsable es hacer que desplegarlo sea
+reversible}. Autorización acotada, medición obligatoria, publicación de los
+siniestros y capacidad de apagarlo. Es menos elegante que una certificación
+definitiva, y es lo único que funciona cuando el sistema que hay que certificar
+cambia con cada actualización.
+
+\printbibliography[title={Referencias bibliográficas}]
+
+\end{document}
