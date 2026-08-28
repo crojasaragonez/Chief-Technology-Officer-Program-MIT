@@ -28,6 +28,4 @@
 *.swp
 .DS_Store
 
-# Capturas de pantalla pendientes de añadir
-images/*.png.tmp
 

@@ -10,7 +10,6 @@
 \usepackage{tabularx}
 \usepackage{enumitem}
 \usepackage{xcolor}
-\usepackage{graphicx}
 \usepackage{csquotes}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc,fit,backgrounds}
@@ -99,8 +98,8 @@ de la tecnología, describe su principio de funcionamiento (la conciliación
 continua entre un estado deseado y un estado real), desglosa las siete capas y
 los seis módulos transversales de un sistema completo, y formaliza el conjunto
 mediante un modelo de objetos y procesos según la metodología OPM, con su
-diagrama de sistema, su ampliación en detalle y el lenguaje OPL
-correspondiente. Todas las figuras son de elaboración propia.
+diagrama de sistema, sus enlaces estructurales, su ampliación en detalle y el
+lenguaje OPL correspondiente. Todas las figuras son de elaboración propia.
 \end{abstract}
 
 % ==========================================================================
@@ -113,10 +112,12 @@ Esta primera parte de la actividad pide tres cosas: un resumen del
 funcionamiento básico de un sistema completo de infraestructura como código,
 un conjunto de imágenes y diagramas que expliquen sus capas o módulos
 principales, y un diagrama de proceso-objeto elaborado en el entorno OPM
-Sandbox \parencite{opcloud}. El documento atiende las tres en ese orden: las
-secciones 2 a 8 contienen el resumen funcional y los diagramas de capas; la
-sección 9 contiene el modelo OPM; la sección 10 documenta su construcción en
-el entorno de la herramienta y aloja la captura de pantalla.
+Sandbox \parencite{opcloud}. El documento atiende las dos primeras en las
+secciones 2 a 8, con el resumen funcional y los diagramas de capas y módulos,
+y la tercera en la sección 9, que contiene el modelo de objetos y procesos con
+su diagrama de sistema, sus enlaces estructurales, su ampliación en detalle y
+el lenguaje OPL correspondiente. El diagrama construido en el propio entorno
+de la herramienta, que no guarda ni exporta el trabajo, se entrega aparte.
 
 \subsection*{02. Qué se entiende aquí por sistema completo}
 
@@ -1122,81 +1123,6 @@ necesita bloqueo de concurrencia. Segundo, que \textsc{Conciliación} y
 distintos, que es la formulación precisa de la diferencia entre desplegar y
 conciliar. Y tercero, que el equipo humano interviene sólo en dos de los siete
 subprocesos, lo que delimita el alcance real de la automatización.
-
-% ==========================================================================
-\section{Construcción del diagrama en OPM Sandbox}
-% ==========================================================================
-
-\subsection*{01. Procedimiento}
-
-El modelo anterior se construye en el entorno OPM Sandbox
-\parencite{opcloud} siguiendo esta secuencia. El entorno no guarda el trabajo
-entre sesiones ni permite descargarlo, de modo que la captura de pantalla es
-el único registro.
-
-\begin{enumerate}
-  \item Abrir \url{https://opcloud-sandbox.web.app/}. El lienzo inicial es el
-    diagrama de sistema (SD) y el panel lateral muestra el OPL, que se
-    actualiza a cada cambio.
-  \item Arrastrar al lienzo el elemento de proceso y renombrarlo como
-    \emph{Aprovisionamiento de Infraestructura}. Situarlo en el centro.
-  \item Arrastrar los once objetos del Cuadro~\ref{tab:entidades} y
-    renombrarlos. Colocar el agente arriba, los instrumentos a los lados y el
-    operando abajo, siguiendo la disposición de las
-    Figuras~\ref{fig:opmsd} y~\ref{fig:opmestr}.
-  \item Marcar como físicos \emph{Equipo de Plataforma},
-    \emph{Infraestructura Desplegada} y \emph{Proveedor de Nube}, y este
-    último además como externo al sistema, mediante las propiedades de la
-    entidad.
-  \item Añadir a \emph{Infraestructura Desplegada} los cuatro estados:
-    inexistente, conforme, desviada y retirada.
-  \item Trazar los enlaces arrastrando desde el borde de una entidad hasta la
-    otra y eligiendo el tipo en el cuadro de diálogo que aparece: agente para
-    el equipo, instrumento para especificación, motor, políticas, proveedor y
-    credenciales, efecto para el registro de estado y para la infraestructura,
-    y resultado para el plan de cambios y el registro de auditoría.
-  \item Añadir los enlaces estructurales: agregación entre
-    \emph{Repositorio Versionado} y \emph{Especificación de Infraestructura},
-    generalización entre \emph{Especificación} y sus dos especializaciones, y
-    exhibición del atributo \emph{Versión}.
-  \item Comprobar en el panel de OPL que las frases generadas coinciden con
-    las de la sección 9.3. Cualquier discrepancia indica un enlace de tipo
-    equivocado.
-  \item Ampliar en detalle el proceso principal desde su menú contextual y
-    añadir dentro los siete subprocesos de la Figura~\ref{fig:opmsd1},
-    ordenados de arriba abajo.
-  \item Capturar la pantalla de ambos diagramas antes de cerrar la pestaña.
-\end{enumerate}
-
-\subsection*{02. Captura del trabajo}
-
-\begin{figure}[ht]
-  \centering
-  \IfFileExists{images/opcloud-sd.png}{%
-    \includegraphics[width=\textwidth]{images/opcloud-sd.png}}{%
-    \fbox{\parbox[c][58mm][c]{0.94\textwidth}{\centering\footnotesize
-      \textbf{Espacio reservado para la captura de pantalla del diagrama de
-      sistema (SD)}\\[4pt]
-      Guardar la imagen como \texttt{images/opcloud-sd.png} y recompilar con
-      \texttt{make pdf}.\\ La figura se insertará automáticamente en este
-      lugar.}}}
-  \caption{Diagrama de sistema construido en OPM Sandbox.}
-  \label{fig:captura-sd}
-\end{figure}
-
-\begin{figure}[ht]
-  \centering
-  \IfFileExists{images/opcloud-sd1.png}{%
-    \includegraphics[width=\textwidth]{images/opcloud-sd1.png}}{%
-    \fbox{\parbox[c][58mm][c]{0.94\textwidth}{\centering\footnotesize
-      \textbf{Espacio reservado para la captura de pantalla de la ampliación
-      en detalle (SD1)}\\[4pt]
-      Guardar la imagen como \texttt{images/opcloud-sd1.png} y recompilar con
-      \texttt{make pdf}.}}}
-  \caption{Ampliación en detalle del proceso de aprovisionamiento, construida
-  en OPM Sandbox.}
-  \label{fig:captura-sd1}
-\end{figure}
 
 % ==========================================================================
 \section{Conclusiones}

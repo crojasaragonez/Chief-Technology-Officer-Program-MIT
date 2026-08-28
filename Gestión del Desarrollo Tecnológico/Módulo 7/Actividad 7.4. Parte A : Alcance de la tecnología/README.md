@@ -13,12 +13,10 @@ recientes de LaTeX.
 
 ## Contenido
 
-- `main.tex` — informe (17 páginas). Las doce figuras son TikZ generadas desde
-  el propio fuente; las dos últimas son marcos reservados para las capturas de
-  pantalla de OPM Sandbox.
+- `main.tex` — informe (16 páginas). Las diez figuras son TikZ generadas desde
+  el propio fuente; el documento no depende de ningún archivo de imagen.
 - `referencias.bib` — sólo entradas con metadatos verificados de forma
   independiente (Crossref y las páginas oficiales de cada norma o proyecto).
-- `images/` — destino de las capturas de pantalla de OPM Sandbox.
 - `context.txt` — los doce elementos recomendados para el índice de una hoja de
   ruta tecnológica, conservados como contexto del módulo.
 
@@ -35,23 +33,18 @@ recientes de LaTeX.
 | 7 | El módulo como unidad de composición |
 | 8 | Ocho figuras de mérito con unidad y procedimiento de medida |
 | 9 | Modelo OPM: diagrama de sistema, enlaces estructurales, ampliación SD1 y OPL |
-| 10 | Procedimiento de construcción en OPM Sandbox y capturas |
-| 11 | Conclusiones |
+| 10 | Conclusiones |
 
-## Capturas de OPM Sandbox
+## Diagrama en OPM Sandbox
 
-El entorno <https://opcloud-sandbox.web.app/> no guarda el trabajo entre
-sesiones ni permite descargarlo. El procedimiento de construcción, paso a paso,
-está en la sección 10 del informe. Una vez tomadas las capturas, guardarlas
-como:
+El modelo de objetos y procesos está en la sección 9 del informe: el diagrama
+de sistema, los enlaces estructurales, la ampliación en detalle y el OPL de
+ambos niveles.
 
-```
-images/opcloud-sd.png     # diagrama de sistema (SD)
-images/opcloud-sd1.png    # ampliación en detalle (SD1)
-```
-
-y recompilar. Las figuras 11 y 12 las insertan automáticamente; mientras no
-existan, el informe compila mostrando un marco reservado en su lugar.
+El diagrama construido en <https://opcloud-sandbox.web.app/> se entrega aparte.
+El entorno no guarda el trabajo entre sesiones ni permite descargarlo, de modo
+que la captura de pantalla es el único registro posible; el informe no la
+incorpora ni depende de ella.
 
 ## Requisitos
 
