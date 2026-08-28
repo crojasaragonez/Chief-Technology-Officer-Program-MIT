@@ -1,0 +1,1237 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc,fit,backgrounds}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.5cm}
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\setlist{nosep}
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy}
+
+% --------------------------------------------------------------------------
+% Estilos gráficos comunes
+% --------------------------------------------------------------------------
+\definecolor{capa}{HTML}{2F5D8C}
+\definecolor{trans}{HTML}{8C5A2F}
+\definecolor{acento}{HTML}{9C2B2B}
+
+\tikzset{
+  % Notación OPM
+  opmobj/.style   = {draw, very thick, rectangle, fill=green!8,
+                     font=\footnotesize\bfseries, align=center,
+                     inner sep=4pt, minimum height=8mm, text width=26mm},
+  opmobjn/.style  = {opmobj, text width=}, % objeto de ancho natural
+  opmproc/.style  = {draw, very thick, ellipse, fill=blue!12,
+                     font=\footnotesize\bfseries, align=center,
+                     inner sep=1pt, minimum height=9mm, minimum width=28mm},
+  opmstate/.style = {draw, rounded corners=4pt, fill=white, font=\scriptsize,
+                     inner sep=2pt, minimum height=4.5mm},
+  instr/.style    = {thick, -{Circle[open,length=5pt]}},
+  agente/.style   = {thick, -{Circle[length=5pt]}},
+  efecto/.style   = {thick, {Stealth[length=5.5pt]}-{Stealth[length=5.5pt]}},
+  flecha/.style   = {thick, -{Stealth[length=5pt]}},
+  % Diagramas de bloques
+  bloque/.style   = {draw, thick, rounded corners=2pt, align=center,
+                     font=\footnotesize, inner sep=5pt},
+  etiq/.style     = {font=\scriptsize\itshape, align=center},
+}
+
+% Triángulos estructurales de OPM.
+% #1 = rotación en grados (0 = base arriba, vértice abajo)
+% #2 = nombre de una coordenada previamente definida
+\newcommand{\opmagg}[2]{% agregación: triángulo relleno
+  \begin{scope}[rotate around={#1:(#2)}]
+    \path[draw,very thick,fill=black] ([shift={(-2mm,2mm)}]#2) --
+      ([shift={(2mm,2mm)}]#2) -- ([shift={(0mm,-2mm)}]#2) -- cycle;
+  \end{scope}}
+\newcommand{\opmgen}[2]{% generalización: triángulo hueco
+  \begin{scope}[rotate around={#1:(#2)}]
+    \path[draw,very thick,fill=white] ([shift={(-2mm,2mm)}]#2) --
+      ([shift={(2mm,2mm)}]#2) -- ([shift={(0mm,-2mm)}]#2) -- cycle;
+  \end{scope}}
+\newcommand{\opmexh}[2]{% exhibición: triángulo hueco con triángulo relleno
+  \begin{scope}[rotate around={#1:(#2)}]
+    \path[draw,very thick,fill=white] ([shift={(-2.4mm,2.4mm)}]#2) --
+      ([shift={(2.4mm,2.4mm)}]#2) -- ([shift={(0mm,-2.4mm)}]#2) -- cycle;
+    \path[fill=black] ([shift={(-1mm,1.5mm)}]#2) --
+      ([shift={(1mm,1.5mm)}]#2) -- ([shift={(0mm,-0.1mm)}]#2) -- cycle;
+  \end{scope}}
+
+\title{\textbf{Alcance de la tecnología: la infraestructura como código}\\
+\large Funcionamiento de un sistema completo, capas y módulos principales,
+y modelo de objetos y procesos}
+\author{Carlos Luis Rojas Aragonés\\
+Gestión del Desarrollo Tecnológico}
+\date{27 de agosto de 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\noindent\small
+La infraestructura como código (\emph{Infrastructure as Code}, IaC) sustituye
+la configuración manual de servidores, redes y servicios por una
+especificación versionada que un motor automático traduce en operaciones sobre
+la interfaz de programación de un proveedor. Este trabajo delimita el alcance
+de la tecnología, describe su principio de funcionamiento (la conciliación
+continua entre un estado deseado y un estado real), desglosa las siete capas y
+los seis módulos transversales de un sistema completo, y formaliza el conjunto
+mediante un modelo de objetos y procesos según la metodología OPM, con su
+diagrama de sistema, su ampliación en detalle y el lenguaje OPL
+correspondiente. Todas las figuras son de elaboración propia.
+\end{abstract}
+
+% ==========================================================================
+\section{Objeto y delimitación del alcance}
+% ==========================================================================
+
+\subsection*{01. El encargo}
+
+Esta primera parte de la actividad pide tres cosas: un resumen del
+funcionamiento básico de un sistema completo de infraestructura como código,
+un conjunto de imágenes y diagramas que expliquen sus capas o módulos
+principales, y un diagrama de proceso-objeto elaborado en el entorno OPM
+Sandbox \parencite{opcloud}. El documento atiende las tres en ese orden: las
+secciones 2 a 8 contienen el resumen funcional y los diagramas de capas; la
+sección 9 contiene el modelo OPM; la sección 10 documenta su construcción en
+el entorno de la herramienta y aloja la captura de pantalla.
+
+\subsection*{02. Qué se entiende aquí por sistema completo}
+
+Conviene fijar el término antes de dibujar nada, porque \enquote{infraestructura
+como código} se usa con dos alcances muy distintos. En el sentido estrecho
+designa una herramienta: un fichero declarativo y un binario que lo aplica. En
+el sentido amplio, que es el que aquí interesa, designa un sistema
+sociotécnico completo, con su cadena de herramientas, su modelo de estado, sus
+controles de gobierno y el equipo que lo opera.
+
+Un sistema completo de IaC es aquel que satisface cuatro propiedades
+simultáneas \parencite{morris2021}:
+
+\begin{enumerate}
+  \item \textbf{Especificación externalizada.} La configuración deseada de la
+    infraestructura vive fuera de la infraestructura, en artefactos de texto
+    legibles y versionados, no en la memoria de un operador ni en el estado
+    acumulado de las máquinas.
+  \item \textbf{Reproducibilidad.} Aplicar la misma especificación sobre un
+    sustrato vacío produce un resultado equivalente, con independencia de
+    quién la aplique y de cuándo lo haga.
+  \item \textbf{Idempotencia.} Aplicar la especificación sobre un sistema que
+    ya la cumple no produce ningún cambio, y aplicarla \emph{n} veces tiene el
+    mismo efecto que aplicarla una vez.
+  \item \textbf{Conciliación.} El sistema es capaz de detectar la divergencia
+    entre lo especificado y lo realmente desplegado, y de corregirla.
+\end{enumerate}
+
+La literatura académica sobre la materia, todavía escasa en comparación con su
+difusión industrial, se ha concentrado sobre todo en la calidad y los defectos
+del propio código de infraestructura \parencite{rahman2019}.
+
+Un montaje que cumpla sólo la primera propiedad es un repositorio de guiones,
+no un sistema de IaC. La cuarta es la que convierte la automatización en
+control, y es también la que con más frecuencia falta en las implantaciones
+reales.
+
+\subsection*{03. La frontera del sistema}
+
+Delimitar el alcance exige decir también qué queda fuera. El
+Cuadro~\ref{tab:frontera} fija la frontera adoptada en este documento.
+
+\begin{table}[ht]
+  \centering
+  \footnotesize
+  \caption{Frontera del sistema de infraestructura como código.}
+  \label{tab:frontera}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}X
+    >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{Dentro del alcance} & \textbf{Fuera del alcance} \\
+    \midrule
+    Cómputo, red, almacenamiento, identidad y servicios gestionados
+      declarados como código. &
+    El sustrato físico del proveedor: centros de datos, cableado,
+      refrigeración. \\
+    Configuración del sistema operativo y de los agentes instalados en él. &
+    El código de la aplicación de negocio y sus pruebas funcionales. \\
+    Construcción de imágenes y artefactos inmutables. &
+    Los datos de producción y su ciclo de vida, que exigen migraciones y
+      copias de seguridad con reglas propias. \\
+    Orquestación de cargas y despliegue continuo de manifiestos. &
+    La gestión de incidencias, la guardia y los procedimientos de crisis. \\
+    Estado, secretos, políticas, pruebas y observabilidad de la propia
+      infraestructura. &
+    La observabilidad funcional de la aplicación (trazas de negocio,
+      experiencia de usuario). \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+La distinción entre infraestructura y datos merece un comentario, porque es la
+frontera que más problemas causa en la práctica. Un servidor de base de datos
+está dentro del alcance: su tamaño, su versión, su red y sus copias
+programadas se declaran como código. El contenido de esa base de datos no lo
+está: no es idempotente, no se puede destruir y recrear, y su presencia obliga
+a que el sistema de IaC distinga recursos desechables de recursos con estado
+persistente, y proteja a los segundos de las operaciones de reemplazo.
+
+% ==========================================================================
+\section{El principio de funcionamiento}
+% ==========================================================================
+
+\subsection*{01. Tres estados y una función}
+
+Todo el funcionamiento de un sistema de IaC se sostiene sobre tres
+representaciones de la misma infraestructura y sobre la función que las
+compara.
+
+\begin{description}[style=nextline, leftmargin=0pt, labelwidth=0pt, labelsep=0pt]
+  \item[Estado deseado.] Lo que la especificación declara. Es un artefacto de
+    texto, versionado, que describe recursos y sus propiedades. No describe
+    los pasos para llegar a ellos.
+  \item[Estado registrado.] Lo que el motor cree que existe, resultado de la
+    última operación que él mismo ejecutó. Se materializa en un fichero o
+    servicio de estado que asocia cada recurso declarado con el identificador
+    real que el proveedor le asignó \parencite{terraformstate}.
+  \item[Estado real.] Lo que efectivamente existe en el proveedor, que sólo se
+    conoce consultando su interfaz de programación.
+\end{description}
+
+La función central del sistema es la \textbf{conciliación}: calcular la
+diferencia entre el estado deseado y el estado real, y emitir el conjunto
+mínimo de operaciones que anula esa diferencia. La Figura~\ref{fig:bucle}
+representa el bucle.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    \node[bloque, fill=blue!8, text width=30mm, minimum height=12mm] (des)
+      {\textbf{Estado deseado}\\\scriptsize especificación versionada};
+    \node[bloque, fill=orange!12, text width=30mm, minimum height=12mm,
+      right=26mm of des] (comp)
+      {\textbf{Comparador}\\\scriptsize cálculo de la diferencia};
+    \node[bloque, fill=green!10, text width=30mm, minimum height=12mm,
+      right=26mm of comp] (real)
+      {\textbf{Estado real}\\\scriptsize recursos del proveedor};
+    \node[bloque, fill=gray!10, text width=30mm, minimum height=12mm,
+      below=17mm of comp] (act)
+      {\textbf{Actuador}\\\scriptsize crear, modificar, destruir};
+
+    \draw[flecha] (des) -- node[above, etiq] {declaración} (comp);
+    \draw[flecha] (real) -- node[above, etiq] {observación} (comp);
+    \draw[flecha] (comp) -- node[right, etiq, xshift=1mm] {plan} (act);
+    \draw[flecha] (act.east) to[out=0, in=-90]
+      node[pos=0.55, below right, etiq, xshift=-3mm, yshift=1mm]
+      {\parbox{24mm}{\centering operaciones\\sobre la API}} (real.south);
+  \end{tikzpicture}
+  \caption{Bucle de conciliación. El sistema no ejecuta una secuencia de
+  pasos, sino que cierra repetidamente la distancia entre dos
+  representaciones. Si la diferencia es vacía, el actuador no ejecuta nada, y
+  ésa es exactamente la propiedad de idempotencia. Elaboración propia.}
+  \label{fig:bucle}
+\end{figure}
+
+\subsection*{02. Declarativo frente a imperativo}
+
+La diferencia entre los dos paradigmas no es de sintaxis sino de quién calcula
+el camino. En el enfoque imperativo, el autor escribe la secuencia de
+operaciones y asume la responsabilidad de que sea correcta desde cualquier
+estado de partida. En el enfoque declarativo, el autor escribe el destino y el
+motor deriva la secuencia.
+
+La consecuencia práctica es que un guion imperativo sólo es correcto para el
+estado de partida que su autor imaginó, mientras que una especificación
+declarativa es correcta para cualquiera, a condición de que el motor sepa
+observar el estado real. Por eso el paradigma declarativo domina la capa de
+aprovisionamiento, donde el espacio de estados de partida es enorme, y
+sobrevive el imperativo en tareas de configuración muy locales, donde ese
+espacio es pequeño y conocido.
+
+Casi ningún sistema es puro. Las herramientas de configuración expresan los
+pasos en orden, pero cada paso es un módulo idempotente que sólo actúa si hace
+falta \parencite{ansibledocs}. Es un híbrido: secuencia imperativa de
+operaciones declarativas.
+
+\subsection*{03. Convergencia y deriva}
+
+Un sistema convergente es el que, aplicado repetidamente, se aproxima al
+estado deseado y luego se queda quieto. La \textbf{deriva}
+(\emph{drift}) es la aparición de diferencias entre el estado real y el
+deseado por causas ajenas al sistema: un cambio manual de urgencia, una acción
+automática del proveedor, la caducidad de un certificado, el borrado
+accidental de un recurso.
+
+La deriva es inevitable, y la madurez de una implantación se mide por lo que
+hace con ella. Hay tres posturas, en orden creciente de rigor:
+
+\begin{enumerate}
+  \item \textbf{Ignorarla.} El motor sólo se ejecuta cuando alguien lo lanza.
+    Entre ejecuciones, el estado real puede alejarse arbitrariamente.
+  \item \textbf{Detectarla.} Una ejecución periódica en modo de sólo lectura
+    compara y notifica, sin corregir. Convierte la deriva en una métrica
+    observable.
+  \item \textbf{Corregirla.} Un agente concilia de forma continua y revierte
+    todo cambio no declarado. Es el principio de conciliación continua de
+    GitOps \parencite{opengitops} y el modo nativo de los controladores de
+    Kubernetes \parencite{k8scontrollers,burns2016}.
+\end{enumerate}
+
+% ==========================================================================
+\section{El ciclo básico de operación}
+% ==========================================================================
+
+Descendiendo un nivel desde el bucle abstracto, la operación cotidiana de un
+sistema completo recorre siete pasos. La Figura~\ref{fig:ciclo} los ordena.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[node distance=4.5mm and 5.5mm]
+    \tikzset{paso/.style={bloque, fill=capa!12, draw=capa, text width=20mm,
+      minimum height=13mm, font=\scriptsize}}
+    \node[paso] (p1) {\textbf{1. Codificar}\\ escribir la\\especificación};
+    \node[paso, right=of p1] (p2) {\textbf{2. Validar}\\ formato, tipos,\\
+      políticas};
+    \node[paso, right=of p2] (p3) {\textbf{3. Planificar}\\ diferencia\\
+      deseado--real};
+    \node[paso, right=of p3] (p4) {\textbf{4. Autorizar}\\ revisión y\\
+      aprobación};
+    \node[paso, right=of p4] (p5) {\textbf{5. Aplicar}\\ ejecutar sobre\\
+      la API};
+    \node[paso, below=9mm of p4] (p6) {\textbf{6. Verificar}\\ pruebas de\\
+      infraestructura};
+    \node[paso, below=9mm of p2] (p7) {\textbf{7. Conciliar}\\ vigilar y\\
+      corregir la deriva};
+
+    \foreach \a/\b in {p1/p2,p2/p3,p3/p4,p4/p5}
+      \draw[flecha, draw=capa] (\a) -- (\b);
+    \draw[flecha, draw=capa] (p5.south) |- (p6.east);
+    \draw[flecha, draw=capa] (p6) -- (p7);
+    \draw[flecha, draw=acento, dashed] (p7.west) -|
+      node[pos=0.28, below, etiq, text=acento, yshift=-1mm]
+      {deriva detectada} (p1.south);
+  \end{tikzpicture}
+  \caption{Los siete pasos del ciclo de operación. El retorno discontinuo es
+  el que distingue un sistema de IaC de una simple automatización de
+  despliegue. Elaboración propia.}
+  \label{fig:ciclo}
+\end{figure}
+
+Los pasos 2, 4 y 6 son los que suelen faltar en implantaciones incompletas, y
+son precisamente los que aportan garantía. Sin validación de políticas, el
+sistema automatiza también los errores de configuración; sin autorización,
+elimina el punto de control humano sobre cambios irreversibles; sin
+verificación, no distingue entre \enquote{el motor terminó sin error} y
+\enquote{la infraestructura funciona}.
+
+\subsection*{01. El paso crítico: la comparación a tres bandas}
+
+El paso 3 merece detalle porque en él se concentra el mecanismo que hace útil
+al sistema. El motor no compara dos cosas sino tres, y lo hace en dos fases
+(Figura~\ref{fig:tresbandas}).
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    \tikzset{caja/.style={bloque, text width=34mm, minimum height=15mm}}
+    \node[caja, fill=blue!8]  (d) {\textbf{Deseado}\\\scriptsize lo que
+      declara el código};
+    \node[caja, fill=gray!12, right=20mm of d] (r) {\textbf{Registrado}\\
+      \scriptsize lo que el motor anotó\\ en la última ejecución};
+    \node[caja, fill=green!10, right=20mm of r] (a) {\textbf{Real}\\
+      \scriptsize lo que devuelve\\ la API del proveedor};
+
+    \draw[efecto, draw=trans] (r) -- node[above, etiq, text=trans]
+      {\textbf{fase 1}} node[below, etiq, text=trans] {refresco} (a);
+    \draw[efecto, draw=acento] (d) -- node[above, etiq, text=acento]
+      {\textbf{fase 2}} node[below, etiq, text=acento] {plan} (r);
+
+    \node[bloque, fill=acento!10, draw=acento, below=12mm of r,
+      text width=0.62\textwidth]
+      {\textbf{Plan de cambios}: lista de recursos a crear, modificar,
+       reemplazar o destruir, con el valor anterior y el posterior de cada
+       propiedad afectada};
+    \draw[flecha, draw=acento] ($(d.south)!0.5!(a.south)+(0,-2mm)$) --
+      ++(0,-5mm);
+  \end{tikzpicture}
+  \caption{Comparación a tres bandas. La fase de refresco actualiza el
+  registro contra el mundo real y es la que descubre la deriva; la fase de
+  plan compara el código contra ese registro ya actualizado y es la que
+  produce las operaciones. Elaboración propia.}
+  \label{fig:tresbandas}
+\end{figure}
+
+El estado registrado no es redundante. Cumple tres funciones que ninguna de
+las otras dos representaciones puede cumplir. Primera, traduce el nombre
+lógico que el código da a un recurso al identificador opaco que el proveedor
+le asignó, sin lo cual el motor no podría reconocer que un recurso existente
+le pertenece. Segunda, permite detectar destrucciones: un recurso presente en
+el registro y ausente del proveedor sólo puede detectarse comparando contra el
+registro, nunca comparando el código con la realidad. Tercera, guarda
+propiedades calculadas por el proveedor que el código no declara y que otros
+recursos necesitan.
+
+Ese fichero es, en consecuencia, un activo crítico: contiene identificadores y
+con frecuencia valores sensibles, y su corrupción o pérdida deja al sistema
+sin capacidad de reconocer lo que él mismo creó. De ahí que todo montaje serio
+lo almacene en un servicio remoto con cifrado, versionado y bloqueo de
+concurrencia.
+
+% ==========================================================================
+\section{Las capas de un sistema completo}
+% ==========================================================================
+
+Un sistema completo se organiza en siete capas apiladas, cada una de las
+cuales consume el resultado de la anterior y expone una abstracción más alta.
+La Figura~\ref{fig:pila} las presenta con sus herramientas representativas.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[y=13.6mm]
+    \def\W{14.6}
+    \foreach \i/\nom/\fun/\tool in {
+      0/{L0 · Sustrato}/{cómputo, red, almacenamiento e identidad del
+         proveedor}/{API de AWS, Azure o GCP; equipo físico},
+      1/{L1 · Aprovisionamiento}/{crea, modifica y destruye los recursos
+         declarados}/{Terraform, OpenTofu, Pulumi, CloudFormation, Bicep},
+      2/{L2 · Imágenes}/{construye artefactos inmutables ya
+         configurados}/{Packer, Dockerfile, \emph{buildpacks}},
+      3/{L3 · Configuración}/{ajusta el interior de la máquina ya
+         arrancada}/{Ansible, Chef, Puppet, cloud-init},
+      4/{L4 · Orquestación}/{programa cargas sobre el conjunto de
+         máquinas}/{Kubernetes, Nomad, Helm, Kustomize},
+      5/{L5 · Entrega}/{lleva el código al motor y concilia de forma
+         continua}/{Argo CD, Flux, canalizaciones de integración},
+      6/{L6 · Plataforma}/{expone catálogo y autoservicio al equipo de
+         producto}/{Backstage, Crossplane, portales internos}} {
+      \node[draw=capa, very thick, fill=capa!\the\numexpr 6+2*\i\relax,
+        rounded corners=2pt, minimum width=\W cm, minimum height=12.6mm,
+        anchor=south west] (L\i) at (0,\i) {};
+      \node[anchor=west, font=\footnotesize\bfseries, text=capa!60!black,
+        text width=37mm, align=left] at ([xshift=3.5mm]L\i.west) {\nom};
+      \node[anchor=west, font=\scriptsize, text width=50mm, align=left]
+        at ([xshift=43mm]L\i.west) {\fun};
+      \node[anchor=west, font=\scriptsize\itshape, text width=45mm,
+        align=left] at ([xshift=96mm]L\i.west) {\tool};
+    }
+    \draw[flecha, draw=capa, line width=1pt] (-0.5,0.2) -- (-0.5,6.8)
+      node[midway, rotate=90, above, font=\scriptsize, text=capa]
+      {abstracción creciente};
+  \end{tikzpicture}
+  \caption{Las siete capas de un sistema completo de infraestructura como
+  código. Cada capa consume la salida de la inferior. Las herramientas citadas
+  son representativas, no exhaustivas. Elaboración propia.}
+  \label{fig:pila}
+\end{figure}
+
+\subsection*{01. Qué hace cada capa}
+
+\textbf{L0, sustrato.} No es parte del sistema de IaC sino su objeto. Aporta
+la interfaz de programación sobre la que todo lo demás actúa. Su
+característica determinante es que ofrece recursos con identidad propia,
+creables y destruibles por llamada, lo que es la condición de posibilidad de
+todo el resto.
+
+\textbf{L1, aprovisionamiento.} Traduce la especificación en llamadas de
+creación, modificación y destrucción. Es la capa que posee el registro de
+estado y la que ejecuta la comparación a tres bandas. Trabaja con recursos que
+todavía no tienen sistema operativo arrancado, o cuyo interior no le
+concierne. Conviene señalar que en 2023 el cambio de licencia de Terraform dio
+origen a OpenTofu, una bifurcación acogida por la Linux Foundation
+\parencite{opentofu}, de modo que hoy la capa cuenta con dos implementaciones
+compatibles del mismo lenguaje: una decisión de dependencia que una hoja de
+ruta tecnológica debería registrar de forma explícita.
+
+\textbf{L2, imágenes.} Desplaza el trabajo de configuración desde el momento
+de ejecución al momento de construcción. En lugar de arrancar una máquina
+genérica y modificarla, construye una imagen ya completa y arranca instancias
+idénticas de ella. Es la base de la infraestructura inmutable: en lugar de
+modificar un servidor, se reemplaza. Reduce drásticamente la deriva, porque
+elimina la ventana temporal en la que un servidor puede divergir.
+
+\textbf{L3, configuración.} Actúa sobre el interior de máquinas ya arrancadas:
+paquetes, ficheros, servicios, usuarios. Es la capa históricamente más antigua
+y la que más terreno ha cedido a L2 y L4. Sigue siendo necesaria donde hay
+máquinas de larga vida, sistemas heredados o equipos físicos.
+
+\textbf{L4, orquestación.} Introduce una indirección importante: deja de
+declararse \enquote{esta carga en esta máquina} y pasa a declararse
+\enquote{esta carga, tantas réplicas} sobre un conjunto de máquinas
+intercambiables. El planificador decide la colocación. Sus controladores son
+bucles de conciliación como el de la Figura~\ref{fig:bucle}, pero embebidos y
+permanentes \parencite{k8scontrollers}.
+
+\textbf{L5, entrega.} Conecta el repositorio con el motor. Ejecuta las
+canalizaciones que validan, planifican y aplican, y, en el modelo de
+conciliación continua, aloja el agente que vigila la deriva sin intervención
+humana \parencite{opengitops,humble2010}.
+
+\textbf{L6, plataforma.} Envuelve todo lo anterior en una interfaz de
+autoservicio, para que un equipo de producto pueda solicitar una base de datos
+sin conocer ni la capa L1 ni las políticas de la organización, que quedan
+codificadas en el catálogo.
+
+\subsection*{02. La tensión entre capas}
+
+Las capas L2, L3 y L4 compiten parcialmente por el mismo territorio. Un mismo
+requisito, por ejemplo \enquote{que este servidor tenga la versión 1.24 de un
+tiempo de ejecución}, puede resolverse construyendo una imagen que ya la
+incluya (L2), instalándola con un módulo de configuración (L3) o empaquetando
+la aplicación en un contenedor que la lleve dentro (L4). Las tres soluciones
+funcionan y no deben coexistir sobre el mismo recurso: si dos capas gobiernan
+la misma propiedad, cada una revierte el trabajo de la otra en cada ciclo de
+conciliación, y el sistema oscila.
+
+Decidir qué capa posee cada propiedad es, por tanto, la primera decisión de
+arquitectura de una implantación, y conviene documentarla de forma explícita.
+
+% ==========================================================================
+\section{Los módulos transversales}
+% ==========================================================================
+
+Las siete capas describen el flujo principal, pero un sistema completo
+necesita además seis módulos que atraviesan todas las capas
+(Figura~\ref{fig:transversales}). Ninguno produce infraestructura; todos
+condicionan si la que se produce es correcta, segura y auditable.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    \node[draw=capa, very thick, fill=capa!10, rounded corners=3pt,
+      minimum width=5.4cm, minimum height=3.7cm, align=center,
+      font=\footnotesize\bfseries, text=capa!60!black] (nucleo)
+      {Las siete capas\\del flujo principal\\[2pt]
+       \scriptsize\mdseries L0 sustrato · L1 aprovisionamiento\\
+       \scriptsize\mdseries L2 imágenes · L3 configuración\\
+       \scriptsize\mdseries L4 orquestación · L5 entrega\\
+       \scriptsize\mdseries L6 plataforma};
+    \foreach \ang/\nom/\det in {
+      90/{Control de versiones}/{historia, revisión, reversión},
+      32/{Gestión de estado}/{registro, bloqueo, cifrado},
+      -32/{Gestión de secretos}/{inyección en tiempo de ejecución},
+      -90/{Política como código}/{reglas evaluables antes de aplicar},
+      -148/{Pruebas}/{estáticas, unitarias, de integración},
+      148/{Observabilidad}/{deriva, coste, cumplimiento}} {
+      \node[bloque, fill=trans!12, draw=trans, text width=31mm,
+        font=\scriptsize, align=center, anchor=center] at (\ang:5.1cm)
+        (m\ang) {\textbf{\nom}\\ \det};
+      \draw[efecto, draw=trans, shorten >=3pt, shorten <=3pt]
+        (m\ang) -- (nucleo);
+    }
+  \end{tikzpicture}
+  \caption{Los seis módulos transversales. Cada uno interactúa con todas las
+  capas del flujo principal, no con una en particular. Elaboración propia.}
+  \label{fig:transversales}
+\end{figure}
+
+El Cuadro~\ref{tab:transversales} resume la función de cada uno y el fallo
+característico que aparece cuando falta.
+
+\begin{table}[ht]
+  \centering
+  \footnotesize
+  \caption{Módulos transversales: función, instrumentos y fallo característico
+  por ausencia.}
+  \label{tab:transversales}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.145\textwidth}
+    >{\raggedright\arraybackslash}X
+    >{\raggedright\arraybackslash}p{0.30\textwidth}@{}}
+    \toprule
+    \textbf{Módulo} & \textbf{Función} & \textbf{Fallo por ausencia} \\
+    \midrule
+    Control de versiones & Registrar quién cambió qué, cuándo y por qué;
+      permitir revertir a un estado anterior conocido. &
+      Cambios sin trazabilidad y reversión imposible. \\
+    Gestión de estado & Custodiar el registro: almacenamiento remoto, cifrado,
+      versionado y bloqueo para impedir ejecuciones concurrentes. &
+      Corrupción del registro y recursos huérfanos. \\
+    Gestión de secretos & Mantener credenciales fuera del código e inyectarlas
+      en el momento de la ejecución, con rotación y ámbito mínimo. Es uno de
+      los defectos más frecuentes en código de infraestructura
+      \parencite{rahman2019smells}. &
+      Credenciales escritas en el repositorio. \\
+    Política como código & Expresar las reglas de la organización como
+      predicados evaluables sobre el plan, antes de aplicarlo
+      \parencite{opa}. &
+      El sistema automatiza también los incumplimientos, y a mayor
+      velocidad. \\
+    Pruebas & Verificar la especificación en varios niveles: análisis
+      estático, validación del plan, despliegue efímero y comprobación
+      funcional. &
+      \enquote{Terminó sin error} se confunde con \enquote{funciona}. \\
+    Observabilidad & Medir deriva, coste, tiempo de ciclo y cumplimiento, y
+      exponerlos como series temporales. &
+      No hay figuras de mérito y la mejora no es demostrable. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+% ==========================================================================
+\section{Modos de operación}
+% ==========================================================================
+
+Sobre la misma arquitectura caben decisiones de operación que cambian de forma
+apreciable el comportamiento del sistema. Las tres principales son
+independientes entre sí.
+
+\subsection*{01. Empuje frente a arrastre}
+
+En el modo de \textbf{empuje} (\emph{push}), un actor externo, típicamente una
+canalización de integración, posee las credenciales del entorno y ejecuta el
+motor contra él. En el modo de \textbf{arrastre} (\emph{pull}), un agente
+residente dentro del entorno consulta el repositorio y se aplica a sí mismo
+los cambios. La Figura~\ref{fig:pushpull} contrasta ambos.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    \tikzset{c/.style={bloque, text width=28mm, minimum height=9mm},
+             cin/.style={bloque, fill=white, text width=30mm,
+               minimum height=7mm, font=\scriptsize},
+             ent/.style={draw, thick, rounded corners=2pt, fill=green!10,
+               minimum width=52mm}}
+    % ---------------- empuje ----------------
+    \node[etiq, font=\footnotesize\bfseries] (t1) {Empuje (\emph{push})};
+    \node[c, fill=blue!8, below=5mm of t1] (r1) {Repositorio};
+    \node[c, fill=orange!12, below=11mm of r1] (ci1)
+      {Canalización\\ \scriptsize con las credenciales};
+    \node[ent, minimum height=24mm, below=11mm of ci1] (e1) {};
+    \node[anchor=north, font=\scriptsize\bfseries]
+      at ([yshift=-2mm]e1.north) {Entorno};
+    \node[cin, anchor=south] at ([yshift=3mm]e1.south) (i1)
+      {Infraestructura};
+    \draw[flecha] (r1) -- node[right, etiq, xshift=1mm] {disparo} (ci1);
+    \draw[flecha] (ci1) -- node[right, etiq, xshift=1mm] {aplica} (e1.north);
+    % ---------------- arrastre ----------------
+    \node[etiq, font=\footnotesize\bfseries, right=52mm of t1] (t2)
+      {Arrastre (\emph{pull})};
+    \node[c, fill=blue!8, below=5mm of t2] (r2) {Repositorio};
+    \node[ent, minimum height=34mm, below=26mm of r2] (e2) {};
+    \node[anchor=north, font=\scriptsize\bfseries]
+      at ([yshift=-1.5mm]e2.north) {Entorno};
+    \node[cin, fill=orange!12, anchor=north] at ([yshift=-7mm]e2.north) (ag)
+      {Agente\\ \scriptsize con las credenciales};
+    \node[cin, anchor=south] at ([yshift=3mm]e2.south) (i2)
+      {Infraestructura};
+    \draw[flecha] ([xshift=-11mm]e2.north) to[out=95,in=-95]
+      node[left, etiq, xshift=-1mm] {consulta} ([xshift=-9mm]r2.south);
+    \draw[flecha] ([xshift=9mm]r2.south) to[out=-85,in=85]
+      node[right, etiq, xshift=1mm] {\parbox{18mm}{\centering estado\\
+      deseado}} ([xshift=11mm]e2.north);
+    \draw[flecha, draw=acento] (ag) -- node[right, font=\tiny\itshape,
+      text=acento, xshift=0.5mm] {concilia} (i2);
+  \end{tikzpicture}
+  \caption{Empuje frente a arrastre. En el arrastre, las credenciales del
+  entorno nunca salen de él, lo que reduce la superficie de ataque y hace del
+  agente el punto natural de conciliación continua. Elaboración propia a
+  partir de los principios de \textcite{opengitops}.}
+  \label{fig:pushpull}
+\end{figure}
+
+El arrastre tiene dos ventajas estructurales. La primera es de seguridad: las
+credenciales de producción no viajan a un sistema de integración compartido.
+La segunda es que el agente, por estar siempre presente, puede conciliar de
+forma continua y no sólo cuando alguien confirma un cambio, que es la cuarta
+propiedad exigida en la sección 1. Su coste es que exige un agente por
+entorno y complica los flujos que necesitan orden entre entornos.
+
+\subsection*{02. Mutable frente a inmutable}
+
+En el modelo mutable, un recurso desplegado se modifica en su sitio. En el
+inmutable, no se modifica nunca: se construye uno nuevo con la configuración
+deseada y se sustituye. El modelo inmutable elimina por construcción la deriva
+de configuración y hace que el recurso desplegado sea siempre trazable a un
+artefacto concreto. A cambio, obliga a que todo estado persistente viva fuera
+del recurso reemplazable, lo que es una restricción de diseño exigente.
+
+\subsection*{03. El cuadro de decisión}
+
+Las tres decisiones son independientes entre sí, de modo que caben ocho
+combinaciones. La más frecuente en implantaciones recientes es la de arrastre,
+inmutable y declarativa, pero ninguna de las tres opciones es obligada. El
+Cuadro~\ref{tab:modos} resume las consecuencias de cada una.
+
+\begin{table}[!ht]
+  \centering
+  \footnotesize
+  \caption{Tres decisiones de operación y sus consecuencias.}
+  \label{tab:modos}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.15\textwidth}
+    >{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{Decisión} & \textbf{Opción A} & \textbf{Opción B} \\
+    \midrule
+    Iniciativa &
+      \textbf{Empuje}: control de orden entre entornos; credenciales fuera del
+      entorno; conciliación sólo bajo disparo. &
+      \textbf{Arrastre}: credenciales confinadas; conciliación continua;
+      un agente por entorno. \\
+    Mutabilidad &
+      \textbf{Mutable}: cambios rápidos y baratos; deriva acumulativa; difícil
+      trazar qué versión corre. &
+      \textbf{Inmutable}: sin deriva; reemplazo trazable; obliga a externalizar
+      todo estado persistente. \\
+    Expresión &
+      \textbf{Declarativa}: el motor calcula el camino; correcta desde
+      cualquier estado de partida. &
+      \textbf{Imperativa}: control fino del orden; sólo correcta desde el
+      estado de partida previsto. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+% ==========================================================================
+\section{El módulo como unidad de composición}
+% ==========================================================================
+
+El término \enquote{módulo} tiene en IaC un sentido preciso: es la unidad
+reutilizable que encapsula un conjunto de recursos tras una interfaz de
+entradas y salidas. Es el mecanismo que permite que una organización no repita
+la misma configuración en cada equipo y, sobre todo, que las decisiones
+correctas queden incorporadas por omisión.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    \node[draw=capa, very thick, fill=capa!8, rounded corners=3pt,
+      minimum width=5.6cm, minimum height=3.2cm] (mod) {};
+    \node[anchor=north, font=\footnotesize\bfseries, text=capa!60!black]
+      at ([yshift=-3mm]mod.north) {Módulo \texttt{red-privada v2.3.1}};
+    \node[bloque, fill=white, font=\scriptsize, text width=44mm,
+      anchor=north] at ([yshift=-9mm]mod.north)
+      {\textbf{Cuerpo}: recursos declarados,\\ valores por omisión,
+       validaciones,\\ etiquetas obligatorias};
+
+    \node[bloque, fill=blue!8, text width=27mm, font=\scriptsize,
+      left=16mm of mod] (in)
+      {\textbf{Entradas}\\ región, CIDR,\\ número de zonas,\\ etiquetas};
+    \node[bloque, fill=green!10, text width=27mm, font=\scriptsize,
+      right=16mm of mod] (out)
+      {\textbf{Salidas}\\ identificador de red,\\ subredes,\\ tabla de rutas};
+    \node[bloque, fill=trans!12, text width=40mm, font=\scriptsize,
+      below=9mm of mod] (reg)
+      {\textbf{Registro versionado}\\ publica, firma y resuelve versiones};
+
+    \draw[flecha] (in) -- (mod);
+    \draw[flecha] (mod) -- (out);
+    \draw[flecha] (reg) -- (mod);
+
+    \node[bloque, fill=gray!8, text width=25mm, font=\scriptsize,
+      above left=8mm and 8mm of mod.north] (c1) {Composición\\
+      \emph{entorno de pruebas}};
+    \node[bloque, fill=gray!8, text width=25mm, font=\scriptsize,
+      above right=8mm and 8mm of mod.north] (c2) {Composición\\
+      \emph{entorno de producción}};
+    \draw[flecha, gray] (c1) -- (mod.north west);
+    \draw[flecha, gray] (c2) -- (mod.north east);
+  \end{tikzpicture}
+  \caption{Anatomía de un módulo. Las mismas entradas con valores distintos
+  producen entornos comparables; el registro versionado permite que una
+  corrección se propague de forma controlada. Elaboración propia.}
+  \label{fig:modulo}
+\end{figure}
+
+Tres propiedades hacen que un módulo cumpla su función. Debe tener una
+\textbf{interfaz estrecha}: cuantas menos entradas expone, más decisiones fija
+y más valor aporta. Debe estar \textbf{versionado} con semántica explícita,
+para que quien lo consume elija cuándo adoptar un cambio. Y debe delimitar un
+\textbf{radio de explosión} razonable: un módulo que agrupa demasiados
+recursos obliga a que cada cambio pequeño planifique sobre un conjunto grande,
+lo que alarga el ciclo y aumenta el riesgo de cada aplicación.
+
+% ==========================================================================
+\section{Figuras de mérito del sistema}
+% ==========================================================================
+
+Un sistema de IaC es en sí mismo una tecnología, y como tal admite figuras de
+mérito que permiten situarlo y seguir su evolución. El
+Cuadro~\ref{tab:fom} propone ocho, con su unidad y su procedimiento de
+medida. Las cuatro primeras coinciden con las métricas de rendimiento de
+entrega ampliamente utilizadas \parencite{forsgren2018}; las cuatro últimas
+son específicas de la infraestructura.
+
+\begin{table}[ht]
+  \centering
+  \footnotesize
+  \caption{Figuras de mérito propuestas para un sistema de IaC.}
+  \label{tab:fom}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.27\textwidth}
+    >{\raggedright\arraybackslash}p{0.17\textwidth}
+    >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{Figura de mérito} & \textbf{Unidad} & \textbf{Cómo se mide} \\
+    \midrule
+    Tiempo de ciclo del cambio & horas & Del registro del cambio en el
+      repositorio a su aplicación efectiva en producción. \\
+    Frecuencia de aplicación & cambios/semana & Recuento de aplicaciones
+      correctas por entorno. \\
+    Tasa de fallo del cambio & \% & Aplicaciones que exigen reversión o
+      corrección inmediata sobre el total. \\
+    Tiempo de restablecimiento & minutos & De la detección del fallo a la
+      recuperación del servicio. \\
+    Cobertura de codificación & \% & Recursos gestionados por el motor sobre
+      el total de recursos existentes en el proveedor. \\
+    Tasa de deriva & recursos desviados / 1000 · semana & Diferencias
+      detectadas en las ejecuciones de sólo lectura. \\
+    Tiempo de reconstrucción & horas & De un entorno vacío a un entorno
+      equivalente al de producción, partiendo sólo del repositorio. \\
+    Cumplimiento de política & \% & Planes que superan la evaluación de
+      políticas sin excepción manual. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+El tiempo de reconstrucción es la figura más reveladora de todas, porque
+verifica de un solo golpe las cuatro propiedades exigidas en la sección 1. Una
+organización que no puede reconstruir un entorno completo desde el repositorio
+no tiene un sistema de IaC completo, con independencia de cuántos ficheros
+declarativos posea.
+
+% ==========================================================================
+\section{Modelo de objetos y procesos (OPM)}
+% ==========================================================================
+
+\subsection*{01. Por qué OPM para este sistema}
+
+La metodología de objetos y procesos, normalizada como ISO/PAS 19450:2015 y
+posteriormente como ISO 19450:2024
+\parencite{iso19450:2015,iso19450:2024,dori2002,dori2016}, presenta dos rasgos que la
+hacen adecuada aquí. El primero es que usa un único tipo de diagrama para
+representar a la vez estructura y comportamiento, lo que evita el problema
+habitual de mantener sincronizados un diagrama de bloques y un diagrama de
+actividad. El segundo es su carácter bimodal: cada diagrama tiene una
+traducción automática a lenguaje natural controlado (OPL), lo que permite
+verificar el modelo leyéndolo.
+
+Para un sistema de IaC, cuya esencia es un proceso que transforma el estado de
+un objeto (la infraestructura desplegada) usando otros objetos como
+instrumentos, la correspondencia con el vocabulario de OPM es casi directa.
+
+\subsection*{02. Entidades del diagrama de sistema}
+
+El Cuadro~\ref{tab:entidades} enumera las entidades del nivel superior.
+
+\begin{table}[ht]
+  \centering
+  \footnotesize
+  \caption{Entidades del diagrama de sistema (SD) del modelo OPM.}
+  \label{tab:entidades}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.27\textwidth}
+    >{\raggedright\arraybackslash}p{0.13\textwidth}
+    >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{Entidad} & \textbf{Tipo} & \textbf{Papel en el modelo} \\
+    \midrule
+    Aprovisionamiento de Infraestructura & Proceso & Proceso principal del
+      sistema; se amplía en detalle en el diagrama SD1. \\
+    Equipo de Plataforma & Objeto (físico) & Agente humano que maneja el
+      proceso. \\
+    Especificación de Infraestructura & Objeto & El código; instrumento del
+      proceso. Se especializa en módulo reutilizable y configuración de
+      entorno, y exhibe el atributo Versión. \\
+    Repositorio Versionado & Objeto & Todo del que la especificación es
+      parte. \\
+    Motor de IaC & Objeto & Instrumento que ejecuta la conciliación. \\
+    Registro de Estado & Objeto & Objeto afectado: el proceso lo lee y lo
+      reescribe en cada aplicación. \\
+    Proveedor de Nube & Objeto (físico) & Instrumento: expone la interfaz de
+      programación. \\
+    Credenciales & Objeto & Instrumento con el que el motor se autentica. \\
+    Conjunto de Políticas & Objeto & Instrumento de la validación. \\
+    Infraestructura Desplegada & Objeto (físico) & Operando del sistema.
+      Estados: inexistente, conforme, desviada, retirada. \\
+    Plan de Cambios & Objeto & Resultado del proceso, consumido por la
+      aplicación. \\
+    Registro de Auditoría & Objeto & Resultado del proceso. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+La notación se reparte en dos figuras para que ninguna quede saturada. La
+Figura~\ref{fig:opmsd} recoge los enlaces procedimentales, es decir, los que
+unen el proceso con los objetos que lo habilitan y con los que transforma:
+círculo hueco para instrumento, círculo relleno para agente, flecha doble
+para efecto y flecha simple para resultado. La Figura~\ref{fig:opmestr}
+recoge los enlaces estructurales del objeto \emph{Especificación de
+Infraestructura}: triángulo relleno para agregación, triángulo hueco para
+generalización y triángulo doble para exhibición de un atributo. En ambas,
+el rectángulo denota objeto, la elipse denota proceso y el rectángulo de
+esquinas redondeadas denota estado.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[scale=0.9, transform shape]
+    % ---- proceso principal
+    \node[opmproc, minimum width=40mm, minimum height=15mm] (P) at (0,0)
+      {Aprovisionamiento\\de Infraestructura};
+
+    % ---- agente humano
+    \node[opmobj, fill=green!18] (eq) at (0,2.7) {Equipo de\\Plataforma};
+    \draw[agente] (eq) -- (P);
+
+    % ---- instrumentos
+    \node[opmobj] (spec) at (-5.4,1.6)  {Especificación de\\Infraestructura};
+    \node[opmobj] (motor) at (-5.4,0)   {Motor de IaC};
+    \node[opmobj] (pol) at (-5.4,-1.6)  {Conjunto de\\Políticas};
+    \node[opmobj] (prov) at (5.4,1.6)   {Proveedor\\de Nube};
+    \node[opmobj] (cred) at (5.4,0)     {Credenciales};
+    \foreach \nd in {spec,motor,pol,prov,cred} \draw[instr] (\nd) -- (P);
+
+    % ---- objeto afectado
+    \node[opmobj] (edo) at (-5.4,-3.2) {Registro de\\Estado};
+    \draw[efecto] (edo) -- (P);
+
+    % ---- resultados
+    \node[opmobj] (plan) at (5.4,-1.6) {Plan de Cambios};
+    \node[opmobj] (aud) at (5.4,-3.2)  {Registro de\\Auditoría};
+    \draw[flecha] (P) -- (plan);
+    \draw[flecha] (P) -- (aud);
+
+    % ---- operando con sus cuatro estados
+    \node[draw, very thick, fill=green!8, minimum width=76mm,
+      minimum height=17mm] (infra) at (0,-4.6) {};
+    \node[anchor=north, font=\footnotesize\bfseries]
+      at ([yshift=-2mm]infra.north) {Infraestructura Desplegada};
+    \foreach \dx/\st/\fl in {-27/inexistente/white, -9/conforme/{green!25},
+      9/desviada/white, 27/retirada/white}
+      \node[opmstate, fill=\fl]
+        at ([xshift=\dx mm, yshift=-4.5mm]infra.center) {\st};
+    \draw[efecto] (P) -- (infra);
+
+    % ---- leyenda de notación
+    \node[draw=gray!60, fill=gray!5, rounded corners=2pt, inner sep=4pt,
+      font=\scriptsize, align=left, anchor=north, text width=0.95\textwidth]
+      at ([yshift=-4mm]infra.south)
+      {\textbf{Notación:} rectángulo = objeto · elipse = proceso ·
+       rectángulo redondeado = estado · línea acabada en círculo hueco =
+       instrumento · línea acabada en círculo relleno = agente · flecha
+       doble = efecto · flecha simple = resultado};
+  \end{tikzpicture}
+  \caption{Diagrama de sistema (SD) del sistema de infraestructura como
+  código, en notación OPM. Elaboración propia siguiendo
+  \textcite{dori2016} y \textcite{iso19450:2024}.}
+  \label{fig:opmsd}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[scale=0.95, transform shape]
+    \node[opmobj, text width=34mm] (spec) at (0,0)
+      {Especificación de\\Infraestructura};
+    % ---- agregación
+    \node[opmobj, text width=30mm] (repo) at (0,2.1)
+      {Repositorio\\Versionado};
+    \draw[very thick] (repo.south) -- (spec.north);
+    \coordinate (ca) at ($(repo.south)!0.5!(spec.north)$);
+    \opmagg{0}{ca}
+    \node[etiq, right=2mm] at (ca) {agregación: \emph{consta de}};
+    % ---- exhibición del atributo
+    \node[opmobj, text width=22mm] (ver) at (5.4,0) {Versión};
+    \draw[very thick] (spec.east) -- (ver.west);
+    \coordinate (ce) at ($(spec.east)!0.42!(ver.west)$);
+    \opmexh{90}{ce}
+    \node[etiq, above=5mm] at ($(spec.east)!0.6!(ver.west)$)
+      {exhibición: \emph{exhibe}};
+    % ---- generalización
+    \node[opmobj, text width=30mm] (mod) at (-3.1,-2.6)
+      {Módulo\\Reutilizable};
+    \node[opmobj, text width=30mm] (cfg) at (3.1,-2.6)
+      {Configuración\\de Entorno};
+    \coordinate (cg) at (0,-1.25);
+    \draw[very thick] (spec.south) -- (0,-1.6);
+    \draw[very thick] (mod.north) |- (0,-1.6) -| (cfg.north);
+    \opmgen{0}{cg}
+    \node[etiq, right=2mm] at (cg) {generalización: \emph{puede ser}};
+  \end{tikzpicture}
+  \caption{Enlaces estructurales del objeto \emph{Especificación de
+  Infraestructura}: agregación con el repositorio que la contiene,
+  generalización en sus dos especializaciones y exhibición del atributo que
+  la versiona. Elaboración propia.}
+  \label{fig:opmestr}
+\end{figure}
+
+\subsection*{03. El lenguaje OPL del diagrama de sistema}
+
+La traducción del diagrama al lenguaje de objetos y procesos permite
+verificarlo por lectura. Las palabras reservadas van en versalitas.
+
+\begin{quote}\small
+\textsc{Equipo de Plataforma} es físico.\\
+\textsc{Infraestructura Desplegada} es física.\\
+\textsc{Proveedor de Nube} es físico y externo.\\
+\textsc{Repositorio Versionado} consta de \textsc{Especificación de
+Infraestructura}.\\
+\textsc{Especificación de Infraestructura} puede ser \textsc{Módulo
+Reutilizable} o \textsc{Configuración de Entorno}.\\
+\textsc{Especificación de Infraestructura} exhibe \textsc{Versión}.\\
+\textsc{Infraestructura Desplegada} puede ser inexistente, conforme, desviada
+o retirada.\\
+\textsc{Aprovisionamiento de Infraestructura} requiere \textsc{Especificación
+de Infraestructura}, \textsc{Motor de IaC}, \textsc{Conjunto de Políticas},
+\textsc{Proveedor de Nube} y \textsc{Credenciales}.\\
+\textsc{Equipo de Plataforma} maneja \textsc{Aprovisionamiento de
+Infraestructura}.\\
+\textsc{Aprovisionamiento de Infraestructura} afecta a \textsc{Registro de
+Estado}.\\
+\textsc{Aprovisionamiento de Infraestructura} cambia \textsc{Infraestructura
+Desplegada} de inexistente a conforme.\\
+\textsc{Aprovisionamiento de Infraestructura} produce \textsc{Plan de Cambios}
+y \textsc{Registro de Auditoría}.
+\end{quote}
+
+Leído en voz alta, el conjunto de frases es una descripción funcional completa
+del sistema, y cualquier error de modelado se manifiesta como una frase falsa.
+
+\subsection*{04. Ampliación en detalle del proceso principal}
+
+El diagrama SD1 amplía el proceso principal en siete subprocesos, ordenados
+verticalmente según la convención de OPM, en la que la posición vertical
+denota precedencia temporal. Los objetos que sólo intervienen en el interior
+del proceso se dibujan dentro de la elipse; el \emph{Equipo de Plataforma},
+que pertenece al entorno, queda fuera. La Figura~\ref{fig:opmsd1} lo recoge.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[scale=0.86, transform shape, x=1mm, y=1mm]
+    \tikzset{sp/.style={opmproc, minimum width=34mm, minimum height=10mm,
+               text width=},
+             ob/.style={opmobj, text width=26mm, minimum height=9mm,
+               font=\scriptsize\bfseries}}
+    % ---- marco elíptico del proceso ampliado
+    \node[draw, very thick, ellipse, fill=blue!4,
+      minimum width=130mm, minimum height=146mm] (marco) at (0,3) {};
+    \node[font=\footnotesize\bfseries] at (0,62)
+      {Aprovisionamiento de Infraestructura};
+
+    % ---- los siete subprocesos, de arriba abajo
+    \node[sp] (c)  at (0, 44) {Codificación};
+    \node[sp] (v)  at (0, 30) {Validación};
+    \node[sp] (pl) at (0, 16) {Planificación};
+    \node[sp] (au) at (0,  2) {Autorización};
+    \node[sp] (ap) at (0,-12) {Aplicación};
+    \node[sp] (co) at (0,-26) {Conciliación};
+    \node[sp] (re) at (0,-40) {Retirada};
+    \foreach \a/\b in {c/v,v/pl,pl/au,au/ap,ap/co,co/re}
+      \draw[flecha, gray!65] (\a) -- (\b);
+
+    % ---- objetos internos
+    \node[ob] (spec) at (-36, 30)
+      {Especificación\\ \scriptsize\mdseries borrador $\to$ validada};
+    \node[ob] (pol)  at ( 36, 30) {Conjunto de\\Políticas};
+    \node[ob] (edo)  at (-36, 16) {Registro\\de Estado};
+    \node[ob] (plan) at ( 36, 16)
+      {Plan de Cambios\\ \scriptsize\mdseries pendiente $\to$ aprobado};
+    \node[ob] (cred) at ( 36, -6) {Credenciales};
+    \node[ob] (prov) at ( 36,-18) {Proveedor\\de Nube};
+    \node[ob] (aud)  at ( 36,-31) {Registro de\\Auditoría};
+    \node[draw, very thick, fill=green!8, minimum width=32mm,
+      minimum height=14mm] (infra) at (-36,-26) {};
+    \node[anchor=north, font=\scriptsize\bfseries, align=center]
+      at ([yshift=-1mm]infra.north) {Infraestructura\\Desplegada};
+    \node[opmstate, font=\tiny] at ([xshift=-7mm,yshift=-4.5mm]infra.center)
+      {desviada};
+    \node[opmstate, font=\tiny, fill=green!25]
+      at ([xshift=7mm,yshift=-4.5mm]infra.center) {conforme};
+
+    % ---- agente humano, fuera del proceso ampliado
+    \node[ob, fill=green!18, text width=24mm] (eq) at (-70, 50)
+      {Equipo de\\Plataforma};
+    \draw[agente] (eq) to[out=0,in=180] (c.west);
+    \draw[agente] (eq.south) |- (au.west);
+
+    % ---- enlaces de los subprocesos
+    \draw[flecha] (c.west) to[out=180,in=90] (spec.north);
+    \draw[efecto] (spec) -- (v);
+    \draw[instr]  (pol)  -- (v);
+    \draw[instr]  (edo)  -- (pl);
+    \draw[flecha] (pl)   -- (plan);
+    \draw[instr]  (plan.south) to[out=-90,in=0] (au.east);
+    \draw[instr]  (cred) -- (ap);
+    \draw[instr]  (prov) -- (ap);
+    \draw[efecto] (ap.west) to[out=180,in=90] (infra.north);
+    \draw[efecto] (co) -- (infra);
+    \draw[flecha] (co) -- (aud);
+    \draw[efecto] (re.west) to[out=180,in=-90] (infra.south);
+  \end{tikzpicture}
+  \caption{Diagrama SD1: ampliación en detalle del proceso de
+  aprovisionamiento. La posición vertical de los subprocesos denota
+  precedencia temporal. \emph{Aplicación} y \emph{Conciliación} actúan sobre
+  el mismo objeto desde estados de partida distintos, que es la formulación
+  precisa de la diferencia entre desplegar y corregir la deriva. El
+  \emph{Equipo de Plataforma} queda fuera del proceso ampliado por ser un
+  objeto del entorno. Elaboración propia.}
+  \label{fig:opmsd1}
+\end{figure}
+
+\subsection*{05. El lenguaje OPL de la ampliación}
+
+\begin{quote}\small
+\textsc{Aprovisionamiento de Infraestructura} consta de
+\textsc{Codificación}, \textsc{Validación}, \textsc{Planificación},
+\textsc{Autorización}, \textsc{Aplicación}, \textsc{Conciliación} y
+\textsc{Retirada}.\\
+\textsc{Equipo de Plataforma} maneja \textsc{Codificación} y
+\textsc{Autorización}.\\
+\textsc{Codificación} produce \textsc{Especificación de Infraestructura}.\\
+\textsc{Validación} requiere \textsc{Conjunto de Políticas}.\\
+\textsc{Validación} cambia \textsc{Especificación de Infraestructura} de
+borrador a validada.\\
+\textsc{Planificación} requiere \textsc{Registro de Estado} y
+\textsc{Especificación de Infraestructura}.\\
+\textsc{Planificación} produce \textsc{Plan de Cambios}.\\
+\textsc{Autorización} cambia \textsc{Plan de Cambios} de pendiente a
+aprobado.\\
+\textsc{Aplicación} requiere \textsc{Plan de Cambios}, \textsc{Credenciales}
+y \textsc{Proveedor de Nube}.\\
+\textsc{Aplicación} cambia \textsc{Infraestructura Desplegada} de inexistente
+a conforme.\\
+\textsc{Aplicación} afecta a \textsc{Registro de Estado}.\\
+\textsc{Conciliación} cambia \textsc{Infraestructura Desplegada} de desviada
+a conforme.\\
+\textsc{Conciliación} produce \textsc{Registro de Auditoría}.\\
+\textsc{Retirada} cambia \textsc{Infraestructura Desplegada} de conforme a
+retirada.
+\end{quote}
+
+Merece la pena señalar lo que el modelo hace explícito y que las descripciones
+en prosa suelen dejar implícito. Primero, que \textsc{Registro de Estado} es
+el único objeto que aparece a la vez como instrumento de la planificación y
+como objeto afectado por la aplicación, lo que identifica exactamente por qué
+necesita bloqueo de concurrencia. Segundo, que \textsc{Conciliación} y
+\textsc{Aplicación} cambian el mismo objeto desde estados de partida
+distintos, que es la formulación precisa de la diferencia entre desplegar y
+conciliar. Y tercero, que el equipo humano interviene sólo en dos de los siete
+subprocesos, lo que delimita el alcance real de la automatización.
+
+% ==========================================================================
+\section{Construcción del diagrama en OPM Sandbox}
+% ==========================================================================
+
+\subsection*{01. Procedimiento}
+
+El modelo anterior se construye en el entorno OPM Sandbox
+\parencite{opcloud} siguiendo esta secuencia. El entorno no guarda el trabajo
+entre sesiones ni permite descargarlo, de modo que la captura de pantalla es
+el único registro.
+
+\begin{enumerate}
+  \item Abrir \url{https://opcloud-sandbox.web.app/}. El lienzo inicial es el
+    diagrama de sistema (SD) y el panel lateral muestra el OPL, que se
+    actualiza a cada cambio.
+  \item Arrastrar al lienzo el elemento de proceso y renombrarlo como
+    \emph{Aprovisionamiento de Infraestructura}. Situarlo en el centro.
+  \item Arrastrar los once objetos del Cuadro~\ref{tab:entidades} y
+    renombrarlos. Colocar el agente arriba, los instrumentos a los lados y el
+    operando abajo, siguiendo la disposición de las
+    Figuras~\ref{fig:opmsd} y~\ref{fig:opmestr}.
+  \item Marcar como físicos \emph{Equipo de Plataforma},
+    \emph{Infraestructura Desplegada} y \emph{Proveedor de Nube}, y este
+    último además como externo al sistema, mediante las propiedades de la
+    entidad.
+  \item Añadir a \emph{Infraestructura Desplegada} los cuatro estados:
+    inexistente, conforme, desviada y retirada.
+  \item Trazar los enlaces arrastrando desde el borde de una entidad hasta la
+    otra y eligiendo el tipo en el cuadro de diálogo que aparece: agente para
+    el equipo, instrumento para especificación, motor, políticas, proveedor y
+    credenciales, efecto para el registro de estado y para la infraestructura,
+    y resultado para el plan de cambios y el registro de auditoría.
+  \item Añadir los enlaces estructurales: agregación entre
+    \emph{Repositorio Versionado} y \emph{Especificación de Infraestructura},
+    generalización entre \emph{Especificación} y sus dos especializaciones, y
+    exhibición del atributo \emph{Versión}.
+  \item Comprobar en el panel de OPL que las frases generadas coinciden con
+    las de la sección 9.3. Cualquier discrepancia indica un enlace de tipo
+    equivocado.
+  \item Ampliar en detalle el proceso principal desde su menú contextual y
+    añadir dentro los siete subprocesos de la Figura~\ref{fig:opmsd1},
+    ordenados de arriba abajo.
+  \item Capturar la pantalla de ambos diagramas antes de cerrar la pestaña.
+\end{enumerate}
+
+\subsection*{02. Captura del trabajo}
+
+\begin{figure}[ht]
+  \centering
+  \IfFileExists{images/opcloud-sd.png}{%
+    \includegraphics[width=\textwidth]{images/opcloud-sd.png}}{%
+    \fbox{\parbox[c][58mm][c]{0.94\textwidth}{\centering\footnotesize
+      \textbf{Espacio reservado para la captura de pantalla del diagrama de
+      sistema (SD)}\\[4pt]
+      Guardar la imagen como \texttt{images/opcloud-sd.png} y recompilar con
+      \texttt{make pdf}.\\ La figura se insertará automáticamente en este
+      lugar.}}}
+  \caption{Diagrama de sistema construido en OPM Sandbox.}
+  \label{fig:captura-sd}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \IfFileExists{images/opcloud-sd1.png}{%
+    \includegraphics[width=\textwidth]{images/opcloud-sd1.png}}{%
+    \fbox{\parbox[c][58mm][c]{0.94\textwidth}{\centering\footnotesize
+      \textbf{Espacio reservado para la captura de pantalla de la ampliación
+      en detalle (SD1)}\\[4pt]
+      Guardar la imagen como \texttt{images/opcloud-sd1.png} y recompilar con
+      \texttt{make pdf}.}}}
+  \caption{Ampliación en detalle del proceso de aprovisionamiento, construida
+  en OPM Sandbox.}
+  \label{fig:captura-sd1}
+\end{figure}
+
+% ==========================================================================
+\section{Conclusiones}
+% ==========================================================================
+
+\begin{enumerate}
+  \item El funcionamiento de un sistema de infraestructura como código se
+    reduce a un mecanismo único: la conciliación repetida entre un estado
+    deseado, expresado en código versionado, y un estado real, observado a
+    través de la interfaz de un proveedor. Todo lo demás, herramientas,
+    formatos y flujos de trabajo, son variaciones sobre ese mecanismo.
+  \item La pieza que hace posible el mecanismo es el estado registrado. No es
+    un detalle de implementación sino el elemento que permite reconocer la
+    propiedad de los recursos, detectar destrucciones y encadenar dependencias,
+    y por eso concentra los requisitos de cifrado, versionado y bloqueo.
+  \item Un sistema completo comprende siete capas, del sustrato del proveedor
+    a la interfaz de autoservicio, y seis módulos transversales. Las capas
+    intermedias compiten por el mismo territorio, de modo que la primera
+    decisión de arquitectura consiste en asignar de forma explícita la
+    propiedad de cada característica a una sola capa.
+  \item Los módulos transversales, y en particular la política como código y
+    las pruebas, son los que distinguen un sistema que automatiza de uno que
+    además garantiza. Su ausencia no impide desplegar: hace que los errores se
+    desplieguen igual de rápido que los aciertos.
+  \item El tiempo de reconstrucción de un entorno completo desde el
+    repositorio es la figura de mérito que mejor resume el estado de una
+    implantación, porque verifica de una vez las cuatro propiedades que
+    definen al sistema.
+  \item El modelado en OPM aporta algo que la descripción en prosa no aporta:
+    obliga a declarar el tipo de cada relación. Al hacerlo aparecen con
+    claridad la doble condición del registro de estado, la diferencia formal
+    entre aplicar y conciliar, y el alcance exacto de la intervención humana,
+    que en este modelo se limita a dos de los siete subprocesos.
+\end{enumerate}
+
+\printbibliography[title={Referencias bibliográficas}]
+
+\end{document}
