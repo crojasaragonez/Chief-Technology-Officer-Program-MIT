@@ -32,7 +32,7 @@ recientes de LaTeX.
 | 6 | Modos de operación: empuje/arrastre, mutable/inmutable, declarativo/imperativo |
 | 7 | El módulo como unidad de composición |
 | 8 | Ocho figuras de mérito con unidad y procedimiento de medida |
-| 9 | Modelo OPM: diagrama de sistema, enlaces estructurales, ampliación SD1 y OPL |
+| 9 | Modelo OPM: entidades, diagrama de sistema y su OPL, enlaces estructurales, ampliación SD1 y su OPL |
 | 10 | Conclusiones |
 
 ## Diagrama en OPM Sandbox

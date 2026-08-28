@@ -11,6 +11,7 @@
 \usepackage{enumitem}
 \usepackage{xcolor}
 \usepackage{csquotes}
+\usepackage{float}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc,fit,backgrounds}
 \usepackage{pgfplots}
@@ -872,14 +873,12 @@ La notación se reparte en dos figuras para que ninguna quede saturada. La
 Figura~\ref{fig:opmsd} recoge los enlaces procedimentales, es decir, los que
 unen el proceso con los objetos que lo habilitan y con los que transforma:
 círculo hueco para instrumento, círculo relleno para agente, flecha doble
-para efecto y flecha simple para resultado. La Figura~\ref{fig:opmestr}
-recoge los enlaces estructurales del objeto \emph{Especificación de
-Infraestructura}: triángulo relleno para agregación, triángulo hueco para
-generalización y triángulo doble para exhibición de un atributo. En ambas,
-el rectángulo denota objeto, la elipse denota proceso y el rectángulo de
-esquinas redondeadas denota estado.
+para efecto y flecha simple para resultado. Los enlaces estructurales se
+tratan aparte, en el apartado 04. En ambas figuras, el rectángulo denota
+objeto, la elipse denota proceso y el rectángulo de esquinas redondeadas
+denota estado.
 
-\begin{figure}[ht]
+\begin{figure}[H]
   \centering
   \begin{tikzpicture}[scale=0.9, transform shape]
     % ---- proceso principal
@@ -934,7 +933,50 @@ esquinas redondeadas denota estado.
   \label{fig:opmsd}
 \end{figure}
 
-\begin{figure}[ht]
+\subsection*{03. El lenguaje OPL del diagrama de sistema}
+
+La traducción del diagrama al lenguaje de objetos y procesos permite
+verificarlo por lectura. Las palabras reservadas van en versalitas.
+
+\begin{quote}\small
+\textsc{Equipo de Plataforma} es físico.\\
+\textsc{Infraestructura Desplegada} es física.\\
+\textsc{Proveedor de Nube} es físico y externo.\\
+\textsc{Repositorio Versionado} consta de \textsc{Especificación de
+Infraestructura}.\\
+\textsc{Especificación de Infraestructura} puede ser \textsc{Módulo
+Reutilizable} o \textsc{Configuración de Entorno}.\\
+\textsc{Especificación de Infraestructura} exhibe \textsc{Versión}.\\
+\textsc{Infraestructura Desplegada} puede ser inexistente, conforme, desviada
+o retirada.\\
+\textsc{Aprovisionamiento de Infraestructura} requiere \textsc{Especificación
+de Infraestructura}, \textsc{Motor de IaC}, \textsc{Conjunto de Políticas},
+\textsc{Proveedor de Nube} y \textsc{Credenciales}.\\
+\textsc{Equipo de Plataforma} maneja \textsc{Aprovisionamiento de
+Infraestructura}.\\
+\textsc{Aprovisionamiento de Infraestructura} afecta a \textsc{Registro de
+Estado}.\\
+\textsc{Aprovisionamiento de Infraestructura} cambia \textsc{Infraestructura
+Desplegada} de inexistente a conforme.\\
+\textsc{Aprovisionamiento de Infraestructura} produce \textsc{Plan de Cambios}
+y \textsc{Registro de Auditoría}.
+\end{quote}
+
+Leído en voz alta, el conjunto de frases es una descripción funcional completa
+del sistema, y cualquier error de modelado se manifiesta como una frase falsa.
+
+\subsection*{04. Los enlaces estructurales}
+
+Además de participar en el proceso, los objetos del modelo mantienen entre sí
+relaciones que no dependen de ninguna ejecución. La
+Figura~\ref{fig:opmestr} recoge las tres que afectan a la \emph{Especificación
+de Infraestructura}: triángulo relleno para la agregación que la vincula con
+el repositorio que la contiene, triángulo hueco para la generalización en sus
+dos especializaciones y triángulo doble para la exhibición del atributo que la
+versiona. Son las relaciones que sostienen las frases \emph{consta de},
+\emph{puede ser} y \emph{exhibe} del OPL anterior.
+
+\begin{figure}[H]
   \centering
   \begin{tikzpicture}[scale=0.95, transform shape]
     \node[opmobj, text width=34mm] (spec) at (0,0)
@@ -971,39 +1013,7 @@ esquinas redondeadas denota estado.
   \label{fig:opmestr}
 \end{figure}
 
-\subsection*{03. El lenguaje OPL del diagrama de sistema}
-
-La traducción del diagrama al lenguaje de objetos y procesos permite
-verificarlo por lectura. Las palabras reservadas van en versalitas.
-
-\begin{quote}\small
-\textsc{Equipo de Plataforma} es físico.\\
-\textsc{Infraestructura Desplegada} es física.\\
-\textsc{Proveedor de Nube} es físico y externo.\\
-\textsc{Repositorio Versionado} consta de \textsc{Especificación de
-Infraestructura}.\\
-\textsc{Especificación de Infraestructura} puede ser \textsc{Módulo
-Reutilizable} o \textsc{Configuración de Entorno}.\\
-\textsc{Especificación de Infraestructura} exhibe \textsc{Versión}.\\
-\textsc{Infraestructura Desplegada} puede ser inexistente, conforme, desviada
-o retirada.\\
-\textsc{Aprovisionamiento de Infraestructura} requiere \textsc{Especificación
-de Infraestructura}, \textsc{Motor de IaC}, \textsc{Conjunto de Políticas},
-\textsc{Proveedor de Nube} y \textsc{Credenciales}.\\
-\textsc{Equipo de Plataforma} maneja \textsc{Aprovisionamiento de
-Infraestructura}.\\
-\textsc{Aprovisionamiento de Infraestructura} afecta a \textsc{Registro de
-Estado}.\\
-\textsc{Aprovisionamiento de Infraestructura} cambia \textsc{Infraestructura
-Desplegada} de inexistente a conforme.\\
-\textsc{Aprovisionamiento de Infraestructura} produce \textsc{Plan de Cambios}
-y \textsc{Registro de Auditoría}.
-\end{quote}
-
-Leído en voz alta, el conjunto de frases es una descripción funcional completa
-del sistema, y cualquier error de modelado se manifiesta como una frase falsa.
-
-\subsection*{04. Ampliación en detalle del proceso principal}
+\subsection*{05. Ampliación en detalle del proceso principal}
 
 El diagrama SD1 amplía el proceso principal en siete subprocesos, ordenados
 verticalmente según la convención de OPM, en la que la posición vertical
@@ -1011,9 +1021,9 @@ denota precedencia temporal. Los objetos que sólo intervienen en el interior
 del proceso se dibujan dentro de la elipse; el \emph{Equipo de Plataforma},
 que pertenece al entorno, queda fuera. La Figura~\ref{fig:opmsd1} lo recoge.
 
-\begin{figure}[ht]
+\begin{figure}[H]
   \centering
-  \begin{tikzpicture}[scale=0.86, transform shape, x=1mm, y=1mm]
+  \begin{tikzpicture}[scale=0.82, transform shape, x=1mm, y=1mm]
     \tikzset{sp/.style={opmproc, minimum width=34mm, minimum height=10mm,
                text width=},
              ob/.style={opmobj, text width=26mm, minimum height=9mm,
@@ -1084,7 +1094,7 @@ que pertenece al entorno, queda fuera. La Figura~\ref{fig:opmsd1} lo recoge.
   \label{fig:opmsd1}
 \end{figure}
 
-\subsection*{05. El lenguaje OPL de la ampliación}
+\subsection*{06. El lenguaje OPL de la ampliación}
 
 \begin{quote}\small
 \textsc{Aprovisionamiento de Infraestructura} consta de
