@@ -1,0 +1,1103 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.5cm}
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\setlist{nosep}
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy}
+
+\title{\textbf{Comentario sobre una hoja de ruta tecnológica}\\
+\large \emph{Quantum Machine Learning}: cobertura de los doce elementos y
+viabilidad de proyectar una fecha de disponibilidad}
+\author{Carlos Luis Rojas Aragonés\\
+Gestión del Desarrollo Tecnológico}
+\date{27 de agosto de 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Objeto, fuente y método del comentario}
+
+\subsection*{01. El documento analizado}
+
+Este comentario examina la hoja de ruta tecnológica titulada \emph{Quantum
+Machine Learning}, elaborada por Kentaro Numa, Dian Wen y Jessy M. Mwarage para
+el curso \emph{16.887/EM.427 Technology Roadmapping and Development} en el
+otoño de 2023 \parencite{numa2023}. El archivo es una exportación de
+PowerPoint de nueve páginas, con el título interno \enquote{Quantum ML -
+Technology Overview\_2} y fecha de creación del 5 de diciembre de 2023. De esas
+nueve páginas, una es la portada y ocho contienen material analítico.
+
+La hoja de ruta plantea el caso de una empresa que pretende lanzar un producto
+\emph{SaaS} de aprendizaje automático cuántico para clientes B2B, combinando
+hardware cuántico adquirido y desarrollado internamente. Su declaración de
+estrategia fija el objetivo en el año 2035.
+
+\subsection*{02. Método seguido}
+
+El comentario se construyó en tres pasadas sucesivas:
+
+\begin{enumerate}
+  \item \textbf{Transcripción completa.} Se extrajo la capa de texto del
+    archivo y se leyeron a alta resolución todas las figuras que en la
+    presentación aparecen reducidas: el diagrama OPM, la matriz DSM, la lista
+    competitiva de veinte procesadores, la matriz morfológica, el análisis de
+    sensibilidad y las cinco tablas del modelo financiero. Sin esa lectura
+    ampliada, buena parte del contenido cuantitativo de la hoja de ruta
+    resulta ilegible.
+  \item \textbf{Reproducción aritmética.} Se recalcularon el modelo de volumen
+    cuántico, las derivadas tecnológicas normalizadas y la totalidad del flujo
+    de caja descontado, para comprobar si los resultados publicados se
+    sostienen a partir de los datos y supuestos que la propia hoja de ruta
+    declara.
+  \item \textbf{Corroboración externa.} Toda afirmación que no proviene del
+    archivo se verificó contra la fuente primaria. Esto incluye las
+    referencias citadas por la hoja de ruta, cuyos metadatos se comprobaron en
+    Crossref y en los registros de patentes.
+\end{enumerate}
+
+A lo largo del texto se distingue de forma explícita entre lo que la hoja de
+ruta afirma, lo que se ha podido verificar y lo que constituye una derivación
+propia de este comentario a partir de los datos contenidos en ella.
+
+\section{Qué contiene la hoja de ruta}
+
+El Cuadro~\ref{tab:contenido} resume el contenido de las ocho páginas
+analíticas.
+
+\begin{table}[ht]
+  \centering
+  \small
+  \caption{Contenido de las páginas analíticas de la hoja de ruta.}
+  \label{tab:contenido}
+  \begin{tabularx}{\textwidth}{@{}c>{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{Pág.} & \textbf{Contenido} \\
+    \midrule
+    2 & \emph{Roadmap Overview}. Clasificación tecnológica
+        (\enquote{Process Information}), descripción de la computación cuántica
+        y del cúbit, esquema comparativo entre aprendizaje automático clásico y
+        cuántico, diagrama OPM y matriz DSM. \\
+    3 & \emph{FOMs and Technology Evolution}. Lista de nueve figuras de mérito
+        y tres gráficos tomados de fuentes externas. \\
+    4 & \emph{Technology Strategy Statement}. Objetivo a 2035 y tres líneas
+        estratégicas con hitos fechados. \\
+    5 & \emph{Key Publications \& Patents}. Genealogía de publicaciones entre
+        1995 y 2021 y dos patentes. \\
+    6 & \emph{Alignment with Company Drivers}. Pila de sistema en cuatro capas
+        y tabla de tres motivaciones estratégicas con cuatro objetivos
+        cuantificados y semáforo de alineación. \\
+    7 & \emph{R\&D Projects, Company Positioning vs. Competition}. Mapa de
+        correlación generado con inteligencia artificial y lista competitiva
+        de veinte procesadores cuánticos. \\
+    8 & \emph{Technical Model}. Matriz morfológica de tres opciones de
+        hardware y análisis de sensibilidad del volumen cuántico. \\
+    9 & \emph{Financial Model}. Análisis de compañías comparables, proyección
+        anual 2022--2035 y valor presente neto. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\section{Cobertura de los doce elementos}
+
+La estructura recomendada para una hoja de ruta tecnológica contempla doce
+elementos. El Cuadro~\ref{tab:cobertura} indica dónde se localiza cada uno y
+qué valoración merece.
+
+\begin{table}[ht]
+  \centering
+  \footnotesize
+  \caption{Cobertura de los doce elementos en la hoja de ruta analizada.}
+  \label{tab:cobertura}
+  \begin{tabularx}{\textwidth}{@{}c>{\raggedright\arraybackslash}p{0.26\textwidth}
+    c>{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{N.\textsuperscript{o}} & \textbf{Elemento} & \textbf{Pág.} &
+    \textbf{Valoración} \\
+    \midrule
+    1 & Descripción de la hoja de ruta & 2 & Presente. Clara en la
+      descripción física, ausente en la delimitación del alcance temporal. \\
+    2 & Matriz de estructura de dependencia (DSM) & 2 & Presente, pero
+      cataloga componentes internos y no otras hojas de ruta, que es lo que su
+      propio título anuncia. \\
+    3 & Modelo de la hoja de ruta (OPM) & 2 & Presente. Diagrama de objetos y
+      procesos válido en su topología, con dos relaciones de especialización
+      invertidas y sin atributos. \\
+    4 & Figuras de mérito (FOM) & 3 & Presente sólo como nómina. Ninguna de
+      las nueve tiene valor de partida, valor objetivo ni serie temporal. \\
+    5 & Correspondencia con las motivaciones estratégicas & 6 & Presente y es
+      el elemento mejor resuelto del conjunto. \\
+    6 & Posicionamiento competitivo mediante diagramas de FOM & 7 & Parcial.
+      Existe la tabla competitiva, pero no hay ningún diagrama de figuras de
+      mérito. \\
+    7 & Modelo técnico & 8 & Presente. Contiene un error de base logarítmica,
+      una inconsistencia de unidades y un punto de diseño fuera del espacio
+      que él mismo define. \\
+    8 & Modelo financiero & 9 & Presente y aritméticamente reproducible, con
+      supuestos de entrada que presuponen la respuesta. \\
+    9 & Portfolio de proyectos y prototipos de I+D & 7 & \textbf{Ausente.} La
+      página que lo anuncia muestra hardware de la competencia, no proyectos
+      propios. \\
+    10 & Publicaciones, presentaciones y patentes clave & 5 & Presente.
+      Genealogía útil, sin presentaciones y con una fecha de patente
+      incorrecta. \\
+    11 & Declaración de estrategia tecnológica & 4 & Presente. Es el único
+      lugar donde aparecen fechas objetivo. \\
+    12 & Evaluación del nivel de madurez de la hoja de ruta & n/d &
+      \textbf{Ausente.} \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+En balance, nueve elementos están presentes de forma sustantiva, uno está
+resuelto a medias y dos faltan por completo. La observación relevante para el
+objeto de este comentario es que los dos elementos ausentes, el portfolio de
+proyectos y la evaluación de madurez, son precisamente los dos que contienen
+información de calendario y de disposición a producir. Su ausencia no es una
+laguna formal: es la razón principal por la que la hoja de ruta no puede
+sostener una proyección de disponibilidad.
+
+\section{Los elementos de modelado (1 a 3)}
+
+\subsection*{01. Descripción y clasificación}
+
+La descripción cumple su función. Sitúa el aprendizaje automático cuántico como
+la intersección entre la computación cuántica y el aprendizaje automático,
+explica la superposición y advierte que distintas realizaciones físicas del
+cúbit, superconductor u óptico, condicionan la teoría y el aparato de cálculo.
+Clasifica la tecnología como \enquote{Process Information}, es decir, en
+función de la operación genérica que ejecuta sobre la materia, la energía o la
+información.
+
+La carencia es de otro tipo. La descripción no delimita qué se entiende por
+disponibilidad de la tecnología. No dice si el objeto de la hoja de ruta es un
+acelerador cuántico para cargas de trabajo concretas, una biblioteca de
+algoritmos, un servicio en la nube o un producto integrado. Sin esa
+delimitación no hay un umbral que fechar, y esta indefinición reaparece en cada
+elemento posterior.
+
+Tampoco se declara el identificador ni el nivel de la propia hoja de ruta
+dentro de una jerarquía. Es un detalle revelador, porque la página 6 sí utiliza
+el identificador \enquote{1QCAIML} para la hoja de ruta de nivel superior al
+encabezar la columna de objetivos. El vocabulario jerárquico existe en el
+documento, pero no se aplica al documento mismo.
+
+\subsection*{02. El modelo OPM}
+
+El diagrama de objetos y procesos es correcto en su topología general.
+Distingue once objetos, dibujados como rectángulos, y cinco procesos,
+dibujados como elipses. Los objetos son cúbits, puertas cuánticas, circuitos
+cuánticos, entrelazamiento cuántico, algoritmos cuánticos, VQA, datos
+cuánticos, LDA, modelos de aprendizaje automático, QNN y resultados. Los
+procesos son \emph{Computing}, \emph{Encoding}, \emph{Training},
+\emph{Predicting} y \emph{Analyzing}. La cadena funcional que describe es
+legible: los recursos cuánticos habilitan el cómputo, el cómputo actúa sobre
+los algoritmos, los algoritmos entrenan modelos y los modelos predicen y
+analizan hasta producir resultados.
+
+Hay tres observaciones que conviene registrar.
+
+Primera, las dos relaciones de especialización están invertidas. El triángulo
+que vincula VQA con los algoritmos cuánticos tiene su vértice apuntando hacia
+VQA, y lo mismo ocurre entre QNN y los modelos de aprendizaje automático. Leído
+según la convención de la notación, el diagrama afirma que un algoritmo
+cuántico es un tipo de VQA y que un modelo de aprendizaje automático es un tipo
+de QNN, cuando la taxonomía pretendida es la contraria.
+
+Segunda, el tratamiento de las familias de algoritmos es incoherente. VQA y QNN
+se enganchan como especializaciones, mientras LDA, que también es una familia
+de métodos, aparece como operando del proceso \emph{Encoding}. Tres objetos del
+mismo tipo lógico reciben tres tratamientos distintos.
+
+Tercera, y con mucho la más importante, ningún objeto del diagrama tiene
+atributos. En un modelo de objetos y procesos, los atributos son el lugar
+natural donde se anclan las figuras de mérito: la fidelidad es un atributo de
+las puertas cuánticas, el número de cúbits lo es de los cúbits, la exactitud lo
+es de los modelos. Al no declarar atributos, el diagrama describe qué hace el
+sistema pero no qué se mide en él, y queda desconectado de las nueve figuras de
+mérito enumeradas en la página siguiente. Tampoco se acompaña de la
+descripción textual equivalente que la metodología prevé, ni de niveles de
+detalle sucesivos.
+
+Se aprecia además una errata en el diagrama, \enquote{Quantum Engtanglement}.
+
+\subsection*{03. La matriz DSM}
+
+La matriz se titula \enquote{DSM Allocation (interdependencies with others
+roadmaps)}. El título anuncia interdependencias con otras hojas de ruta, pero
+sus once filas y once columnas son exactamente los once objetos del diagrama
+OPM. Lo que la matriz representa son dependencias entre componentes internos
+del sistema, no entre hojas de ruta. Ninguno de los cinco procesos del
+diagrama aparece en ella, y tampoco aparece el identificador \enquote{1QCAIML}
+que la página 6 sí emplea. La consecuencia práctica es que la hoja de ruta no
+documenta de qué otras hojas de ruta depende, y por tanto no documenta qué
+esperas ajenas condicionan su propio calendario.
+
+La reproducción de la matriz permite tres constataciones adicionales. Contiene
+44 marcas sobre 110 celdas fuera de la diagonal, una densidad del 40 por
+ciento. De los 22 pares posibles con marca, 20 son simétricos y 4 no lo son:
+resultados frente a VQA, resultados frente a QNN, resultados frente a LDA y
+datos cuánticos frente a LDA. Las cuatro asimetrías apuntan en el mismo
+sentido, de un componente hacia los resultados, lo que sugiere que se intentó
+registrar una dirección. Pero si la matriz fuera dirigida, los otros veinte
+pares simétricos serían incorrectos, y si fuera no dirigida, esas cuatro
+celdas están incompletas. La convención no se declara y se aplica de las dos
+maneras a la vez.
+
+Por último, las marcas son binarias. No hay pesos, ni tipos de dependencia, ni
+orden de precedencia. Una DSM binaria permite ver acoplamientos, pero no
+permite agrupar módulos por intensidad ni derivar una secuencia de desarrollo,
+que es el uso que la convertiría en un instrumento de planificación temporal.
+
+\section{El problema central: tres vocabularios de métricas desconectados}
+
+Este es, a juicio de quien comenta, el defecto estructural del documento y la
+causa directa de que no pueda proyectarse una fecha. La hoja de ruta utiliza
+tres conjuntos de métricas que no se solapan entre sí.
+
+\subsection*{01. Las nueve figuras de mérito declaradas}
+
+La página 3 enumera nueve figuras de mérito con sus unidades: aceleración
+computacional en FLOPS, eficiencia de aprendizaje medida como valor de pérdida
+en por ciento, exactitud del modelo en por ciento, escalabilidad en datos por
+segundo, versatilidad como número, generalización en por ciento, eficiencia de
+recursos expresada en \enquote{valor}, CAPEX en dólares y OPEX en dólares.
+
+Ninguna de las nueve tiene valor actual, valor objetivo, método de medición ni
+serie histórica. Son nombres con unidades. Además, algunas unidades no
+corresponden a la magnitud: una aceleración es un cociente adimensional y no se
+mide en FLOPS, que son un caudal de operaciones; un valor de pérdida no es en
+general un porcentaje; y \enquote{valor} no es una unidad. La escalabilidad
+expresada en datos por segundo se solapa conceptualmente con la aceleración
+computacional.
+
+\subsection*{02. Los objetivos estratégicos}
+
+La página 6 traduce tres motivaciones de la empresa en cuatro objetivos
+cuantificados, y les asigna un semáforo de alineación: más de 16 cúbits
+(alineado), fidelidad de cúbit superior al 99,9 por ciento (alineado), más del
+1 por ciento de cuota de mercado del negocio \emph{SaaS} de aprendizaje
+automático (en riesgo) y menos del 25 por ciento de variabilidad en el coste de
+adquisición de hardware (no alineado).
+
+Este es el elemento mejor construido de la hoja de ruta. Los objetivos son
+verificables, el semáforo es honesto y reconoce dos incumplimientos, y el texto
+razona por qué la fidelidad importa más que el recuento de cúbits. Sin embargo,
+ninguno de los cuatro objetivos figura entre las nueve figuras de mérito de la
+página anterior.
+
+Hay además una imprecisión con consecuencias. El objetivo de fidelidad no
+especifica si se refiere a puertas de un cúbit o de dos. El dispositivo elegido,
+el H1-1 de Quantinuum, declara en la propia tabla de la hoja de ruta un 99,996
+por ciento para un cúbit y un 99,8 por ciento para dos cúbits. Leído sobre
+puertas de un cúbit, el objetivo se cumple y el semáforo verde es correcto;
+leído sobre puertas de dos cúbits, no se cumple y el semáforo debería ser rojo.
+Como el propio diagrama OPM incluye el entrelazamiento cuántico entre los
+objetos necesarios para el cómputo, y el entrelazamiento se genera con puertas
+de dos cúbits, la lectura pertinente es la segunda. La ambigüedad de una sola
+palabra decide el color de la casilla.
+
+\subsection*{03. El volumen cuántico}
+
+Las páginas 7 y 8 introducen un tercer vocabulario. El texto afirma que el
+volumen cuántico, entendido como un equilibrio entre número de cúbits y tasa de
+error, es \enquote{la métrica principal para evaluar el rendimiento de un
+computador cuántico}, y sobre él se decide la selección del dispositivo. El
+volumen cuántico no aparece entre las nueve figuras de mérito. Tampoco la
+fidelidad ni el número de cúbits.
+
+La Figura~\ref{fig:vocabularios} representa la situación. Tres conjuntos de
+métricas, cada uno definido en una página distinta, sin ninguna relación
+declarada entre ellos. La estrategia se evalúa con unas métricas, el sistema se
+describe con otras y la decisión técnica se toma con unas terceras. Falta la
+trazabilidad que permitiría afirmar que alcanzar cierto volumen cuántico
+implica alcanzar cierta exactitud de modelo, y que esa exactitud es la que
+satisface la motivación estratégica. Sin esa cadena, no existe un umbral
+técnico asociado a la disponibilidad comercial, y por tanto no hay nada que
+fechar.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[
+    caja/.style={draw, rounded corners, align=left, text width=0.28\textwidth,
+      inner sep=5pt, font=\footnotesize},
+    roto/.style={thick, dashed, gray}
+  ]
+    \node[caja, fill=blue!6] (fom) {\textbf{Pág. 3: nueve FOM}\\
+      Aceleración [FLOPS]\\ Eficiencia de aprendizaje [\%]\\
+      Exactitud [\%] · Escalabilidad\\ Versatilidad · Generalización\\
+      Eficiencia de recursos\\ CAPEX · OPEX};
+    \node[caja, fill=orange!10, anchor=north west]
+      at ([xshift=0.5cm]fom.north east) (drv)
+      {\textbf{Pág. 6: objetivos}\\ $>16$ cúbits\\ Fidelidad $>99{,}9\%$\\
+       Cuota de mercado $>1\%$\\ Variabilidad de coste $<25\%$};
+    \node[caja, fill=green!9, anchor=north west]
+      at ([xshift=0.5cm]drv.north east) (qv)
+      {\textbf{Págs. 7--8: modelo}\\ Volumen cuántico (QV)\\
+       Número de cúbits $n$\\ Tasa de error $p$};
+    \draw[roto] ($(fom.north east)+(0,-9mm)$) --
+      node[midway, fill=white, inner sep=1pt, font=\footnotesize,
+        text=red!65!black] {$\times$} ($(drv.north west)+(0,-9mm)$);
+    \draw[roto] ($(drv.north east)+(0,-9mm)$) --
+      node[midway, fill=white, inner sep=1pt, font=\footnotesize,
+        text=red!65!black] {$\times$} ($(qv.north west)+(0,-9mm)$);
+  \end{tikzpicture}
+  \caption{Los tres vocabularios de métricas de la hoja de ruta. Ningún
+  elemento de un conjunto reaparece en otro y la hoja de ruta no declara
+  ninguna relación entre ellos, lo que impide trazar un objetivo estratégico
+  hasta la magnitud técnica que lo mediría. Elaboración propia a partir de
+  \textcite{numa2023}.}
+  \label{fig:vocabularios}
+\end{figure}
+
+\subsection*{04. El posicionamiento competitivo}
+
+El elemento 6 pide diagramas de figuras de mérito para situar a la empresa
+frente a la competencia. La hoja de ruta aporta una tabla de veinte
+procesadores con fabricante, fidelidad, cúbits físicos, volumen cuántico y año
+de lanzamiento, pero ningún diagrama. Es una omisión llamativa porque los datos
+para construirlo están en la misma página: bastaría representar cúbits frente a
+tasa de error, o volumen cuántico frente a año, para obtener la frontera de
+diseño y la posición relativa del dispositivo elegido.
+
+La tabla tiene además dos limitaciones de origen. La hoja de ruta declara que
+proviene de la lista de procesadores cuánticos de Wikipedia, y el extracto
+reproducido empieza en IonQ y termina en el Aspen-M-3 de Rigetti. Es un
+fragmento alfabético: faltan IBM, Google, Intel y D-Wave. La ausencia de IBM y
+Google es particularmente incómoda porque son dos de las cuatro compañías que
+el modelo financiero de la página 9 utiliza como comparables. La segunda
+limitación es que la columna de volumen cuántico sólo está rellena en cuatro de
+las veinte filas.
+
+El acompañamiento visual de esa página es un \enquote{Correlation Map of
+Quantum Computer R\&D Projects} que, según la nota al pie de la propia hoja de
+ruta, se generó con DALL-E 2 a partir de la lista de Wikipedia. Una imagen
+generativa no codifica estructura de correlación alguna: es una ilustración
+ocupando el lugar de un análisis.
+
+\section{El modelo técnico (elemento 7)}
+
+\subsection*{01. La matriz morfológica}
+
+La matriz compara tres dispositivos de Quantinuum sobre tres variables: número
+de cúbits $n$, tasa de error $p$ en por ciento y volumen cuántico. Los valores
+son H2 con 32 cúbits y $2^{16}$, H1-1 con 20 cúbits y $2^{19}$, y H1-2 con 12
+cúbits y $2^{12}$. Estos valores coinciden con la tabla competitiva de la
+página anterior, y los rangos de $p$ se derivan correctamente de las
+fidelidades declaradas. Hasta aquí, el modelo es consistente.
+
+La decisión que se toma sobre esa matriz, en cambio, no se sigue de los
+criterios que la hoja de ruta había fijado. Se elige el H1-1 por tener el
+volumen cuántico más alto. Pero los dos objetivos que la página 6 establece
+para el hardware son más de 16 cúbits y fidelidad superior al 99,9 por ciento,
+y sobre esos dos criterios el H2 domina al H1-1: tiene 32 cúbits frente a 20,
+igual fidelidad de dos cúbits (99,8 por ciento), mejor fidelidad de un cúbit
+(99,997 frente a 99,996 por ciento) y es un año más reciente. El criterio que
+decide, el volumen cuántico, se introduce en el momento de decidir y no figura
+ni entre los objetivos estratégicos ni entre las figuras de mérito.
+
+\subsection*{02. El análisis de sensibilidad y la base del logaritmo}
+
+El análisis de sensibilidad calcula derivadas tecnológicas normalizadas del
+volumen cuántico respecto a $n$ y a $p$, sobre un modelo que, reconstruido a
+partir de las expresiones y de la tabla numérica, es
+\[
+  QV = 2^{n}\,(1-p)^{2}.
+\]
+La derivada respecto a $p$ está bien calculada. La hoja de ruta obtiene
+$\partial QV/\partial p = -2^{\,n+1}(1-p)$ y, normalizada, $-2/(1-p)$, que en el
+punto nominal $p = 5$ por ciento vale $-2{,}105$. Reproduce sus propias cifras.
+
+La derivada respecto a $n$ contiene un error de base logarítmica. La hoja de
+ruta emplea $\partial QV/\partial n = 2^{n}\log(2)\,(1-p)^{2}$ y normaliza a
+$\log(2) = 0{,}301$, es decir, logaritmo decimal. La derivada de $2^{n}$
+respecto a $n$ es $2^{n}\ln 2$, de modo que el valor normalizado correcto es
+$\ln 2 = 0{,}693$. La discrepancia es un factor de $\ln 2 / \log_{10} 2 =
+2{,}303$.
+
+El error no invierte la conclusión, pero sí la magnifica. Con las cifras
+publicadas, la tasa de error parece tener casi siete veces más apalancamiento
+que el número de cúbits ($2{,}105 / 0{,}301 = 6{,}99$). Corregida la base, el
+factor es de tres ($2{,}105 / 0{,}693 = 3{,}04$). La tasa de error sigue siendo
+la variable dominante, lo que respalda el razonamiento de la página 6, pero el
+modelo exagera esa dominancia en más del doble.
+
+\subsection*{03. Unidades y rango de validez}
+
+Hay dos problemas adicionales, y son más graves que el anterior.
+
+El símbolo $p$ cambia de unidad dentro de la misma página. En la matriz
+morfológica está en por ciento, con rangos de 0,003 a 0,3, que se corresponden
+con las fidelidades declaradas. En el análisis de sensibilidad está expresado
+como fracción, con valores de 0,001 a 0,1, y el punto nominal se enuncia como
+$p = 5$ por ciento. Es decir, el punto de diseño nominal tiene una tasa de
+error entre 17 y 1250 veces peor que cualquiera de los tres dispositivos de la
+matriz. El número de cúbits nominal, $n = 128$, es cuatro veces mayor que la
+opción más grande de la matriz. El punto de diseño sobre el que se calculan
+las sensibilidades queda fuera del espacio de diseño que la propia página
+define.
+
+El segundo problema es el rango de validez del modelo. El Cuadro~\ref{tab:qv}
+compara el volumen cuántico que predice la expresión $2^{n}(1-p)^{2}$ con el
+que la propia hoja de ruta reporta para cada máquina.
+
+\begin{table}[ht]
+  \centering
+  \small
+  \caption{Volumen cuántico predicho por el modelo de la hoja de ruta frente al
+  volumen cuántico que ella misma reporta. Cálculo propio a partir de los datos
+  de \textcite{numa2023}, tomando $p$ igual a la tasa de error de puerta de dos
+  cúbits.}
+  \label{tab:qv}
+  \begin{tabular}{@{}lrrrr@{}}
+    \toprule
+    \textbf{Dispositivo} & \textbf{$n$} & \textbf{$p$} &
+    \textbf{$2^{n}(1-p)^{2}$} & \textbf{QV reportado} \\
+    \midrule
+    H1-2 (Quantinuum)   &  12 & 0,003 & $4{,}07\times10^{3}$  & $4\,096$ \\
+    H1-1 (Quantinuum)   &  20 & 0,002 & $1{,}04\times10^{6}$  & $524\,288$ \\
+    H2 (Quantinuum)     &  32 & 0,002 & $4{,}28\times10^{9}$  & $65\,536$ \\
+    Aspen-M-1 (Rigetti) &  80 & 0,054 & $1{,}08\times10^{24}$ & $8$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+El modelo acierta con el H1-2, se equivoca por un factor de dos con el H1-1, se
+equivoca por un factor de sesenta y cinco mil con el H2 y se equivoca por
+veintitrés órdenes de magnitud con el Aspen-M-1. El patrón es claro: la
+expresión sólo se aproxima al comportamiento observado mientras el número de
+cúbits es pequeño, porque no incorpora la limitación de profundidad de circuito
+que en la práctica acota el volumen cuántico. Dicho de otro modo, el modelo
+funciona para el dispositivo que se quiere elegir y falla para los demás, y el
+punto nominal de $n = 128$ está muy lejos de su zona de validez.
+
+Esto tiene una consecuencia directa sobre la pregunta que motiva este
+comentario: el modelo técnico no puede usarse para proyectar nada. Es una
+fotografía estática, sin variable temporal, cuya extrapolación produce valores
+absurdos.
+
+\section{El modelo financiero (elemento 8)}
+
+\subsection*{01. Estructura y consistencia aritmética}
+
+Conviene empezar por lo positivo, porque es notable. El modelo financiero es
+íntegramente reproducible. Consta de un análisis de cuatro compañías
+comparables (NVIDIA, IBM, Microsoft y Google), una proyección anual de catorce
+periodos que abarca de 2022 a 2035, y un descuento de flujos con tasa del 10
+por ciento, impuesto del 21 por ciento y crecimiento terminal del 5 por ciento.
+
+Se recalcularon todas las líneas. El tamaño de mercado, la cuota, los ingresos,
+el valor terminal calculado como $CF_{14}/(r-g) = 4\,658/0{,}05 = 93\,160$, su
+valor presente de $26\,985$ y el valor presente neto total de $32\,210$
+coinciden con las cifras publicadas de $93\,164$, $26\,986$ y $32\,211$ dentro
+del redondeo. La tabla de comparables también es internamente consistente: los
+ingresos de aprendizaje automático son el producto de las ventas por el
+porcentaje declarado en cada caso.
+
+Merece señalarse un acierto metodológico que a primera vista parece un error:
+el flujo del periodo 14 no se descuenta ni se suma, y eso es correcto, porque
+el valor terminal situado en el periodo 13 ya capitaliza ese flujo y los
+siguientes. La aritmética del descuento está bien planteada.
+
+\subsection*{02. El año base y la cuota de mercado}
+
+El problema del modelo no está en su aritmética sino en sus entradas, y es
+grave. El Cuadro~\ref{tab:financiero} extrae las líneas decisivas.
+
+\begin{table}[ht]
+  \centering
+  \small
+  \caption{Líneas seleccionadas del modelo financiero, en millones de dólares.
+  Transcripción de \textcite{numa2023}.}
+  \label{tab:financiero}
+  \begin{tabular}{@{}lrrrrr@{}}
+    \toprule
+    & \textbf{2022} & \textbf{2025} & \textbf{2030} & \textbf{2032} &
+    \textbf{2035} \\
+    \midrule
+    Tamaño de mercado & 613,0 & 1\,346,8 & 5\,000,4 & 7\,800,7 & 12\,917,9 \\
+    Cuota de mercado  & 10,1\% & 13,4\% & 21,6\% & 26,1\% & 34,8\% \\
+    Ingresos          & 62 & 181 & 1\,079 & 2\,037 & 4\,491 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+El modelo asigna a la empresa una cuota del 10,1 por ciento del mercado de
+aprendizaje automático cuántico en 2022 y unos ingresos de 62 millones de
+dólares en ese mismo año. La nota de supuestos indica que ese 10,1 por ciento
+procede del \enquote{promedio de la industria}, y en efecto coincide con el
+10,07 por ciento que la tabla de comparables calcula como cuota media de
+NVIDIA, IBM, Microsoft y Google.
+
+Ese encadenamiento no se sostiene, por tres razones acumulativas.
+
+Primera, la hoja de ruta describe en la página 6 una empresa que
+\enquote{pretende lanzar} el producto. El modelo financiero le atribuye
+ingresos desde el primer periodo, sin año de lanzamiento, sin rampa y sin
+ningún ejercicio con ingresos nulos.
+
+Segunda, la cuota inicial que se le asigna es diez veces el objetivo
+estratégico que la propia hoja de ruta se fija, más del 1 por ciento, y que
+califica de \enquote{en riesgo}. La cuota final, 34,8 por ciento, es treinta y
+cinco veces ese objetivo y supera a la del comparable más alto de su propia
+tabla, que es Google con el 28,21 por ciento.
+
+Tercera, los denominadores no son los mismos. Si se dividen los ingresos de
+aprendizaje automático de cada comparable por su cuota declarada, resulta de
+forma consistente un mercado total de unos 158 mil millones de dólares, que es
+el mercado de aprendizaje automático clásico. La cuota que el modelo aplica es
+en cambio del mercado de aprendizaje automático cuántico, que en la misma tabla
+vale 613 millones en 2022. Se traslada un porcentaje entre dos mercados que
+difieren en más de dos órdenes de magnitud.
+
+Además, la cuota crece de forma mecánica al 10 por ciento anual durante trece
+periodos, sin ningún vínculo con los hitos técnicos de 2025, 2030 o 2032. Los
+ingresos suben igual se cumplan o no. Este es el hallazgo decisivo para la
+pregunta de la proyección temporal y se retoma más adelante.
+
+\subsection*{03. El signo del gasto de capital}
+
+El modelo fija el gasto de capital en el 92,63 por ciento de las ventas, valor
+tomado del promedio de la tabla de comparables, y lo \emph{suma} al flujo de
+caja. La fórmula que la propia hoja de ruta enuncia en su columna de supuestos
+es
+\[
+  CF = (1-\tau)\,EBITDA + \tau\,\text{Depreciación} - CapEx -
+  \Delta\text{Capital de trabajo},
+\]
+donde el gasto de capital se resta. Aplicando el signo tal como la fórmula lo
+declara, y con las cifras de la propia tabla, el flujo de 2022 sería
+$18 + 1 - 57 - 4 = -42$ millones, el de 2035 sería $-3\,662$ millones y todos
+los años intermedios serían negativos, porque un gasto de capital del 92,6 por
+ciento de las ventas excede con holgura un EBITDA después de impuestos que
+ronda el 28,5 por ciento de las ventas. El valor presente neto resultante sería
+de unos $-25\,236$ millones en lugar de $+32\,211$. El signo de esa línea
+decide por sí solo si el proyecto vale treinta y dos mil millones o pierde
+veinticinco mil.
+
+El origen del problema está aguas arriba, en la tabla de comparables, donde el
+gasto de capital alcanza el 119,2 por ciento de las ventas para IBM y el 119,6
+por ciento para Microsoft. Ninguna compañía madura sostiene una inversión anual
+en activos superior a sus ingresos, de modo que esa columna no puede ser gasto
+de capital anual, y el promedio del 92,63 por ciento que de ella se deriva no
+es un parámetro utilizable.
+
+En la misma tabla es visible un error de hoja de cálculo sin resolver,
+\enquote{\#REF!}, en la fila de depreciación sobre activos fijos.
+
+\subsection*{04. La concentración en el valor terminal}
+
+De los 32\,211 millones de valor presente neto, 26\,986 son valor terminal, es
+decir el 83,8 por ciento. Los flujos explícitos de los trece años proyectados
+aportan sólo 5\,225 millones. La valoración no descansa sobre el periodo que la
+hoja de ruta modela, sino sobre una perpetuidad que empieza donde el modelo
+termina.
+
+Para el objeto de este comentario, esto significa que el modelo financiero no
+es una proyección de cuándo la tecnología generará valor, sino una apuesta
+sobre las condiciones posteriores a 2035. El horizonte 2035 no es una fecha
+derivada: es el punto donde se corta el análisis.
+
+Hay finalmente dos discrepancias menores de atribución y de narrativa. La
+tabla acredita el tamaño de mercado a Statista, mientras la viñeta de la misma
+página lo acredita a Virtue Market Research; las cifras (613,0 millones en 2022
+y 5\,000,4 millones en 2030) coinciden exactamente con el informe de Virtue
+Market Research, cuyo horizonte publicado termina en 2030
+\parencite{virtue2023}, de manera que las tasas aplicadas de 2031 a 2035 no
+proceden de la fuente citada. Y la viñeta afirma un crecimiento del 30 por
+ciento hasta 2030 que se moderaría al 20 por ciento hasta 2035, mientras la
+tabla aplica en realidad el 30 por ciento hasta 2031, el 20 por ciento entre
+2032 y 2034 y el 15 por ciento en 2035.
+
+\section{Portfolio de I+D, publicaciones y patentes (elementos 9 y 10)}
+
+\subsection*{01. El portfolio ausente}
+
+La página 7 se titula \enquote{R\&D Projects, Company Positioning vs.
+Competition with FOMs}, pero no contiene ningún proyecto de la empresa.
+Contiene hardware de otros fabricantes y una ilustración generativa. No hay
+lista de proyectos propios, ni asignación de presupuesto, ni calendario, ni
+responsables, ni valoración por proyecto, ni matriz de riesgo frente a retorno,
+ni prototipos.
+
+El elemento 9 es, junto al 12, el que más pesa en la pregunta temporal. Un
+portfolio de proyectos con fechas de inicio y fin es el instrumento que traduce
+una intención estratégica en un calendario verificable. Sin él, los hitos de la
+página 4 quedan sin nada debajo que los sostenga.
+
+\subsection*{02. Publicaciones y patentes}
+
+La genealogía de publicaciones sí es un buen elemento. Recoge once hitos
+fechados entre 1995 y 2021: los primeros trabajos de inspiración biológica
+sobre aprendizaje automático cuántico (Kak, 1995), la primera propuesta de red
+neuronal cuántica competitiva (Ventura, 1999), la neurona tipo cúbit (Matsui y
+otros, 2000), el perceptrón cuántico (Altaiski, 2001), las máquinas de vectores
+de soporte cuánticas (Anguita, 2003), el resultado sobre patrones que las redes
+clásicas no pueden aprender (Liu, 2013), las $K$-medias cuánticas (Lloyd,
+2013), la primera monografía sobre la materia (Wittek, 2014), el modelo de red
+neuronal cuántica para procesadores de corto plazo (Farhi, 2017), la primera
+implementación de una neurona cuántica real en un procesador (Tacchino y otros,
+2019) y la primera versión de TensorFlow Quantum (Broughton y otros, 2020). La
+hoja de ruta divide con acierto la evolución en dos fases, formulación de
+modelos desde mediados de los años noventa hasta 2007 y énfasis posterior en la
+implementación, siguiendo a \textcite{alchieri2021}.
+
+Sobre las dos patentes hay una corrección que hacer. La hoja de ruta fecha
+ambas en 2022. La patente de Google, US11449760B2, \enquote{Quantum assisted
+optimization}, fue efectivamente concedida el 20 de septiembre de 2022, a
+partir de una solicitud con prioridad del 25 de abril de 2016
+\parencite{patentGoogle2022}. La patente de Accenture, US10275721B2,
+\enquote{Quantum computing machine learning module}, fue concedida el 30 de
+abril de 2019, no en 2022, a partir de una solicitud del 19 de abril de 2017
+\parencite{patentAccenture2019}.
+
+La corrección no es un detalle bibliográfico. La hoja de ruta usa años de
+concesión como marcadores de progreso, y los años de concesión son un
+indicador ruidoso porque dependen de la tramitación: en estos dos casos median
+dos y seis años entre solicitud y concesión. Si se quiere leer la actividad de
+patentes como señal temporal, la fecha pertinente es la de prioridad.
+
+\section{Estrategia tecnológica y madurez (elementos 11 y 12)}
+
+\subsection*{01. La declaración de estrategia}
+
+La página 4 es el único lugar de toda la hoja de ruta donde aparecen fechas
+objetivo. El enunciado general fija avances computacionales de gran alcance
+para 2035, y las tres líneas estratégicas y el gráfico que las acompaña
+producen la escalera de hitos que recoge la Figura~\ref{fig:hitos}.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[
+    hito/.style={draw, rounded corners, align=center, font=\scriptsize,
+      text width=0.18\textwidth, inner sep=4pt, minimum height=13mm}
+  ]
+    \draw[-{Stealth[length=3mm]}, very thick, gray!60]
+      (0.01\textwidth,0) -- (0.96\textwidth,0);
+    \foreach \x/\a in {0.12/2023, 0.2467/2025, 0.5633/2030, 0.69/2032, 0.88/2035}
+      {\draw[thick] (\x\textwidth,-1.2mm) -- (\x\textwidth,1.2mm);
+       \node[above=1mm, font=\scriptsize\bfseries] at (\x\textwidth,1.5mm) {\a};}
+    \node[hito, below=9mm, fill=gray!8] at (0.12\textwidth,0)
+      {Hoja de ruta\\redactada};
+    \node[hito, above=6mm, fill=blue!7] at (0.2467\textwidth,0)
+      {Plataforma de\\computación cuántica\\robusta para IA/ML};
+    \node[hito, above=6mm, fill=blue!7] at (0.5633\textwidth,0)
+      {Algoritmos cuánticos\\que superan a los\\clásicos};
+    \node[hito, below=9mm, fill=orange!12] at (0.69\textwidth,0)
+      {Sistemas híbridos\\cuántico-clásicos\\\emph{operativos}};
+    \node[hito, above=6mm, fill=green!10] at (0.88\textwidth,0)
+      {Capacidades\\computacionales\\transformadoras};
+    \draw[-{Stealth[length=2mm]}, thick, orange!70!black]
+      (0.6\textwidth,-9mm) .. controls (0.5633\textwidth,-6mm) ..
+      (0.5633\textwidth,-1.5mm);
+  \end{tikzpicture}
+  \caption{Escalera de hitos reconstruida a partir de la declaración de
+  estrategia tecnológica. El paso descrito como \emph{solución intermedia}
+  hacia los sistemas plenamente cuánticos se fecha en 2032, después del hito de
+  2030 al que debería conducir. Elaboración propia a partir de
+  \textcite{numa2023}.}
+  \label{fig:hitos}
+\end{figure}
+
+La declaración tiene dos defectos internos.
+
+El primero es de secuencia. La tercera línea estratégica describe los sistemas
+híbridos cuántico-clásicos como \enquote{una solución intermedia para los
+avances en IA/ML y un paso hacia soluciones plenamente cuánticas}. El gráfico
+los fecha en 2032, es decir, dos años \emph{después} del hito de 2030 en el que
+los algoritmos cuánticos ya habrían superado a los clásicos. Un paso intermedio
+que llega después del destino al que conduce indica que la escalera no se
+construyó como una secuencia de dependencias sino como una lista de
+aspiraciones ordenadas por ambición.
+
+El segundo es de consistencia entre soporte y texto. La fecha de 2032 aparece
+únicamente en el gráfico; la viñeta correspondiente no lleva fecha. Las de 2025
+y 2030 sí aparecen en ambos.
+
+Y hay un defecto de método que afecta a las cuatro fechas: ninguna se deriva de
+nada. No se declara qué valor de qué figura de mérito define el cumplimiento de
+cada hito, ni con qué tasa de mejora se llegaría a él, ni de qué proyecto
+depende. Son fechas afirmadas, no calculadas.
+
+\subsection*{02. La evaluación de madurez ausente}
+
+El elemento 12 no está. No hay evaluación del nivel de madurez de la propia
+hoja de ruta ni de sus subsistemas, ni una escala de tipo TRL, ni una
+autoevaluación de la completitud de los elementos anteriores.
+
+Esta ausencia es la más costosa de todas para la pregunta temporal, porque un
+nivel de madurez es exactamente la magnitud que se convierte en tiempo hasta la
+disponibilidad. Sin saber en qué nivel está cada componente, no hay origen
+desde el que contar.
+
+\section{¿Hay material para proyectar cuándo estará disponible la tecnología?}
+
+Esta es la pregunta que motiva el comentario y merece una respuesta ordenada.
+La respuesta corta es que hay material fechado, pero no material proyectable, y
+que la brecha entre ambas cosas es identificable con precisión.
+
+\subsection*{01. Inventario del material fechado}
+
+La hoja de ruta contiene cinco conjuntos de datos con eje temporal:
+
+\begin{enumerate}
+  \item \textbf{Los hitos estratégicos} de 2025, 2030, 2032 y 2035
+    (Figura~\ref{fig:hitos}).
+  \item \textbf{La serie financiera anual} de 2022 a 2035, con tamaño de
+    mercado, cuota, ingresos y flujos de caja para cada ejercicio.
+  \item \textbf{La tabla competitiva}, con año de lanzamiento entre 2017 y 2023
+    para veinte procesadores, cúbits físicos para todos ellos y volumen
+    cuántico para cuatro.
+  \item \textbf{La genealogía de publicaciones}, con once hitos entre 1995 y
+    2021, más dos patentes.
+  \item \textbf{La curva de cómputo de entrenamiento}, con cómputo en FLOPS
+    frente a fecha de publicación entre 2010 y 2022.
+\end{enumerate}
+
+Es más material del que suele encontrarse en un ejercicio de este tipo. El
+problema es lo que falta para convertirlo en una proyección.
+
+\subsection*{02. Los cuatro ingredientes que faltan}
+
+Una proyección de disponibilidad requiere cuatro cosas: un umbral, una línea
+base, una tasa de mejora y un vínculo entre el umbral técnico y la
+disponibilidad comercial. La hoja de ruta no tiene ninguna de las cuatro.
+
+\textbf{No hay umbral.} Ninguna de las nueve figuras de mérito tiene valor
+objetivo. \enquote{Disponible} no está definido en términos medibles. No se
+puede fechar el cruce de una línea que no se ha dibujado.
+
+\textbf{No hay línea base para lo que importa.} El único dato de capacidad con
+eje de calendario es de hardware, cúbits y volumen cuántico, y no de
+rendimiento de aprendizaje automático cuántico. El único dato de rendimiento de
+aprendizaje automático cuántico, el gráfico de pérdida frente a iteraciones
+tomado de \textcite{huang2021}, tiene en el eje horizontal iteraciones de
+entrenamiento y no años. Ninguno de los tres gráficos de la página 3 tiene
+simultáneamente una figura de mérito de la tecnología en el eje vertical y
+tiempo de calendario en el horizontal.
+
+\textbf{No hay tasa.} En ninguna página se estima una velocidad de mejora. El
+modelo técnico calcula derivadas respecto a $n$ y a $p$, pero no respecto al
+tiempo. No hay ningún $dFOM/dt$ en todo el documento.
+
+\textbf{No hay vínculo.} El modelo financiero, que sí tiene calendario anual
+completo, es independiente de los hitos técnicos. Los ingresos de 2031 son los
+mismos si la plataforma de 2025 se retrasa cinco años. Esto es lo que convierte
+la serie financiera en un calendario y no en una proyección: nada en ella está
+condicionado a la madurez de la tecnología.
+
+\subsection*{03. Lo que sí permiten los datos de la propia hoja de ruta}
+
+Pese a lo anterior, la tabla competitiva contiene la única serie de la hoja de
+ruta que empareja una capacidad técnica con años de calendario, y sí admite un
+ajuste. Los doce procesadores de Rigetti que la tabla recoge cubren de 2017 a
+2022 con recuento de cúbits y fidelidad de puerta de dos cúbits. Tomando el
+mejor valor de cada año y ajustando una tendencia exponencial se obtienen los
+resultados de la Figura~\ref{fig:tendencias} y del Cuadro~\ref{tab:tasas}.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    \begin{semilogyaxis}[
+      width=0.47\textwidth, height=5.1cm,
+      xlabel={Año de lanzamiento}, ylabel={Cúbits físicos},
+      xmin=2016.5, xmax=2022.5, ymin=10, ymax=120,
+      xtick={2017,2018,2019,2020,2021,2022},
+      xticklabel style={/pgf/number format/1000 sep=},
+      log basis y=10, ytick={10,20,50,100},
+      yticklabels={10,20,50,100},
+      grid=both, grid style={gray!18}, tick label style={font=\scriptsize},
+      label style={font=\scriptsize}, title style={font=\scriptsize\bfseries},
+      title={Recuento de cúbits: duplica cada 2,4 años}]
+      \addplot[only marks, mark=*, mark size=1.6pt, blue!70!black]
+        coordinates {(2017,19) (2018,16) (2019,28) (2020,31) (2021,40) (2022,80)};
+      \addplot[thick, dashed, red!70!black] coordinates {(2017,15.0) (2022,63.0)};
+    \end{semilogyaxis}
+  \end{tikzpicture}\hfill
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=0.47\textwidth, height=5.1cm,
+      xlabel={Año de lanzamiento},
+      ylabel={Error de puerta de 2 cúbits [\%]},
+      xmin=2016.5, xmax=2022.5, ymin=0, ymax=14,
+      xtick={2017,2018,2019,2020,2021,2022},
+      xticklabel style={/pgf/number format/1000 sep=},
+      grid=both, grid style={gray!18}, tick label style={font=\scriptsize},
+      label style={font=\scriptsize}, title style={font=\scriptsize\bfseries},
+      title={Tasa de error: sin mejora desde 2019}]
+      \addplot[only marks, mark=*, mark size=1.6pt, blue!70!black]
+        coordinates {(2017,12.5) (2018,9.16) (2019,4.8) (2020,5.66)
+                     (2021,5.34) (2022,4.9)};
+      \addplot[thick, dashed, red!70!black]
+        coordinates {(2017,10.20) (2022,4.25)};
+      \addplot[thick, orange!85!black] coordinates {(2019,5.175) (2022,5.175)};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Tendencias derivadas de la serie de doce procesadores de Rigetti que
+  la hoja de ruta recoge, tomando el mejor valor de cada año. La línea
+  discontinua es el ajuste exponencial 2017--2022; la línea naranja continua es
+  la media del subperiodo 2019--2022. Cálculo propio a partir de los datos de
+  \textcite{numa2023}.}
+  \label{fig:tendencias}
+\end{figure}
+
+\begin{table}[ht]
+  \centering
+  \small
+  \caption{Tasas de mejora ajustadas sobre los datos de la hoja de ruta.
+  Cálculo propio.}
+  \label{tab:tasas}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}X rrr@{}}
+    \toprule
+    \textbf{Serie} & \textbf{Tasa anual} & \textbf{Tiempo de duplicación
+    o reducción a la mitad} & \textbf{$R^{2}$} \\
+    \midrule
+    Cúbits físicos, 2017--2022 & $+33{,}2\%$ & 2,42 años & 0,872 \\
+    Error de dos cúbits, 2017--2022 & $-16{,}1\%$ & 3,95 años & 0,695 \\
+    Error de dos cúbits, 2019--2022 & $+0{,}04\%$ & no aplicable & 0,000 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+De aquí se desprenden tres conclusiones, y las tres apuntan en contra de la
+posibilidad de fechar la disponibilidad con este material.
+
+\textbf{Primera: las dos variables del modelo técnico avanzan a velocidades
+incomparables.} El recuento de cúbits crece de forma robusta, duplicándose cada
+2,4 años con un ajuste razonable. La tasa de error, en cambio, mejoró con
+fuerza entre 2017 y 2019 y desde entonces no se mueve: el subperiodo 2019--2022
+tiene una pendiente indistinguible de cero y un $R^{2}$ nulo. Y la tasa de
+error es, según la propia hoja de ruta, \enquote{el factor más significativo}
+al evaluar la eficiencia del hardware, además de la variable a la que su
+análisis de sensibilidad atribuye entre tres y siete veces más apalancamiento.
+La hoja de ruta apuesta el rendimiento del sistema a la variable que, en sus
+propios datos, no está mejorando.
+
+\textbf{Segunda: extrapolar hacia el objetivo estratégico da fechas
+incompatibles con los hitos.} Con la tendencia 2017--2022, pasar del 4,9 por
+ciento de error del mejor dispositivo de 2022 al 0,1 por ciento que exige el
+objetivo de fidelidad superior al 99,9 por ciento requeriría 22,2 años, es
+decir, alrededor de 2044. Con la tendencia 2019--2022, no se llegaría nunca. La
+hoja de ruta sitúa la plataforma robusta en 2025.
+
+\textbf{Tercera: el modelo técnico se rompe si se le aplica la única tendencia
+disponible.} Si se proyecta el recuento de cúbits con su tasa observada y se
+mantiene la tasa de error en su valor estancado, la expresión
+$QV = 2^{n}(1-p)^{2}$ predice para 2024 un volumen cuántico del orden de
+$2^{160}$, cuando la propia tabla de la hoja de ruta atribuye al procesador de
+80 cúbits de 2022 un volumen cuántico de 8. La extrapolación del modelo técnico
+sobre datos del propio documento produce un resultado absurdo en dos años.
+
+Conviene añadir una cautela que refuerza el argumento en lugar de debilitarlo.
+Estas tendencias se han ajustado sobre una sola familia de dispositivos de un
+solo fabricante y una sola arquitectura, la superconductora, porque es la única
+serie con suficientes puntos en la tabla. La comparación con la otra
+arquitectura presente lo confirma: el H1-1 de iones atrapados alcanzaba en 2022
+una fidelidad de dos cúbits del 99,8 por ciento, muy por delante de esa
+tendencia. Es decir, el salto de rendimiento relevante no llegó por avance
+temporal dentro de una arquitectura, sino por cambio de arquitectura. Esto es
+precisamente lo que invalida la extrapolación temporal como instrumento: el
+progreso en este campo es discontinuo y depende de qué tecnología física gane,
+una cuestión que ninguna curva de tendencia responde. La tabla competitiva,
+además, sólo tiene volumen cuántico en cuatro de veinte filas, todas de 2022 y
+2023, y con valores no monótonos, ya que el H1-1 de 2022 declara 524\,288
+frente a los 65\,536 del H2 de 2023. Con dos años y valores decrecientes no hay
+ninguna tendencia que ajustar.
+
+\subsection*{04. Por qué la restricción probablemente no es de hardware}
+
+Hay un argumento más profundo, y procede de una de las fuentes que la hoja de
+ruta cita.
+
+La página 3 organiza su razonamiento en tres pasos: el aprendizaje automático
+necesita procesar datos a escala cada vez mayor; la evolución de la computación
+cuántica mejorará su rendimiento; la evolución de los algoritmos cuánticos
+mejorará su eficiencia. El segundo paso se apoya en un gráfico de tiempo de
+ejecución frente a tamaño del problema, atribuido a \enquote{Florian Meyer, ETH
+Zurich} en \emph{Communications of the ACM}, 2023.
+
+La verificación de esa referencia arroja dos resultados. El primero es de
+autoría: el artículo de \emph{Communications of the ACM} de mayo de 2023 se
+titula \enquote{Disentangling Hype from Practicality: On Realistically
+Achieving Quantum Advantage} y es obra de Torsten Hoefler, Thomas Häner y
+Matthias Troyer \parencite{hoefler2023}. Florian Meyer es el autor de la nota
+divulgativa que ETH Zurich publicó sobre ese artículo, no del artículo.
+
+El segundo resultado es de fondo y es el que importa. La tesis de ese trabajo
+es que la ventaja cuántica práctica exige problemas de \emph{datos pequeños} y
+aceleraciones \emph{superiores a las cuadráticas}, que la mayoría de los
+algoritmos y aplicaciones cuánticas propuestos no alcanzan esas aceleraciones,
+y que el potencial se concentra por ahora en ciencia de materiales y química
+\parencite{hoefler2023}. La hoja de ruta invoca ese trabajo para sostener que
+la era del aprendizaje automático cuántico se acerca, cuando el trabajo citado
+sostiene que el requisito es de datos pequeños, justo lo contrario de la
+premisa \enquote{el aprendizaje automático necesita procesar datos a gran
+escala} con la que abre la misma página. La fuente citada contradice el
+argumento para el que se la cita.
+
+Si el trabajo citado tiene razón, la consecuencia metodológica es directa: la
+restricción determinante no es el hardware sino la existencia de algoritmos con
+la clase de aceleración adecuada sobre problemas del tamaño adecuado. Y la
+llegada de un resultado algorítmico no es extrapolable a partir de tendencias
+de cúbits ni de ninguna otra curva de capacidad física. Este es el motivo más
+sólido para no ofrecer una fecha: no es que falten datos de hardware, es que
+la variable crítica es de naturaleza discreta e impredecible.
+
+Merece señalarse, en el mismo sentido, que el gráfico del propio artículo no
+tiene eje de calendario. Su eje horizontal es el tamaño del problema. Para
+convertir ese cruce en una fecha haría falta conocer cómo crece con el tiempo
+el tamaño de los problemas de los clientes, algo que la hoja de ruta no aporta.
+Es notable que el documento tenga la curva de demanda, el cómputo de
+entrenamiento de los modelos clásicos frente a la fecha de publicación, y tenga
+el concepto de cruce, pero no llegue a dibujar la curva de oferta con eje
+temporal que permitiría intersecarlas. Se queda a un paso de la construcción
+que respondería a la pregunta.
+
+\subsection*{05. Veredicto}
+
+La hoja de ruta contiene una \emph{declaración de intención} fechada en 2035 y
+una escalera de hitos, pero no contiene el material para una proyección
+independiente de disponibilidad. La distinción es la siguiente: una declaración
+de intención afirma una fecha; una proyección la deriva de una línea base, una
+tasa y un umbral, y expone el intervalo de incertidumbre que la acompaña.
+
+Con el contenido del documento, el enunciado más fuerte que se puede sostener
+con rigor es direccional y no está fechado: sobre los datos que la propia hoja
+de ruta reúne, el recuento de cúbits mejora de forma sostenida mientras la
+tasa de error, que su análisis identifica como la variable dominante, no ha
+mejorado desde 2019; y la fuente que el documento invoca para justificar el
+optimismo sostiene que el cuello de botella es algorítmico. Nada de esto
+permite escribir un año, y presentarlo como si lo permitiera sería precisamente
+el error que el trabajo citado advierte.
+
+Los hitos de 2025, 2030 y 2032 pueden evaluarse en retrospectiva desde la
+posición actual, y esa es una vía legítima para valorar la calidad de la hoja
+de ruta como ejercicio de previsión, pero no es una proyección hecha a partir
+de ella.
+
+\section{Recomendaciones}
+
+Las siguientes seis medidas cerrarían la brecha entre el material fechado que
+la hoja de ruta ya tiene y una proyección defendible. Están ordenadas por
+impacto sobre la pregunta temporal.
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+  \item \textbf{Definir la disponibilidad de forma operativa.} Una figura de
+    mérito, un umbral y una carga de trabajo. Por ejemplo: exactitud de modelo
+    igual o superior a un valor determinado sobre una tarea concreta de un
+    cliente, con un coste total por inferencia por debajo de un límite, frente
+    a la mejor alternativa clásica. Sin esta frase, ningún elemento posterior
+    puede fechar nada.
+  \item \textbf{Reconciliar los tres vocabularios de métricas.} Incorporar el
+    volumen cuántico, la fidelidad de dos cúbits y el recuento de cúbits a la
+    lista de figuras de mérito, o bien retirarlos del modelo técnico, y
+    declarar la relación entre cada objetivo estratégico y la figura de mérito
+    que lo mide. Conviene además reducir las nueve figuras a las tres o cuatro
+    que realmente se van a seguir, con valor de partida y valor objetivo
+    fechado para cada una.
+  \item \textbf{Construir la curva de oferta con eje temporal.} La misma fuente
+    que la hoja de ruta ya utiliza permite completar el volumen cuántico por
+    año para los principales fabricantes, e incorporar a IBM, Google, Intel y
+    D-Wave, hoy ausentes del extracto. A ello pueden añadirse las hojas de ruta
+    publicadas por los propios fabricantes, que sí están fechadas: la de IBM de
+    septiembre de 2020 fijaba Hummingbird con 65 cúbits en 2020, Eagle con 127
+    en 2021, Osprey con 433 en 2022 y Condor con 1121 en 2023
+    \parencite{ibm2020}, y el 4 de diciembre de 2023, un día antes de la fecha
+    de creación del archivo analizado, se amplió hasta 2033 con Starling
+    previsto para 2029 \parencite{ibm2023}. Superponer esa curva de oferta a la
+    curva de demanda de cómputo que la hoja de ruta ya incluye permite
+    localizar un cruce y acompañarlo de una banda de incertidumbre.
+  \item \textbf{Añadir los dos elementos ausentes.} Un portfolio de proyectos
+    propios con fechas de inicio y fin, presupuesto y dependencias, y una
+    evaluación de madurez por subsistema. Son los dos elementos que convierten
+    una aspiración en un calendario auditable, y son precisamente los dos que
+    faltan.
+  \item \textbf{Condicionar el modelo financiero a los hitos técnicos.} Fijar
+    un año de lanzamiento, empezar la serie con ingresos nulos, partir de una
+    cuota coherente con el objetivo declarado de más del 1 por ciento en lugar
+    del 10,1 por ciento heredado de los comparables, corregir el signo del
+    gasto de capital y ejecutar al menos un escenario con los hitos retrasados.
+    Dado que el 83,8 por ciento del valor presente neto reside en el valor
+    terminal, un análisis de sensibilidad sobre la fecha de disponibilidad es
+    más informativo que cualquier refinamiento de los flujos explícitos.
+  \item \textbf{Releer las fuentes citadas.} Corregir la atribución del
+    artículo de \emph{Communications of the ACM}, sustituir la entrada
+    divulgativa que respalda la curva de cómputo por el estudio primario
+    \parencite{sevilla2022}, y ajustar la fecha de la patente de Accenture. Más
+    importante que las correcciones: si la tesis de \textcite{hoefler2023} se
+    acepta, la hoja de ruta debería reorientar su premisa desde el
+    procesamiento de datos a gran escala hacia problemas de datos pequeños con
+    aceleraciones superiores a las cuadráticas, lo que cambiaría tanto el
+    portfolio de I+D como el mercado objetivo.
+\end{enumerate}
+
+\section{Conclusiones}
+
+La hoja de ruta analizada es un ejercicio sólido en su mitad estratégica y
+frágil en su mitad predictiva. La correspondencia con las motivaciones de la
+empresa está bien construida, con objetivos verificables y un semáforo que no
+oculta los incumplimientos; la genealogía de publicaciones es útil; y el modelo
+financiero, cuya aritmética se reproduce sin discrepancias, revela una
+disciplina de cálculo apreciable. Nueve de los doce elementos están presentes
+de forma sustantiva.
+
+El defecto que atraviesa el documento es la falta de trazabilidad entre
+métricas. La estrategia se evalúa con cuatro objetivos, el sistema se describe
+con nueve figuras de mérito y la decisión técnica se toma con el volumen
+cuántico, sin que ninguno de los tres conjuntos se relacione con los otros.
+Cuando esa cadena falta, cada elemento puede parecer correcto por separado y el
+conjunto no puede responder a la pregunta para la que existe una hoja de ruta.
+
+Respecto a la pregunta planteada, la conclusión es que hay material fechado
+pero no material proyectable. Faltan los cuatro ingredientes de una proyección:
+un umbral que defina la disponibilidad, una línea base de la magnitud
+pertinente, una tasa de mejora y un vínculo entre el umbral técnico y el
+calendario comercial. Y faltan, además, los dos elementos que habrían aportado
+calendario: el portfolio de proyectos y la evaluación de madurez.
+
+La ironía del caso es que la propia hoja de ruta contiene los datos con los que
+demostrarlo. Su tabla competitiva permite establecer que el recuento de cúbits
+se duplica cada 2,4 años mientras la tasa de error, la variable que su análisis
+de sensibilidad señala como dominante, no ha mejorado desde 2019; su modelo
+técnico produce resultados absurdos en cuanto se le aplica esa tendencia; y la
+fuente que invoca para sostener que la era del aprendizaje automático cuántico
+se acerca sostiene en realidad que la mayoría de los algoritmos cuánticos
+propuestos no alcanzan la aceleración necesaria para ser prácticos, y que el
+requisito es de datos pequeños, lo contrario de la premisa con la que el
+documento abre.
+
+De ahí se sigue la lección de gestión tecnológica que este caso ofrece. La
+tentación de una hoja de ruta es fijar la fecha primero y buscar después el
+respaldo. El orden correcto es el inverso: definir el umbral, medir la línea
+base, estimar la tasa y sólo entonces derivar la fecha, con la incertidumbre
+declarada. Una hoja de ruta que no puede fechar su objetivo sigue siendo útil
+si dice con precisión qué le falta para poder hacerlo. Ese es, en definitiva,
+el aporte principal de este comentario sobre el documento analizado.
+
+\printbibliography[title={Referencias bibliográficas}]
+
+\end{document}
