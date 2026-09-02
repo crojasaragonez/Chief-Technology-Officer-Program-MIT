@@ -1,0 +1,15 @@
+se recomienda que el índice y la tabla de contenidos de la hoja de ruta tecnológica incluya 12 elementos.
+
+
+Elemento 1: descripción de la hoja de ruta
+Elemento 2: matriz de estructura de dependencia (DSM)
+Elemento 3: modelo de la hoja de ruta (con metodología OPM u otro lenguaje de modelado de sistemas)
+Elemento 4: figuras de mérito (FOM)
+Elemento 5: correspondencia con las motivaciones estratégicas de la empresa
+Elemento 6: posicionamiento de la empresa con respecto a la competencia: diagramas de figuras de mérito
+Elemento 7: modelo técnico
+Elemento 8: modelo financiero
+Elemento 9: portfolio de proyectos y prototipos de I + D
+Elemento 10: publicaciones, presentaciones y patentes clave
+Elemento 11: declaración de estrategia tecnológica
+Elemento 12: evaluación del nivel de madurez de la hoja de ruta
