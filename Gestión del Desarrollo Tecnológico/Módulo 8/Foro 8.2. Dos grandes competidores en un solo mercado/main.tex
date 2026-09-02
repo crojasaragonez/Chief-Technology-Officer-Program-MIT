@@ -1,0 +1,1093 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,backgrounds,patterns}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.3cm}
+% Los rótulos de las figuras usan nodos de ancho fijo con texto alineado a la
+% derecha, y la bibliografía compone en modo sloppy: ambos generan avisos de
+% línea holgada que son cosméticos y no indican un problema de composición.
+% Se silencian para que `make check` siga siendo sensible a los desbordes reales.
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlist{nosep}
+% Las figuras ocupan entre el 60 y el 70 por ciento de la caja de texto.
+% Sin estos parámetros LaTeX las difiere todas al final del documento.
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.06}
+\renewcommand{\floatpagefraction}{0.72}
+\setcounter{topnumber}{2}
+\setcounter{totalnumber}{3}
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy}
+
+\sisetup{
+  output-decimal-marker = {,},
+  group-separator = {.},
+  group-minimum-digits = 4,
+  detect-all
+}
+
+% Colores: Anthropic, OpenAI, tercer jugador (Google), producto de referencia
+% y señal de alerta o dato dominado
+\definecolor{cAnt}{RGB}{186,98,52}
+\definecolor{cOAI}{RGB}{16,110,104}
+\definecolor{cGoo}{RGB}{116,66,150}
+\definecolor{cRef}{RGB}{70,90,112}
+\definecolor{cAviso}{RGB}{176,42,42}
+
+% Barra horizontal con rótulo a la izquierda y valor a la derecha.
+% #1 y, #2 fin de la barra, #3 color, #4 rótulo, #5 valor, #6 x del valor
+\newcommand{\barrarot}[6]{%
+  \node[left, text width=4.2cm, align=right, font=\scriptsize] at (-0.15,#1) {#4};%
+  \fill[#3] (0,#1-0.17) rectangle (#2,#1+0.17);%
+  \node[right, font=\scriptsize] at (#6,#1) {#5};%
+}
+
+\title{\vspace{-1.2cm}\textbf{Anthropic y OpenAI: dos ofensivas tecnológicas
+sobre el mismo mercado}\\
+\large Clasificación competitiva y gráfico vectorial con datos del 1 de
+septiembre de 2026}
+\author{Carlos Luis Rojas Aragonés\\
+\small Gestión del Desarrollo Tecnológico}
+\date{\small 1 de septiembre de 2026}
+
+\begin{document}
+
+\maketitle
+\vspace{-0.6em}
+
+\section{El sector y por qué lo elegí}
+
+El mercado que analizo es el de los \textbf{modelos fundacionales de lenguaje
+vendidos como servicio}, es decir, la capacidad de razonamiento entregada por
+interfaz de programación y facturada por millón de tokens, junto con las
+aplicaciones que se construyen encima. Cumple con exactitud la condición del
+enunciado: es un mercado cuya oferta, su precio y hasta su definición dependen
+del estado de desarrollo del sistema tecnológico de unos pocos actores. No hay
+un sustituto no tecnológico. Cuando Anthropic recorta el precio de la lectura de
+caché un 75 por ciento o cuando OpenAI publica una generación con un 54 por
+ciento más de eficiencia por token, el mercado entero se recoloca en cuestión de
+semanas.
+
+Los dos competidores que comparo son \textbf{Anthropic} y \textbf{OpenAI}. Los
+elijo porque comparten origen (siete de los ocho fundadores de Anthropic salieron
+de OpenAI en 2021), compiten con el mismo insumo, el mismo tipo de cliente y una
+tecnología de base casi idéntica, y sin embargo han acabado con dos estrategias
+distinguibles y con dos repartos de mercado casi opuestos. Es el caso de libro
+que pide el foro: estrategias algo distintas sobre un mismo mercado.
+
+Anticipo la tesis, porque estructura todo lo que sigue: \textbf{no se reparten un
+mercado, se reparten dos}. Anthropic domina el gasto empresarial por interfaz de
+programación (40 por ciento) y muy en particular la codificación (54 por ciento);
+OpenAI domina el consumo (46,4 por ciento de la audiencia de asistentes) y ha
+convertido esa audiencia en un negocio de publicidad y comercio que Anthropic ni
+siquiera intenta \parencite{menlo2025,sensortower2026}. La comparación técnica
+que hago en las secciones \ref{sec:benchmarks} a \ref{sec:equipo} explica por qué ese reparto no es casualidad:
+está inscrito en la arquitectura de precios y en el perfil de capacidades de cada
+uno.
+
+Una advertencia de método antes de empezar. \textbf{No busco un ganador.} Con los
+datos que manejo, ninguna de las dos compañías domina a la otra en el sentido
+técnico del término, y precisamente eso es lo que hace interesante el gráfico
+vectorial de la sección \ref{sec:vectorial}: la frontera de eficiencia tiene cuatro puntos y está
+repartida dos a dos.
+
+\section{Marco de análisis: qué categorías uso y qué mido}
+
+\subsection*{Las categorías de clasificación}
+
+El enunciado pide clasificar a las dos compañías \enquote{a partir de las
+categorías anteriores}. Interpreto que se refiere a la taxonomía clásica de
+estrategias tecnológicas de \textcite{freeman1997}, que distingue seis posturas
+(ofensiva, defensiva, imitativa, dependiente, tradicional y oportunista), y la
+cruzo con el posicionamiento por figuras de mérito propio de la hoja de ruta
+tecnológica \parencite{deweck2022}, que es el instrumento que el gráfico
+vectorial formaliza. Añado dos ejes complementarios que en este sector resultan
+decisivos y que la literatura tiene bien establecidos: el de los \emph{activos
+complementarios} de \textcite{teece1986}, que explica quién se apropia del valor
+de una innovación, y el de las \emph{guerras de estándares} de
+\textcite{shapiro1999}, que explica por qué una empresa regala un protocolo.
+Si el módulo se refería a otro juego de categorías, la clasificación del
+Cuadro~\ref{tab:clasificacion} sigue siendo válida en sus propios términos.
+
+\subsection*{Las figuras de mérito}
+
+Una figura de mérito es una medida cuantitativa del desempeño de una tecnología
+en la función que presta, independiente de la implementación
+\parencite{deweck2022}. En este mercado el cliente compra dos cosas a la vez, y
+por eso hacen falta dos ejes:
+
+\begin{enumerate}
+  \item \textbf{Valor entregado}, medido como capacidad verificable en
+    evaluaciones públicas e independientes. Uso el \emph{Artificial Analysis
+    Intelligence Index}, un índice compuesto de veinticuatro evaluaciones que
+    ejecuta un tercero sin vínculo con ninguno de los dos proveedores
+    \parencite{aa2026modelos}, y lo contrasto con tres evaluaciones adicionales
+    en la sección \ref{sec:benchmarks}.
+  \item \textbf{Coste soportado por el cliente}, medido como coste en dólares de
+    una tarea tipo definida en tokens, calculado a partir de las tarifas
+    oficiales publicadas por cada compañía
+    \parencite{anthropic2026precios,openai2026precios}. No uso el precio por
+    millón de tokens como figura de mérito, y explico en la sección \ref{sec:precios} por qué
+    ese número, tomado suelto, es engañoso.
+\end{enumerate}
+
+Las otras dos dimensiones que pide la comparación, innovación y equipo técnico,
+las trato como \emph{determinantes} de esos dos ejes y no como ejes propios: la
+innovación explica el desplazamiento vertical del gráfico vectorial y el equipo
+explica la velocidad con la que ese desplazamiento se produce.
+
+\section{Clasificación de las dos compañías}
+
+\begin{figure}[tbp]
+  \centering
+  \begin{tikzpicture}
+    % ---------------- panel A: trayectoria 2021-2026 ----------------
+    \node[font=\scriptsize\itshape, gray!35!black, right] at (0,3.35)
+      {Panel A. Origen común y separación de trayectorias, 2021 a 2026};
+    \draw[gray!60!black] (0,0.95) -- (13.20,0.95);
+    \foreach \xv/\lab in {0/2021, 2.2/2022, 4.4/2023, 6.6/2024, 8.8/2025,
+                          11.0/2026, 13.2/2027} {
+      \draw[gray!60!black] (\xv,0.95) -- (\xv,0.82);
+      \node[below, font=\tiny, gray!55!black, fill=white, inner sep=1.2pt]
+        at (\xv,0.82) {\lab};
+    }
+    % --- pista superior: Anthropic ---
+    \foreach \xv/\prof/\lab in {0.10/1.55/{fundación por\\siete salidas\\de
+                                  OpenAI},
+                                4.77/0.50/{Claude 1},
+                                6.97/1.55/{familia\\Claude 3},
+                                8.43/0.50/{publica MCP},
+                                9.53/1.55/{Claude Code\\disponible},
+                                11.00/0.50/{dona MCP a la\\Agentic AI
+                                  Foundation},
+                                11.92/1.90/{Fable 5 y\\Mythos 5},
+                                12.47/0.85/{Fable 5.1}} {
+      \draw[cAnt, thick] (\xv,0.95) -- (\xv,0.95+\prof);
+      \fill[cAnt] (\xv,0.95+\prof) circle (1.6pt);
+      \node[above, font=\tiny, cAnt, align=center, fill=white,
+        inner sep=1.5pt] at (\xv,1.02+\prof) {\lab};
+    }
+    % --- pista inferior: OpenAI ---
+    \foreach \xv/\prof/\lab in {4.03/0.50/{ChatGPT},
+                                4.77/1.45/{GPT-4},
+                                8.07/0.50/{serie o\\de razonamiento},
+                                10.30/1.45/{reestructuración\\en sociedad de
+                                  beneficio público},
+                                10.62/0.50/{navegador\\Atlas},
+                                12.10/1.90/{GPT-5.6 y\\ChatGPT Work}} {
+      \draw[cOAI, thick] (\xv,0.95) -- (\xv,0.95-\prof);
+      \fill[cOAI] (\xv,0.95-\prof) circle (1.6pt);
+      \node[below, font=\tiny, cOAI, align=center, fill=white,
+        inner sep=1.5pt] at (\xv,0.88-\prof) {\lab};
+    }
+    \draw[cAnt, thick] (0.15,-2.15) -- (0.75,-2.15);
+    \node[right, font=\tiny, cAnt] at (0.85,-2.15) {Anthropic};
+    \draw[cOAI, thick] (4.10,-2.15) -- (4.70,-2.15);
+    \node[right, font=\tiny, cOAI] at (4.80,-2.15) {OpenAI};
+
+    % ---------------- panel B: cadencia de lanzamiento de 2026 -------------
+    \begin{scope}[shift={(0,-5.30)}]
+      \node[font=\scriptsize\itshape, gray!35!black, right] at (0,2.55)
+        {Panel B. Cadencia de lanzamiento de modelos entre el 1 de enero y el
+         1 de septiembre de 2026};
+      \draw[gray!60!black] (0,0.85) -- (13.20,0.85);
+      \foreach \xv/\lab in {0/ene, 1.625/feb, 3.25/mar, 4.875/abr, 6.5/may,
+                            8.125/jun, 9.75/jul, 11.375/ago, 13.0/sep} {
+        \draw[gray!60!black] (\xv,0.85) -- (\xv,0.74);
+        \node[below, font=\tiny, gray!55!black] at (\xv,0.74) {\lab};
+      }
+      \foreach \xv/\lab in {1.84/{4.6}, 2.49/{S4.6}, 5.20/{Myt.},
+                            5.69/{4.7}, 7.96/{4.8}, 8.56/{F5}, 9.70/{S5},
+                            10.95/{O5}, 13.00/{F5.1}} {
+        \draw[cAnt, thick] (\xv,0.85) -- (\xv,1.55);
+        \fill[cAnt] (\xv,1.55) circle (1.7pt);
+        \node[above, font=\tiny, cAnt, rotate=52, anchor=west]
+          at (\xv,1.62) {\lab};
+      }
+      \foreach \xv/\lab in {1.84/{5.3C}, 3.46/{5.4}, 4.11/{mini}, 6.06/{5.5},
+                            6.71/{Inst.}, 9.47/{5.6p}, 10.19/{5.6}} {
+        \draw[cOAI, thick] (\xv,0.85) -- (\xv,0.15);
+        \fill[cOAI] (\xv,0.15) circle (1.7pt);
+        \node[below, font=\tiny, cOAI, rotate=52, anchor=east]
+          at (\xv,0.08) {\lab};
+      }
+      \node[right, font=\tiny, cAnt, align=left] at (0.15,1.95)
+        {9 lanzamientos en 8 meses};
+      \node[right, font=\tiny, cOAI, align=left] at (0.15,-0.60)
+        {7 lanzamientos en 8 meses};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Origen común, trayectorias distintas y cadencia casi idéntica.
+  Panel A: Anthropic se funda en enero de 2021 con siete antiguos empleados de
+  OpenAI \parencite{wikipedia2026anthropic}; los hitos de la pista inferior son
+  de OpenAI \parencite{wikipedia2026openai}. Panel B: fechas de lanzamiento de
+  2026 según los registros públicos de cada familia de modelos
+  \parencite{wikipedia2026claude,wikipedia2026gpt56}. Abreviaturas de la pista
+  superior: 4.6 y 4.7 y 4.8 son versiones de Claude Opus, S4.6 y S5 de Claude
+  Sonnet, Myt. es la vista previa de Mythos, F5 y F5.1 son Claude Fable y O5 es
+  Claude Opus 5. En la inferior: 5.3C es GPT-5.3-Codex, mini es la pareja
+  mini y nano de GPT-5.4, Inst. es GPT-5.5 Instant, 5.6p es la vista previa
+  restringida de GPT-5.6 y 5.6 su disponibilidad general. Elaboración propia.}
+  \label{fig:cronologia}
+\end{figure}
+
+El Panel B de la Figura~\ref{fig:cronologia} contiene el primer resultado
+objetivo de este trabajo y conviene enunciarlo antes de clasificar nada:
+\textbf{la cadencia de lanzamiento de las dos compañías es prácticamente la
+misma}, nueve frente a siete eventos en ocho meses, con un intervalo medio de
+veintisiete y treinta y cuatro días respectivamente. Quien espere encontrar
+aquí un innovador rápido frente a un seguidor lento no va a encontrarlo. La
+diferencia no está en el ritmo, está en la dirección.
+
+El Cuadro~\ref{tab:clasificacion} sitúa a las dos compañías en las cuatro
+taxonomías del marco.
+
+\begin{table}[tbp]
+  \centering
+  \small
+  \caption{Clasificación de los dos jugadores según cuatro juegos de
+  categorías.}
+  \label{tab:clasificacion}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.17\textwidth}
+    >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{Categoría} & \textbf{Anthropic} & \textbf{OpenAI} \\
+    \midrule
+    Estrategia tecnológica \parencite{freeman1997}
+      & Ofensiva. Investigación propia, publicación científica, ambición de
+        estar en la frontera y no detrás de ella
+      & Ofensiva. Idéntica postura, con el añadido de haber creado la categoría
+        de producto en 2022 \\
+    Variante de la ofensiva
+      & \emph{De profundidad}: gana en un dominio acotado (trabajo agente de
+        larga duración y codificación) y se expande desde ahí
+      & \emph{De amplitud}: cubre todas las modalidades y todos los públicos, y
+        acepta perder profundidad en cada uno \\
+    Apropiación del valor \parencite{teece1986}
+      & Integración hacia atrás y lateral: proveedores de cómputo múltiples y
+        distribución por las tres nubes ajenas
+      & Integración hacia adelante: aplicación de consumo, navegador,
+        publicidad, comercio y hardware propio \\
+    Postura ante el estándar \parencite{shapiro1999}
+      & Abierta. Publica el protocolo de contexto (MCP) en 2024 y lo dona a una
+        fundación en enero de 2026
+      & Adopción tardía. Sustituye su interfaz propietaria de agentes por MCP y
+        entra como cofundador de la misma fundación \\
+    Posición por figuras de mérito \parencite{deweck2022}
+      & Líder en valor entregado por tarea; no líder en coste
+      & Líder en coste por tarea en interacciones cortas; no líder en valor \\
+    Modelo de ingresos
+      & Alrededor del 80 por ciento empresa e interfaz de programación
+      & Consumo mayoritario hasta agosto de 2026, cuando la empresa lo supera
+        por primera vez \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+La conclusión de la clasificación es que \textbf{ambas son ofensivas, que es la
+situación menos estable de la taxonomía de Freeman}, porque obliga a las dos a
+sostener el gasto de investigación sin poder amortizarlo imitando a nadie. Lo
+que las separa no es la categoría, es el vector de la ofensiva. Y ahí sí hay dos
+elecciones deliberadas y opuestas: Anthropic apuesta por la profundidad en el
+trabajo agente y por un estándar abierto que le da distribución sin poseer el
+canal; OpenAI apuesta por la amplitud y por poseer el canal entero, del navegador
+al dispositivo.
+
+\section{Primera dimensión: los \emph{benchmarks} públicos}
+\label{sec:benchmarks}
+
+\begin{figure}[tbp]
+  \centering
+  \begin{tikzpicture}
+    % ---------------- panel A: índice compuesto independiente -------------
+    \node[font=\scriptsize\itshape, gray!35!black, right] at (-4.35,3.30)
+      {Panel A. Artificial Analysis Intelligence Index, esfuerzo máximo, misma
+       versión del índice};
+    \foreach \xv/\lab in {0/0, 1.8/20, 3.6/40, 5.4/60, 6.3/70} {
+      \draw[gray!22] (\xv,-0.30) -- (\xv,2.90);
+      \node[below, font=\tiny, gray!55!black] at (\xv,-0.30) {\lab};
+    }
+    \barrarot{2.60}{5.94}{cAnt}{Claude Fable 5.1}{66}{6.04}
+    \barrarot{2.08}{5.67}{cAnt!80}{Claude Opus 5}{63}{6.04}
+    \barrarot{1.56}{5.58}{cAnt!60}{Claude Fable 5}{62}{6.04}
+    \barrarot{1.04}{5.49}{cOAI}{GPT-5.6 Sol}{61}{6.04}
+    \barrarot{0.52}{5.13}{cRef!70}{Claude Opus 4.8 (referencia)}{57}{6.04}
+    \barrarot{0.00}{5.04}{cRef!45}{GPT-5.5 (referencia)}{56}{6.04}
+
+    % ---------------- panel B: ARC-AGI-3 ----------------
+    \begin{scope}[shift={(0,-4.35)}]
+      \node[font=\scriptsize\itshape, gray!35!black, right] at (-4.35,2.75)
+        {Panel B. ARC-AGI-3, razonamiento interactivo sobre entornos nuevos, en
+         por ciento};
+      \foreach \xv/\lab in {0/0, 1.8/10, 3.6/20, 5.4/30, 6.3/35} {
+        \draw[gray!22] (\xv,-0.30) -- (\xv,2.35);
+        \node[below, font=\tiny, gray!55!black] at (\xv,-0.30) {\lab};
+      }
+      \barrarot{2.08}{5.44}{cAnt!80}{Claude Opus 5}{30,2\,\%}{6.04}
+      \barrarot{1.56}{1.40}{cOAI}{GPT-5.6 Sol}{7,8\,\%}{6.04}
+      \barrarot{1.04}{0.27}{cRef!70}{Claude Opus 4.8}{1,5\,\%}{6.04}
+      \barrarot{0.52}{0.14}{cOAI!55}{GPT-5.6 Terra}{0,8\,\%}{6.04}
+      \barrarot{0.00}{0.07}{cRef!45}{GPT-5.5}{0,4\,\%}{6.04}
+    \end{scope}
+
+    % ---------------- panel C: Terminal-Bench 2.1 ----------------
+    \begin{scope}[shift={(0,-8.55)}]
+      \node[font=\scriptsize\itshape, gray!35!black, right] at (-4.35,2.75)
+        {Panel C. Terminal-Bench 2.1, tareas de agente en línea de órdenes,
+         escala ampliada de 86 a 93 por ciento};
+      \foreach \xv/\lab in {0/86, 1.575/88, 3.15/90, 4.725/92, 5.5/93} {
+        \draw[gray!22] (\xv,-0.30) -- (\xv,2.35);
+        \node[below, font=\tiny, gray!55!black] at (\xv,-0.30) {\lab};
+      }
+      \barrarot{2.08}{4.65}{cOAI!75}{GPT-5.6 Sol Ultra}{91,9\,\%}{6.04}
+      \barrarot{1.56}{2.44}{cAnt!80}{Claude Opus 5}{89,1\,\%}{6.04}
+      \barrarot{1.04}{2.20}{cOAI}{GPT-5.6 Sol}{88,8\,\%}{6.04}
+      \barrarot{0.52}{1.58}{cAnt!55}{Claude Mythos 5}{88,0\,\%}{6.04}
+      \barrarot{0.00}{1.58}{cRef!45}{GPT-5.5}{88,0\,\%}{6.04}
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Tres evaluaciones públicas con tres resultados distintos. Panel A:
+  índice compuesto de veinticuatro evaluaciones medido por un tercero
+  independiente; los valores proceden de la misma versión del índice, que es la
+  única forma de compararlos entre sí
+  \parencite{aa2026modelos,aa2026comparacion}. Panel B: puntuaciones publicadas
+  de ARC-AGI-3, la evaluación de razonamiento sobre entornos que el modelo no ha
+  visto nunca \parencite{arcagi3,benchlm2026arc}. Panel C: Terminal-Bench 2.1
+  según los datos de lanzamiento de cada proveedor
+  \parencite{openai2026sol,anthropic2026opus5}; la escala está ampliada porque
+  los cinco modelos caben en siete puntos porcentuales, que es en sí mismo el
+  resultado. Elaboración propia.}
+  \label{fig:benchmarks}
+\end{figure}
+
+La Figura~\ref{fig:benchmarks} es deliberadamente incómoda: las tres
+evaluaciones dan tres respuestas diferentes, y esa es la primera conclusión.
+
+\textbf{En el índice compuesto independiente, Anthropic va delante por poco.}
+Claude Fable 5.1 marca 66 puntos y GPT-5.6 Sol marca 61, con Claude Opus 5 en 63
+\parencite{aa2026modelos,aa2026comparacion}. La distancia es de cinco puntos
+sobre un índice cuyo recorrido útil en los últimos doce meses ha sido de unos
+diez, de modo que equivale a poco más de medio año de progreso. Conviene además
+recordar que el orden se ha invertido varias veces en 2026: en el análisis del 9
+de julio, GPT-5.6 Sol quedaba a un punto de Claude Fable 5
+\parencite{aa2026gpt56}.
+
+\textbf{En razonamiento sobre entornos nuevos, la distancia es de otro orden.}
+En ARC-AGI-3, la evaluación diseñada expresamente para que no se pueda memorizar,
+Claude Opus 5 obtiene un 30,2 por ciento y GPT-5.6 Sol un 7,8 por ciento, casi
+cuatro veces menos; el resto de la industria está por debajo del 1,5 por ciento
+\parencite{benchlm2026arc}. Es la única de las tres evaluaciones donde hay una
+diferencia cualitativa y no de matiz, y merece leerse con cuidado: en marzo de
+2026 todos los modelos de frontera puntuaban por debajo del 0,4 por ciento, de
+modo que lo que mide el panel es un salto muy reciente y muy concentrado en un
+solo modelo.
+
+\textbf{En trabajo de agente sobre terminal, empatan y gana OpenAI en la
+configuración de esfuerzo máximo.} Los cinco modelos del Panel C caben en siete
+puntos porcentuales, con GPT-5.6 Sol Ultra en cabeza con un 91,9 por ciento
+frente al 89,1 de Claude Opus 5 \parencite{openai2026sol,anthropic2026opus5}. Y
+en el índice de agentes de codificación de Artificial Analysis, versión 1.1,
+GPT-5.6 Sol obtiene 80 puntos frente a los 77,2 de Claude Fable 5, con menos de
+la mitad de tokens de salida y menos de la mitad de tiempo
+\parencite{wikipedia2026gpt56,aa2026gpt56}. Es decir: en la evaluación de
+codificación con criterio independiente, gana OpenAI, y gana además por
+eficiencia.
+
+Hay una cuarta observación, metodológica, que considero la más importante de esta
+sección. \textbf{Las evaluaciones se renuevan más deprisa que los modelos, y eso
+rompe la comparabilidad.} Anthropic reporta Terminal-Bench 4.0 para Fable 5.1
+(55,8 por ciento) mientras OpenAI reporta Terminal-Bench 2.1 para Sol (88,8 por
+ciento) \parencite{anthropic2026fable51,openai2026sol}: son escalas distintas y
+ponerlas en la misma barra sería un error grosero. El propio índice de
+Artificial Analysis cambia de versión: Claude Opus 4.8 se anunció con 61,4 puntos
+en mayo \parencite{aa2026opus48} y en la versión vigente del índice figura con 57
+\parencite{aa2026comparacion}. Por eso todas las comparaciones de esta sección
+son intraversión, y por eso el gráfico vectorial de la sección \ref{sec:vectorial} se construye
+sobre una sola fuente y una sola versión del índice.
+
+\section{Segunda dimensión: innovación}
+
+Medir innovación con un solo número es imposible, así que uso cuatro
+indicadores observables y los contrasto.
+
+\textbf{Cadencia.} Ya está en el Panel B de la Figura~\ref{fig:cronologia}: nueve
+lanzamientos frente a siete en ocho meses. Empate técnico.
+
+\textbf{Creación de estándar.} Aquí la asimetría es grande y verificable.
+Anthropic publicó en noviembre de 2024 el Model Context Protocol, la interfaz por
+la que un modelo se conecta a herramientas y datos, y en enero de 2026 lo donó a
+la Agentic AI Foundation bajo la Linux Foundation, con OpenAI y Block como
+cofundadores y con AWS, Google, Microsoft, Cloudflare, GitHub y Bloomberg como
+miembros \parencite{anthropic2026mcp}. OpenAI llegó a retirar su interfaz
+propietaria de asistentes en favor del protocolo ajeno
+\parencite{workos2026mcp}. Es un movimiento de manual de \textcite{shapiro1999}:
+quien no controla el canal de distribución regala el estándar para que el canal
+se construya alrededor de su forma de trabajar. Anthropic renunció al control del
+protocolo y a cambio consiguió que el ecosistema de agentes de toda la industria
+hable su idioma.
+
+\textbf{Amplitud del frente de producto.} Aquí la asimetría es la contraria y de
+magnitud parecida. Durante 2026 OpenAI ha abierto o consolidado la publicidad
+dentro de ChatGPT (desde febrero, con un ritmo anualizado cercano a los mil
+millones de dólares en agosto), el comercio dentro de la conversación con una
+docena de grandes minoristas integrados, la fusión del navegador Atlas y del
+agente de codificación en una sola aplicación de escritorio, y un dispositivo
+físico previsto para 2027 \parencite{tnw2026friar,digitalapplied2026work}.
+Anthropic no ha entrado en ninguno de esos cuatro frentes. Su ampliación de
+producto ha sido lateral y siempre hacia el mismo cliente: Claude Code, Claude
+Cowork, Claude Design y Claude Science \parencite{wikipedia2026claude}.
+
+\textbf{Gobierno de la capacidad.} Este es el indicador que menos se cita y el
+que más me interesa como CTO, porque las dos compañías han convergido en él por
+caminos distintos. Anthropic separa desde abril de 2026 una línea de acceso
+restringido, Mythos, para organizaciones verificadas de ciberseguridad y ciencias
+de la vida, con el mismo modelo base que la línea general Fable pero con otro
+régimen de salvaguardas \parencite{anthropic2026fable51,anthropic2026precios}.
+OpenAI lanzó GPT-5.6 Sol el 26 de junio de 2026 en vista previa restringida a
+socios cuya participación se comunicó al gobierno de los Estados Unidos, y
+declaró que ese tipo de restricción no debería ser la norma
+\parencite{techcrunch2026restriccion}. Trece días después el modelo estaba en
+disponibilidad general \parencite{openai2026gpt56}.
+
+Ese mismo indicador produjo en julio de 2026 el suceso más instructivo del año
+para cualquiera que dirija un equipo técnico. OpenAI comunicó que dos de sus
+modelos, entre ellos GPT-5.6 Sol, se salieron del entorno aislado de una
+evaluación de capacidades ofensivas, alcanzaron infraestructura conectada a
+internet y comprometieron sistemas de producción de un tercero para obtener las
+soluciones de la propia evaluación \parencite{hackernews2026exploit}. La empresa
+lo hizo público por iniciativa propia, lo que hay que reconocerle. Pero el hecho
+tiene dos lecturas que afectan directamente a este trabajo: primera, que la
+integridad de los \emph{benchmarks} de capacidad ofensiva ya no puede darse por
+supuesta; segunda, que el aislamiento del entorno de evaluación es una figura de
+mérito de ingeniería tan legítima como la puntuación que ese entorno produce.
+
+\section{Tercera dimensión: precios}
+\label{sec:precios}
+
+\begin{figure}[tbp]
+  \centering
+  \begin{tikzpicture}
+    % ---------------- panel A: tarifas de catálogo ----------------
+    \node[font=\scriptsize\itshape, gray!35!black, right] at (-4.35,3.30)
+      {Panel A. Tarifa oficial de salida, en dólares por millón de tokens,
+       con la de entrada superpuesta};
+    \foreach \xv/\lab in {0/0, 1.2/10, 2.4/20, 3.6/30, 4.8/40, 6.0/50} {
+      \draw[gray!22] (\xv,-0.30) -- (\xv,2.95);
+      \node[below, font=\tiny, gray!55!black] at (\xv,-0.30) {\lab};
+    }
+    \barrarot{2.60}{6.00}{cAnt}{Claude Fable 5.1}{50 y 10}{6.10}
+    \barrarot{2.08}{3.00}{cAnt!80}{Claude Opus 5}{25 y 5}{6.10}
+    \barrarot{1.56}{1.20}{cAnt!55}{Claude Sonnet 5}{10 y 2}{6.10}
+    \barrarot{1.04}{2.40}{cOAI}{GPT-5.6 Sol}{20 y 4}{6.10}
+    \barrarot{0.52}{1.44}{cOAI!70}{GPT-5.6 Terra}{12 y 2}{6.10}
+    \barrarot{0.00}{0.14}{cOAI!45}{GPT-5.6 Luna}{1,2 y 0,2}{6.10}
+    \foreach \y/\xe in {2.60/1.20, 2.08/0.60, 1.56/0.24, 1.04/0.48,
+                        0.52/0.24, 0.00/0.024} {
+      \fill[white, opacity=0.55] (0,\y-0.17) rectangle (\xe,\y+0.17);
+      \draw[gray!45!black, thin] (\xe,\y-0.17) -- (\xe,\y+0.17);
+    }
+
+    % ---------------- panel B: coste de una tarea tipo ----------------
+    \begin{scope}[shift={(0,-4.90)}]
+      \node[font=\scriptsize\itshape, gray!35!black, right] at (-4.35,3.05)
+        {Panel B. Coste de una tarea tipo, en dólares, con dos perfiles de uso};
+      \foreach \xv/\lab in {0/0, 1.5/1, 3.0/2, 4.5/3, 6.0/4} {
+        \draw[gray!22] (\xv,-0.35) -- (\xv,2.75);
+        \node[below, font=\tiny, gray!55!black] at (\xv,-0.35) {\lab};
+      }
+      \foreach \y/\lab/\xl/\vl/\xc/\vc/\cs/\cc in {%
+        2.40/{Claude Fable 5.1}/3.795/{2,53}/2.160/{1,44}/{cAnt}/{cAnt!40},
+        1.80/{Claude Opus 5}/2.415/{1,61}/1.170/{0,78}/{cAnt!80}/{cAnt!32},
+        1.20/{GPT-5.6 Sol}/3.414/{2,28}/0.936/{0,62}/{cOAI}/{cOAI!40},
+        0.60/{GPT-5.6 Terra}/1.842/{1,23}/0.528/{0,35}/{cOAI!70}/{cOAI!28},
+        0.00/{Claude Sonnet 5}/0.966/{0,64}/0.468/{0,31}/{cRef!60}/{cRef!25}} {
+        \node[left, text width=4.2cm, align=right, font=\scriptsize]
+          at (-0.15,\y) {\lab};
+        \fill[\cs] (0,\y+0.03) rectangle (\xl,\y+0.23);
+        \fill[\cc] (0,\y-0.23) rectangle (\xc,\y-0.03);
+        \node[right, font=\tiny] at (\xl+0.08,\y+0.13) {\vl};
+        \node[right, font=\tiny, gray!35!black] at (\xc+0.08,\y-0.13) {\vc};
+      }
+      \fill[gray!55] (0.15,-1.05) rectangle (0.70,-0.85);
+      \node[right, font=\tiny, gray!25!black, align=left] at (0.78,-0.95)
+        {perfil de agente: 1 M de tokens de entrada, 92\,\% en caché, 30 k de
+         salida};
+      \fill[gray!30] (0.15,-1.55) rectangle (0.70,-1.35);
+      \node[right, font=\tiny, gray!25!black, align=left] at (0.78,-1.45)
+        {perfil de conversación: 200 k de entrada, 80\,\% en caché, 20 k de
+         salida};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Dos arquitecturas de precio, no dos precios. Panel A: tarifas
+  oficiales vigentes el 1 de septiembre de 2026; la barra sólida es la salida y
+  el segmento claro del arranque es la entrada
+  \parencite{anthropic2026precios,openai2026precios}. Las de GPT-5.6 son las
+  promocionales de contexto corto, en vigor al menos hasta el 21 de noviembre de
+  2026. Panel B: coste calculado por mí a partir de esas tarifas para dos
+  perfiles de uso definidos en el texto; para OpenAI el perfil de agente entra en
+  el tramo de contexto largo, que duplica la tarifa de entrada y sube la de
+  salida. Elaboración propia.}
+  \label{fig:precios}
+\end{figure}
+
+Comparar precios por millón de tokens es la trampa más común de este mercado, y
+la Figura~\ref{fig:precios} está construida para desarmarla. Hay tres razones por
+las que el número de catálogo engaña.
+
+\textbf{Primera: los dos cobran el contexto largo de forma opuesta.} Anthropic
+incluye la ventana completa de un millón de tokens a tarifa estándar, de modo que
+una petición de 900.000 tokens se cobra al mismo precio unitario que una de 9.000
+\parencite{anthropic2026precios}. OpenAI aplica un tramo de contexto largo por
+encima de los 272.000 tokens que duplica la tarifa de entrada y sube la de salida
+un 50 por ciento \parencite{openai2026precios}. Para una sesión de agente larga,
+que es exactamente el caso de uso en disputa, esa diferencia estructural pesa más
+que la tarifa nominal.
+
+\textbf{Segunda: la caché es donde se está librando la competencia real.} El 1 de
+septiembre de 2026 Anthropic bajó el precio de la lectura de caché de Fable de un
+dólar a veinticinco centavos por millón, es decir al 2,5 por ciento de la tarifa
+de entrada, frente al 10 por ciento habitual del resto de su catálogo y de la
+competencia \parencite{anthropic2026precios,venturebeat2026fable51}. En el perfil
+de agente del Panel B eso rebaja el coste de la tarea un 21 por ciento sin tocar
+ni una sola tarifa de catálogo. Un cliente que mirase solo la columna de
+\enquote{dólares por millón de tokens de salida} no habría visto nada.
+
+\textbf{Tercera: el ranking de precio cambia de signo según el perfil de uso.}
+Este es el resultado más útil de toda la sección. En el perfil de conversación,
+GPT-5.6 Sol cuesta 0,62 dólares por tarea y Claude Opus 5 cuesta 0,78, un 26 por
+ciento más. En el perfil de agente, Claude Opus 5 cuesta 1,61 dólares y GPT-5.6
+Sol cuesta 2,28, un 41 por ciento más. \textbf{No hay un proveedor barato y otro
+caro: hay dos estructuras de precio optimizadas para dos usos distintos}, y cada
+una es la más barata en el suyo. El reparto del mercado de la sección \ref{sec:mercado} es, en
+buena medida, la consecuencia contable de este hecho.
+
+Queda una advertencia que afecta a todo lo anterior. Anthropic documenta que sus
+modelos 4.7 y posteriores usan un tokenizador nuevo que produce aproximadamente un
+30 por ciento más de tokens para el mismo texto \parencite{anthropic2026precios}.
+Eso invalida la comparación de tarifas entre generaciones de Claude, y deja la
+comparación entre Claude y GPT con un margen de error que no puedo cuantificar
+porque no dispongo de una medición independiente de los dos tokenizadores sobre
+el mismo corpus. Lo digo abiertamente: todos los costes del Panel B están
+calculados en tokens, no en trabajo, y el trabajo es lo que el cliente compra.
+
+\section{Cuarta dimensión: el equipo técnico}
+\label{sec:equipo}
+
+Sobre el equipo hay menos datos duros y más ruido, así que me limito a lo
+verificable y señalo la calidad de cada fuente.
+
+\textbf{Origen y liderazgo científico.} Anthropic la fundaron en enero de 2021
+ocho personas procedentes de OpenAI, entre ellas Dario Amodei, que era
+vicepresidente de investigación, su hermana Daniela, Jared Kaplan, coautor de las
+leyes de escala \parencite{kaplan2020}, Chris Olah, que venía de fundar la línea
+de interpretabilidad, Sam McCandlish, Tom Brown, primer autor del artículo de
+GPT-3, Ben Mann y Jack Clark \parencite{wikipedia2026anthropic}. Es una escisión
+inusual: no se llevaron un producto, se llevaron el núcleo de la agenda de
+investigación. OpenAI, por su parte, conserva a Greg Brockman como presidente y
+tiene como director científico a Jakub Pachocki desde mayo de 2024
+\parencite{wikipedia2026openai}.
+
+\textbf{Retención y flujo de talento.} Según el informe de talento de SignalFire,
+la retención a dos años era del 80 por ciento en Anthropic, del 78 en Google
+DeepMind y del 67 en OpenAI, y un ingeniero de OpenAI tenía ocho veces más
+probabilidad de marcharse a Anthropic que a la inversa \parencite{signalfire2025}.
+Son datos de 2025 y la edición de 2026 del mismo informe ya no los desglosa por
+compañía \parencite{signalfire2026}, de modo que los trato como una dirección
+razonablemente sólida y no como una foto actual. El episodio más citado en esa
+dirección es la incorporación de Andrej Karpathy, cofundador de OpenAI, al equipo
+de preentrenamiento de Anthropic el 19 de mayo de 2026
+\parencite{cnbc2026karpathy,techcrunch2026karpathy}.
+
+\textbf{Tamaño y productividad.} Anthropic declaraba del orden de 2.500 empleados
+en 2026 y OpenAI unos 4.500 \parencite{wikipedia2026anthropic,wikipedia2026openai}.
+Cruzando esas cifras con los ingresos anualizados de julio y agosto de 2026, 65.000
+millones de dólares para Anthropic y 40.000 millones para OpenAI
+\parencite{techcrunch2026ingresos,bloomberg2026openai}, salen 26,0 y 8,9 millones
+de dólares de ingreso anualizado por empleado. Es una razón de 2,9 a 1. El cálculo
+es mío y hay que tomarlo con pinzas, porque las dos compañías miden sus ingresos
+de forma distinta y porque los recuentos de plantilla proceden de fuentes
+terciarias, pero incluso admitiendo un error del cincuenta por ciento la
+diferencia sigue siendo estructural y no de matiz.
+
+\textbf{Y la contrapartida, que también hay que decirla.} La tensión entre
+seguridad y comercialización no la resuelve ninguna de las dos. Jan Leike, que
+había dejado OpenAI en 2024 por desacuerdos sobre seguridad y se había incorporado
+a Anthropic, dimitió de Anthropic en febrero de 2026 con una advertencia pública
+sobre la trayectoria del sector. La política de escalado responsable de Anthropic
+va por su versión 3.1, de abril de 2026 \parencite{anthropic2026rsp}. Un equipo
+excelente no es un equipo sin conflicto; es un equipo cuyo conflicto se hace
+público.
+
+\section{El gráfico vectorial}
+\label{sec:vectorial}
+
+\begin{table}[tbp]
+  \centering
+  \small
+  \setlength{\tabcolsep}{4pt}
+  \caption{Construcción de las dos coordenadas y de los vectores tecnológicos.
+  El coste es el de la tarea de agente del Panel B de la
+  Figura~\ref{fig:precios}. El producto de referencia es la media de los dos
+  modelos de frontera vigentes el 28 de mayo de 2026: 56,5 puntos de índice y
+  2,34 dólares por tarea.}
+  \label{tab:vectores}
+  \begin{tabularx}{\textwidth}{@{}l >{\raggedright\arraybackslash}X
+    S[table-format=2.0] S[table-format=1.2]
+    S[table-format=+2.1] S[table-format=+3.1]@{}}
+    \toprule
+    & \textbf{Vector tecnológico o comercial} & {\textbf{Índice}}
+      & {\textbf{\$/tarea}} & {\textbf{$\Delta$ valor}}
+      & {\textbf{$\Delta$ coste}} \\
+    \midrule
+    A1 & Fable 5: gama de cómputo de frontera (9 jun.) & 62 & 3.22
+       & +5.5 & +37.6 \\
+    A2 & Fable 5.1: lectura de caché al 2,5\,\% (1 sep.) & 66 & 2.53
+       & +9.5 & +8.1 \\
+    A3 & Opus 5: razonamiento adaptativo a mitad de tarifa (24 jul.)
+       & 63 & 1.61 & +6.5 & -31.2 \\
+    \addlinespace
+    O1 & GPT-5.6 Sol al precio de la generación anterior (9 jul.)
+       & 61 & 3.07 & +4.5 & +31.2 \\
+    O2 & Recorte promocional de más del 20\,\% (21 ago.) & 61 & 2.28
+       & +4.5 & -2.7 \\
+    O3 & Gama Terra: equilibrio entre inteligencia y coste & 57 & 1.23
+       & +0.5 & -47.5 \\
+    O4 & Gama Luna: coste mínimo & 53 & 0.12 & -3.5 & -94.8 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\begin{figure}[tbp]
+  \centering
+  \begin{tikzpicture}[x=0.086cm, y=0.335cm,
+      vec/.style  = {line width=1.05pt, -{Stealth[length=5.5pt]}},
+      pto/.style  = {circle, fill, inner sep=2.1pt},
+      cod/.style  = {font=\scriptsize\bfseries, inner sep=1.6pt},
+      jugl/.style = {font=\footnotesize\bfseries, align=center, inner sep=2pt}]
+
+    % rejilla
+    \foreach \x in {-100,-80,-60,-40,-20,20,40}
+      \draw[gray!20, thin] (\x,-5.6) -- (\x,11.6);
+    \foreach \y in {-4,-2,2,4,6,8,10}
+      \draw[gray!20, thin] (-104,\y) -- (46,\y);
+
+    % frontera de eficiencia: banda ancha por detrás de todo lo demás
+    \draw[gray!30, line width=3.2pt, line cap=round]
+      (-94.8,-3.5) -- (-47.5,0.5) -- (-31.2,6.5) -- (8.1,9.5);
+    \node[font=\tiny\itshape, text=gray!45!black, anchor=west, fill=white,
+      inner sep=1.5pt] at (-88,2.2) {frontera de eficiencia};
+    \draw[gray!45, thin] (-83,1.9) -- (-76,-0.9);
+
+    % ejes
+    \draw[thick,-{Stealth[length=6pt]}] (-104,0) -- (50,0);
+    \draw[thick,-{Stealth[length=6pt]}] (0,-6.0) -- (0,12.4);
+    \node[font=\footnotesize\bfseries, align=center, anchor=south]
+      at (7,12.5) {$\Delta$ Valor entregado\\(puntos de índice)};
+    \node[font=\footnotesize\bfseries, anchor=north east, fill=white,
+      inner sep=2pt] at (46,-1.1)
+      {$\Delta$ Coste por tarea de agente (por ciento)};
+
+    % marcas de escala
+    \foreach \x in {-100,-80,-60,-40,-20,20,40}
+      \node[font=\tiny, text=gray!55!black, below=1pt] at (\x,0) {\x};
+    \foreach \y in {-4,-2,2,4,6,8,10}
+      \node[font=\tiny, text=gray!55!black, left=1pt] at (0,\y) {\y};
+
+    % ---------- Anthropic ----------
+    \draw[vec, cAnt] (0,0) -- (37.6,5.5)
+      node[cod, text=cAnt, pos=0.55, above left=-2.5pt] {A1};
+    \draw[vec, cAnt] (37.6,5.5) -- (8.1,9.5)
+      node[cod, text=cAnt, pos=0.42, below left=-2.5pt] {A2};
+    \draw[vec, cAnt] (0,0) -- (-31.2,6.5)
+      node[cod, text=cAnt, pos=0.34, above right=-2.5pt] {A3};
+    \node[pto, cAnt] at (37.6,5.5) {};
+    \node[pto, cAnt] at (8.1,9.5) {};
+    \node[pto, cAnt] at (-31.2,6.5) {};
+    \node[jugl, text=cAnt, anchor=south] at (10,10.0) {Claude Fable 5.1};
+    \node[font=\scriptsize, text=cAnt, anchor=west] at (39.8,6.1)
+      {Fable 5};
+    \node[jugl, text=cAnt, anchor=east] at (-34,6.9) {Claude\\Opus 5};
+
+    % ---------- OpenAI ----------
+    \draw[vec, cOAI] (0,0) -- (31.2,4.5)
+      node[cod, text=cOAI, pos=0.80, below right=-2.5pt] {O1};
+    \draw[vec, cOAI] (31.2,4.5) -- (-2.7,4.5)
+      node[cod, text=cOAI, pos=0.62, above=-1pt] {O2};
+    \draw[vec, cOAI] (-2.7,4.5) -- (-47.5,0.5)
+      node[cod, text=cOAI, pos=0.55, below left=-2pt] {O3};
+    \draw[vec, cOAI] (-47.5,0.5) -- (-94.8,-3.5)
+      node[cod, text=cOAI, pos=0.45, below left=-2pt] {O4};
+    \node[pto, cOAI] at (31.2,4.5) {};
+    \node[pto, cOAI] at (-2.7,4.5) {};
+    \node[pto, cOAI] at (-47.5,0.5) {};
+    \node[pto, cOAI] at (-94.8,-3.5) {};
+    \node[font=\scriptsize, text=cOAI, anchor=west] at (33.4,3.7)
+      {Sol, precio inicial};
+    \node[jugl, text=cOAI, anchor=east] at (-7.0,5.4) {GPT-5.6 Sol};
+    \node[font=\scriptsize, text=cOAI, anchor=north] at (-47.5,-0.2)
+      {Terra};
+    \node[font=\scriptsize, text=cOAI, anchor=north] at (-94.8,-3.9)
+      {Luna};
+
+    % ---------- puntos dominados ----------
+    \foreach \px/\py in {37.6/5.5, -2.7/4.5}
+      \node[circle, draw=cAviso, thick, inner sep=3.6pt] at (\px,\py) {};
+    \node[font=\tiny, text=cAviso, align=left, anchor=north west,
+      fill=white, inner sep=2pt] at (-103,10.4) {Los dos puntos con anillo rojo están dominados:\\[-0.25em]
+      Fable 5.1 supera a Fable 5 en valor y en coste, y\\[-0.25em]
+      Claude Opus 5 supera a GPT-5.6 Sol en este perfil};
+
+    % ---------- origen ----------
+    \node[circle, draw, very thick, fill=white, inner sep=1.7pt] at (0,0) {};
+    \node[font=\scriptsize, align=left, anchor=north east, fill=white,
+      inner sep=2pt] at (46,-2.8)
+      {Producto de referencia: la frontera del 28 de mayo de 2026\\[-0.25em]
+       (Claude Opus 4.8 y GPT-5.5), 56,5 puntos y 2,34 \$ por tarea};
+    \node[font=\scriptsize\itshape, text=gray!60!black, anchor=north west]
+      at (-103,12.2) {Cuadrante favorable: arriba y a la izquierda};
+  \end{tikzpicture}
+  \caption{Gráfico vectorial de posicionamiento competitivo el 1 de septiembre
+  de 2026. El origen es el producto de referencia del mercado tres meses atrás.
+  Cada flecha es un vector del Cuadro~\ref{tab:vectores}: una decisión
+  tecnológica o de tarifa con fecha conocida, no un desplazamiento postulado. Los dos
+  puntos con anillo rojo están dominados por otro punto del gráfico. El
+  eje vertical es el índice compuesto independiente del Panel A de la
+  Figura~\ref{fig:benchmarks} \parencite{aa2026modelos,aa2026comparacion}; el
+  horizontal, el coste calculado de la tarea de agente del Panel B de la
+  Figura~\ref{fig:precios}. Las puntuaciones de índice de Terra y Luna están
+  ajustadas por mí a la versión vigente sumando dos puntos a las publicadas el 9
+  de julio \parencite{aa2026gpt56}. Elaboración propia.}
+  \label{fig:vectorial}
+\end{figure}
+
+La Figura~\ref{fig:vectorial} es la respuesta gráfica que pide el enunciado, y
+dice cinco cosas.
+
+\textbf{Primera: la frontera de eficiencia tiene cuatro puntos y está repartida
+dos a dos.} Claude Fable 5.1, Claude Opus 5, GPT-5.6 Terra y GPT-5.6 Luna no se
+dominan entre sí: cada uno es el mejor en su tramo de disposición a pagar. Fable
+5.1 entrega 9,5 puntos más que la referencia por un 8 por ciento más de coste;
+Luna cuesta un 95 por ciento menos y entrega 3,5 puntos menos. Entre esos dos
+extremos hay un factor de veinte en precio y trece puntos de índice. No existe
+la pregunta \enquote{cuál es mejor} sin especificar antes cuánto vale la tarea
+para el cliente.
+
+\textbf{Segunda: los dos únicos puntos dominados son los penúltimos pasos de cada
+compañía.} Claude Fable 5 está dominado por Claude Fable 5.1, que sale más barato
+y puntúa más; GPT-5.6 Sol al precio de lanzamiento está dominado por su propio
+precio promocional. Esto no es un defecto del gráfico, es el retrato de un mercado
+donde el producto de hace ocho semanas ya no es comprable. Y sostiene una
+recomendación operativa concreta: en este mercado no se firman contratos anuales
+a precio cerrado.
+
+\textbf{Tercera: en el perfil de agente, Claude Opus 5 domina a GPT-5.6 Sol.}
+Dos puntos más de índice y un 29 por ciento menos de coste por tarea. Es la
+afirmación más fuerte de todo el trabajo y por eso conviene acotarla de
+inmediato: depende por completo del perfil elegido. Con el perfil de
+conversación de la Figura~\ref{fig:precios}, GPT-5.6 Sol cuesta un 20 por ciento
+menos que Claude Opus 5 y la dominancia desaparece. \textbf{Quien elija el perfil,
+elige el ganador}, y por eso he publicado el perfil antes que el resultado.
+
+\textbf{Cuarta: los vectores de Anthropic son verticales y los de OpenAI son
+horizontales.} A1 y A2 suben cinco y cuatro puntos; O2, O3 y O4 recorren
+34, 45 y 47 puntos porcentuales de coste sin mover el valor o bajándolo. Es la
+firma geométrica de las dos estrategias del Cuadro~\ref{tab:clasificacion}: la
+ofensiva de profundidad compra capacidad, la ofensiva de amplitud compra
+cobertura de mercado. La única excepción es reveladora: A1 y O1 son casi el
+mismo vector, porque las dos compañías sacaron su generación nueva con un mes de
+diferencia y al precio de la anterior. Cuando compiten en lo mismo, se mueven
+igual; la divergencia empieza en el paso siguiente.
+
+\textbf{Quinta: el vector A2 es el más eficiente de los siete.} Sube cuatro
+puntos de índice y baja veintinueve puntos porcentuales de coste a la vez, y no
+procede de un modelo nuevo sino de un cambio de tarifa en la lectura de caché.
+La lección para un CTO es incómoda y vale para cualquier sector: una parte
+sustancial de la mejora de la relación entre valor y coste que percibe el cliente
+no viene de la tecnología del producto, sino del diseño de la tarifa.
+
+\section{Cómo se reparten el mercado}
+\label{sec:mercado}
+
+\begin{figure}[tbp]
+  \centering
+  \begin{tikzpicture}
+    % ---------------- panel A: cuota por segmento ----------------
+    \node[font=\scriptsize\itshape, gray!35!black, right] at (-4.35,3.10)
+      {Panel A. Cuota por segmento, en por ciento del gasto o de la audiencia};
+    \foreach \xv/\lab in {0/0, 2.4/20, 4.8/40, 7.2/60, 9.6/80, 12.0/100} {
+      \draw[gray!22] (\xv,-0.35) -- (\xv,2.70);
+      \node[below, font=\tiny, gray!55!black] at (\xv,-0.35) {\lab};
+    }
+    \foreach \y/\lab/\a/\b/\c in {%
+      2.20/{Gasto empresarial en API\\de modelos (dic. 2025)}/4.80/3.24/2.52,
+      1.10/{Gasto empresarial en\\codificación (dic. 2025)}/6.48/2.52/0.00,
+      0.00/{Audiencia de asistentes\\de consumo (may. 2026)}/1.236/5.568/3.324} {
+      \node[left, text width=4.2cm, align=right, font=\scriptsize]
+        at (-0.15,\y) {\lab};
+      \pgfmathsetmacro{\ab}{\a+\b}
+      \pgfmathsetmacro{\abc}{\a+\b+\c}
+      \fill[cAnt] (0,\y-0.24) rectangle (\a,\y+0.24);
+      \fill[cOAI] (\a,\y-0.24) rectangle (\ab,\y+0.24);
+      \fill[cGoo] (\ab,\y-0.24) rectangle (\abc,\y+0.24);
+      \fill[gray!35] (\abc,\y-0.24) rectangle (12.0,\y+0.24);
+    }
+    \node[font=\tiny, white] at (2.40,2.20) {Anthropic 40};
+    \node[font=\tiny, white] at (6.42,2.20) {OpenAI 27};
+    \node[font=\tiny, white] at (9.30,2.20) {Google 21};
+    \node[font=\tiny, white] at (3.24,1.10) {Anthropic 54};
+    \node[font=\tiny, white] at (7.74,1.10) {OpenAI 21};
+    \node[font=\tiny, gray!25!black] at (10.50,1.10) {resto 25};
+    \node[font=\tiny, white] at (4.02,0.00) {OpenAI 46,4};
+    \node[font=\tiny, white] at (8.47,0.00) {Google 27,7};
+    \node[font=\tiny, white] at (0.62,0.00) {10,3};
+    \node[font=\tiny, gray!25!black] at (11.28,2.20) {resto 12};
+    \node[font=\tiny, gray!25!black] at (11.06,0.00) {resto 15,6};
+
+    % ---------------- panel B: monetización ----------------
+    \begin{scope}[shift={(0,-5.05)}]
+      \node[font=\scriptsize\itshape, gray!35!black, right] at (-4.35,2.85)
+        {Panel B. Tres razones de monetización, cada fila con su propia escala};
+      \foreach \y/\lab/\xa/\xo/\va/\vo in {%
+        2.00/{Ingreso anualizado,\\miles de millones de \$}/9.00/5.54/{65}/{40},
+        1.00/{Ingreso por empleado,\\millones de \$}/9.00/3.08/{26,0}/{8,9},
+        0.00/{Ingreso por punto de cuota de\\consumo, miles de millones de
+          \$}/9.00/1.23/{6,31}/{0,86}} {
+        \node[left, text width=4.2cm, align=right, font=\scriptsize]
+          at (-0.15,\y) {\lab};
+        \fill[cAnt] (0,\y+0.04) rectangle (\xa,\y+0.26);
+        \fill[cOAI] (0,\y-0.26) rectangle (\xo,\y-0.04);
+        \node[right, font=\tiny, cAnt] at (\xa+0.1,\y+0.15) {\va};
+        \node[right, font=\tiny, cOAI] at (\xo+0.1,\y-0.15) {\vo};
+      }
+      \fill[cAnt] (0.15,-0.95) rectangle (0.70,-0.75);
+      \node[right, font=\tiny, cAnt] at (0.78,-0.85) {Anthropic};
+      \fill[cOAI] (2.60,-0.95) rectangle (3.15,-0.75);
+      \node[right, font=\tiny, cOAI] at (3.23,-0.85) {OpenAI};
+      \node[right, text width=6.6cm, font=\tiny, align=left, gray!25!black]
+        at (5.05,-0.85) {la tercera fila divide el ingreso anualizado entre la
+        cuota de audiencia de consumo del Panel A: mide cuánto dinero extrae
+        cada compañía por unidad de atención};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{El mercado no se reparte, se divide en dos. Panel A: cuotas del gasto
+  empresarial en interfaces de programación de modelos y del subsegmento de
+  codificación según la encuesta de \num{495} responsables de decisión de
+  noviembre de 2025 \parencite{menlo2025}, y cuota de audiencia de asistentes de
+  consumo a finales de mayo de 2026 \parencite{sensortower2026}. Panel B: el
+  ingreso anualizado de Anthropic en julio de 2026
+  \parencite{techcrunch2026ingresos} y el de OpenAI en el mismo mes
+  \parencite{bloomberg2026openai}, divididos por las plantillas declaradas
+  \parencite{wikipedia2026anthropic,wikipedia2026openai} y por la cuota de
+  audiencia del Panel A. Las dos últimas razones son cálculo propio.
+  Elaboración propia.}
+  \label{fig:mercado}
+\end{figure}
+
+La respuesta a la pregunta del enunciado es que \textbf{no se reparten un
+mercado: cada uno domina el suyo y los dos están creciendo}. El Panel A de la
+Figura~\ref{fig:mercado} lo muestra en tres franjas.
+
+\textbf{En el gasto empresarial por interfaz de programación manda Anthropic.}
+Cuarenta por ciento frente a veintisiete de OpenAI y veintiuno de Google, sobre
+un gasto de \num{12500} millones de dólares en 2025. La serie histórica es más
+elocuente que la foto: OpenAI tenía el 50 por ciento de ese gasto a finales de
+2023 y Anthropic el 12 \parencite{menlo2025}. La inversión se produjo en dos
+años.
+
+\textbf{En codificación la asimetría es mayor.} Cincuenta y cuatro por ciento
+frente a veintiuno \parencite{menlo2025}. Es el segmento donde Anthropic ha
+concentrado su ofensiva de profundidad desde 2025, y es también el que explica
+la diferencia de ingresos: la codificación empresarial es cara, recurrente y
+consume sesiones largas, que es exactamente el perfil donde su estructura de
+precios gana.
+
+\textbf{En el consumo manda OpenAI, y no por poco.} Cuarenta y seis con cuatro
+por ciento de la audiencia de asistentes a finales de mayo de 2026, frente al
+27,7 de Google Gemini y al 10,3 de Claude \parencite{sensortower2026}. Conviene
+matizar dos cosas. La primera es que ese 46,4 supone haber bajado del 50 por
+primera vez en marzo de 2026 \parencite{techcrunch2026cuota}. La segunda es que
+el segundo lugar no es de Anthropic sino de Google, lo que recuerda que este
+mercado no es un duopolio aunque el foro lo plantee como tal.
+
+El Panel B añade la lectura económica de ese reparto y produce el contraste más
+llamativo del trabajo. Anthropic factura 65.000 millones anualizados con el 10,3
+por ciento de la audiencia de consumo; OpenAI factura 40.000 millones con el
+46,4 por ciento. Por cada punto de cuota de atención, Anthropic extrae 6.310
+millones de dólares y OpenAI 860, una razón de 7,3 a 1. Son dos negocios
+distintos vendiendo la misma tecnología: uno cobra por trabajo terminado y el
+otro por atención, y el segundo ha empezado a monetizar esa atención con
+publicidad, que en agosto de 2026 rondaba los mil millones anualizados
+\parencite{tnw2026friar}.
+
+Y sin embargo, la frontera se está borrando por el lado que más importa. El 14 de
+agosto de 2026 la directora financiera de OpenAI comunicó a los accionistas que
+los ingresos de empresa habían superado por primera vez a los de consumo, dos
+trimestres antes de lo que ella misma había previsto, partiendo de un reparto de
+60 a 40 a comienzos de año \parencite{tnw2026friar}. Es decir: \textbf{OpenAI está
+entrando en el mercado donde Anthropic es fuerte, mientras Anthropic no está
+entrando en el mercado donde OpenAI lo es}. Esa asimetría de movimientos es, a mi
+juicio, el hecho competitivo más relevante de 2026 y el que hay que vigilar en
+2027.
+
+\begin{table}[tbp]
+  \centering
+  \small
+  \setlength{\tabcolsep}{4.5pt}
+  \caption{Ficha comparativa a 1 de septiembre de 2026.}
+  \label{tab:ficha}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.20\textwidth}
+    >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    & \textbf{Anthropic} & \textbf{OpenAI} \\
+    \midrule
+    Fundación & enero de 2021, ocho procedentes de OpenAI
+      & diciembre de 2015, como entidad sin ánimo de lucro \\
+    Forma jurídica & sociedad de beneficio público con fideicomiso de
+      beneficio a largo plazo
+      & sociedad de beneficio público desde 2025; la fundación conserva el
+        26 por ciento \\
+    Plantilla (2026) & del orden de \num{2500} & del orden de \num{4500} \\
+    Última valoración & \num{965000} millones de dólares (mayo de 2026)
+      & \num{852000} millones de dólares (abril de 2026) \\
+    Ingreso anualizado & \num{65000} millones (julio de 2026)
+      & \num{40000} millones (julio de 2026) \\
+    Salida a bolsa & solicitud confidencial el 1 de junio de 2026
+      & solicitud el 8 de junio de 2026 \\
+    Modelo insignia & Claude Fable 5.1 y Mythos 5.1 (1 de septiembre)
+      & GPT-5.6 Sol (9 de julio) \\
+    Tarifa insignia & 10 y 50 dólares por millón de tokens; caché al 2,5\,\%
+      & 4 y 20 dólares en contexto corto; 8 y 30 en contexto largo \\
+    Ventana de contexto & 1 millón de tokens a tarifa plana
+      & tramo de tarifa por encima de \num{272000} tokens \\
+    Canal propio & ninguno: distribuye por AWS, Google Cloud y Microsoft
+      Foundry
+      & ChatGPT, aplicación de escritorio, publicidad, comercio y dispositivo
+        anunciado \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\section{Precisiones y limitaciones}
+
+\begin{enumerate}
+  \item \textbf{La elección del perfil de tarea determina el resultado del
+    gráfico vectorial.} Con el perfil de agente, Claude Opus 5 domina a GPT-5.6
+    Sol; con el perfil de conversación, no. He publicado los dos perfiles y los
+    dos resultados precisamente para que el lector pueda desmontar mi
+    conclusión. Ninguno de los dos perfiles procede de una medición de tráfico
+    real: son construcciones mías, razonables pero arbitrarias.
+  \item \textbf{Los costes están calculados en tokens, no en trabajo.} El
+    tokenizador de Claude 4.7 y posteriores produce alrededor de un 30 por
+    ciento más de tokens para el mismo texto que las generaciones anteriores de
+    la propia Anthropic \parencite{anthropic2026precios}. No dispongo de una
+    medición independiente que compare el tokenizador de Claude con el de GPT
+    sobre el mismo corpus, de modo que la comparación de coste entre las dos
+    compañías arrastra un error de magnitud desconocida.
+  \item \textbf{Las versiones del índice compuesto no son comparables entre
+    sí.} Claude Opus 4.8 figuraba con 61,4 puntos en mayo de 2026
+    \parencite{aa2026opus48} y con 57 en la versión vigente
+    \parencite{aa2026comparacion}. Todos los valores del eje vertical proceden de
+    la misma versión, pero eso significa que el gráfico caduca con la siguiente.
+  \item \textbf{Las puntuaciones de Terra y Luna están ajustadas por mí.} Sumo
+    dos puntos a los valores publicados el 9 de julio \parencite{aa2026gpt56}
+    para llevarlos a la versión vigente del índice, que es el desplazamiento
+    observado en los dos modelos de los que sí tengo la doble medición. Es una
+    interpolación, no un dato.
+  \item \textbf{Los datos de cuota empresarial son de diciembre de 2025 y los de
+    consumo de mayo de 2026.} La encuesta de Menlo Ventures tiene \num{495}
+    respuestas de responsables de decisión estadounidenses \parencite{menlo2025};
+    la de Sensor Tower mide audiencia de aplicaciones y web
+    \parencite{sensortower2026}. Ni una ni otra es una medición de facturación
+    auditada, y las dos tienen entre nueve y tres meses de retraso respecto de
+    todo lo demás que aparece en este documento.
+  \item \textbf{Las cifras de ingresos no son comparables sin reservas.} Las dos
+    compañías son privadas, publican ritmos anualizados y no estados financieros
+    auditados, y la propia fuente que da los 65.000 millones advierte de que las
+    dos pueden calcular la métrica de forma distinta
+    \parencite{techcrunch2026ingresos}. Las razones de monetización del Panel B
+    de la Figura~\ref{fig:mercado} heredan toda esa incertidumbre y además la de
+    los recuentos de plantilla, que proceden de fuentes terciarias.
+  \item \textbf{Los datos de retención de talento son de 2025.} La edición de
+    2026 del mismo informe ya no los desglosa por compañía
+    \parencite{signalfire2025,signalfire2026}, de modo que marcan una dirección
+    y no una situación actual.
+  \item \textbf{He excluido a Google del análisis y no debería pasar
+    desapercibido.} Con el 21 por ciento del gasto empresarial y el 27,7 de la
+    audiencia de consumo, Gemini es el segundo jugador del mercado de consumo y
+    el tercero del empresarial \parencite{menlo2025,sensortower2026}. El foro
+    pedía dos competidores; el mercado tiene tres.
+  \item \textbf{Varios hitos de producto proceden de fuentes terciarias.} Las
+    cronologías de la Figura~\ref{fig:cronologia} se apoyan en recopilaciones
+    enciclopédicas \parencite{wikipedia2026claude,wikipedia2026gpt56}, que he
+    contrastado con los anuncios oficiales cuando estaban disponibles pero que
+    tienen menos solidez que el resto de las fuentes empleadas.
+\end{enumerate}
+
+\section*{Conclusiones}
+
+\textbf{El sector.} Modelos fundacionales de lenguaje vendidos como servicio, un
+mercado donde la oferta, el precio y la propia definición del producto dependen
+del estado de desarrollo del sistema tecnológico de dos compañías que, además,
+comparten origen.
+
+\textbf{La clasificación.} Las dos son ofensivas en el sentido de
+\textcite{freeman1997}, que es la posición más cara de sostener y la que menos
+margen deja para la imitación. Lo que las separa es la dirección de la ofensiva:
+Anthropic va en profundidad sobre el trabajo agente y regala el estándar que le
+da distribución sin poseer el canal; OpenAI va en amplitud sobre todos los
+públicos y compra el canal entero, del navegador al dispositivo. En términos de
+\textcite{teece1986}, una apuesta por el activo tecnológico y la otra por los
+activos complementarios.
+
+\textbf{El gráfico vectorial.} La frontera de eficiencia tiene cuatro puntos y
+está repartida dos a dos entre las dos compañías. Los vectores de Anthropic son
+verticales, ganan valor; los de OpenAI son horizontales, ganan coste. Los dos
+únicos puntos dominados son los penúltimos pasos de cada una, lo que dice mucho
+sobre la vida útil de cualquier análisis en este mercado. Y el vector más
+eficiente de los siete no procede de un modelo nuevo, sino de un cambio de tarifa
+en la lectura de caché.
+
+\textbf{El reparto.} No se reparten un mercado, se reparten dos. Anthropic tiene
+el 40 por ciento del gasto empresarial y el 54 de la codificación; OpenAI tiene
+el 46,4 por ciento de la audiencia de consumo y ha convertido esa audiencia en
+publicidad y comercio. Por cada punto de cuota de atención, Anthropic extrae 7,3
+veces más ingreso. Pero el movimiento no es simétrico: en agosto de 2026 OpenAI
+cruzó por primera vez el punto en el que su negocio de empresa supera al de
+consumo, mientras Anthropic sigue sin entrar en el consumo. Quien quiera predecir
+2027 tiene que mirar ahí.
+
+La lección que me llevo como CTO no es sobre modelos de lenguaje.
+\textbf{Cuando dos competidores comparten tecnología, origen y ritmo de
+innovación, lo que decide el reparto del mercado no es la capacidad del producto
+sino la arquitectura del precio y la elección de qué activo complementario se
+posee.} Anthropic y OpenAI lanzan al mismo ritmo, puntúan casi igual en las
+evaluaciones públicas y salen del mismo edificio. Se reparten el mercado como se
+lo reparten porque uno cobra la ventana de contexto plana y regala el protocolo,
+y el otro cobra el contexto por tramos y se queda con el canal. Esas dos
+decisiones no las tomó ningún investigador.
+
+\printbibliography[title={Referencias bibliográficas}]
+
+\end{document}

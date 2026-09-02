@@ -1,0 +1,33 @@
+# Artefactos de LuaLaTeX / Biber (se regeneran con `make pdf`)
+*.aux
+*.bcf
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.nav
+*.snm
+*.vrb
+*.xdv
+
+# Salidas intermedias de imágenes generadas por LaTeX
+*-eps-converted-to.pdf
+
+# El PDF final (main.pdf) SÍ se versiona: es el entregable de la actividad.
+
+# Basura de editores y del sistema
+.~lock.*#
+*~
+*.swp
+.DS_Store
+
+# Fuente intermedia de las figuras (la regenera `make html` desde main.tex)
+figuras.tex
+figuras.pdf
