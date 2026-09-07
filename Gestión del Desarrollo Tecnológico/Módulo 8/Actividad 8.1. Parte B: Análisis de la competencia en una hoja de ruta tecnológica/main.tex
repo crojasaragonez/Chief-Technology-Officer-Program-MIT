@@ -13,7 +13,7 @@
 \usepackage{csquotes}
 \usepackage{float}
 \usepackage{tikz}
-\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc,fit,backgrounds}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc,fit,backgrounds,shadows}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
 \usepackage{tocloft}
@@ -56,51 +56,72 @@
 \definecolor{propia}{HTML}{2F5D8C}  % ruta propuesta para la empresa
 \definecolor{descart}{HTML}{7A7A7A} % opción evaluada y descartada
 
+\definecolor{opmobjc}{HTML}{1E7A1E}   % contorno de los objetos (OPM)
+\definecolor{opmprocc}{HTML}{2E3FA8}  % contorno de los procesos (OPM)
+\definecolor{dsmarq}{HTML}{2F5D8C}    % marcas de la DSM de arquitectura
+\definecolor{dsmpro}{HTML}{8C5A2F}    % marcas de la DSM de cartera
+
 \tikzset{
-  % Notación OPM
-  opmobj/.style   = {draw, very thick, rectangle, fill=green!8,
+  % ---------------- Notación OPM (ISO 19450) ----------------
+  % Objeto: rectángulo de contorno verde.
+  opmobj/.style   = {draw=opmobjc, very thick, rectangle, fill=opmobjc!7,
                      font=\footnotesize\bfseries, align=center,
                      inner sep=4pt, minimum height=8mm, text width=26mm},
-  opmobjn/.style  = {opmobj, text width=}, % objeto de ancho natural
-  opmproc/.style  = {draw, very thick, ellipse, fill=blue!12,
-                     font=\footnotesize\bfseries, align=center,
+  opmobjn/.style  = {opmobj, text width=},
+  % Proceso: elipse de contorno azul.
+  opmproc/.style  = {draw=opmprocc, very thick, ellipse, fill=opmprocc!7,
+                     font=\footnotesize\bfseries, align=center, text=black,
                      inner sep=1pt, minimum height=9mm, minimum width=28mm},
-  opmstate/.style = {draw, rounded corners=4pt, fill=white, font=\scriptsize,
-                     inner sep=2pt, minimum height=4.5mm},
-  instr/.style    = {thick, -{Circle[open,length=5pt]}},
-  agente/.style   = {thick, -{Circle[length=5pt]}},
+  % Estado: rectángulo de esquinas redondeadas, dentro del objeto.
+  opmstate/.style = {draw=opmobjc, thick, rounded corners=3pt, fill=white,
+                     font=\scriptsize, inner sep=2pt, minimum height=4.5mm},
+  % Cosa física: sombra proyectada. Cosa ambiental: contorno discontinuo.
+  opmfis/.style   = {drop shadow={shadow xshift=0.8mm, shadow yshift=-0.8mm,
+                     opacity=1, fill=black!45}},
+  opmamb/.style   = {densely dashed},
+  % Enlaces procedimentales.
+  instr/.style    = {thick, -{Circle[open,length=5pt]}},   % instrumento
+  agente/.style   = {thick, -{Circle[length=5pt]}},        % agente
   efecto/.style   = {thick, {Stealth[length=5.5pt]}-{Stealth[length=5.5pt]}},
-  flecha/.style   = {thick, -{Stealth[length=5pt]}},
+  flecha/.style   = {thick, -{Stealth[length=5pt]}},       % consumo/resultado
+  invoca/.style   = {thick, densely dashed, -{Stealth[length=5pt]}},
   % Diagramas de bloques
   bloque/.style   = {draw, thick, rounded corners=2pt, align=center,
                      font=\footnotesize, inner sep=5pt},
   etiq/.style     = {font=\scriptsize\itshape, align=center},
 }
 
-% Triángulos estructurales de OPM.
-% #1 = rotación en grados (0 = base arriba, vértice abajo)
-% #2 = nombre de una coordenada previamente definida
-\newcommand{\opmagg}[2]{% agregación: triángulo relleno
+% --------------------------------------------------------------------------
+% Símbolos estructurales de OPM.
+% La base del triángulo se apoya en el lado del todo, del general o del
+% exhibidor, y el vértice apunta hacia la parte, la especialización o el
+% atributo. #1 = rotación en grados (0 = base arriba, vértice abajo);
+% #2 = coordenada previamente definida sobre la que se centra el símbolo.
+% --------------------------------------------------------------------------
+\newcommand{\opmtri}[4]{% #3 = semiancho, #4 = relleno
   \begin{scope}[rotate around={#1:(#2)}]
-    \path[draw,very thick,fill=black] ([shift={(-2mm,2mm)}]#2) --
-      ([shift={(2mm,2mm)}]#2) -- ([shift={(0mm,-2mm)}]#2) -- cycle;
+    \path[draw,very thick,fill=#4] ([shift={(-#3,#3)}]#2) --
+      ([shift={(#3,#3)}]#2) -- ([shift={(0mm,-#3)}]#2) -- cycle;
   \end{scope}}
-\newcommand{\opmgen}[2]{% generalización: triángulo hueco
+\newcommand{\opmagg}[2]{\opmtri{#1}{#2}{2.1mm}{black}}   % agregación-participación
+\newcommand{\opmgen}[2]{\opmtri{#1}{#2}{2.1mm}{white}}   % generalización-especialización
+\newcommand{\opmexh}[2]{% exhibición-caracterización: triángulo dentro de triángulo
+  \opmtri{#1}{#2}{2.6mm}{white}%
   \begin{scope}[rotate around={#1:(#2)}]
-    \path[draw,very thick,fill=white] ([shift={(-2mm,2mm)}]#2) --
-      ([shift={(2mm,2mm)}]#2) -- ([shift={(0mm,-2mm)}]#2) -- cycle;
+    \path[fill=black] ([shift={(-1.1mm,0.9mm)}]#2) --
+      ([shift={(1.1mm,0.9mm)}]#2) -- ([shift={(0mm,-1.1mm)}]#2) -- cycle;
   \end{scope}}
-\newcommand{\opmexh}[2]{% exhibición: triángulo hueco con triángulo relleno
-  \begin{scope}[rotate around={#1:(#2)}]
-    \path[draw,very thick,fill=white] ([shift={(-2.4mm,2.4mm)}]#2) --
-      ([shift={(2.4mm,2.4mm)}]#2) -- ([shift={(0mm,-2.4mm)}]#2) -- cycle;
-    \path[fill=black] ([shift={(-1mm,1.5mm)}]#2) --
-      ([shift={(1mm,1.5mm)}]#2) -- ([shift={(0mm,-0.1mm)}]#2) -- cycle;
-  \end{scope}}
+
+% --------------------------------------------------------------------------
+% Matriz de estructura de dependencia (DSM).
+% Rejilla cuadrada de lado #1 celdas, con celda de \dsmu de lado.
+% --------------------------------------------------------------------------
+\newlength{\dsmu}\setlength{\dsmu}{6.4mm}
 
 \title{\textbf{Alcance de la tecnología: la infraestructura como código}\\
 \large Funcionamiento de un sistema completo, capas y módulos principales,
-modelo de objetos y procesos, y posicionamiento frente a la competencia}
+matriz de estructura de dependencia, modelo de objetos y procesos, y
+posicionamiento frente a la competencia}
 \author{Carlos Luis Rojas Aragonés\\
 Gestión del Desarrollo Tecnológico}
 \date{1 de septiembre de 2026}
@@ -117,11 +138,15 @@ especificación versionada que un motor automático traduce en operaciones sobre
 la interfaz de programación de un proveedor. Este trabajo delimita el alcance
 de la tecnología, describe su principio de funcionamiento (la conciliación
 continua entre un estado deseado y un estado real), desglosa las siete capas y
-los seis módulos transversales de un sistema completo, y formaliza el conjunto
-mediante un modelo de objetos y procesos según la metodología OPM, con su
-diagrama de sistema, sus enlaces estructurales, su ampliación en detalle y el
-lenguaje OPL correspondiente. Sobre esas mismas figuras de mérito se construye
-después el posicionamiento de la empresa frente a la competencia, con un
+los seis módulos transversales de un sistema completo, y ordena sus
+interdependencias en dos matrices de estructura de dependencia, una de
+arquitectura y otra de cartera de proyectos, cuyo particionado produce la
+secuencia de implantación. Formaliza después el conjunto mediante un modelo de
+objetos y procesos según la metodología OPM, con su diagrama de sistema, el
+despliegue estructural de la especificación, la ampliación en detalle del
+proceso principal y el lenguaje OPL de los tres diagramas. Sobre las figuras
+de mérito de la tecnología se construye por último el posicionamiento de la
+empresa frente a la competencia, con un
 gráfico vectorial que sitúa a Terraform, Bicep y Pulumi en un plano de
 variación de valor para el cliente y variación de coste para el productor, y
 que descompone la trayectoria de cada jugador en los vectores tecnológicos que
@@ -135,30 +160,70 @@ la producen. Todas las figuras son de elaboración propia.
 
 % ==========================================================================
 \section{Objeto y delimitación del alcance}
+\label{sec:alcance}
 % ==========================================================================
 
 \subsec{01. El encargo}
 
-El documento recoge dos entregas encadenadas de la misma hoja de ruta
-tecnológica. La primera pedía tres cosas: un resumen del funcionamiento básico
-de un sistema completo de infraestructura como código, un conjunto de imágenes
-y diagramas que explicasen sus capas o módulos principales, y un diagrama de
-proceso-objeto elaborado en el entorno OPM Sandbox \parencite{opcloud}. Las
-dos primeras se atienden en las secciones 2 a 8, con el resumen funcional y
-los diagramas de capas y módulos; la tercera, en la sección 10, que contiene
-el modelo de objetos y procesos con su diagrama de sistema, sus enlaces
-estructurales, su ampliación en detalle y el lenguaje OPL correspondiente. El
-diagrama construido en el propio entorno de la herramienta, que no guarda ni
-exporta el trabajo, se entrega aparte.
+El documento recoge entregas encadenadas de una misma hoja de ruta
+tecnológica, y por eso no se organiza por actividades sino por los elementos
+del índice recomendado para una hoja de ruta. El Cuadro~\ref{tab:atra} recoge
+esa correspondencia.
+
+La primera entrega, el alcance de la tecnología, cubre los tres primeros
+elementos. El elemento 1, la descripción de la tecnología, ocupa las
+secciones~\ref{sec:principio} a \ref{sec:modulo}, con el resumen funcional y
+los diagramas de capas y de módulos. El elemento 2, la matriz de estructura de
+dependencia, ocupa la sección~\ref{sec:dsm} con dos matrices, una de los
+componentes del sistema y otra de los proyectos de la cartera, y con el
+particionado que convierte a ambas en una secuencia de implantación. El
+elemento 3, el modelo de objetos y procesos, ocupa la
+sección~\ref{sec:opm}, con el diagrama de sistema, el despliegue estructural
+de la especificación, la ampliación en detalle del proceso principal y el OPL
+de los tres diagramas.
 
 La segunda entrega pide analizar la competencia mediante un gráfico vectorial
-que incluya al menos dos competidores. Se atiende en la sección 9, que
-corresponde al elemento 6 del índice de una hoja de ruta tecnológica, el
-posicionamiento de la empresa con respecto a la competencia, y que compara
-tres jugadores, Terraform, Bicep y Pulumi, con la trayectoria propuesta para
-la empresa. Su sitio natural es inmediatamente después de la sección 8, porque
-las coordenadas del gráfico se construyen a partir de las figuras de mérito
-definidas allí.
+que incluya al menos dos competidores. Corresponde al elemento 6 y ocupa la
+sección~\ref{sec:comp}, que compara tres jugadores, Terraform, Bicep y
+Pulumi, con la trayectoria propuesta para la empresa. Su sitio natural es
+inmediatamente después de la sección~\ref{sec:fom}, porque las coordenadas del
+gráfico se construyen a partir de las figuras de mérito definidas allí.
+
+\begin{table}[ht]
+  \centering
+  \footnotesize
+  \caption{Correspondencia entre los doce elementos del índice recomendado
+  para una hoja de ruta tecnológica y las secciones de este documento.}
+  \label{tab:atra}
+  \begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X
+    >{\raggedright\arraybackslash}p{0.30\textwidth}@{}}
+    \toprule
+    \textbf{N.\textsuperscript{o}} & \textbf{Elemento} &
+      \textbf{Dónde se atiende} \\
+    \midrule
+    1 & Descripción de la tecnología &
+      Secciones \ref{sec:alcance} a \ref{sec:modulo} \\
+    2 & Matriz de estructura de dependencia (DSM) &
+      Sección \ref{sec:dsm} \\
+    3 & Modelo con metodología OPM &
+      Sección \ref{sec:opm} \\
+    4 & Figuras de mérito (FOM) &
+      Sección \ref{sec:fom} \\
+    5 & Correspondencia con las motivaciones estratégicas &
+      Pendiente \\
+    6 & Posicionamiento frente a la competencia &
+      Sección \ref{sec:comp} \\
+    7 & Modelo técnico & Pendiente \\
+    8 & Modelo financiero &
+      Declarado fuera de alcance en la sección \ref{sec:comp} \\
+    9 & Portfolio de proyectos y prototipos de I+D &
+      Cuadro \ref{tab:dsmproy}, en lo relativo a su secuencia \\
+    10 & Publicaciones, presentaciones y patentes clave & Pendiente \\
+    11 & Declaración de estrategia tecnológica & Pendiente \\
+    12 & Evaluación del nivel de madurez de la hoja de ruta & Pendiente \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
 
 \subsec{02. Qué se entiende aquí por sistema completo}
 
@@ -240,6 +305,7 @@ persistente, y proteja a los segundos de las operaciones de reemplazo.
 
 % ==========================================================================
 \section{El principio de funcionamiento}
+\label{sec:principio}
 % ==========================================================================
 
 \subsec{01. Tres estados y una función}
@@ -341,6 +407,7 @@ hace con ella. Hay tres posturas, en orden creciente de rigor:
 
 % ==========================================================================
 \section{El ciclo básico de operación}
+\label{sec:ciclo}
 % ==========================================================================
 
 Descendiendo un nivel desde el bucle abstracto, la operación cotidiana de un
@@ -441,6 +508,7 @@ concurrencia.
 
 % ==========================================================================
 \section{Las capas de un sistema completo}
+\label{sec:capas}
 % ==========================================================================
 
 Un sistema completo se organiza en siete capas apiladas, cada una de las
@@ -549,6 +617,7 @@ arquitectura de una implantación, y conviene documentarla de forma explícita.
 
 % ==========================================================================
 \section{Los módulos transversales}
+\label{sec:transversales}
 % ==========================================================================
 
 Las siete capas describen el flujo principal, pero un sistema completo
@@ -630,6 +699,7 @@ característico que aparece cuando falta.
 
 % ==========================================================================
 \section{Modos de operación}
+\label{sec:modos}
 % ==========================================================================
 
 Sobre la misma arquitectura caben decisiones de operación que cambian de forma
@@ -694,7 +764,7 @@ El arrastre tiene dos ventajas estructurales. La primera es de seguridad: las
 credenciales de producción no viajan a un sistema de integración compartido.
 La segunda es que el agente, por estar siempre presente, puede conciliar de
 forma continua y no sólo cuando alguien confirma un cambio, que es la cuarta
-propiedad exigida en la sección 1. Su coste es que exige un agente por
+propiedad exigida en la sección~\ref{sec:alcance}. Su coste es que exige un agente por
 entorno y complica los flujos que necesitan orden entre entornos.
 
 \subsec{02. Mutable frente a inmutable}
@@ -744,6 +814,7 @@ Cuadro~\ref{tab:modos} resume las consecuencias de cada una.
 
 % ==========================================================================
 \section{El módulo como unidad de composición}
+\label{sec:modulo}
 % ==========================================================================
 
 El término \enquote{módulo} tiene en IaC un sentido preciso: es la unidad
@@ -802,7 +873,966 @@ recursos obliga a que cada cambio pequeño planifique sobre un conjunto grande,
 lo que alarga el ciclo y aumenta el riesgo de cada aplicación.
 
 % ==========================================================================
+\section{Matriz de estructura de dependencia (DSM)}
+\label{sec:dsm}
+% ==========================================================================
+
+Esta sección corresponde al elemento 2 del índice de una hoja de ruta
+tecnológica. Las secciones anteriores han enumerado las piezas del sistema,
+pero enumerarlas no basta: lo que decide el orden de una implantación, el
+riesgo de cada paso y la conveniencia de agrupar unos trabajos y separar otros
+son las dependencias entre ellas. La matriz de estructura de dependencia, o
+DSM \parencite{steward1981,eppinger2012}, es el instrumento que las hace
+visibles y operables, porque permite reordenar filas y columnas hasta que la
+propia matriz muestra la secuencia.
+
+Se construyen dos matrices, porque la hoja de ruta necesita responder a dos
+preguntas distintas. La primera es de arquitectura: qué componente del sistema
+necesita a qué otro, lo que determina qué se puede diseñar y desplegar por
+separado. La segunda es de cartera: qué proyecto de la hoja de ruta necesita
+que otro esté terminado, lo que determina el calendario y el orden de
+inversión.
+
+\subsec{01. Convención de lectura}
+
+Ambas matrices son cuadradas y llevan los mismos elementos en filas y en
+columnas, en el mismo orden. Se adopta la convención de entradas por fila:
+
+\begin{quote}
+Una marca en la celda de la fila $i$ y la columna $j$ significa que el
+elemento $i$ \textbf{necesita algo del} elemento $j$. Se lee, por tanto,
+recorriendo la fila $i$ de izquierda a derecha: las marcas de esa fila son
+todo lo que $i$ recibe. Recorriendo en cambio la columna $j$ de arriba abajo
+se obtiene todo lo que $j$ entrega.
+\end{quote}
+
+De esa convención se derivan las tres lecturas que se usan después. La
+\textbf{suma de una fila} mide cuántas condiciones previas tiene un elemento,
+es decir, su dificultad de arranque. La \textbf{suma de una columna} mide a
+cuántos elementos afecta, es decir, el alcance del daño si falla o se retrasa.
+Y una marca \textbf{por encima de la diagonal}, una vez ordenada la matriz,
+señala una realimentación: un elemento que necesita algo que en el orden
+propuesto todavía no existe, lo que obliga a iterar.
+
+La diagonal no se marca: ningún elemento se necesita a sí mismo. Las celdas
+diagonales se sombrean únicamente para orientar la vista.
+
+\subsec{02. La DSM de arquitectura}
+
+Los elementos son los trece componentes ya descritos: las siete capas de la
+Figura~\ref{fig:pila} y los seis módulos transversales del
+Cuadro~\ref{tab:transversales}. El Cuadro~\ref{tab:dsmelem} fija los códigos
+que usa la matriz y, para cada componente, el tipo de dependencia que
+introduce.
+
+\begin{table}[ht]
+  \centering
+  \footnotesize
+  \caption{Los trece componentes de la DSM de arquitectura y la dependencia
+  que cada uno introduce en el sistema.}
+  \label{tab:dsmelem}
+  \begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}p{0.235\textwidth}
+    >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{Cód.} & \textbf{Componente} & \textbf{Qué necesita de los demás} \\
+    \midrule
+    L0 & Sustrato del proveedor & Nada del sistema: es su objeto. \\
+    L1 & Aprovisionamiento & La interfaz de L0, la especificación versionada,
+         el registro de estado, las credenciales y el veredicto de la
+         política. \\
+    L2 & Imágenes & Sustrato donde construir, definiciones versionadas y
+         credenciales del registro de artefactos. \\
+    L3 & Configuración & Máquinas ya creadas por L1 a partir de imágenes de
+         L2. \\
+    L4 & Orquestación & El agrupamiento aprovisionado por L1 y las imágenes de
+         contenedor de L2. \\
+    L5 & Entrega & El motor de L1, el destino de L4, el repositorio, las
+         políticas y las pruebas que ejecuta en cada paso. \\
+    L6 & Plataforma & El catálogo que ejecuta sobre L1, la canalización de L5,
+         las políticas que codifica y las métricas que muestra. \\
+    M1 & Control de versiones & Nada: es la raíz del sistema. \\
+    M2 & Gestión de estado & Almacenamiento remoto en L0 y claves de cifrado
+         del módulo de secretos. \\
+    M3 & Gestión de secretos & El servicio de custodia y cifrado de L0. \\
+    M4 & Política como código & El plan que produce L1 y el repositorio donde
+         viven las reglas. \\
+    M5 & Pruebas & Entornos efímeros que crea L1 y el repositorio del que
+         parten. \\
+    M6 & Observabilidad & Telemetría de L0, ejecuciones de sólo lectura de L1,
+         registros de L5 y el estado custodiado por M2. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+La Figura~\ref{fig:dsmarq} presenta la matriz en el orden natural de
+exposición, capas primero y módulos después. Es el orden en que se ha descrito
+el sistema, no el orden en que conviene construirlo, y por eso las marcas
+aparecen repartidas a ambos lados de la diagonal.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[x=6.4mm, y=6.4mm, font=\scriptsize]
+    \def\n{13}
+    % ---- marcas: fila/columna (la fila necesita algo de la columna)
+    \def\marcas{2/1,2/8,2/9,2/10,2/11,
+                3/1,3/8,3/10,
+                4/2,4/3,4/8,4/10,
+                5/2,5/3,5/8,5/10,
+                6/2,6/5,6/8,6/10,6/11,6/12,
+                7/2,7/6,7/8,7/11,7/13,
+                9/1,9/10,
+                10/1,
+                11/2,11/8,
+                12/2,12/8,
+                13/1,13/2,13/6,13/9}
+    % ---- fondo de la rejilla y diagonal
+    \fill[gray!4] (0,0) rectangle (\n,-\n);
+    \foreach \i in {1,...,13}
+      \fill[gray!35] (\i-1,-\i+1) rectangle (\i,-\i);
+    % ---- marcas
+    \foreach \r/\c in \marcas
+      \fill[dsmarq] (\c-1+0.14,-\r+1-0.14) rectangle (\c-0.14,-\r+0.14);
+    % ---- rejilla
+    \draw[gray!55, thin, step=1] (0,0) grid (\n,-\n);
+    \draw[thick] (0,0) rectangle (\n,-\n);
+    % ---- separación entre capas y módulos
+    \draw[thick, gray!70] (7,0) -- (7,-\n);
+    \draw[thick, gray!70] (0,-7) -- (\n,-7);
+    % ---- etiquetas
+    \foreach \i/\lab in {1/L0,2/L1,3/L2,4/L3,5/L4,6/L5,7/L6,
+                         8/M1,9/M2,10/M3,11/M4,12/M5,13/M6} {
+      \node[anchor=east] at (-0.2,-\i+0.5) {\lab};
+      \node[anchor=west, rotate=90] at (\i-0.5,0.2) {\lab};
+    }
+    % ---- sumas
+    \foreach \i/\v in {1/0,2/5,3/3,4/4,5/4,6/6,7/5,8/0,9/2,10/1,11/2,12/2,13/4}
+      \node[anchor=west, font=\scriptsize\bfseries] at (\n+0.35,-\i+0.5) {\v};
+    \foreach \i/\v in {1/5,2/7,3/2,4/0,5/1,6/2,7/0,8/8,9/2,10/6,11/3,12/1,13/1}
+      \node[anchor=north, font=\scriptsize\bfseries] at (\i-0.5,-\n-0.25) {\v};
+    \node[anchor=west, font=\scriptsize\itshape, align=left]
+      at (\n+0.35,0.7) {entradas};
+    \node[anchor=north, font=\scriptsize\itshape] at (\n+1.1,-\n-0.25)
+      {salidas};
+  \end{tikzpicture}
+  \caption{DSM de arquitectura en el orden natural de exposición. Una marca en
+  la fila $i$ y la columna $j$ indica que el componente $i$ necesita algo del
+  componente $j$. La columna de la derecha suma las entradas de cada fila y la
+  banda inferior suma las salidas de cada columna. Elaboración propia.}
+  \label{fig:dsmarq}
+\end{figure}
+
+\subsec{03. Qué dice la matriz sin reordenarla}
+
+Antes de tocar el orden, las sumas ya dicen tres cosas.
+
+\textbf{Dos de los tres concentradores de riesgo son módulos transversales, no
+capas.} Las columnas con más salidas son M1, el control de versiones, con
+ocho; L1, el aprovisionamiento, con siete; y M3, la gestión de secretos, con
+seis. Es un resultado con consecuencias prácticas: una interrupción del
+repositorio detiene ocho componentes y una del custodio de secretos detiene
+seis, mientras que la caída de la capa de configuración, L3, con cero salidas,
+no detiene a ninguno. La disponibilidad que se exige a cada pieza debería
+seguir ese orden, y con frecuencia no lo sigue, porque la atención se
+concentra en el motor, que es sólo el segundo de los tres.
+
+\textbf{Las capas superiores son las caras de construir, no las de operar.} Las
+filas con más entradas son L5, la entrega, con seis, y L1 y L6 con cinco. Un
+proyecto que empiece por la interfaz de autoservicio está aceptando cinco
+condiciones previas simultáneas; empezar por ahí es la causa habitual de que
+un portal interno quede a medias.
+
+\textbf{Hay dos elementos sin ninguna entrada}, L0 y M1, que son por tanto los
+únicos puntos de arranque posibles de cualquier secuencia.
+
+\subsec{04. Particionado: la secuencia de implantación}
+
+Reordenar filas y columnas con la misma permutación no cambia la información
+de la matriz, sólo la presentación. El particionado busca la permutación que
+lleva el mayor número posible de marcas por debajo de la diagonal, porque una
+matriz triangular inferior describe un orden en el que cada elemento se
+construye cuando todo lo que necesita ya existe. La
+Figura~\ref{fig:dsmarqord} recoge el resultado.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[x=6.4mm, y=6.4mm, font=\scriptsize]
+    \def\n{13}
+    % Orden: M1 L0 M3 M2 L2 L1 M4 M5 L3 L4 L5 M6 L6
+    % Posición nueva: 1=M1 2=L0 3=M3 4=M2 5=L2 6=L1 7=M4 8=M5 9=L3 10=L4
+    %                 11=L5 12=M6 13=L6
+    \def\marcas{3/2, 4/2,4/3, 5/1,5/2,5/3, 6/1,6/2,6/3,6/4, 7/1,7/6,
+                8/1,8/6, 9/1,9/3,9/5,9/6, 10/1,10/3,10/5,10/6,
+                11/1,11/3,11/6,11/7,11/8,11/10,
+                12/2,12/4,12/6,12/11, 13/1,13/6,13/7,13/11,13/12}
+    \fill[gray!4] (0,0) rectangle (\n,-\n);
+    \foreach \i in {1,...,13}
+      \fill[gray!35] (\i-1,-\i+1) rectangle (\i,-\i);
+    % ---- marca de realimentación (por encima de la diagonal)
+    \fill[acento] (6.14,-5.14) rectangle (6.86,-5.86);
+    \foreach \r/\c in \marcas
+      \fill[dsmarq] (\c-1+0.14,-\r+1-0.14) rectangle (\c-0.14,-\r+0.14);
+    \draw[gray!55, thin, step=1] (0,0) grid (\n,-\n);
+    \draw[thick] (0,0) rectangle (\n,-\n);
+    % ---- escalonado de las olas de implantación, sobre la rejilla
+    \foreach \a/\b in {0/2, 2/3, 3/5, 5/7, 7/10, 10/11, 11/12, 12/13}
+      \draw[gray!75!black, line width=1pt] (\a,-\a) -- (\b,-\a) -- (\b,-\b);
+    % ---- bloque acoplado L1-M4
+    \draw[acento, very thick] (5,-5) rectangle (7,-7);
+    \foreach \i/\lab in {1/M1,2/L0,3/M3,4/M2,5/L2,6/L1,7/M4,
+                         8/M5,9/L3,10/L4,11/L5,12/M6,13/L6} {
+      \node[anchor=east] at (-0.2,-\i+0.5) {\lab};
+      \node[anchor=west, rotate=90] at (\i-0.5,0.2) {\lab};
+    }
+    \node[anchor=west, font=\scriptsize\itshape, text=acento]
+      at (7.4,-6) {bloque acoplado};
+    \draw[acento, thick] (7.05,-5.5) -- (7.35,-6);
+  \end{tikzpicture}
+  \caption{DSM de arquitectura particionada. En el orden M1, L0, M3, M2, L2,
+  L1, M4, M5, L3, L4, L5, M6, L6 todas las dependencias caen por debajo de la
+  diagonal salvo una, la que L1 tiene de M4, marcada en rojo. El escalonado
+  gris separa las olas: los elementos de una misma ola no dependen entre sí y
+  pueden abordarse en paralelo. Elaboración propia.}
+  \label{fig:dsmarqord}
+\end{figure}
+
+El resultado es una matriz triangular inferior con una sola excepción, y esa
+excepción es informativa. El escalonado define ocho olas, y los elementos que
+comparten ola pueden abordarse en paralelo:
+
+\begin{enumerate}
+  \item \textbf{M1 y L0}: el repositorio y la cuenta del proveedor. Sin
+    entradas, son el arranque obligado.
+  \item \textbf{M3}: la gestión de secretos. Aparece la segunda, antes que
+    cualquier capa, porque seis componentes la necesitan y ninguno puede
+    autenticarse sin ella. Ponerla al final, que es lo habitual cuando se
+    trata como un endurecimiento posterior, obliga a rehacer todo lo anterior.
+  \item \textbf{M2 y L2}: la custodia del registro de estado y la construcción
+    de imágenes, que no dependen la una de la otra.
+  \item \textbf{L1 y M4}: el bloque acoplado, del que se habla enseguida.
+  \item \textbf{M5, L3 y L4}: las pruebas, la configuración y la orquestación,
+    los tres apoyados en el motor ya operativo.
+  \item \textbf{L5}: la entrega continua, que necesita el motor, la
+    orquestación, las políticas y las pruebas a la vez.
+  \item \textbf{M6}: la observabilidad, que sólo puede medir lo que ya
+    funciona.
+  \item \textbf{L6}: la interfaz de autoservicio, la última porque envuelve a
+    todo lo demás.
+\end{enumerate}
+
+\textbf{El bloque acoplado y cómo se rompe.} L1 necesita de M4 el veredicto de
+la política antes de aplicar un cambio, y M4 necesita de L1 el plan sobre el
+que pronunciarse. En una DSM eso es un ciclo, y un ciclo obliga a iterar o a
+descomponer. La descomposición correcta consiste en partir L1 en dos
+subprocesos, uno que produce el plan y otro que lo aplica, con la evaluación
+de política entre ambos. Es exactamente lo que hace el diagrama SD1 del modelo
+OPM de la sección~\ref{sec:opm}: al separar \emph{Planificación},
+\emph{Validación} y \emph{Aplicación} en subprocesos distintos, el ciclo
+desaparece y la secuencia queda lineal. La DSM detecta el acoplamiento y el
+modelo OPM propone la partición que lo elimina, lo que ilustra por qué los
+elementos 2 y 3 de la hoja de ruta se sostienen mutuamente.
+
+\subsec{05. La DSM de la cartera de proyectos}
+
+La segunda matriz cambia de objeto. Sus elementos ya no son componentes del
+sistema sino los ocho proyectos con que la empresa pasa de la plataforma
+actual a la plataforma de 2029. Tres de ellos se corresponden con los vectores
+tecnológicos del Cuadro~\ref{tab:vectores}, que la sección~\ref{sec:comp}
+utiliza para construir el gráfico vectorial; los otros cinco son los
+habilitadores sin los cuales aquéllos no se sostienen. El
+Cuadro~\ref{tab:dsmproy} los enumera.
+
+\begin{table}[ht]
+  \centering
+  \footnotesize
+  \caption{Los ocho proyectos de la cartera, su correspondencia con los
+  vectores tecnológicos del Cuadro~\ref{tab:vectores} y los componentes de la
+  DSM de arquitectura sobre los que actúan. Las filas con la columna
+  \emph{vector} en blanco son proyectos habilitadores, que no desplazan por sí
+  solos ninguna coordenada del gráfico vectorial.}
+  \label{tab:dsmproy}
+  \begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}p{0.245\textwidth}
+    >{\raggedright\arraybackslash}X l l@{}}
+    \toprule
+    \textbf{Cód.} & \textbf{Proyecto} & \textbf{Alcance} & \textbf{Vector} &
+      \textbf{Comp.} \\
+    \midrule
+    R1 & Cierre de cobertura de codificación & Inventariar los recursos
+         creados a mano e importarlos al motor hasta llevar la cobertura del
+         55 al 86 por ciento. & & L1 \\
+    R2 & Custodia del registro de estado & Estado remoto, cifrado, versionado
+         y con bloqueo de concurrencia. & & M2 \\
+    R3 & Catálogo de módulos certificados & Módulos versionados, firmados y
+         publicados en un registro interno, con interfaz estrecha. & P1 &
+         L1, L6 \\
+    R4 & Política como código & Reglas de la organización evaluadas sobre el
+         plan antes de aplicarlo. & P1 & M4 \\
+    R5 & Malla de pruebas y entornos efímeros & Análisis estático, validación
+         del plan y despliegue efímero verificado. & & M5 \\
+    R6 & Sustitución del motor & Migración a la bifurcación abierta con
+         estado gestionado propio. & P2 & L1 \\
+    R7 & Interfaz de autoservicio & Portal que expone el catálogo al equipo
+         de producto. & P3 & L6 \\
+    R8 & Observabilidad de la plataforma & Deriva, coste, tiempo de ciclo y
+         cumplimiento como series temporales. & & M6 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Las dependencias entre proyectos no son las mismas que entre componentes,
+porque un proyecto puede necesitar de otro un resultado parcial y no el
+componente entero. La Figura~\ref{fig:dsmproy} distingue por eso dos
+intensidades: dependencia \emph{necesaria}, cuando el proyecto no puede
+empezar sin el resultado del otro, y dependencia \emph{conveniente}, cuando
+puede empezar pero a un coste o un riesgo mayores.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[x=8.4mm, y=8.4mm, font=\scriptsize]
+    \def\n{8}
+    \def\fuerte{1/2, 3/1, 4/3, 5/3, 6/2, 6/3, 6/5, 7/3, 7/4, 8/1}
+    \def\debil{3/2, 4/1, 5/2, 7/6, 8/2}
+    \fill[gray!4] (0,0) rectangle (\n,-\n);
+    \foreach \i in {1,...,8}
+      \fill[gray!35] (\i-1,-\i+1) rectangle (\i,-\i);
+    \foreach \r/\c in \fuerte
+      \fill[dsmpro] (\c-1+0.16,-\r+1-0.16) rectangle (\c-0.16,-\r+0.16);
+    \foreach \r/\c in \debil
+      \draw[dsmpro, thick, fill=dsmpro!20]
+        (\c-1+0.16,-\r+1-0.16) rectangle (\c-0.16,-\r+0.16);
+    \draw[gray!55, thin, step=1] (0,0) grid (\n,-\n);
+    \draw[thick] (0,0) rectangle (\n,-\n);
+    \foreach \i/\lab in {1/R1,2/R2,3/R3,4/R4,5/R5,6/R6,7/R7,8/R8} {
+      \node[anchor=east] at (-0.2,-\i+0.5) {\lab};
+      \node[anchor=south] at (\i-0.5,0.1) {\lab};
+    }
+  \end{tikzpicture}
+  \caption{DSM de la cartera de proyectos en el orden de codificación R1 a R8.
+  Marca llena: el proyecto de la fila no puede empezar sin el resultado del
+  proyecto de la columna. Marca hueca: puede empezar, pero a mayor coste o
+  riesgo. Elaboración propia.}
+  \label{fig:dsmproy}
+\end{figure}
+
+\subsec{06. Secuenciación de la cartera}
+
+Aplicado el mismo particionado, la matriz de la cartera resulta ser
+completamente triangular inferior: no hay ningún ciclo, de modo que existe una
+secuencia que no obliga a rehacer nada. La Figura~\ref{fig:dsmproyord} la
+recoge y la traduce en seis olas.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[x=8.4mm, y=8.4mm, font=\scriptsize]
+    \def\n{8}
+    % Orden: R2 R1 R3 R8 R4 R5 R6 R7
+    % Posición: 1=R2 2=R1 3=R3 4=R8 5=R4 6=R5 7=R6 8=R7
+    \def\fuerte{2/1, 3/2, 4/2, 5/3, 6/3, 7/1, 7/3, 7/6, 8/3, 8/5}
+    \def\debil{3/1, 4/1, 5/2, 6/1, 8/7}
+    \fill[gray!4] (0,0) rectangle (\n,-\n);
+    \foreach \i in {1,...,8}
+      \fill[gray!35] (\i-1,-\i+1) rectangle (\i,-\i);
+    \foreach \r/\c in \fuerte
+      \fill[dsmpro] (\c-1+0.16,-\r+1-0.16) rectangle (\c-0.16,-\r+0.16);
+    \foreach \r/\c in \debil
+      \draw[dsmpro, thick, fill=dsmpro!20]
+        (\c-1+0.16,-\r+1-0.16) rectangle (\c-0.16,-\r+0.16);
+    \draw[gray!55, thin, step=1] (0,0) grid (\n,-\n);
+    \draw[thick] (0,0) rectangle (\n,-\n);
+    % ---- escalonado de las olas, sobre la rejilla
+    \foreach \a/\b in {0/1, 1/2, 2/4, 4/6, 6/7, 7/8}
+      \draw[gray!75!black, line width=1pt] (\a,-\a) -- (\b,-\a) -- (\b,-\b);
+    \foreach \i/\lab in {1/R2,2/R1,3/R3,4/R8,5/R4,6/R5,7/R6,8/R7} {
+      \node[anchor=east] at (-0.2,-\i+0.5) {\lab};
+      \node[anchor=south] at (\i-0.5,0.1) {\lab};
+    }
+    \foreach \y/\ola in {0.5/{ola 1}, 1.5/{ola 2}, 3/{ola 3}, 5/{ola 4},
+                         6.5/{ola 5}, 7.5/{ola 6}}
+      \node[anchor=west, font=\scriptsize\itshape, text=gray!55!black]
+        at (\n+0.35,-\y) {\ola};
+  \end{tikzpicture}
+  \caption{DSM de la cartera particionada. Todas las marcas quedan por debajo
+  de la diagonal: la cartera admite una secuencia sin iteración. R3 y R8 caen
+  en la misma ola porque no dependen entre sí, y lo mismo ocurre con R4 y R5.
+  Elaboración propia.}
+  \label{fig:dsmproyord}
+\end{figure}
+
+La secuencia resultante es R2; R1; R3 y R8 en paralelo; R4 y R5 en paralelo;
+R6; y por último R7. Tres consecuencias merecen comentario.
+
+\textbf{La custodia del estado va primero, y sola.} R2 no depende de nada y
+casi todo depende de él. Es el único proyecto de la cartera que no admite ser
+pospuesto, porque importar recursos a un registro de estado sin bloqueo ni
+cifrado, que es lo que haría R1 sin él, multiplica el trabajo por dos: primero
+se importa y después se migra.
+
+\textbf{La observabilidad no es el remate, es la ola 3.} R8 aparece pronto
+porque sin él las figuras de mérito del Cuadro~\ref{tab:fom} no son medibles,
+y sin medida las posiciones del gráfico vectorial de la
+sección~\ref{sec:comp} siguen siendo estimaciones. Situarlo al final, que es
+la tentación natural, deja la hoja de ruta sin instrumento de verificación
+justo durante los años en que se ejecuta.
+
+\textbf{La matriz confirma el orden discutido del catálogo y el motor.} El
+apartado 05 de la sección~\ref{sec:comp} defiende en prosa que el catálogo de
+módulos (R3) debe construirse antes que la sustitución del motor (R6), y
+reconoce que es la decisión más discutible de aquella sección. La DSM lo
+convierte en una constatación estructural: R6 tiene marca necesaria en las
+columnas R2, R3 y R5, de modo que en cualquier orden admisible R6 queda por
+detrás de los tres. Invertir el orden no es una preferencia distinta, es una
+marca por encima de la diagonal, esto es, una iteración forzada.
+
+\subsec{07. Riesgos que la matriz hace visibles}
+
+Cruzar las dos matrices identifica dónde conviene poner las reservas de
+esfuerzo, que es el uso que la gestión del portafolio hace de la DSM.
+
+\begin{table}[!ht]
+  \centering
+  \footnotesize
+  \caption{Riesgos derivados de la estructura de dependencias y respuesta
+  prevista.}
+  \label{tab:dsmriesgo}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.235\textwidth}
+    >{\raggedright\arraybackslash}X
+    >{\raggedright\arraybackslash}p{0.30\textwidth}@{}}
+    \toprule
+    \textbf{Origen en la matriz} & \textbf{Riesgo} & \textbf{Respuesta} \\
+    \midrule
+    M1 con ocho salidas & Una indisponibilidad del repositorio detiene ocho
+      componentes; su compromiso los compromete a todos. &
+      Réplica del repositorio y firma obligatoria de confirmaciones. \\
+    M3 con seis salidas y ola temprana & Si la gestión de secretos llega tarde,
+      lo construido antes queda con credenciales incrustadas. &
+      Adelantarla a la ola 2 de la arquitectura, antes que cualquier capa
+      intermedia. \\
+    Bloque acoplado L1--M4 & La política evaluada después de aplicar convierte
+      el incumplimiento en un hecho consumado. &
+      Partir el motor en planificación y aplicación, con la evaluación
+      intercalada, según el diagrama SD1 de la sección~\ref{sec:opm}. \\
+    R2 con cinco entradas en su columna & Un retraso en la custodia del estado
+      desplaza toda la cartera. &
+      Ola 1 en solitario, con criterio de terminación explícito antes de
+      abrir R1. \\
+    R3 con cuatro entradas en su columna & El catálogo es el cuello de botella
+      de la cartera: R4, R5, R6 y R7 lo esperan. &
+      Publicar el catálogo por incrementos y abrir R4 y R5 contra los primeros
+      módulos, sin esperar al catálogo completo. \\
+    L3 y L6 con cero salidas & Ningún componente los espera, luego son los
+      candidatos naturales a recortar si el calendario se comprime. &
+      Registrar el recorte como decisión consciente, no como omisión. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsec{08. Límites de las dos matrices}
+
+Tres reservas. La primera es que ambas matrices son \textbf{binarias en el
+tipo}: registran que hay dependencia, no de qué naturaleza es. Una DSM más
+elaborada distinguiría dependencias de información, de material, de energía y
+espaciales, y la de este sistema sería casi enteramente de información, lo que
+resta valor a la distinción.
+
+La segunda es que la DSM de arquitectura describe una \textbf{implantación
+completa desde cero}. Una organización que ya opera parte del sistema, que es
+el caso de la empresa de referencia, no recorre las olas en orden sino que
+entra en la secuencia por el punto en que se encuentra; el orden sigue siendo
+válido para los componentes que faltan.
+
+La tercera es que la matriz de cartera \textbf{no incorpora el calendario ni
+el coste}. Dice qué debe ir antes que qué, no cuánto dura cada cosa ni cuántos
+equipos caben en paralelo. Convertir estas olas en fechas exige el modelo
+financiero, el elemento 8 del índice, que este documento declara fuera de
+alcance.
+
+% ==========================================================================
+\section{Modelo de objetos y procesos (OPM)}
+\label{sec:opm}
+% ==========================================================================
+
+\subsec{01. Por qué OPM y cómo se ha construido el modelo}
+
+Esta sección corresponde al elemento 3 del índice de una hoja de ruta
+tecnológica. La metodología de objetos y procesos, normalizada como ISO/PAS
+19450:2015 y después como ISO 19450:2024
+\parencite{iso19450:2015,iso19450:2024,dori2002,dori2016}, presenta dos rasgos
+que la hacen adecuada aquí. El primero es que usa un único tipo de diagrama
+para representar a la vez estructura y comportamiento, lo que evita el
+problema habitual de mantener sincronizados un diagrama de bloques y un
+diagrama de actividad. El segundo es su carácter bimodal: cada diagrama tiene
+una traducción a lenguaje natural controlado, el OPL, de modo que el modelo se
+verifica leyéndolo, y un enlace mal puesto se manifiesta como una frase falsa.
+
+Las herramientas autorizadas para este elemento son OPCloud
+\parencite{opcloud} y OPCAT \parencite{opcat}, y el modelo está enunciado en
+el vocabulario cerrado que ambas admiten: cada entidad, cada enlace y cada
+frase del OPL de los apartados siguientes se corresponden con un elemento de
+la norma y con ningún otro. Las figuras de esta sección son la composición
+tipográfica de ese mismo modelo, dibujada con la notación de la norma para que
+quepa en la caja del documento y pueda referirse desde el texto.
+
+\subsec{02. Vocabulario y notación empleados}
+
+OPM tiene un vocabulario cerrado, y la mayor parte de los errores de modelado
+consisten en usar un símbolo por otro. El Cuadro~\ref{tab:opmnotacion} fija el
+que se usa en las tres figuras siguientes.
+
+\begin{table}[ht]
+  \centering
+  \footnotesize
+  \caption{Vocabulario de OPM empleado en las Figuras \ref{fig:opmsd},
+  \ref{fig:opmsd2} y \ref{fig:opmsd1}, con la frase OPL que genera cada
+  símbolo.}
+  \label{tab:opmnotacion}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.215\textwidth}
+    >{\raggedright\arraybackslash}p{0.305\textwidth}
+    >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{Elemento} & \textbf{Símbolo} & \textbf{Frase OPL} \\
+    \midrule
+    \multicolumn{3}{@{}l}{\textit{Entidades}} \\
+    Objeto & Rectángulo de contorno verde & \\
+    Proceso & Elipse de contorno azul & \\
+    Estado & Rectángulo redondeado dentro del objeto &
+      \emph{O} puede estar \emph{s1}, \emph{s2} o \emph{s3}. \\
+    Cosa física & Con sombra proyectada & \emph{C} es física. \\
+    Cosa ambiental & Contorno discontinuo & \emph{C} es ambiental. \\
+    \midrule
+    \multicolumn{3}{@{}l}{\textit{Enlaces procedimentales}} \\
+    Agente & Línea acabada en círculo relleno &
+      \emph{O} maneja \emph{P}. \\
+    Instrumento & Línea acabada en círculo hueco &
+      \emph{P} requiere \emph{O}. \\
+    Efecto & Flecha de doble punta &
+      \emph{P} afecta a \emph{O}. \\
+    Consumo & Flecha del objeto al proceso &
+      \emph{P} consume \emph{O}. \\
+    Resultado & Flecha del proceso al objeto &
+      \emph{P} produce \emph{O}. \\
+    Entrada y salida & Flechas entre estados concretos y el proceso &
+      \emph{P} cambia \emph{O} de \emph{s1} a \emph{s2}. \\
+    \midrule
+    \multicolumn{3}{@{}l}{\textit{Enlaces estructurales}} \\
+    Agregación & Triángulo relleno &
+      \emph{A} consta de \emph{B}. \\
+    Generalización & Triángulo hueco &
+      \emph{B} es un \emph{A}. \\
+    Exhibición & Triángulo dentro de triángulo &
+      \emph{A} exhibe \emph{B}. \\
+    \midrule
+    \multicolumn{3}{@{}l}{\textit{Mecanismos de refinamiento}} \\
+    Ampliación en detalle & El proceso ampliado contiene a sus subprocesos,
+      ordenados de arriba abajo por precedencia temporal &
+      \emph{P} se amplía en \emph{P1}, \emph{P2} y \emph{P3}. \\
+    Despliegue & Diagrama aparte con la jerarquía estructural de un objeto &
+      (las de sus enlaces estructurales) \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Dos precisiones sobre el uso de estos símbolos, porque son las dos que con más
+frecuencia se incumplen. La primera: la precedencia temporal entre subprocesos
+de una ampliación se expresa \textbf{únicamente} por la posición vertical, y
+no dibujando flechas entre ellos; una flecha entre dos procesos sería un
+enlace de invocación, que significa otra cosa. La segunda: cuando el diagrama
+muestra los estados de un objeto y el proceso transforma uno concreto en otro,
+los enlaces deben partir y llegar \textbf{al estado} y no al objeto entero; el
+enlace de efecto al objeto entero sólo es correcto cuando el cambio de estado
+no se especifica.
+
+\subsec{03. Diagrama de sistema (SD)}
+
+El diagrama de sistema recoge el proceso principal, quién lo maneja, qué
+instrumentos necesita y qué objetos transforma o produce. Los estados de la
+\emph{Infraestructura Desplegada} se declaran aquí, pero las transiciones
+concretas entre ellos no se especifican todavía: a este nivel el proceso la
+afecta, sin más, y las transiciones aparecen en la ampliación en detalle. El
+Cuadro~\ref{tab:entidades} enumera las entidades.
+
+\begin{table}[ht]
+  \centering
+  \scriptsize
+  \caption{Entidades del modelo OPM y diagrama en el que aparecen.}
+  \label{tab:entidades}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.245\textwidth}
+    >{\raggedright\arraybackslash}p{0.155\textwidth}
+    >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{Entidad} & \textbf{Tipo} & \textbf{Papel en el modelo} \\
+    \midrule
+    Aprovisionamiento de Infraestructura & Proceso & Proceso principal; se
+      amplía en detalle en SD1. \\
+    Equipo de Plataforma & Objeto físico y ambiental & Agente humano que
+      maneja el proceso. \\
+    Especificación de Infraestructura & Objeto informático & El código;
+      instrumento del proceso. Se despliega en SD2. Estados: borrador,
+      validada. \\
+    Repositorio Versionado & Objeto informático & Todo del que la
+      especificación es parte (SD2). \\
+    Módulo Reutilizable, Configuración de Entorno & Objetos informáticos &
+      Especializaciones de la especificación (SD2). \\
+    Versión & Objeto informático & Atributo exhibido por la especificación
+      (SD2). \\
+    Motor de IaC & Objeto informático & Instrumento que ejecuta la
+      comparación y la conciliación. \\
+    Registro de Estado & Objeto informático & Objeto afectado: el proceso lo
+      lee y lo reescribe en cada aplicación. \\
+    Proveedor de Nube & Objeto físico y ambiental & Instrumento: expone la
+      interfaz de programación. \\
+    Credenciales & Objeto informático & Instrumento con el que el motor se
+      autentica. \\
+    Conjunto de Políticas & Objeto informático & Instrumento de la
+      validación. \\
+    Infraestructura Desplegada & Objeto físico & Operando del sistema.
+      Estados: inexistente, conforme, desviada, retirada. \\
+    Plan de Cambios & Objeto informático & Resultado de la planificación,
+      instrumento de la aplicación. Estados: pendiente, aprobado. \\
+    Registro de Auditoría & Objeto informático & Resultado del proceso. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[scale=0.86, transform shape,
+                      every node/.style={transform shape}]
+    % ---- proceso principal
+    \node[opmproc, minimum width=44mm, minimum height=17mm] (P) at (0,0)
+      {Aprovisionamiento\\de Infraestructura};
+
+    % ---- agente humano: objeto físico y ambiental
+    \node[opmobj, opmamb, opmfis, text width=24mm] (eq) at (0,3.05)
+      {Equipo de\\Plataforma};
+    \draw[agente] (eq) -- (P);
+
+    % ---- instrumentos
+    \node[opmobj] (spec)  at (-5.8, 1.85) {Especificación de\\Infraestructura};
+    \node[opmobj] (motor) at (-5.8, 0.35) {Motor de IaC};
+    \node[opmobj] (pol)   at (-5.8,-1.15) {Conjunto de\\Políticas};
+    \node[opmobj, opmamb, opmfis] (prov) at (5.8, 1.85)
+      {Proveedor\\de Nube};
+    \node[opmobj] (cred)  at ( 5.8, 0.35) {Credenciales};
+    \foreach \nd in {spec,motor,pol,prov,cred} \draw[instr] (\nd) -- (P);
+
+    % ---- objeto afectado
+    \node[opmobj] (edo) at (-5.8,-2.75) {Registro\\de Estado};
+    \draw[efecto] (edo) -- (P);
+
+    % ---- resultados
+    \node[opmobj] (plan) at (5.8,-1.15) {Plan de Cambios};
+    \node[opmobj] (aud)  at (5.8,-2.75) {Registro de\\Auditoría};
+    \draw[flecha] (P) -- (plan);
+    \draw[flecha] (P) -- (aud);
+
+    % ---- operando: objeto físico con sus cuatro estados
+    \node[draw=opmobjc, very thick, fill=opmobjc!7, opmfis,
+      minimum width=84mm, minimum height=18mm] (infra) at (0,-4.35) {};
+    \node[anchor=north, font=\footnotesize\bfseries]
+      at ([yshift=-1.6mm]infra.north) {Infraestructura Desplegada};
+    \foreach \dx/\st in {-30/inexistente, -10/conforme, 10/desviada,
+                          30/retirada}
+      \node[opmstate] at ([xshift=\dx mm, yshift=-4.6mm]infra.center) {\st};
+    \draw[efecto] (P) -- (infra);
+  \end{tikzpicture}
+  \caption{Diagrama de sistema (SD). El proceso principal, su agente, sus
+  cinco instrumentos, el objeto que afecta, los dos que produce y el operando
+  con sus cuatro estados. El \emph{Equipo de Plataforma} y el \emph{Proveedor
+  de Nube} llevan contorno discontinuo por ser ambientales y sombra por ser
+  físicos; la \emph{Infraestructura Desplegada} lleva sombra por ser física.
+  Elaboración propia según \textcite{dori2016} y \textcite{iso19450:2024}.}
+  \label{fig:opmsd}
+\end{figure}
+
+\subsec{04. El OPL del diagrama de sistema}
+
+Las palabras reservadas del lenguaje van en versalitas los nombres de las
+entidades y en redonda las palabras estructurales. Cada frase se corresponde
+con un símbolo de la Figura~\ref{fig:opmsd} y con ningún otro.
+
+\begin{quote}\small
+\textsc{Equipo de Plataforma} es físico y ambiental.\\
+\textsc{Proveedor de Nube} es físico y ambiental.\\
+\textsc{Infraestructura Desplegada} es física.\\
+\textsc{Infraestructura Desplegada} puede estar inexistente, conforme,
+desviada o retirada.\\
+\textsc{Equipo de Plataforma} maneja \textsc{Aprovisionamiento de
+Infraestructura}.\\
+\textsc{Aprovisionamiento de Infraestructura} requiere \textsc{Especificación
+de Infraestructura}, \textsc{Motor de IaC}, \textsc{Conjunto de Políticas},
+\textsc{Credenciales} y \textsc{Proveedor de Nube}.\\
+\textsc{Aprovisionamiento de Infraestructura} afecta a \textsc{Registro de
+Estado}.\\
+\textsc{Aprovisionamiento de Infraestructura} afecta a \textsc{Infraestructura
+Desplegada}.\\
+\textsc{Aprovisionamiento de Infraestructura} produce \textsc{Plan de Cambios}
+y \textsc{Registro de Auditoría}.
+\end{quote}
+
+Leído en voz alta, el conjunto es una descripción funcional completa del nivel
+superior del sistema.
+
+\subsec{05. Despliegue de la especificación (SD2)}
+
+La \emph{Especificación de Infraestructura} tiene una estructura interna que
+el diagrama de sistema no muestra, porque mezclarla allí saturaría el nivel
+superior. OPM prevé para eso el despliegue: un diagrama aparte que expone la
+jerarquía estructural de un objeto sin tocar su comportamiento. La
+Figura~\ref{fig:opmsd2} lo recoge con las tres relaciones estructurales de la
+norma, que son las tres que este objeto necesita.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[scale=0.92, transform shape,
+                      every node/.style={transform shape}]
+    \node[opmobj, text width=32mm] (spec) at (0,0)
+      {Especificación de\\Infraestructura};
+
+    % ---- agregación: el repositorio consta de la especificación
+    \node[opmobj, text width=30mm] (repo) at (0,2.3)
+      {Repositorio\\Versionado};
+    \draw[very thick] (repo.south) -- (spec.north);
+    \coordinate (ca) at ($(repo.south)!0.45!(spec.north)$);
+    \opmagg{0}{ca}
+    \node[etiq, anchor=west] at ([xshift=3mm]ca)
+      {agregación: \emph{consta de}};
+
+    % ---- exhibición: la especificación exhibe el atributo Versión
+    \node[opmobj, text width=17mm] (ver) at (5.9,0) {Versión};
+    \draw[very thick] (spec.east) -- (ver.west);
+    \coordinate (ce) at ($(spec.east)!0.40!(ver.west)$);
+    \opmexh{90}{ce}
+    \node[etiq, anchor=south] at ([yshift=2.6mm]$(spec.east)!0.62!(ver.west)$)
+      {exhibición: \emph{exhibe}};
+
+    % ---- generalización: dos especializaciones
+    \node[opmobj, text width=28mm] (mod) at (-3.0,-2.8)
+      {Módulo\\Reutilizable};
+    \node[opmobj, text width=28mm] (cfg) at ( 3.0,-2.8)
+      {Configuración\\de Entorno};
+    \coordinate (cg) at (0,-1.15);
+    \draw[very thick] (spec.south) -- (0,-1.75);
+    \draw[very thick] (mod.north) |- (0,-1.75) -| (cfg.north);
+    \opmgen{0}{cg}
+    \node[etiq, anchor=west] at ([xshift=3mm]cg)
+      {generalización: \emph{es un}};
+  \end{tikzpicture}
+  \caption{SD2: despliegue del objeto \emph{Especificación de
+  Infraestructura}. Agregación con el repositorio que la contiene,
+  generalización en sus dos especializaciones y exhibición del atributo que la
+  versiona. La base de cada triángulo se apoya en el todo, el general o el
+  exhibidor, y el vértice apunta a la parte, la especialización o el atributo.
+  Elaboración propia.}
+  \label{fig:opmsd2}
+\end{figure}
+
+\begin{quote}\small
+\textsc{Repositorio Versionado} consta de \textsc{Especificación de
+Infraestructura}.\\
+\textsc{Especificación de Infraestructura} exhibe \textsc{Versión}.\\
+\textsc{Módulo Reutilizable} es una \textsc{Especificación de
+Infraestructura}.\\
+\textsc{Configuración de Entorno} es una \textsc{Especificación de
+Infraestructura}.
+\end{quote}
+
+Conviene subrayar la diferencia entre la tercera frase y una que se le parece
+mucho pero significa otra cosa. \emph{Es un} declara una especialización, esto
+es, una clase de objeto distinta que hereda las propiedades de la general.
+\emph{Puede estar} declara un estado, esto es, una situación transitoria del
+mismo objeto. Un módulo reutilizable no es un estado de la especificación, es
+un tipo de especificación; borrador y validada, en cambio, sí son estados.
+
+\subsec{06. Ampliación en detalle del proceso principal (SD1)}
+
+El diagrama SD1 amplía el proceso principal en siete subprocesos. La
+convención de la norma es que la posición vertical, y sólo ella, denota
+precedencia temporal: no hay flechas entre subprocesos. Los objetos que ya
+aparecen en el diagrama de sistema permanecen fuera de la elipse ampliada, y
+los enlaces cruzan su contorno hasta el subproceso concreto que los usa, que
+es lo que permite ver en qué punto exacto interviene cada uno. Los estados de
+la \emph{Especificación de Infraestructura}, del \emph{Plan de Cambios} y de
+la \emph{Infraestructura Desplegada} se hacen explícitos aquí, y con ellos las
+transiciones.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[scale=0.79, transform shape, x=1mm, y=1mm,
+                      every node/.style={transform shape}]
+    \tikzset{sp/.style={opmproc, minimum width=46mm, minimum height=10mm,
+               text width=, font=\footnotesize\bfseries},
+             ob/.style={opmobj, text width=23mm, minimum height=8mm,
+               font=\scriptsize\bfseries},
+             obe/.style={draw=opmobjc, very thick, fill=opmobjc!7,
+               minimum width=34mm},
+             est/.style={opmstate, font=\tiny, minimum width=20mm}}
+
+    % ---- elipse del proceso ampliado
+    \node[draw=opmprocc, very thick, ellipse, fill=opmprocc!5,
+      minimum width=100mm, minimum height=124mm] (marco) at (0,0) {};
+    \node[font=\scriptsize\bfseries, align=center] at (0,50)
+      {Aprovisionamiento\\de Infraestructura};
+
+    % ---- los siete subprocesos: la posición vertical fija la precedencia
+    \node[sp] (c)  at (0, 36) {Codificación};
+    \node[sp] (v)  at (0, 24) {Validación};
+    \node[sp] (pl) at (0, 12) {Planificación};
+    \node[sp] (au) at (0,  0) {Autorización};
+    \node[sp] (ap) at (0,-12) {Aplicación};
+    \node[sp] (co) at (0,-24) {Conciliación};
+    \node[sp] (re) at (0,-36) {Retirada};
+
+    % ---- eje temporal, fuera de todo
+    \draw[flecha, gray!65] (-106,42) -- (-106,-42)
+      node[midway, rotate=90, above=0.6mm, font=\scriptsize,
+           text=gray!55!black] {precedencia temporal};
+
+    % ---- agente, fuera del proceso ampliado
+    \node[ob, opmamb, opmfis, text width=21mm] (eq) at (-72,48)
+      {Equipo de\\Plataforma};
+
+    % ---- objetos de la izquierda
+    \node[obe, minimum height=28mm] (spec) at (-72,28) {};
+    \node[anchor=north, font=\scriptsize\bfseries, align=center]
+      at ([yshift=-1.1mm]spec.north) {Especificación de\\Infraestructura};
+    \node[est] (sb) at (-72,30) {borrador};
+    \node[est] (sv) at (-72,22) {validada};
+
+    \node[ob] (edo)   at (-72, 8) {Registro\\de Estado};
+    \node[ob] (motor) at (-72,-6) {Motor de IaC};
+
+    \node[obe, minimum height=40mm, opmfis] (infra) at (-72,-33) {};
+    \node[anchor=north, font=\scriptsize\bfseries, align=center]
+      at ([yshift=-1.1mm]infra.north) {Infraestructura\\Desplegada};
+    \node[est] (si) at (-72,-24) {inexistente};
+    \node[est] (sc) at (-72,-32) {conforme};
+    \node[est] (sd) at (-72,-40) {desviada};
+    \node[est] (sr) at (-72,-48) {retirada};
+
+    % ---- objetos de la derecha
+    \node[ob] (pol) at (72,26) {Conjunto de\\Políticas};
+    \node[obe, minimum height=20mm] (plan) at (72,6) {};
+    \node[anchor=north, font=\scriptsize\bfseries] at ([yshift=-1.1mm]plan.north)
+      {Plan de Cambios};
+    \node[est] (pp) at (72,7.5) {pendiente};
+    \node[est] (pa) at (72,0.5) {aprobado};
+    \node[ob] (cred) at (72,-16) {Credenciales};
+    \node[ob, opmamb, opmfis] (prov) at (72,-30) {Proveedor\\de Nube};
+    \node[ob] (aud)  at (72,-46) {Registro de\\Auditoría};
+
+    % ---- enlaces del agente
+    \draw[agente] (eq.south east) to[out=-40,in=155] (c.north west);
+    \draw[agente, rounded corners=3mm]
+      (eq.west) -- (-96,48) -- (-96,0) -- (au.west);
+
+    % ---- codificación, validación y planificación
+    \draw[flecha] (c.west) to[out=180,in=10] ([yshift=1mm]sb.east);
+    \draw[flecha] ([yshift=-1mm]sb.east) to[out=-10,in=170] (v.north west);
+    \draw[flecha] (v.west) to[out=180,in=10] ([yshift=1mm]sv.east);
+    \draw[instr]  ([yshift=-1mm]sv.east) to[out=-10,in=165] (pl.north west);
+    \draw[instr]  (edo.east) -- (pl.west);
+    \draw[instr]  (motor.north east) to[out=25,in=195] (pl.south west);
+
+    % ---- autorización y aplicación
+    \draw[flecha] (pl.east) to[out=0,in=170] (pp.north west);
+    \draw[instr]  (pp.south west) to[out=-165,in=15] (au.east);
+    \draw[flecha] (au.north east) to[out=15,in=190] (pa.west);
+    \draw[instr]  (pa.south west) to[out=-160,in=20] (ap.east);
+    \draw[instr]  (motor.east) to[out=0,in=170] (ap.north west);
+    \draw[instr]  (cred.west) -- (ap.east);
+    \draw[instr]  (prov.north west) to[out=155,in=-15] (ap.south east);
+    \draw[efecto] (ap.west) to[out=170,in=-25] (edo.south east);
+    \draw[flecha] (si.east) to[out=0,in=200] (ap.south west);
+    \draw[flecha] (ap.west) to[out=195,in=15] ([yshift=1.4mm]sc.east);
+
+    % ---- conciliación y retirada
+    \draw[instr]  (prov.west) to[out=180,in=-15] (co.east);
+    \draw[flecha] (sd.east) to[out=0,in=195] (co.west);
+    \draw[flecha] (co.north west) to[out=160,in=-5] ([yshift=-1.4mm]sc.east);
+    \draw[flecha] (co.south east) to[out=-40,in=165] (aud.west);
+    \draw[instr]  (prov.south west) to[out=205,in=-10] (re.east);
+    \draw[flecha, rounded corners=2mm]
+      ([yshift=-3.2mm]sc.east) -- (-49,-35.2) -- (-32,-35.2) -- (re.west);
+    \draw[flecha] (re.south west) to[out=210,in=-10] (sr.south east);
+  \end{tikzpicture}
+  \caption{SD1: ampliación en detalle de \emph{Aprovisionamiento de
+  Infraestructura} en sus siete subprocesos. La precedencia temporal la fija
+  la posición vertical, sin flechas entre procesos. Los objetos que ya
+  aparecen en el diagrama de sistema quedan fuera de la elipse y se enlazan
+  con el subproceso que los usa. \emph{Aplicación}, \emph{Conciliación} y
+  \emph{Retirada} actúan sobre el mismo objeto desde estados de partida
+  distintos, que es la formulación precisa de la diferencia entre desplegar,
+  corregir la deriva y desmantelar. Elaboración propia.}
+  \label{fig:opmsd1}
+\end{figure}
+
+\subsec{07. El OPL de la ampliación}
+
+\begin{quote}\small
+\textsc{Aprovisionamiento de Infraestructura} se amplía en
+\textsc{Codificación}, \textsc{Validación}, \textsc{Planificación},
+\textsc{Autorización}, \textsc{Aplicación}, \textsc{Conciliación} y
+\textsc{Retirada}, en ese orden temporal.\\
+\textsc{Especificación de Infraestructura} puede estar borrador o validada.\\
+\textsc{Plan de Cambios} puede estar pendiente o aprobado.\\
+\textsc{Equipo de Plataforma} maneja \textsc{Codificación} y
+\textsc{Autorización}.\\
+\textsc{Codificación} produce \textsc{Especificación de Infraestructura}
+borrador.\\
+\textsc{Validación} requiere \textsc{Conjunto de Políticas}.\\
+\textsc{Validación} cambia \textsc{Especificación de Infraestructura} de
+borrador a validada.\\
+\textsc{Planificación} requiere \textsc{Motor de IaC}, \textsc{Registro de
+Estado} y \textsc{Especificación de Infraestructura} validada.\\
+\textsc{Planificación} produce \textsc{Plan de Cambios} pendiente.\\
+\textsc{Autorización} requiere \textsc{Plan de Cambios} pendiente.\\
+\textsc{Autorización} cambia \textsc{Plan de Cambios} de pendiente a
+aprobado.\\
+\textsc{Aplicación} requiere \textsc{Motor de IaC}, \textsc{Plan de Cambios}
+aprobado, \textsc{Credenciales} y \textsc{Proveedor de Nube}.\\
+\textsc{Aplicación} cambia \textsc{Infraestructura Desplegada} de inexistente
+a conforme.\\
+\textsc{Aplicación} afecta a \textsc{Registro de Estado}.\\
+\textsc{Conciliación} requiere \textsc{Proveedor de Nube}.\\
+\textsc{Conciliación} cambia \textsc{Infraestructura Desplegada} de desviada a
+conforme.\\
+\textsc{Conciliación} produce \textsc{Registro de Auditoría}.\\
+\textsc{Retirada} requiere \textsc{Proveedor de Nube}.\\
+\textsc{Retirada} cambia \textsc{Infraestructura Desplegada} de conforme a
+retirada.
+\end{quote}
+
+\subsec{08. Qué hace explícito el modelo}
+
+Merece la pena señalar cuatro cosas que el modelo obliga a decir y que las
+descripciones en prosa dejan implícitas.
+
+\begin{enumerate}
+  \item \textsc{Registro de Estado} es el único objeto que aparece a la vez
+    como instrumento de la planificación y como objeto afectado por la
+    aplicación. Esa doble condición es exactamente la razón por la que
+    necesita bloqueo de concurrencia, y el modelo la hace visible sin
+    argumentarla.
+  \item \textsc{Aplicación}, \textsc{Conciliación} y \textsc{Retirada} cambian
+    el mismo objeto desde estados de partida distintos. Con enlaces de efecto
+    al objeto entero las tres serían indistinguibles; con enlaces de entrada y
+    salida entre estados quedan formalmente separadas, que es la diferencia
+    entre desplegar, corregir la deriva y desmantelar.
+  \item El equipo humano interviene sólo en dos de los siete subprocesos, la
+    codificación y la autorización. Eso delimita el alcance real de la
+    automatización y, de paso, señala dónde está el cuello de botella de
+    personas.
+  \item La \textsc{Validación} se sitúa entre la \textsc{Codificación} y la
+    \textsc{Planificación}, y la \textsc{Autorización} entre la
+    \textsc{Planificación} y la \textsc{Aplicación}. Esa partición es la que
+    rompe el bloque acoplado L1--M4 que la
+    Figura~\ref{fig:dsmarqord} detecta en la matriz de dependencias: el
+    veredicto de la política deja de necesitar un motor que a su vez lo
+    necesita a él, porque cada uno actúa sobre un subproceso distinto.
+\end{enumerate}
+
+% ==========================================================================
 \section{Figuras de mérito del sistema}
+\label{sec:fom}
 % ==========================================================================
 
 Un sistema de IaC es en sí mismo una tecnología, y como tal admite figuras de
@@ -844,13 +1874,15 @@ son específicas de la infraestructura.
 \end{table}
 
 El tiempo de reconstrucción es la figura más reveladora de todas, porque
-verifica de un solo golpe las cuatro propiedades exigidas en la sección 1. Una
+verifica de un solo golpe las cuatro propiedades exigidas en la
+sección~\ref{sec:alcance}. Una
 organización que no puede reconstruir un entorno completo desde el repositorio
 no tiene un sistema de IaC completo, con independencia de cuántos ficheros
 declarativos posea.
 
 % ==========================================================================
 \section{Posicionamiento frente a la competencia}
+\label{sec:comp}
 % ==========================================================================
 
 Esta sección corresponde al elemento 6 del índice de una hoja de ruta
@@ -1400,332 +2432,8 @@ con flechas transmite más certidumbre de la que el método admite.
 \end{enumerate}
 
 % ==========================================================================
-\section{Modelo de objetos y procesos (OPM)}
-% ==========================================================================
-
-\subsec{01. Por qué OPM para este sistema}
-
-La metodología de objetos y procesos, normalizada como ISO/PAS 19450:2015 y
-posteriormente como ISO 19450:2024
-\parencite{iso19450:2015,iso19450:2024,dori2002,dori2016}, presenta dos rasgos que la
-hacen adecuada aquí. El primero es que usa un único tipo de diagrama para
-representar a la vez estructura y comportamiento, lo que evita el problema
-habitual de mantener sincronizados un diagrama de bloques y un diagrama de
-actividad. El segundo es su carácter bimodal: cada diagrama tiene una
-traducción automática a lenguaje natural controlado (OPL), lo que permite
-verificar el modelo leyéndolo.
-
-Para un sistema de IaC, cuya esencia es un proceso que transforma el estado de
-un objeto (la infraestructura desplegada) usando otros objetos como
-instrumentos, la correspondencia con el vocabulario de OPM es casi directa.
-
-\subsec{02. Entidades del diagrama de sistema}
-
-El Cuadro~\ref{tab:entidades} enumera las entidades del nivel superior.
-
-\begin{table}[ht]
-  \centering
-  \footnotesize
-  \caption{Entidades del diagrama de sistema (SD) del modelo OPM.}
-  \label{tab:entidades}
-  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.27\textwidth}
-    >{\raggedright\arraybackslash}p{0.13\textwidth}
-    >{\raggedright\arraybackslash}X@{}}
-    \toprule
-    \textbf{Entidad} & \textbf{Tipo} & \textbf{Papel en el modelo} \\
-    \midrule
-    Aprovisionamiento de Infraestructura & Proceso & Proceso principal del
-      sistema; se amplía en detalle en el diagrama SD1. \\
-    Equipo de Plataforma & Objeto (físico) & Agente humano que maneja el
-      proceso. \\
-    Especificación de Infraestructura & Objeto & El código; instrumento del
-      proceso. Se especializa en módulo reutilizable y configuración de
-      entorno, y exhibe el atributo Versión. \\
-    Repositorio Versionado & Objeto & Todo del que la especificación es
-      parte. \\
-    Motor de IaC & Objeto & Instrumento que ejecuta la conciliación. \\
-    Registro de Estado & Objeto & Objeto afectado: el proceso lo lee y lo
-      reescribe en cada aplicación. \\
-    Proveedor de Nube & Objeto (físico) & Instrumento: expone la interfaz de
-      programación. \\
-    Credenciales & Objeto & Instrumento con el que el motor se autentica. \\
-    Conjunto de Políticas & Objeto & Instrumento de la validación. \\
-    Infraestructura Desplegada & Objeto (físico) & Operando del sistema.
-      Estados: inexistente, conforme, desviada, retirada. \\
-    Plan de Cambios & Objeto & Resultado del proceso, consumido por la
-      aplicación. \\
-    Registro de Auditoría & Objeto & Resultado del proceso. \\
-    \bottomrule
-  \end{tabularx}
-\end{table}
-
-La notación se reparte en dos figuras para que ninguna quede saturada. La
-Figura~\ref{fig:opmsd} recoge los enlaces procedimentales, es decir, los que
-unen el proceso con los objetos que lo habilitan y con los que transforma:
-círculo hueco para instrumento, círculo relleno para agente, flecha doble
-para efecto y flecha simple para resultado. Los enlaces estructurales se
-tratan aparte, en el apartado 04. En ambas figuras, el rectángulo denota
-objeto, la elipse denota proceso y el rectángulo de esquinas redondeadas
-denota estado.
-
-\begin{figure}[H]
-  \centering
-  \begin{tikzpicture}[scale=0.9, transform shape]
-    % ---- proceso principal
-    \node[opmproc, minimum width=40mm, minimum height=15mm] (P) at (0,0)
-      {Aprovisionamiento\\de Infraestructura};
-
-    % ---- agente humano
-    \node[opmobj, fill=green!18] (eq) at (0,2.7) {Equipo de\\Plataforma};
-    \draw[agente] (eq) -- (P);
-
-    % ---- instrumentos
-    \node[opmobj] (spec) at (-5.4,1.6)  {Especificación de\\Infraestructura};
-    \node[opmobj] (motor) at (-5.4,0)   {Motor de IaC};
-    \node[opmobj] (pol) at (-5.4,-1.6)  {Conjunto de\\Políticas};
-    \node[opmobj] (prov) at (5.4,1.6)   {Proveedor\\de Nube};
-    \node[opmobj] (cred) at (5.4,0)     {Credenciales};
-    \foreach \nd in {spec,motor,pol,prov,cred} \draw[instr] (\nd) -- (P);
-
-    % ---- objeto afectado
-    \node[opmobj] (edo) at (-5.4,-3.2) {Registro de\\Estado};
-    \draw[efecto] (edo) -- (P);
-
-    % ---- resultados
-    \node[opmobj] (plan) at (5.4,-1.6) {Plan de Cambios};
-    \node[opmobj] (aud) at (5.4,-3.2)  {Registro de\\Auditoría};
-    \draw[flecha] (P) -- (plan);
-    \draw[flecha] (P) -- (aud);
-
-    % ---- operando con sus cuatro estados
-    \node[draw, very thick, fill=green!8, minimum width=76mm,
-      minimum height=17mm] (infra) at (0,-4.6) {};
-    \node[anchor=north, font=\footnotesize\bfseries]
-      at ([yshift=-2mm]infra.north) {Infraestructura Desplegada};
-    \foreach \dx/\st/\fl in {-27/inexistente/white, -9/conforme/{green!25},
-      9/desviada/white, 27/retirada/white}
-      \node[opmstate, fill=\fl]
-        at ([xshift=\dx mm, yshift=-4.5mm]infra.center) {\st};
-    \draw[efecto] (P) -- (infra);
-
-    % ---- leyenda de notación
-    \node[draw=gray!60, fill=gray!5, rounded corners=2pt, inner sep=4pt,
-      font=\scriptsize, align=left, anchor=north, text width=0.95\textwidth]
-      at ([yshift=-4mm]infra.south)
-      {\textbf{Notación:} rectángulo = objeto · elipse = proceso ·
-       rectángulo redondeado = estado · línea acabada en círculo hueco =
-       instrumento · línea acabada en círculo relleno = agente · flecha
-       doble = efecto · flecha simple = resultado};
-  \end{tikzpicture}
-  \caption{Diagrama de sistema (SD) del sistema de infraestructura como
-  código, en notación OPM. Elaboración propia siguiendo
-  \textcite{dori2016} y \textcite{iso19450:2024}.}
-  \label{fig:opmsd}
-\end{figure}
-
-\subsec{03. El lenguaje OPL del diagrama de sistema}
-
-La traducción del diagrama al lenguaje de objetos y procesos permite
-verificarlo por lectura. Las palabras reservadas van en versalitas.
-
-\begin{quote}\small
-\textsc{Equipo de Plataforma} es físico.\\
-\textsc{Infraestructura Desplegada} es física.\\
-\textsc{Proveedor de Nube} es físico y externo.\\
-\textsc{Repositorio Versionado} consta de \textsc{Especificación de
-Infraestructura}.\\
-\textsc{Especificación de Infraestructura} puede ser \textsc{Módulo
-Reutilizable} o \textsc{Configuración de Entorno}.\\
-\textsc{Especificación de Infraestructura} exhibe \textsc{Versión}.\\
-\textsc{Infraestructura Desplegada} puede ser inexistente, conforme, desviada
-o retirada.\\
-\textsc{Aprovisionamiento de Infraestructura} requiere \textsc{Especificación
-de Infraestructura}, \textsc{Motor de IaC}, \textsc{Conjunto de Políticas},
-\textsc{Proveedor de Nube} y \textsc{Credenciales}.\\
-\textsc{Equipo de Plataforma} maneja \textsc{Aprovisionamiento de
-Infraestructura}.\\
-\textsc{Aprovisionamiento de Infraestructura} afecta a \textsc{Registro de
-Estado}.\\
-\textsc{Aprovisionamiento de Infraestructura} cambia \textsc{Infraestructura
-Desplegada} de inexistente a conforme.\\
-\textsc{Aprovisionamiento de Infraestructura} produce \textsc{Plan de Cambios}
-y \textsc{Registro de Auditoría}.
-\end{quote}
-
-Leído en voz alta, el conjunto de frases es una descripción funcional completa
-del sistema, y cualquier error de modelado se manifiesta como una frase falsa.
-
-\subsec{04. Los enlaces estructurales}
-
-Además de participar en el proceso, los objetos del modelo mantienen entre sí
-relaciones que no dependen de ninguna ejecución. La
-Figura~\ref{fig:opmestr} recoge las tres que afectan a la \emph{Especificación
-de Infraestructura}: triángulo relleno para la agregación que la vincula con
-el repositorio que la contiene, triángulo hueco para la generalización en sus
-dos especializaciones y triángulo doble para la exhibición del atributo que la
-versiona. Son las relaciones que sostienen las frases \emph{consta de},
-\emph{puede ser} y \emph{exhibe} del OPL anterior.
-
-\begin{figure}[H]
-  \centering
-  \begin{tikzpicture}[scale=0.95, transform shape]
-    \node[opmobj, text width=34mm] (spec) at (0,0)
-      {Especificación de\\Infraestructura};
-    % ---- agregación
-    \node[opmobj, text width=30mm] (repo) at (0,2.1)
-      {Repositorio\\Versionado};
-    \draw[very thick] (repo.south) -- (spec.north);
-    \coordinate (ca) at ($(repo.south)!0.5!(spec.north)$);
-    \opmagg{0}{ca}
-    \node[etiq, right=2mm] at (ca) {agregación: \emph{consta de}};
-    % ---- exhibición del atributo
-    \node[opmobj, text width=22mm] (ver) at (5.4,0) {Versión};
-    \draw[very thick] (spec.east) -- (ver.west);
-    \coordinate (ce) at ($(spec.east)!0.42!(ver.west)$);
-    \opmexh{90}{ce}
-    \node[etiq, above=5mm] at ($(spec.east)!0.6!(ver.west)$)
-      {exhibición: \emph{exhibe}};
-    % ---- generalización
-    \node[opmobj, text width=30mm] (mod) at (-3.1,-2.6)
-      {Módulo\\Reutilizable};
-    \node[opmobj, text width=30mm] (cfg) at (3.1,-2.6)
-      {Configuración\\de Entorno};
-    \coordinate (cg) at (0,-1.25);
-    \draw[very thick] (spec.south) -- (0,-1.6);
-    \draw[very thick] (mod.north) |- (0,-1.6) -| (cfg.north);
-    \opmgen{0}{cg}
-    \node[etiq, right=2mm] at (cg) {generalización: \emph{puede ser}};
-  \end{tikzpicture}
-  \caption{Enlaces estructurales del objeto \emph{Especificación de
-  Infraestructura}: agregación con el repositorio que la contiene,
-  generalización en sus dos especializaciones y exhibición del atributo que
-  la versiona. Elaboración propia.}
-  \label{fig:opmestr}
-\end{figure}
-
-\subsec{05. Ampliación en detalle del proceso principal}
-
-El diagrama SD1 amplía el proceso principal en siete subprocesos, ordenados
-verticalmente según la convención de OPM, en la que la posición vertical
-denota precedencia temporal. Los objetos que sólo intervienen en el interior
-del proceso se dibujan dentro de la elipse; el \emph{Equipo de Plataforma},
-que pertenece al entorno, queda fuera. La Figura~\ref{fig:opmsd1} lo recoge.
-
-\begin{figure}[H]
-  \centering
-  \begin{tikzpicture}[scale=0.82, transform shape, x=1mm, y=1mm]
-    \tikzset{sp/.style={opmproc, minimum width=34mm, minimum height=10mm,
-               text width=},
-             ob/.style={opmobj, text width=26mm, minimum height=9mm,
-               font=\scriptsize\bfseries}}
-    % ---- marco elíptico del proceso ampliado
-    \node[draw, very thick, ellipse, fill=blue!4,
-      minimum width=130mm, minimum height=146mm] (marco) at (0,3) {};
-    \node[font=\footnotesize\bfseries] at (0,62)
-      {Aprovisionamiento de Infraestructura};
-
-    % ---- los siete subprocesos, de arriba abajo
-    \node[sp] (c)  at (0, 44) {Codificación};
-    \node[sp] (v)  at (0, 30) {Validación};
-    \node[sp] (pl) at (0, 16) {Planificación};
-    \node[sp] (au) at (0,  2) {Autorización};
-    \node[sp] (ap) at (0,-12) {Aplicación};
-    \node[sp] (co) at (0,-26) {Conciliación};
-    \node[sp] (re) at (0,-40) {Retirada};
-    \foreach \a/\b in {c/v,v/pl,pl/au,au/ap,ap/co,co/re}
-      \draw[flecha, gray!65] (\a) -- (\b);
-
-    % ---- objetos internos
-    \node[ob] (spec) at (-36, 30)
-      {Especificación\\ \scriptsize\mdseries borrador $\to$ validada};
-    \node[ob] (pol)  at ( 36, 30) {Conjunto de\\Políticas};
-    \node[ob] (edo)  at (-36, 16) {Registro\\de Estado};
-    \node[ob] (plan) at ( 36, 16)
-      {Plan de Cambios\\ \scriptsize\mdseries pendiente $\to$ aprobado};
-    \node[ob] (cred) at ( 36, -6) {Credenciales};
-    \node[ob] (prov) at ( 36,-18) {Proveedor\\de Nube};
-    \node[ob] (aud)  at ( 36,-31) {Registro de\\Auditoría};
-    \node[draw, very thick, fill=green!8, minimum width=32mm,
-      minimum height=14mm] (infra) at (-36,-26) {};
-    \node[anchor=north, font=\scriptsize\bfseries, align=center]
-      at ([yshift=-1mm]infra.north) {Infraestructura\\Desplegada};
-    \node[opmstate, font=\tiny] at ([xshift=-7mm,yshift=-4.5mm]infra.center)
-      {desviada};
-    \node[opmstate, font=\tiny, fill=green!25]
-      at ([xshift=7mm,yshift=-4.5mm]infra.center) {conforme};
-
-    % ---- agente humano, fuera del proceso ampliado
-    \node[ob, fill=green!18, text width=24mm] (eq) at (-70, 50)
-      {Equipo de\\Plataforma};
-    \draw[agente] (eq) to[out=0,in=180] (c.west);
-    \draw[agente] (eq.south) |- (au.west);
-
-    % ---- enlaces de los subprocesos
-    \draw[flecha] (c.west) to[out=180,in=90] (spec.north);
-    \draw[efecto] (spec) -- (v);
-    \draw[instr]  (pol)  -- (v);
-    \draw[instr]  (edo)  -- (pl);
-    \draw[flecha] (pl)   -- (plan);
-    \draw[instr]  (plan.south) to[out=-90,in=0] (au.east);
-    \draw[instr]  (cred) -- (ap);
-    \draw[instr]  (prov) -- (ap);
-    \draw[efecto] (ap.west) to[out=180,in=90] (infra.north);
-    \draw[efecto] (co) -- (infra);
-    \draw[flecha] (co) -- (aud);
-    \draw[efecto] (re.west) to[out=180,in=-90] (infra.south);
-  \end{tikzpicture}
-  \caption{Diagrama SD1: ampliación en detalle del proceso de
-  aprovisionamiento. La posición vertical de los subprocesos denota
-  precedencia temporal. \emph{Aplicación} y \emph{Conciliación} actúan sobre
-  el mismo objeto desde estados de partida distintos, que es la formulación
-  precisa de la diferencia entre desplegar y corregir la deriva. El
-  \emph{Equipo de Plataforma} queda fuera del proceso ampliado por ser un
-  objeto del entorno. Elaboración propia.}
-  \label{fig:opmsd1}
-\end{figure}
-
-\subsec{06. El lenguaje OPL de la ampliación}
-
-\begin{quote}\small
-\textsc{Aprovisionamiento de Infraestructura} consta de
-\textsc{Codificación}, \textsc{Validación}, \textsc{Planificación},
-\textsc{Autorización}, \textsc{Aplicación}, \textsc{Conciliación} y
-\textsc{Retirada}.\\
-\textsc{Equipo de Plataforma} maneja \textsc{Codificación} y
-\textsc{Autorización}.\\
-\textsc{Codificación} produce \textsc{Especificación de Infraestructura}.\\
-\textsc{Validación} requiere \textsc{Conjunto de Políticas}.\\
-\textsc{Validación} cambia \textsc{Especificación de Infraestructura} de
-borrador a validada.\\
-\textsc{Planificación} requiere \textsc{Registro de Estado} y
-\textsc{Especificación de Infraestructura}.\\
-\textsc{Planificación} produce \textsc{Plan de Cambios}.\\
-\textsc{Autorización} cambia \textsc{Plan de Cambios} de pendiente a
-aprobado.\\
-\textsc{Aplicación} requiere \textsc{Plan de Cambios}, \textsc{Credenciales}
-y \textsc{Proveedor de Nube}.\\
-\textsc{Aplicación} cambia \textsc{Infraestructura Desplegada} de inexistente
-a conforme.\\
-\textsc{Aplicación} afecta a \textsc{Registro de Estado}.\\
-\textsc{Conciliación} cambia \textsc{Infraestructura Desplegada} de desviada
-a conforme.\\
-\textsc{Conciliación} produce \textsc{Registro de Auditoría}.\\
-\textsc{Retirada} cambia \textsc{Infraestructura Desplegada} de conforme a
-retirada.
-\end{quote}
-
-Merece la pena señalar lo que el modelo hace explícito y que las descripciones
-en prosa suelen dejar implícito. Primero, que \textsc{Registro de Estado} es
-el único objeto que aparece a la vez como instrumento de la planificación y
-como objeto afectado por la aplicación, lo que identifica exactamente por qué
-necesita bloqueo de concurrencia. Segundo, que \textsc{Conciliación} y
-\textsc{Aplicación} cambian el mismo objeto desde estados de partida
-distintos, que es la formulación precisa de la diferencia entre desplegar y
-conciliar. Y tercero, que el equipo humano interviene sólo en dos de los siete
-subprocesos, lo que delimita el alcance real de la automatización.
-
-% ==========================================================================
 \section{Conclusiones}
+\label{sec:conclusiones}
 % ==========================================================================
 
 \begin{enumerate}
@@ -1751,7 +2459,23 @@ subprocesos, lo que delimita el alcance real de la automatización.
     repositorio es la figura de mérito que mejor resume el estado de una
     implantación, porque verifica de una vez las cuatro propiedades que
     definen al sistema.
-  \item El gráfico vectorial de la sección 9 desplaza la pregunta habitual.
+  \item La matriz de estructura de dependencia desplaza el orden de
+    implantación que sugiere la intuición. Los concentradores de riesgo no son
+    las capas visibles sino dos módulos transversales, el control de versiones
+    con ocho salidas y la gestión de secretos con seis, y en la secuencia
+    particionada la gestión de secretos aparece en la segunda ola, antes que
+    cualquier capa intermedia. Tratarla como un endurecimiento posterior
+    obliga a rehacer todo lo construido antes.
+  \item La matriz de la cartera resulta enteramente triangular inferior, de
+    modo que existe una secuencia de los ocho proyectos que no obliga a
+    rehacer ninguno: custodia del estado, cierre de cobertura, catálogo y
+    observabilidad, política y pruebas, sustitución del motor y, en último
+    lugar, interfaz de autoservicio. Convierte además en constatación
+    estructural lo que la sección~\ref{sec:comp} defiende como criterio: el
+    catálogo antes que el motor no es una preferencia sino la única
+    ordenación que no fuerza una iteración.
+  \item El gráfico vectorial de la sección~\ref{sec:comp} desplaza la
+    pregunta habitual.
     La comparación entre Terraform, Bicep y Pulumi ocupa la mayor parte del
     debate técnico y explica menos de la décima parte del valor que se puede
     ganar: en la trayectoria propuesta, el vector que sustituye el motor
@@ -1769,8 +2493,17 @@ subprocesos, lo que delimita el alcance real de la automatización.
   \item El modelado en OPM aporta algo que la descripción en prosa no aporta:
     obliga a declarar el tipo de cada relación. Al hacerlo aparecen con
     claridad la doble condición del registro de estado, la diferencia formal
-    entre aplicar y conciliar, y el alcance exacto de la intervención humana,
-    que en este modelo se limita a dos de los siete subprocesos.
+    entre aplicar, conciliar y retirar, que sólo se sostiene si los enlaces
+    parten de estados y no del objeto entero, y el alcance exacto de la
+    intervención humana, que en este modelo se limita a dos de los siete
+    subprocesos.
+  \item Los elementos 2 y 3 del índice se sostienen mutuamente, y ese es el
+    hallazgo metodológico del trabajo. La matriz de dependencias detecta un
+    único bloque acoplado, el que forman el motor de aprovisionamiento y la
+    política como código, y no dispone de instrumentos para romperlo; la
+    ampliación en detalle del modelo OPM lo rompe al partir el proceso en
+    planificación, validación y aplicación. La matriz encuentra el problema y
+    el modelo aporta la partición que lo resuelve.
 \end{enumerate}
 
 \printbibliography[heading=bibintoc,title={Referencias bibliográficas}]
