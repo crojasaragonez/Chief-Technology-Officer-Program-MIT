@@ -1,0 +1,1542 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage[version=4]{mhchem}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,backgrounds,
+                patterns,decorations.pathreplacing,calc}
+\usepackage{placeins}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.3cm}
+% Los rótulos de las figuras usan nodos de ancho fijo con texto alineado, y la
+% bibliografía compone en modo sloppy: ambos generan avisos de línea holgada
+% que son cosméticos. Se silencian para que `make check` siga siendo sensible
+% a los desbordes reales.
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlist{nosep}
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.06}
+\renewcommand{\floatpagefraction}{0.72}
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{3}
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy}
+
+\sisetup{
+  output-decimal-marker = {,},
+  group-separator = {.},
+  group-digits = integer,
+  group-minimum-digits = 4,
+  detect-all
+}
+\DeclareSIUnit{\pkm}{pax\text{-}km}
+\DeclareSIUnit{\pax}{pax}
+\DeclareSIUnit{\litro}{L}
+
+% Colores: dato de partida, resultado calculado, magnitud despreciada,
+% alerta o incoherencia, referencia externa y contexto neutro
+\definecolor{cDato}{RGB}{70,90,112}
+\definecolor{cCalc}{RGB}{16,110,104}
+\definecolor{cAviso}{RGB}{176,42,42}
+\definecolor{cNeutro}{RGB}{132,124,112}
+\definecolor{cVerde}{RGB}{74,116,60}
+\definecolor{cNaranja}{RGB}{186,98,52}
+
+% --- Figura 2: fracción de combustible frente al alcance --------------------
+\newcommand{\cRx}[1]{#1*0.655}     % miles de km -> cm (20 = 13,1 cm)
+\newcommand{\cRy}[1]{#1*0.0620}     % %   -> cm  (100 %    =  6,2 cm)
+
+% --- Figura 4: cascada del combustible --------------------------------------
+\newcommand{\cWy}[1]{#1*0.00178}    % kg  -> cm  (3.000 kg =  5,3 cm)
+% #1 x izquierda, #2 base, #3 cima, #4 color, #5 rótulo, #6 valor,
+% #7 altura del rótulo (los rótulos se alternan en dos filas)
+\newcommand{\tramo}[7]{%
+  \fill[#4] (#1,{\cWy{#2}}) rectangle ({#1+1.14},{\cWy{#3}});%
+  \node[above, font=\scriptsize\bfseries, text=#4, fill=white,
+        inner sep=1.3pt] at ({#1+0.57},{\cWy{#3}}) {#6};%
+  \draw[cNeutro!45] ({#1+0.57},-0.06) -- ({#1+0.57},{#7+0.10});%
+  \node[below, font=\scriptsize, text width=2.35cm, align=center,
+        text=cNeutro!80!black] at ({#1+0.57},#7) {#5};%
+}
+
+% --- Figura 5: tornado de sensibilidad --------------------------------------
+\newcommand{\tSx}[1]{(#1-1700)*0.0094}   % kg -> cm (1.700 a 3.000 = 12,2 cm)
+% #1 y, #2 kg extremo bajo, #3 kg extremo alto, #4 rótulo, #5 texto bajo,
+% #6 texto alto
+\newcommand{\tornado}[6]{%
+  \node[left, font=\scriptsize, text width=3.15cm, align=right]
+       at (-0.52,#1) {#4};%
+  \fill[cCalc!70] ({\tSx{#2}},#1-0.27) rectangle ({\tSx{2248}},#1+0.27);%
+  \fill[cAviso!70] ({\tSx{2248}},#1-0.27) rectangle ({\tSx{#3}},#1+0.27);%
+  \node[left, font=\scriptsize, text=cCalc!80!black]
+       at ({\tSx{#2}-0.10},#1) {#5};%
+  \node[right, font=\scriptsize, text=cAviso]
+       at ({\tSx{#3}+0.10},#1) {#6};%
+}
+
+\title{\vspace{-1.3cm}\textbf{¿Cuánto queroseno hace falta para volar de
+Boston a Los Ángeles?}\\
+\large Estimación mediante la ecuación de alcance y resistencia de Bréguet,
+comprobación de la estimación y análisis de por qué el cálculo es difícil}
+\author{Carlos Luis Rojas Aragonés\\
+\small Gestión del Desarrollo Tecnológico}
+\date{\small 7 de septiembre de 2026}
+
+\begin{document}
+
+\maketitle
+\vspace{-0.8em}
+
+\section{El resultado, antes de justificarlo}
+
+Con los datos del enunciado, la ecuación de alcance de Bréguet da
+\textbf{\SI{2248}{\kilogram} de queroseno}, es decir unas \textbf{2,25
+toneladas} o \textbf{\SI{2800}{\litro}}, para recorrer los
+\SI{5000}{\kilo\meter} en crucero. Eso es el \textbf{22,5 por ciento} del peso
+al despegue del avión: casi una cuarta parte de lo que sale del suelo es
+combustible que se va a quemar por el camino.
+
+La cifra sale de una cadena de conversión muy corta. El queroseno lleva
+\SI{42.8}{\mega\joule} de energía química por kilogramo; el conjunto
+motor más hélice o tobera entrega al aire el 30 por ciento de eso en forma de
+trabajo propulsivo; y el ala convierte cada newton de arrastre vencido en
+quince newtons de peso sostenido. El producto de esas tres cosas es una
+distancia, y esa distancia es la respuesta.
+
+El Cuadro~\ref{cuadro:respuesta} adelanta el resultado completo, incluidas las
+dos lecturas posibles del enunciado y lo que le falta a la cifra para ser un
+plan de vuelo.
+
+\begin{table}[htbp]
+\small
+\caption{La respuesta, en las cuatro formas en que puede pedirse, y lo que hay
+que añadirle para que sea utilizable. Cálculo propio con los datos del
+enunciado y \(h=\SI{42.8}{\mega\joule\per\kilogram}\).}
+\label{cuadro:respuesta}
+\begin{tabularx}{\textwidth}{@{}Xrl@{}}
+\toprule
+\textbf{Magnitud} & \textbf{Valor} & \textbf{Procedencia} \\
+\midrule
+Parámetro adimensional \(x = Rg/[\eta_o h (L/D)]\) & \num{0.2547} &
+  ecuación~\eqref{eq:x} \\
+Razón de pesos \(W_i/W_f = e^{x}\) & \num{1.2900} & ecuación~\eqref{eq:breguet} \\
+\midrule
+\textbf{Queroseno, lectura A} (las \SI{10}{\tonne} son el peso al despegue)
+  & \textbf{\SI{2248}{\kilogram}} & \(m_i(1-e^{-x})\) \\
+Queroseno, lectura B (las \SI{10}{\tonne} son el peso sin combustible)
+  & \SI{2900}{\kilogram} & \(m_f(e^{x}-1)\) \\
+Queroseno con la forma lineal de la ecuación (lectura A)
+  & \SI{2547}{\kilogram} & ecuación~\eqref{eq:lineal} \\
+\midrule
+Volumen a \SI{0.804}{\kilogram\per\litro} (lectura A) & \SI{2796}{\litro} &
+  \(m_f/\rho_{\text{comb}}\) \\
+Energía química embarcada & \SI{96.2}{\giga\joule} & \(m_f h\) \\
+\ce{CO2} emitido, factor \SI{3.16}{\kilogram\per\kilogram} & \SI{7.10}{\tonne} &
+  \textcite{icaocalc} \\
+Duración del crucero (resistencia) & \SI{4.63}{\hour} & \(R/V\) \\
+\midrule
+Combustible que habría que embarcar de verdad & \(\approx\)
+  \SI{2850}{\kilogram} & Figura~\ref{fig:cascada} \\
+Combustible si se corrige el \(L/D\) a la condición real de vuelo &
+  \(>\SI{4900}{\kilogram}\) & Cuadro~\ref{cuadro:coherencia} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Las dos últimas filas son el motivo de que la pregunta final del enunciado
+(\enquote{¿por qué es un cálculo complicado?}) tenga una respuesta larga y no
+una respuesta retórica. La ecuación se resuelve en cinco líneas. El problema
+que la ecuación pretende resolver no se resuelve en cinco líneas, y la
+distancia entre las dos cosas es medible: la doy cuantificada en la
+sección~\ref{sec:complicado}.
+
+\section{La ecuación: de dónde sale y qué dice}
+
+\subsection{Nota sobre el nombre}
+
+Conviene aclarar dos cosas del enunciado antes de usarlo. La primera es que
+\enquote{resistencia}, en \enquote{ecuación de alcance y resistencia},
+traduce el inglés \emph{endurance} y significa \textbf{tiempo que el avión
+puede mantenerse en el aire}, no \emph{drag}, que en español es arrastre. Son
+dos magnitudes distintas y las dos aparecen en este problema: el arrastre es
+la fuerza que hay que vencer y la resistencia es la duración del vuelo,
+\SI{4.63}{\hour} en este caso. La segunda es que la ecuación se conoce por el
+nombre de Louis Charles Bréguet, que la publicó en 1923, pero la habían
+derivado antes Devillers en 1918 y \textcite{coffin1920} en el informe 69 de
+la NACA. El nombre es una convención, no una atribución.
+
+\subsection{Derivación completa}
+
+La ecuación no es una correlación empírica: se deduce de tres afirmaciones
+elementales. Sigo la derivación de \textcite{mitunified}, que es la que usa el
+módulo, y la de \textcite{torenbeek2009}.
+
+\textbf{Primera afirmación: el vuelo es recto, horizontal y uniforme.} Las
+cuatro fuerzas se equilibran dos a dos, como en el Panel A de la
+Figura~\ref{fig:cadena}:
+\begin{equation}
+L = W, \qquad T = D = \frac{L}{L/D} = \frac{W}{L/D}.
+\label{eq:equilibrio}
+\end{equation}
+Esta es la única aparición de la aerodinámica en todo el desarrollo, y entra
+por un solo número, \(L/D\). El enunciado nos lo da hecho: 15.
+
+\textbf{Segunda afirmación: el avión adelgaza a medida que quema.} La tasa de
+cambio del peso es el flujo másico de combustible multiplicado por la gravedad,
+con signo negativo:
+\begin{equation}
+\frac{dW}{dt} = -\dot{m}_f\, g .
+\label{eq:masa}
+\end{equation}
+
+\textbf{Tercera afirmación: definición de eficiencia total.} Lo que se obtiene
+es potencia propulsiva; lo que se paga es potencia química:
+\begin{equation}
+\eta_o \equiv \frac{\text{lo que se obtiene}}{\text{lo que se paga}}
+        = \frac{\text{potencia propulsiva}}{\text{potencia de combustible}}
+        = \frac{T\,V}{\dot{m}_f\, h}
+\quad\Longrightarrow\quad
+\dot{m}_f = \frac{T\,V}{\eta_o\, h}.
+\label{eq:eta}
+\end{equation}
+El enunciado nos da \(\eta_o = 0{,}3\). Ese número es el producto de un
+rendimiento termodinámico (lo que el ciclo del motor convierte en energía
+cinética del chorro) por un rendimiento propulsivo (lo que ese chorro convierte
+en empuje útil), y 0,3 es un valor razonable para un turbofán de generación
+media \parencite{mitthermo}.
+
+\textbf{Combinación e integración.} Sustituyendo \eqref{eq:equilibrio} y
+\eqref{eq:eta} en \eqref{eq:masa} se obtiene una ecuación diferencial en la que
+ya no aparece ni el empuje ni el flujo de combustible:
+\begin{equation}
+\frac{dW}{dt}
+  = -\frac{T V g}{\eta_o h}
+  = -\,\frac{W}{L/D}\cdot\frac{V g}{\eta_o h}
+\quad\Longrightarrow\quad
+\frac{dW}{W} = -\,\frac{V g}{\eta_o\, h\,(L/D)}\; dt .
+\label{eq:edo}
+\end{equation}
+El paso decisivo es el de la izquierda: \textbf{la variable dependiente aparece
+en el numerador y en el denominador}. Eso es lo que convierte el problema en
+logarítmico y no en proporcional, y es la raíz de casi todas las dificultades
+que discuto en la sección~\ref{sec:complicado}. Integrando entre el estado
+inicial y el final, con \(\eta_o\), \(L/D\) y \(V\) constantes:
+\begin{equation}
+\ln\frac{W_i}{W_f} = \frac{V g\, t}{\eta_o\, h\,(L/D)} .
+\end{equation}
+
+De ahí salen las dos formas que pide el enunciado. Multiplicando por la
+velocidad, con \(R = V t\), la velocidad se cancela y queda el
+\textbf{alcance}:
+\begin{equation}
+\boxed{\;R = \eta_o\,\frac{h}{g}\,\frac{L}{D}\,\ln\frac{W_i}{W_f}\;}
+\label{eq:breguet}
+\end{equation}
+y sin multiplicar por la velocidad queda la \textbf{resistencia}, es decir la
+duración:
+\begin{equation}
+E = \frac{\eta_o}{V}\,\frac{h}{g}\,\frac{L}{D}\,\ln\frac{W_i}{W_f}
+  = \frac{R}{V} .
+\label{eq:endurance}
+\end{equation}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+
+% ================= Panel A: equilibrio de fuerzas =================
+\node[anchor=south west, font=\small\bfseries, text width=6.6cm, align=left]
+     at (-0.4,3.30)
+     {Panel A. Las cuatro fuerzas en crucero, con los valores de este
+      problema};
+
+% silueta de perfil
+\begin{scope}[shift={(3.2,0.60)}]
+  \fill[cNeutro!35, rounded corners=6pt] (-1.30,-0.17) rectangle (1.05,0.25);
+  \fill[cNeutro!35] (1.00,-0.10) -- (1.62,0.04) -- (1.00,0.22) -- cycle;
+  \fill[cDato!45] (-1.28,0.22) -- (-0.86,0.22) -- (-1.02,0.92) --
+                  (-1.24,0.92) -- cycle;
+  \fill[cDato!45] (-1.30,0.20) -- (-0.72,0.26) -- (-0.72,0.32) --
+                  (-1.30,0.30) -- cycle;
+  \fill[cDato!60] (-0.30,-0.06) -- (0.52,0.02) -- (0.52,0.09) --
+                  (-0.30,0.04) -- cycle;
+  \fill[cNeutro!55, rounded corners=3pt] (-0.16,-0.42) rectangle (0.46,-0.14);
+\end{scope}
+
+% sustentación
+\draw[cCalc, very thick, -{Stealth[length=6pt]}] (3.20,1.05) -- (3.20,2.95);
+\node[right, font=\scriptsize, text=cCalc, align=left] at (3.32,2.66)
+     {$L = W = \SI{98100}{\newton}$};
+% peso
+\draw[cAviso, very thick, -{Stealth[length=6pt]}] (3.20,0.12) -- (3.20,-1.55);
+\node[right, font=\scriptsize, text=cAviso, align=left] at (3.32,-1.28)
+     {$W = m\,g$, \emph{decreciente}};
+% empuje
+\draw[cNaranja, very thick, -{Stealth[length=6pt]}] (5.00,0.70) -- (6.30,0.70);
+\node[above, font=\scriptsize, text=cNaranja] at (5.65,0.78) {$T$};
+% arrastre
+\draw[cDato, very thick, -{Stealth[length=6pt]}] (1.72,0.70) -- (0.42,0.70);
+\node[above, font=\scriptsize, text=cDato] at (1.07,0.80) {$D$};
+\node[below, font=\scriptsize, text=cDato] at (1.07,0.58) {$\dfrac{W}{L/D}$};
+\node[font=\scriptsize, align=center, text=cNeutro!85!black] at (1.07,-0.62)
+     {$\SI{6540}{\newton}$ al inicio\\$\SI{5070}{\newton}$ al final};
+
+% ================= Panel B: las cuatro disciplinas =================
+\begin{scope}[shift={(8.75,0.55)}]
+\node[anchor=south west, font=\small\bfseries, text width=6.6cm, align=left]
+     at (-0.55,2.75)
+     {Panel B. Los cuatro factores y la disciplina de la que sale cada uno};
+
+\node[font=\normalsize] (r)  at (0,1.45) {$R \;=\;$};
+\node[font=\normalsize, text=cNaranja, right=1pt of r]  (f1) {$\eta_o$};
+\node[font=\normalsize, right=4pt of f1] (x1) {$\times$};
+\node[font=\normalsize, text=cVerde, right=4pt of x1]   (f2) {$\dfrac{h}{g}$};
+\node[font=\normalsize, right=4pt of f2] (x2) {$\times$};
+\node[font=\normalsize, text=cDato, right=4pt of x2]    (f3) {$\dfrac{L}{D}$};
+\node[font=\normalsize, right=4pt of f3] (x3) {$\times$};
+\node[font=\normalsize, text=cAviso, right=4pt of x3]
+     (f4) {$\ln\dfrac{W_i}{W_f}$};
+
+% los rótulos se alternan en dos alturas para que no se solapen
+\draw[cNaranja, decorate, decoration={brace, mirror, amplitude=3.2pt}]
+  (f1.south west) -- (f1.south east);
+\node[below, font=\scriptsize, text=cNaranja, text width=1.9cm, align=center]
+  at ($(f1.south)+(0,-0.14)$) {propulsión\\\num{0.30}};
+
+\draw[cVerde, decorate, decoration={brace, mirror, amplitude=3.2pt}]
+  (f2.south west) -- (f2.south east);
+\draw[cVerde, thin] ($(f2.south)+(0,-0.12)$) -- ($(f2.south)+(0,-0.94)$);
+\node[below, font=\scriptsize, text=cVerde, text width=2.1cm, align=center]
+  at ($(f2.south)+(0,-0.94)$) {química del combustible\\\SI{4363}{\kilo\meter}};
+
+\draw[cDato, decorate, decoration={brace, mirror, amplitude=3.2pt}]
+  (f3.south west) -- (f3.south east);
+\node[below, font=\scriptsize, text=cDato, text width=1.9cm, align=center]
+  at ($(f3.south)+(0,-0.14)$) {aerodinámica\\\num{15}};
+
+\draw[cAviso, decorate, decoration={brace, mirror, amplitude=3.2pt}]
+  (f4.south west) -- (f4.south east);
+\draw[cAviso, thin] ($(f4.south)+(0,-0.12)$) -- ($(f4.south)+(0,-0.94)$);
+\node[below, font=\scriptsize, text=cAviso, text width=2.3cm, align=center]
+  at ($(f4.south)+(0,-0.94)$) {estructuras y carga de pago\\\num{0.2547}};
+
+\node[font=\scriptsize, align=left, text width=6.6cm, text=cNeutro!85!black]
+     at (2.7,-2.10)
+     {El producto de los tres primeros factores es una distancia,
+      \SI{19633}{\kilo\meter}. El cuarto dice qué fracción de esa distancia se
+      recorre de verdad.};
+\end{scope}
+
+\end{tikzpicture}
+\caption{La ecuación de Bréguet en dos vistas. Panel A: el equilibrio de
+fuerzas del que se deduce, con los valores numéricos de este problema. El peso
+es la única de las cuatro fuerzas que cambia durante el vuelo, y de ahí sale el
+logaritmo. Panel B: los cuatro factores del segundo miembro de la
+ecuación~\eqref{eq:breguet}, cada uno perteneciente a una disciplina distinta.
+Esta descomposición es la razón por la que \textcite{mitunified} usa esta
+ecuación como puerta de entrada a la ingeniería aeronáutica: es el punto en el
+que propulsión, aerodinámica y estructuras se multiplican. Elaboración propia
+a partir de \textcite{mitunified,deweck2022}.}
+\label{fig:cadena}
+\end{figure}
+
+\subsection{La forma lineal y por qué la menciono}
+
+El módulo, siguiendo a \textcite{tennekes2009}, presenta también una versión
+simplificada que se obtiene suponiendo que todo el combustible se consume en la
+misma condición de vuelo y que el peso apenas cambia:
+\begin{equation}
+R \;\approx\; \eta_o\,\frac{h}{g}\,\frac{L}{D}\cdot\frac{W_f}{W},
+\label{eq:lineal}
+\end{equation}
+donde \(W_f\) es el peso del combustible. No es otra ecuación: es el primer
+término del desarrollo de la ecuación~\eqref{eq:breguet}, porque
+\(\ln(1/(1-\zeta)) \approx \zeta\) cuando la fracción de combustible \(\zeta\)
+es pequeña. La menciono por dos motivos. El primero es que da una respuesta
+distinta, \SI{2547}{\kilogram} en lugar de \SI{2248}{\kilogram}, un 13 por
+ciento más, y conviene saber de dónde viene esa discrepancia antes de que
+aparezca. El segundo es que la propia aproximación deja ver el mecanismo:
+\textbf{cada kilogramo de combustible que se embarca hay que llevarlo también
+en volandas hasta que se quema}, y la forma lineal es precisamente la que
+ignora eso.
+
+De la ecuación~\eqref{eq:lineal} sale además una observación que
+\textcite{tennekes2009} subraya y que aquí resulta muy útil: el cociente
+\(h/g\) tiene dimensiones de longitud. Para el queroseno,
+\(h/g = \SI{42.8e6}{\joule\per\kilogram} / \SI{9.81}{\meter\per\second\squared}
+= \SI{4363}{\kilo\meter}\). Ese es el alcance de referencia de un combustible,
+y el alcance real de cualquier vehículo es del mismo orden de magnitud
+multiplicado por \(\eta_o (L/D)\), que para este avión vale \num{4.5}. Antes de
+calcular nada ya sabemos que \SI{5000}{\kilo\meter} es una fracción moderada de
+lo alcanzable, y por tanto que la respuesta no va a ser ni el 2 ni el 80 por
+ciento del peso del avión.
+
+\section{Datos de partida}
+
+El Cuadro~\ref{cuadro:datos} recoge todo lo que hace falta, en unidades del
+sistema internacional, y declara explícitamente qué datos entran en la ecuación
+y cuáles no.
+
+\begin{table}[htbp]
+\small
+\caption{Datos de partida, convertidos a unidades coherentes. La última
+columna indica si el dato entra en la ecuación~\eqref{eq:breguet} o si se usa
+para otra cosa, que es una distinción que el enunciado no hace y que conviene
+hacer.}
+\label{cuadro:datos}
+\begin{tabularx}{\textwidth}{@{}p{4.35cm}p{1.5cm}rXp{2.15cm}@{}}
+\toprule
+\textbf{Magnitud} & \textbf{Símbolo} & \textbf{Valor (SI)} &
+\textbf{Origen} & \textbf{¿Entra en la ecuación?} \\
+\midrule
+Distancia Boston--Los Ángeles & \(R\) & \SI{5.0e6}{\meter} & enunciado &
+  sí \\
+Masa total al despegue & \(m_i\) & \SI{1.0e4}{\kilogram} & enunciado &
+  sí \\
+Relación sustentación/arrastre & \(L/D\) & \num{15} & enunciado & sí \\
+Eficiencia total & \(\eta_o\) & \num{0.30} & enunciado & sí \\
+Densidad energética del queroseno & \(h\) &
+  \SI{42.8e6}{\joule\per\kilogram} & sección 3 del módulo;
+  \textcite{tennekes2009} & sí \\
+Aceleración de la gravedad & \(g\) &
+  \SI{9.81}{\meter\per\second\squared} & constante & sí \\
+\midrule
+Velocidad de crucero & \(V\) & \SI{300}{\meter\per\second} & enunciado &
+  \textbf{no} en el alcance; sí en la resistencia \\
+Densidad del aire a \SI{6000}{\meter} & \(\rho\) &
+  \SI{0.6125}{\kilogram\per\meter\cubed} & enunciado
+  (\(\rho_0/2\), con \(\rho_0=\SI{1.225}{\kilogram\per\meter\cubed}\)) &
+  \textbf{no}: sirve para comprobar la coherencia \\
+\midrule
+Densidad del queroseno & \(\rho_{\text{comb}}\) &
+  \SI{804}{\kilogram\per\meter\cubed} & \textcite{chevron2007} &
+  sólo para pasar a litros \\
+Factor de emisión del queroseno & &
+  \SI{3.16}{\kilogram\per\kilogram} de \ce{CO2} & \textcite{icaocalc} &
+  sólo para la huella \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{La densidad energética del queroseno}
+
+Es el dato que el enunciado remite a la sección 3 del módulo. El valor que allí
+se da, tomado de la tabla de poderes caloríficos de \textcite{tennekes2009}, es
+\(h \approx \SI{42.5}{\mega\joule\per\kilogram}\) para el grupo
+\enquote{queroseno, gasolina y gasóleo}, y la literatura de referencia sitúa el
+poder calorífico inferior del Jet A-1 entre \num{42.8} y
+\SI{43.2}{\mega\joule\per\kilogram} \parencite{chevron2007}. Uso
+\SI{42.8}{\mega\joule\per\kilogram}, que es el valor mínimo de especificación
+del combustible de aviación y el que emplea \textcite{mitunified} en el mismo
+ejercicio.
+
+Merece la pena detenerse un segundo en este dato, porque encierra la primera de
+las trampas del problema. Lo que hay que usar es el \textbf{poder calorífico
+inferior}, no el superior. La diferencia entre los dos es el calor latente del
+vapor de agua que sale por la tobera: unos \SI{3.6}{\mega\joule\per\kilogram},
+un 8 por ciento. Ese vapor se va a la atmósfera sin condensar, de modo que su
+calor latente no está disponible para producir empuje. Si uno toma por
+descuido el poder calorífico superior, el resultado sale un 7 por ciento bajo,
+como se ve en el Cuadro~\ref{cuadro:sensibilidad}. Es un error pequeño en este
+problema y grande en otros: para el hidrógeno la diferencia entre los dos
+poderes caloríficos es del 18 por ciento.
+
+\section{El cálculo, paso a paso}
+
+\subsection{Los cinco pasos}
+
+\textbf{Paso 1. El alcance de referencia del combustible.}
+\begin{equation}
+\frac{h}{g} = \frac{\SI{42.8e6}{\joule\per\kilogram}}
+                   {\SI{9.81}{\meter\per\second\squared}}
+            = \SI{4.363e6}{\meter} = \SI{4363}{\kilo\meter}.
+\end{equation}
+
+\textbf{Paso 2. El alcance característico del avión}, es decir el que
+recorrería si todo su peso fuera combustible y pudiera quemarlo entero:
+\begin{equation}
+R^{*} \equiv \eta_o\,\frac{h}{g}\,\frac{L}{D}
+      = 0{,}30 \times \SI{4363}{\kilo\meter} \times 15
+      = \SI{19633}{\kilo\meter}.
+\label{eq:rest}
+\end{equation}
+Esta cifra es útil por sí misma: es media vuelta al mundo, lo que dice que un
+avión con estos números está lejos de poder circunnavegar el planeta pero muy
+por encima de lo que necesita para cruzar los Estados Unidos.
+
+\textbf{Paso 3. El parámetro adimensional.} La ecuación~\eqref{eq:breguet} se
+reescribe como \(R = R^{*}\ln(W_i/W_f)\), de modo que el exponente que gobierna
+todo es el cociente entre la distancia pedida y el alcance característico:
+\begin{equation}
+x \equiv \frac{R}{R^{*}} = \frac{R\,g}{\eta_o\, h\,(L/D)}
+  = \frac{\SI{5.0e6}{\meter}\times\SI{9.81}{\meter\per\second\squared}}
+         {0{,}30\times\SI{42.8e6}{\joule\per\kilogram}\times 15}
+  = \frac{\num{4.905e7}}{\num{1.926e8}} = \num{0.2547}.
+\label{eq:x}
+\end{equation}
+
+\textbf{Paso 4. La razón de pesos.}
+\begin{equation}
+\frac{W_i}{W_f} = \frac{m_i}{m_f} = e^{x} = e^{0{,}2547} = \num{1.2900}.
+\end{equation}
+
+\textbf{Paso 5. La masa de combustible.} Aquí el enunciado admite dos lecturas,
+y las doy las dos porque la diferencia entre ellas no es pequeña.
+
+\emph{Lectura A: las \SI{10}{\tonne} son el peso total al despegue}, que es lo
+que dice literalmente el enunciado (\enquote{este es el peso total}). Entonces
+\(m_i = \SI{10000}{\kilogram}\) y el combustible es la diferencia entre el peso
+inicial y el final:
+\begin{align}
+m_{\text{final}} &= \frac{m_i}{e^{x}}
+  = \frac{\SI{10000}{\kilogram}}{1{,}2900} = \SI{7752}{\kilogram},\\
+m_{\text{comb}}  &= m_i\left(1-e^{-x}\right)
+  = \SI{10000}{\kilogram}\times(1-0{,}7752)
+  = \boxed{\SI{2248}{\kilogram}} .
+\label{eq:resultado}
+\end{align}
+
+\emph{Lectura B: las \SI{10}{\tonne} son el peso sin combustible}, es decir
+estructura más pasajeros más carga, que es la interpretación que sugiere la
+aclaración \enquote{incluye pasajeros y carga}. Entonces
+\(m_{\text{final}} = \SI{10000}{\kilogram}\) y
+\begin{equation}
+m_{\text{comb}} = m_{\text{final}}\left(e^{x}-1\right)
+  = \SI{10000}{\kilogram}\times 0{,}2900 = \SI{2900}{\kilogram},
+\end{equation}
+con un peso al despegue de \SI{12900}{\kilogram}. Las dos cifras difieren en un
+29 por ciento, y la ambigüedad de una sola frase del enunciado es la mayor
+fuente de incertidumbre de todo el ejercicio, por encima de la del valor de
+\(h\) y comparable a la del \(L/D\). En lo que sigue uso la lectura A, que es
+la literal, y arrastro la B en el análisis de sensibilidad.
+
+\subsection{Qué forma tiene la respuesta}
+
+La Figura~\ref{fig:curva} sitúa el resultado en la curva completa. Es la parte
+del ejercicio que a mí más me ha servido, porque explica de un golpe tres cosas
+que por separado parecen desconectadas: por qué la forma lineal se equivoca
+poco aquí y mucho en un vuelo transpacífico, por qué existe un alcance máximo
+aunque el depósito fuera infinito, y por qué el reactor de negocios de este
+problema no llega a Los Ángeles con las reservas puestas.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+
+\node[anchor=south west, font=\small\bfseries] at (-0.9,6.65)
+     {Fracción del peso al despegue que hay que llevar en queroseno, frente al
+      alcance};
+
+% rejilla y ejes
+\foreach \v in {20,40,60,80,100} {
+  \draw[cNeutro!28] (0,{\cRy{\v}}) -- (13.5,{\cRy{\v}});
+  \node[left, font=\scriptsize, text=cNeutro] at (-0.06,{\cRy{\v}}) {\v\,\%};
+}
+\draw[cNeutro!70] (0,0) -- (13.5,0);
+\draw[cNeutro!70] (0,0) -- (0,6.45);
+\foreach \a in {0,2.5,5,7.5,10,12.5,15,17.5,20} {
+  \draw[cNeutro!70] ({\cRx{\a}},0) -- ({\cRx{\a}},-0.09);
+}
+\foreach \a/\t in {0/0, 5/5.000, 10/10.000, 15/15.000, 20/20.000} {
+  \node[below, font=\scriptsize, text=cNeutro] at ({\cRx{\a}},-0.11) {\t};
+}
+\node[below, font=\scriptsize, text=cNeutro] at (6.75,-0.62)
+     {alcance en crucero (km)};
+
+% asíntota del 100 %
+\draw[cNeutro!75, dashed] (0,{\cRy{100}}) -- (13.5,{\cRy{100}});
+
+% curva lineal (aproximación de Tennekes)
+\draw[cNaranja, thick, dashed, samples=60, domain=0:19.633, variable=\r]
+  plot ({\cRx{\r}},{\cRy{100*\r/19.633}});
+\node[right, font=\scriptsize, text=cNaranja, align=left, rotate=27]
+     at ({\cRx{12.1}},{\cRy{66}}) {forma lineal: $R/R^{*}$};
+
+% curva exacta
+\draw[cCalc, very thick, samples=90, domain=0:20, variable=\r]
+  plot ({\cRx{\r}},{\cRy{100*(1-exp(-\r/19.633))}});
+\node[right, font=\scriptsize, text=cCalc, align=left]
+     at ({\cRx{15.4}},{\cRy{45}}) {forma exacta:\\$1-e^{-R/R^{*}}$};
+
+% punto de operación
+\draw[cDato, dashed] ({\cRx{5}},0) -- ({\cRx{5}},{\cRy{100}});
+\fill[cCalc] ({\cRx{5}},{\cRy{22.48}}) circle (2.6pt);
+\fill[cNaranja] ({\cRx{5}},{\cRy{25.47}}) circle (2.6pt);
+\node[right, font=\scriptsize, text=cCalc, align=left]
+     at ({\cRx{5.25}},{\cRy{17.5}})
+     {\textbf{este problema}\\\SI{22.48}{\percent} = \SI{2248}{\kilogram}};
+\node[left, font=\scriptsize, text=cNaranja, align=right]
+     at ({\cRx{4.75}},{\cRy{32}})
+     {\SI{25.47}{\percent} = \SI{2547}{\kilogram}\\(forma lineal,
+      \num[retain-explicit-plus]{+13}\,\%)};
+
+% R*
+\draw[cAviso, dotted, thick] ({\cRx{19.633}},0) -- ({\cRx{19.633}},{\cRy{100}});
+\node[above left, font=\scriptsize, text=cAviso, align=right]
+     at ({\cRx{19.633}},{\cRy{101}})
+     {$R^{*} = \SI{19633}{\kilo\meter}$};
+\fill[cAviso] ({\cRx{19.633}},{\cRy{63.21}}) circle (2.2pt);
+\node[left, font=\scriptsize, text=cAviso] at ({\cRx{19.4}},{\cRy{63.21}})
+     {\SI{63.2}{\percent}};
+
+% banda de capacidad de un reactor real de 10 t
+\fill[cDato!16] (0,{\cRy{26}}) rectangle (13.5,{\cRy{28.5}});
+\node[right, font=\scriptsize, text=cDato, align=left]
+     at ({\cRx{8.05}},{\cRy{11.5}})
+     {capacidad de depósito de un reactor real de \SI{10}{\tonne}:
+      \SI{2750}{\kilogram} sobre \SI{9752}{\kilogram},
+      el \SI{28.2}{\percent}};
+\draw[cDato, -{Stealth[length=4pt]}] ({\cRx{10.4}},{\cRy{16.5}})
+  -- ({\cRx{10.4}},{\cRy{25.2}});
+
+% zona de validez de la forma lineal
+\draw[cNeutro!85, |-|] ({\cRx{0.2}},{\cRy{92}}) -- ({\cRx{4}},{\cRy{92}});
+\node[right, font=\scriptsize, text=cNeutro!85!black, align=left]
+     at ({\cRx{4.15}},{\cRy{92}})
+     {por debajo de $R \approx R^{*}/5$ las dos formas coinciden dentro
+      del \SI{10}{\percent}};
+
+\end{tikzpicture}
+\caption{El resultado en su contexto. La curva verde es la
+ecuación~\eqref{eq:breguet} resuelta para la fracción de combustible; la
+naranja discontinua es la aproximación lineal~\eqref{eq:lineal}, que sobrestima
+y que diverge sin límite mientras la exacta se satura. El alcance
+característico \(R^{*} = \eta_o (h/g)(L/D) = \SI{19633}{\kilo\meter}\) es la
+escala natural del problema: a \(R = R^{*}\) haría falta el
+\SI{63.2}{\percent} del peso al despegue en combustible, y ningún avión
+convencional pasa del 45 o 50 por ciento, de modo que \(R^{*}\) no es un
+alcance alcanzable sino una constante de normalización. La banda azul es la
+capacidad real de depósito de un reactor de negocios de esta masa
+\parencite{learjet75}: el punto de operación cae justo por debajo, que es la
+razón de que un avión así llegue a Los Ángeles desde Boston sólo sobre el
+papel. Elaboración propia.}
+\label{fig:curva}
+\end{figure}
+
+Tres lecturas de la figura:
+
+\begin{itemize}
+\item \textbf{La curva se satura y la aproximación lineal no.} A
+  \SI{5000}{\kilo\meter} la diferencia entre las dos es del 13 por ciento; a
+  \SI{15000}{\kilo\meter} la forma lineal daría el 76 por ciento del peso al
+  despegue en combustible frente al 53 por ciento real, un error del 43 por
+  ciento. La aproximación es utilizable exactamente en el régimen de este
+  problema y no más allá.
+\item \textbf{Existe un techo estructural, no energético.} Como la fracción de
+  combustible nunca puede llegar al 100 por ciento, la ecuación de Bréguet dice
+  que el alcance está limitado por lo que la estructura permite embarcar. Con
+  un 45 por ciento de fracción de combustible, que es un valor de récord para
+  un avión de transporte, este avión llegaría a \SI{11700}{\kilo\meter}.
+\item \textbf{El punto de operación está incómodamente cerca del depósito.}
+  Los \SI{2248}{\kilogram} son el 22,5 por ciento del peso al despegue, y el
+  reactor de negocios real más parecido a este avión lleva
+  \SI{2750}{\kilogram} de capacidad, el 28,2 por ciento
+  \parencite{learjet75,aopalearjet}. Parece que sobra margen. La
+  Figura~\ref{fig:cascada} muestra que no sobra.
+\end{itemize}
+
+\section{Cuatro comprobaciones independientes}
+
+Un resultado de una línea conviene comprobarlo por caminos que no usen la
+misma línea. Hago cuatro, resumidas en el Cuadro~\ref{cuadro:comprobaciones}.
+
+\textbf{Comprobación 1: balance de energía con el peso medio.} El trabajo que
+hay que hacer contra el arrastre es \(\overline{D}\,R\). El arrastre inicial es
+\(D_i = W_i/(L/D) = \SI{98100}{\newton}/15 = \SI{6540}{\newton}\) y el final
+\(D_f = \SI{5070}{\newton}\). Si se usa el peso inicial constante, el trabajo
+sale \SI{32.7}{\giga\joule} y el combustible \SI{2547}{\kilogram}, que es
+exactamente el resultado de la forma lineal: la aproximación lineal
+\emph{es} suponer que el avión no adelgaza. Si se usa la media logarítmica de
+los pesos, \SI{8828}{\kilogram}, el trabajo sale \SI{28.9}{\giga\joule} y el
+combustible \SI{2248}{\kilogram}, que reproduce la
+ecuación~\eqref{eq:resultado} con cinco cifras. La media logarítmica no es una
+elección estética: es la media que la integral del logaritmo impone.
+
+\textbf{Comprobación 2: potencias y flujo de combustible.} La potencia
+propulsiva media es \(\overline{D}\,V = \SI{5774}{\newton} \times
+\SI{300}{\meter\per\second} = \SI{1.73}{\mega\watt}\), y la potencia química
+que hay que meter por el otro extremo es \SI{5.77}{\mega\watt}. Dividida por
+la densidad energética, eso son \SI{0.135}{\kilogram\per\second}, es decir
+\SI{486}{\kilogram\per\hour}, que multiplicados por las \SI{4.63}{\hour} de
+crucero devuelven los \SI{2248}{\kilogram}. El consumo pasa de
+\SI{550}{\kilogram\per\hour} al principio a \SI{426}{\kilogram\per\hour} al
+final: un 23 por ciento menos, sólo porque el avión pesa menos.
+
+\textbf{Comprobación 3: la resistencia.} La ecuación~\eqref{eq:endurance} da
+\(E = R/V = \SI{5.0e6}{\meter}/\SI{300}{\meter\per\second} = \SI{16667}{\second}
+= \SI{4.63}{\hour}\), es decir 4 horas y 38 minutos. Aquí es donde entra la
+velocidad, que en el alcance se había cancelado. Es una comprobación débil (no
+usa la ecuación de Bréguet, sólo la definición de velocidad) pero es la que
+contesta la mitad \enquote{de resistencia} de la pregunta.
+
+\textbf{Comprobación 4: contra un avión que existe.} Un avión de transporte con
+peso máximo al despegue de \SI{9752}{\kilogram}, que es la masa de este
+problema con un 2 por ciento de diferencia, lleva \SI{2750}{\kilogram} de
+combustible y tiene un alcance certificado de \SI{3797}{\kilo\meter} con cuatro
+pasajeros \parencite{learjet75,aopalearjet}. Eso son
+\SI{0.724}{\kilogram\per\kilo\meter}, frente a los
+\SI{0.450}{\kilogram\per\kilo\meter} de mi estimación: la estimación es
+\textbf{optimista en un factor 1,6}. Invirtiendo la ecuación de Bréguet con los
+datos del avión real se obtiene \(\eta_o (L/D) = \num{2.63}\), frente a
+\(0{,}30\times 15 = \num{4.50}\) que supone el enunciado. Esa es la medida
+limpia de cuánto de bueno es el avión hipotético del enunciado comparado con
+uno de verdad, y la respuesta es que es un 71 por ciento mejor de lo que existe.
+
+\begin{table}[htbp]
+\small
+\caption{Las cuatro comprobaciones y lo que cada una añade. Cálculo propio.}
+\label{cuadro:comprobaciones}
+\begin{tabularx}{\textwidth}{@{}p{4.0cm}rXl@{}}
+\toprule
+\textbf{Comprobación} & \textbf{Resultado} & \textbf{Qué verifica} &
+\textbf{Veredicto} \\
+\midrule
+Trabajo contra el arrastre con peso medio logarítmico
+& \SI{2248}{\kilogram}
+& que la integral está bien hecha
+& \textcolor{cVerde}{\textbf{coincide}} \\
+Trabajo contra el arrastre con peso inicial constante
+& \SI{2547}{\kilogram}
+& que la forma lineal equivale a ignorar el adelgazamiento
+& \textcolor{cVerde}{\textbf{explica el} \boldmath\SI{13}{\percent}} \\
+Potencia y flujo de combustible medio
+& \SI{486}{\kilogram\per\hour}
+& que las magnitudes intermedias son físicamente razonables
+& \textcolor{cVerde}{\textbf{coincide}} \\
+Consumo por kilómetro de un reactor real de \SI{9.8}{\tonne}
+& \SI{0.724}{\kilogram\per\kilo\meter}
+& que el orden de magnitud es el del mundo real
+& \textcolor{cAviso}{\textbf{estimación} \boldmath\num{1.6}\textbf{ veces
+  baja}} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Para qué sirven la velocidad y la densidad del aire}
+\label{sec:coherencia}
+
+El enunciado da dos datos que \textbf{no entran en la ecuación del alcance}: la
+velocidad de \SI{300}{\meter\per\second} y la densidad del aire de
+\SI{0.6125}{\kilogram\per\meter\cubed}. La velocidad se cancela al pasar de la
+resistencia al alcance, y la densidad no aparece en ninguna de las dos
+ecuaciones. No son datos superfluos: son los datos que permiten comprobar si el
+resto del enunciado describe un avión posible. Y la respuesta, con números, es
+que no.
+
+\subsection{Primer indicio: el número de Mach}
+
+A \SI{6000}{\meter} en atmósfera estándar la temperatura es
+\SI{249.15}{\kelvin} \parencite{iso2533}, de donde la velocidad del sonido es
+\begin{equation}
+a = \sqrt{\gamma R_{\text{aire}} T}
+  = \sqrt{1{,}4 \times \SI{287.05}{\joule\per\kilogram\per\kelvin}
+          \times \SI{249.15}{\kelvin}}
+  = \SI{316.4}{\meter\per\second},
+\end{equation}
+y por tanto el número de Mach del enunciado es
+\begin{equation}
+M = \frac{V}{a} = \frac{300}{316{,}4} = \num{0.948}.
+\end{equation}
+Eso es un problema. Los aviones de transporte cruzan entre Mach 0,78 y Mach
+0,85 precisamente porque por encima de Mach 0,90 aparece la
+\textbf{divergencia de arrastre}: se forman ondas de choque locales sobre el
+extradós del ala y el coeficiente de arrastre se dispara
+\parencite{anderson1999}. Mach 0,948 está por encima del Mach de divergencia de
+cualquier ala subsónica conocida. Un \(L/D\) de 15 en esa condición no es
+optimista: es imposible.
+
+De paso, la densidad que da el enunciado también merece un comentario. La
+atmósfera estándar a \SI{6000}{\meter} tiene
+\(\rho = \SI{0.660}{\kilogram\per\meter\cubed}\), que es el 53,8 por ciento del
+valor a nivel del mar y no el 50 por ciento \parencite{iso2533}. La
+aproximación del enunciado es buena (un 7 por ciento de diferencia) y no cambia
+nada, pero conviene saber que \(\rho_0/2\) corresponde en realidad a
+\SI{6600}{\meter}.
+
+\subsection{Segundo indicio: la sustentación no cierra}
+
+Con la densidad y la velocidad del enunciado, la presión dinámica es
+\begin{equation}
+q = \tfrac{1}{2}\rho V^{2}
+  = \tfrac{1}{2}\times\SI{0.6125}{\kilogram\per\meter\cubed}
+    \times(\SI{300}{\meter\per\second})^{2}
+  = \SI{27562}{\pascal},
+\end{equation}
+casi tres veces la presión dinámica de crucero de un avión de línea
+(\SI{9600}{\pascal} para un reactor de pasillo único a \SI{11000}{\meter} y
+Mach 0,78). De la ecuación de sustentación \(W = q\,S\,C_L\) sale entonces
+\begin{equation}
+S\,C_L = \frac{W}{q} = \frac{\SI{98100}{\newton}}{\SI{27562}{\pascal}}
+       = \SI{3.56}{\meter\squared},
+\end{equation}
+y aquí se abre la tenaza. El Cuadro~\ref{cuadro:coherencia} y la
+Figura~\ref{fig:coherencia} la desarrollan:
+
+\begin{itemize}
+\item Si el ala es de tamaño normal para un avión de \SI{10}{\tonne}, del orden
+  de \SI{29}{\meter\squared} \parencite{learjet75}, entonces
+  \(C_L = 3{,}56/29 = \num{0.123}\). Para que \(L/D = 15\) con ese
+  \(C_L\) haría falta \(C_D = 0{,}123/15 = \num{0.0082}\), que es
+  \textbf{menos de la mitad del arrastre parásito} de cualquier avión de
+  transporte, cuyo \(C_{D0}\) mínimo ronda \num{0.020} a \num{0.025}
+  \parencite{anderson1999,raymer2018}. Con \(C_{D0} = \num{0.022}\) el
+  \(L/D\) realmente alcanzable en esa condición es \num{5.6}.
+\item Si en cambio se impone un \(C_L\) razonable de crucero, del orden de
+  \num{0.40}, entonces el ala tendría que medir \SI{8.9}{\meter\squared}, lo
+  que da una carga alar de \SI{1124}{\kilogram\per\meter\squared}. Eso es más
+  que la de un caza de combate.
+\end{itemize}
+
+Las dos salidas son inadmisibles, y la conclusión es que \textbf{los datos del
+enunciado no describen ningún avión construible}: describen un avión de
+\SI{10}{\tonne} con la eficiencia aerodinámica de un planeador volando a la
+velocidad de un caza a una altitud de avión de hélice. Esto no invalida el
+ejercicio, porque el ejercicio es sobre la ecuación y no sobre el avión, pero sí
+es una de las respuestas a la pregunta de por qué el cálculo es complicado, y de
+las más importantes: en un problema real \textbf{no se pueden elegir los datos
+de entrada por separado}, porque están acoplados por la física.
+
+\begin{table}[htbp]
+\small
+\caption{Examen de coherencia entre los datos del enunciado y la aerodinámica.
+Cálculo propio; valores de referencia de reactor de pasillo único a
+\SI{11000}{\meter} y Mach 0,78, y coeficiente de arrastre parásito de
+\textcite{anderson1999} y \textcite{raymer2018}.}
+\label{cuadro:coherencia}
+\begin{tabularx}{\textwidth}{@{}Xrrl@{}}
+\toprule
+\textbf{Magnitud} & \textbf{Enunciado} & \textbf{Avión real} &
+\textbf{Diagnóstico} \\
+\midrule
+Altitud (\si{\meter})                          & \num{6000}  & \num{11000} &
+  baja para crucero \\
+Número de Mach                                 & \num{0.948} & \num{0.78}  &
+  \textcolor{cAviso}{transónico} \\
+Presión dinámica \(q\) (\si{\pascal})          & \num{27562} & \num{9600}  &
+  \(\times 2{,}9\) \\
+Coeficiente de sustentación \(C_L\)            & \num{0.123} & \num{0.540}  &
+  \textcolor{cAviso}{muy bajo} \\
+\(C_D\) necesario para \(L/D = 15\)            & \num{0.0082} & \num{0.032} &
+  \textcolor{cAviso}{por debajo del parásito} \\
+\(L/D\) realmente alcanzable                   & \num{5.6}   & \num{17}    &
+  \textcolor{cAviso}{un tercio de lo supuesto} \\
+\midrule
+Combustible con \(L/D = 15\) (\si{\kilogram})  & \num{2248}  &             &
+  respuesta del ejercicio \\
+Combustible con \(L/D = 5{,}6\) (\si{\kilogram}) & \num{4958} &            &
+  \textcolor{cAviso}{el 50 \% del peso al despegue} \\
+Alcance real con \SI{2750}{\kilogram} y \(L/D = 5{,}6\) (\si{\kilo\meter})
+  & \num{2419} & \num{3797} & \textcolor{cAviso}{no llega} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+
+% ---------------- Panel A: la condición de vuelo ----------------
+\node[anchor=south west, font=\small\bfseries] at (-0.5,4.30)
+     {Panel A. La condición de vuelo del enunciado frente a la de un reactor
+      de línea};
+
+% presión dinámica
+\foreach \v in {10,20,30} {
+  \draw[cNeutro!28] (0,{\v*0.125}) -- (5.6,{\v*0.125});
+  \node[left, font=\scriptsize, text=cNeutro] at (-0.06,{\v*0.125}) {\v};
+}
+\draw[cNeutro!70] (0,0) -- (5.6,0);
+\fill[cDato!75] (0.55,0) rectangle (1.75,{9.6*0.125});
+\node[above, font=\scriptsize\bfseries, text=cDato] at (1.15,{9.6*0.125})
+     {\num{9.6}};
+\fill[cAviso!80] (2.75,0) rectangle (3.95,{27.562*0.125});
+\node[above, font=\scriptsize\bfseries, text=cAviso] at (3.35,{27.562*0.125})
+     {\num{27.6}};
+\node[below, font=\scriptsize, text width=2.2cm, align=center] at (1.15,-0.10)
+     {reactor de línea\\M 0,78 a \SI{11}{\kilo\meter}};
+\node[below, font=\scriptsize, text width=2.2cm, align=center] at (3.35,-0.10)
+     {\textbf{enunciado}\\M 0,95 a \SI{6}{\kilo\meter}};
+\node[font=\scriptsize, text=cNeutro, rotate=90] at (-0.80,2.1)
+     {presión dinámica $q$ (kPa)};
+
+% coeficiente de sustentación
+\begin{scope}[shift={(7.6,0)}]
+\foreach \v/\t in {0.2/{0,2}, 0.4/{0,4}, 0.6/{0,6}} {
+  \draw[cNeutro!28] (0,{\v*6.2}) -- (5.6,{\v*6.2});
+  \node[left, font=\scriptsize, text=cNeutro] at (-0.06,{\v*6.2}) {\t};
+}
+\draw[cNeutro!70] (0,0) -- (5.6,0);
+\fill[cDato!75] (0.55,0) rectangle (1.75,{0.540*6.2});
+\node[above, font=\scriptsize\bfseries, text=cDato] at (1.15,{0.540*6.2})
+     {\num{0.54}};
+\fill[cAviso!80] (2.75,0) rectangle (3.95,{0.123*6.2});
+\node[above, font=\scriptsize\bfseries, text=cAviso] at (3.35,{0.123*6.2})
+     {\num{0.123}};
+\node[below, font=\scriptsize, text width=2.2cm, align=center] at (1.15,-0.10)
+     {reactor de línea\\$S = \SI{123}{\meter\squared}$};
+\node[below, font=\scriptsize, text width=2.2cm, align=center] at (3.35,-0.10)
+     {\textbf{enunciado}\\$S = \SI{29}{\meter\squared}$};
+\node[font=\scriptsize, text=cNeutro, rotate=90] at (-0.75,2.1)
+     {coeficiente de sustentación $C_L$};
+\node[right, font=\scriptsize, text=cAviso, align=left, text width=3.0cm]
+     at (4.15,2.5)
+     {volar tan rápido y tan bajo obliga a un $C_L$ cuatro veces menor
+      que el de crucero};
+\end{scope}
+
+% ---------------- Panel B: la consecuencia ----------------
+\begin{scope}[shift={(0,-7.35)}]
+\node[anchor=south west, font=\small\bfseries] at (-0.9,5.55)
+     {Panel B. Consecuencia: el $L/D$ supuesto y el combustible que hace falta
+      de verdad};
+
+% L/D
+\foreach \v in {5,10,15,20} {
+  \draw[cNeutro!28] (0,{\v*0.25}) -- (5.6,{\v*0.25});
+  \node[left, font=\scriptsize, text=cNeutro] at (-0.06,{\v*0.25}) {\v};
+}
+\draw[cNeutro!70] (0,0) -- (5.6,0);
+\fill[cDato!75] (0.35,0) rectangle (1.35,{17*0.25});
+\node[above, font=\scriptsize\bfseries, text=cDato] at (0.85,{17*0.25}) {17};
+\fill[cVerde!80] (2.05,0) rectangle (3.05,{15*0.25});
+\node[above, font=\scriptsize\bfseries, text=cVerde] at (2.55,{15*0.25}) {15};
+\fill[cAviso!80] (3.75,0) rectangle (4.75,{5.6*0.25});
+\node[above, font=\scriptsize\bfseries, text=cAviso] at (4.25,{5.6*0.25})
+     {\num{5.6}};
+\node[below, font=\scriptsize, text width=1.75cm, align=center] at (0.85,-0.10)
+     {reactor de línea (real)};
+\node[below, font=\scriptsize, text width=1.75cm, align=center] at (2.55,-0.10)
+     {\textbf{supuesto en el enunciado}};
+\node[below, font=\scriptsize, text width=1.75cm, align=center] at (4.25,-0.10)
+     {alcanzable a M 0,95 con $C_{D0}=0{,}022$};
+\node[font=\scriptsize, text=cNeutro, rotate=90] at (-0.70,2.1)
+     {relación $L/D$};
+
+% combustible
+\begin{scope}[shift={(7.6,0)}]
+\foreach \v in {1000,2000,3000,4000,5000} {
+  \draw[cNeutro!28] (0,{\v*0.00098}) -- (5.6,{\v*0.00098});
+  \node[left, font=\scriptsize, text=cNeutro] at (-0.06,{\v*0.00098})
+       {\num{\v}};
+}
+\draw[cNeutro!70] (0,0) -- (5.6,0);
+\fill[cVerde!80] (0.75,0) rectangle (2.05,{2248*0.00098});
+\node[above, font=\scriptsize\bfseries, text=cVerde] at (1.40,{2248*0.00098})
+     {\num{2248}};
+\fill[cAviso!80] (3.15,0) rectangle (4.45,{4958*0.00098});
+\node[above, font=\scriptsize\bfseries, text=cAviso] at (3.80,{4958*0.00098})
+     {\num{4958}};
+\draw[cDato, very thick, dashed] (0,{2750*0.00098}) -- (5.6,{2750*0.00098});
+\node[above right, font=\scriptsize, text=cDato, align=left]
+     at (0.10,{2750*0.00098})
+     {depósito: \SI{2750}{\kilogram}};
+\node[below, font=\scriptsize, text width=2.1cm, align=center] at (1.40,-0.10)
+     {con $L/D = 15$\\(respuesta del ejercicio)};
+\node[below, font=\scriptsize, text width=2.1cm, align=center] at (3.80,-0.10)
+     {con $L/D = 5{,}6$\\(el \SI{50}{\percent} del avión)};
+\node[font=\scriptsize, text=cNeutro, rotate=90] at (-1.32,2.4)
+     {queroseno (kg)};
+\end{scope}
+\end{scope}
+
+\end{tikzpicture}
+\caption{Por qué la velocidad y la densidad, que no entran en la ecuación,
+importan. Panel A: a \SI{300}{\meter\per\second} y \SI{6000}{\meter} la presión
+dinámica es 2,9 veces la de crucero de un reactor de línea, lo que fuerza un
+coeficiente de sustentación cuatro veces menor. Panel B: con ese \(C_L\) y un
+arrastre parásito realista, el \(L/D\) alcanzable es \num{5.6} y no 15, y el
+combustible necesario pasa de \num{2248} a \SI{4958}{\kilogram}, por encima de
+la capacidad de depósito de cualquier avión de esta masa. Los datos del
+enunciado son aritméticamente consistentes y físicamente incompatibles entre
+sí. Elaboración propia; \(C_{D0}\) de \textcite{anderson1999} y
+\textcite{raymer2018}, atmósfera de \textcite{iso2533}.}
+\label{fig:coherencia}
+\end{figure}
+
+\section{Del crucero ideal al depósito real}
+\label{sec:cascada}
+
+El enunciado autoriza a pasar por alto el ascenso y el descenso, y hago uso de
+esa licencia para el resultado principal. Pero conviene saber cuánto vale la
+licencia, porque es la diferencia entre una estimación y un plan de vuelo. La
+Figura~\ref{fig:cascada} pone la cuenta completa.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+
+\node[anchor=south west, font=\small\bfseries] at (-0.9,5.80)
+     {De la respuesta del ejercicio al combustible que habría que embarcar de
+      verdad (kg)};
+
+% rejilla
+\foreach \v in {500,1000,1500,2000,2500,3000} {
+  \draw[cNeutro!26] (0,{\cWy{\v}}) -- (10.15,{\cWy{\v}});
+  \node[left, font=\scriptsize, text=cNeutro] at (-0.06,{\cWy{\v}})
+       {\num{\v}};
+}
+\draw[cNeutro!70] (0,0) -- (10.15,0);
+\draw[cNeutro!70] (0,0) -- (0,5.55);
+
+% capacidad de depósito de un reactor real de 10 t
+\draw[cAviso, very thick, dashed] (0,{\cWy{2750}}) -- (10.15,{\cWy{2750}});
+\node[right, font=\scriptsize, text=cAviso, align=left, text width=2.75cm]
+     at (10.35,{\cWy{2620}})
+     {capacidad de depósito de un reactor real de \SI{9752}{\kilogram}:
+      \SI{2750}{\kilogram}};
+
+% líneas de enlace entre tramos
+\foreach \x/\y in {1.44/2248, 2.84/2329, 4.24/2441, 5.64/2607, 7.04/2807,
+                   8.44/2847} {
+  \draw[cNeutro!60, dotted] (\x,{\cWy{\y}}) -- ({\x+0.26},{\cWy{\y}});
+}
+
+\tramo{0.30}{0}{2248}{cCalc}{crucero ideal (Bréguet)}{\num{2248}}{-0.14}
+\tramo{1.70}{2248}{2329}{cNaranja}{ascenso y aceleración}{$+81$}{-0.86}
+\tramo{3.10}{2329}{2441}{cNaranja}{contingencia del
+  \SI{5}{\percent}}{$+112$}{-0.14}
+\tramo{4.50}{2441}{2607}{cNaranja}{alternativo a
+  \SI{370}{\kilo\meter}}{$+166$}{-0.86}
+\tramo{5.90}{2607}{2807}{cNaranja}{reserva final de
+  \SI{30}{\minute}}{$+200$}{-0.14}
+\tramo{7.30}{2807}{2847}{cNaranja}{rodaje}{$+40$}{-0.86}
+\tramo{8.86}{0}{2847}{cAviso}{\textbf{total a embarcar}}{\num{2847}}{-0.14}
+
+\node[anchor=north west, font=\scriptsize, align=left, text width=13.0cm,
+      text=cNeutro!85!black] at (-0.9,-1.70)
+     {La licencia que da el enunciado (\enquote{puede pasar por alto el ascenso
+      y el descenso}) vale \SI{81}{\kilogram}, un \SI{3.6}{\percent}. Lo que de
+      verdad falta es la normativa de reservas: \SI{518}{\kilogram}, un
+      \SI{23}{\percent}, y no es negociable.};
+
+\end{tikzpicture}
+\caption{La respuesta del ejercicio es la primera barra; las cinco siguientes
+son lo que la normativa y la física añaden. El incremento por ascenso es el
+mínimo termodinámico, calculado como la energía potencial más la cinética que
+hay que darle al avión
+(\(mgh + \tfrac{1}{2}mV^{2} = \num{589} + \num{450} = \SI{1039}{\mega\joule}\),
+que a \(\eta_o h\) por kilogramo son \SI{81}{\kilogram}); en la práctica es
+mayor, porque durante el ascenso ni el \(L/D\) ni el \(\eta_o\) valen lo que
+valen en crucero. Las reservas siguen la política de combustible del Reglamento
+(UE) 965/2012 \parencite{easa965}: contingencia del 5 por ciento del trayecto,
+combustible hasta un aeropuerto alternativo a \num{200} millas náuticas,
+reserva final de 30 minutos en espera y rodaje. Elaboración propia. El total,
+\SI{2847}{\kilogram}, supera la capacidad de depósito del avión real de masa
+comparable, y eso con el \(L/D\) optimista del enunciado.}
+\label{fig:cascada}
+\end{figure}
+
+Los dos números que salen de la cascada son estos. La licencia del enunciado
+(ignorar ascenso y descenso) vale \textbf{\SI{81}{\kilogram}, un 3,6 por
+ciento}, y por tanto está bien concedida: no cambia la respuesta. Lo que sí la
+cambia es la normativa: las reservas obligatorias suman
+\textbf{\SI{518}{\kilogram}, un 23 por ciento} sobre el combustible de
+trayecto, y no son opcionales. Un avión que despachara con
+\SI{2248}{\kilogram} para este vuelo no despegaría.
+
+Y el resultado que cierra el círculo: el total, \SI{2847}{\kilogram}, es
+\textbf{superior a la capacidad de depósito} del reactor real de masa
+equivalente, \SI{2750}{\kilogram} \parencite{learjet75}. Es decir que incluso
+concediéndole al avión del enunciado su \(L/D\) imposible de 15, el vuelo
+Boston--Los Ángeles sin escalas queda fuera de alcance para un avión de
+\SI{10}{\tonne}. Con el \(L/D\) real de la sección~\ref{sec:coherencia} queda
+fuera por más del doble. La ecuación de Bréguet, bien usada, no sólo da un
+número: dice que el avión del enunciado no puede hacer el viaje del enunciado.
+
+\section{Análisis de sensibilidad}
+
+Como los datos de entrada son estimaciones y no medidas, lo que importa no es
+la cifra sino su intervalo. La Figura~\ref{fig:tornado} y el
+Cuadro~\ref{cuadro:sensibilidad} lo dan.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+
+\node[anchor=south west, font=\small\bfseries] at (-3.7,5.10)
+     {Efecto de cada dato de entrada sobre el queroseno estimado (kg)};
+
+% rejilla
+\foreach \v in {1800,2000,2200,2400,2600,2800,3000} {
+  \draw[cNeutro!26] ({\tSx{\v}},-0.10) -- ({\tSx{\v}},4.55);
+  \node[below, font=\scriptsize, text=cNeutro] at ({\tSx{\v}},-0.12)
+       {\num{\v}};
+}
+% línea del caso base
+\draw[cDato, very thick] ({\tSx{2248}},-0.10) -- ({\tSx{2248}},4.62);
+\node[above, font=\scriptsize\bfseries, text=cDato] at ({\tSx{2248}},4.60)
+     {caso base \num{2248}};
+
+\tornado{4.0}{1739}{2633}{Eficiencia total $\eta_o$\\(de \num{0.25} a
+  \num{0.40})}{\num{0.40}}{\num{0.25}}
+\tornado{3.1}{1912}{2726}{Relación $L/D$\\(de 12 a 18)}{18}{12}
+\tornado{2.2}{2248}{2900}{Lectura del enunciado\\(peso total o peso sin
+  combustible)}{A}{B}
+\tornado{1.3}{1923}{2443}{Distancia $R$\\(de \num{4193} a
+  \SI{5500}{\kilo\meter})}{\num{4193}}{\num{5500}}
+\tornado{0.4}{2094}{2262}{Densidad energética $h$\\(de \num{42.5} a
+  \SI{46.4}{\mega\joule\per\kilogram})}{\num{46.4}}{\num{42.5}}
+
+\node[font=\scriptsize, align=left, text width=4.4cm,
+      text=cNeutro!85!black] at (10.3,0.80)
+     {El orden importa: los dos datos que más pesan son los dos que el
+      enunciado regala hechos.};
+
+\end{tikzpicture}
+\caption{Diagrama de tornado del combustible estimado. Cada barra recorre el
+intervalo plausible de un dato de entrada manteniendo los demás en su valor
+base. Los dos primeros, la eficiencia total y la relación sustentación/arrastre,
+son los que dominan y son precisamente los dos que en un problema real hay que
+estimar con un modelo del motor y un modelo del ala; el enunciado los da por
+supuestos, y ahí es donde se esconde la dificultad del cálculo. El tercero es
+la ambigüedad de una frase del propio enunciado. Elaboración propia.}
+\label{fig:tornado}
+\end{figure}
+
+\begin{table}[htbp]
+\small
+\caption{Sensibilidad del resultado a cada dato de entrada, lectura A. Cada
+fila cambia un solo dato. Cálculo propio.}
+\label{cuadro:sensibilidad}
+\begin{tabularx}{\textwidth}{@{}Xrrl@{}}
+\toprule
+\textbf{Variante} & \textbf{Queroseno} & \textbf{Cambio} &
+\textbf{Comentario} \\
+ & \textbf{(\si{\kilogram})} & & \\
+\midrule
+\textbf{Caso base} (\(h=42{,}8\); \(\eta_o=0{,}30\); \(L/D=15\);
+  \(R=\SI{5000}{\kilo\meter}\))
+  & \textbf{\num{2248}} & & respuesta del ejercicio \\
+\midrule
+\(h = \SI{42.5}{\mega\joule\per\kilogram}\) (valor del módulo)
+  & \num{2262} & \num[retain-explicit-plus]{+0.6}\,\% & indiferente \\
+\(h = \SI{43.0}{\mega\joule\per\kilogram}\) (Jet A-1 típico)
+  & \num{2239} & \num{-0.4}\,\% & indiferente \\
+\(h = \SI{46.4}{\mega\joule\per\kilogram}\) (poder calorífico superior)
+  & \num{2094} & \num{-6.9}\,\% & \textcolor{cAviso}{error conceptual} \\
+\midrule
+\(\eta_o = 0{,}25\) (turbofán antiguo)
+  & \num{2633} & \num[retain-explicit-plus]{+17.1}\,\% & \\
+\(\eta_o = 0{,}35\) (turbofán moderno)
+  & \num{1961} & \num{-12.8}\,\% & \\
+\(\eta_o = 0{,}40\) (mejor disponible)
+  & \num{1739} & \num{-22.7}\,\% & \\
+\midrule
+\(L/D = 12\) (reactor de negocios real)
+  & \num{2726} & \num[retain-explicit-plus]{+21.3}\,\% & \\
+\(L/D = 18\) (reactor de línea moderno)
+  & \num{1912} & \num{-14.9}\,\% & \\
+\(L/D = 5{,}6\) (alcanzable a Mach 0,95)
+  & \num{4958} & \num[retain-explicit-plus]{+120.5}\,\% &
+  \textcolor{cAviso}{ver Cuadro~\ref{cuadro:coherencia}} \\
+\midrule
+\(R = \SI{4193}{\kilo\meter}\) (distancia real BOS--LAX)
+  & \num{1923} & \num{-14.9}\,\% &
+  \textcolor{cAviso}{el enunciado redondea un 19 \% al alza} \\
+\(R = \SI{5500}{\kilo\meter}\) (desvío y viento en contra del 10 \%)
+  & \num{2443} & \num[retain-explicit-plus]{+8.7}\,\% & \\
+\midrule
+Lectura B (\SI{10}{\tonne} sin combustible)
+  & \num{2900} & \num[retain-explicit-plus]{+29.0}\,\% & ambigüedad del
+  enunciado \\
+Forma lineal de la ecuación
+  & \num{2547} & \num[retain-explicit-plus]{+13.3}\,\% & aproximación de primer
+  orden \\
+Con reservas normativas (Figura~\ref{fig:cascada})
+  & \num{2847} & \num[retain-explicit-plus]{+26.6}\,\% & obligatorio en
+  operación real \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Dos conclusiones del cuadro. La primera: \textbf{el dato que el enunciado nos
+manda buscar es el que menos importa}. Cambiar la densidad energética del
+queroseno dentro de todo su rango de especificación mueve el resultado menos
+del 1 por ciento, mientras que cambiar la eficiencia total en un punto
+razonable lo mueve 20 veces más. La segunda: \textbf{la distancia del enunciado
+no es la distancia}. Boston y Los Ángeles están a \SI{4193}{\kilo\meter} de
+círculo máximo; los \SI{5000}{\kilo\meter} del enunciado son un 19 por ciento
+más, que probablemente sea una concesión razonable al encaminamiento real y al
+viento, pero conviene declararla, porque por sí sola vale más que toda la
+incertidumbre del combustible.
+
+\section{De queroseno a huella de carbono por pasajero}
+
+La actividad se titula \enquote{estima la huella de carbono por pasajero de un
+vuelo}, así que cierro el círculo. La combustión completa de un kilogramo de
+queroseno produce \SI{3.16}{\kilogram} de \ce{CO2}, cifra que no depende del
+motor sino de la estequiometría del hidrocarburo \parencite{icaocalc}. Con los
+\SI{2248}{\kilogram} de la respuesta:
+\begin{equation}
+m_{\ce{CO2}} = \SI{2248}{\kilogram}\times\num{3.16}
+             = \SI{7105}{\kilogram} \approx \SI{7.1}{\tonne}.
+\end{equation}
+
+El Cuadro~\ref{cuadro:huella} reparte esa cifra entre pasajeros. El reparto es
+la parte interesante, porque es donde se ve que \textbf{la huella por pasajero
+no es una propiedad del avión sino del modelo de negocio}.
+
+\begin{table}[htbp]
+\small
+\caption{La misma tonelada de queroseno, repartida entre distintos números de
+pasajeros. Vuelo de \SI{5000}{\kilo\meter}, sólo crucero, sin reservas y con
+factor de ocupación del 100 por ciento. Cálculo propio; factor de emisión de
+\textcite{icaocalc}, valores de referencia de \textcite{defra2025}.}
+\label{cuadro:huella}
+\begin{tabularx}{\textwidth}{@{}Xrrrr@{}}
+\toprule
+\textbf{Configuración} & \textbf{Pasajeros} & \textbf{\ce{CO2} por} &
+\textbf{\ce{CO2} por} & \textbf{Queroseno} \\
+ & & \textbf{pasajero} & \textbf{\si{\pkm}} & \textbf{(\si{\litro\per\pkm})} \\
+ & & \textbf{(\si{\kilogram})} & \textbf{(\si{\kilogram})} & \\
+\midrule
+Reactor privado, cabina de lujo & 4 & \num{1776} & \num{0.355} & \num{0.140} \\
+Reactor privado, uso habitual   & 6 & \num{1184} & \num{0.237} & \num{0.093} \\
+Reactor de negocios, cabina llena & 8 & \num{888} & \num{0.178} & \num{0.070} \\
+Configuración máxima de la clase & 9 & \num{789} & \num{0.158} & \num{0.062} \\
+\midrule
+\emph{Referencia}: reactor de pasillo único, \num{180} plazas
+  & \num{180} & \num{243} & \num{0.049} & \num{0.019} \\
+\emph{Referencia}: factor oficial británico, vuelo de largo radio
+  & & & \num{0.117} & \\
+\emph{Referencia}: factor oficial británico, vuelo de radio corto
+  & & & \num{0.150} & \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+La lectura es incómoda y es correcta: \textbf{el mismo vuelo, en el mismo
+avión, tiene una huella por pasajero que varía en un factor 2,25 según cuánta
+gente vaya dentro}, y comparado con un reactor de pasillo único lleno la
+diferencia llega a un factor 3,6 a favor del avión grande. La eficiencia
+aeronáutica del avión pequeño es peor, pero lo que domina el resultado no es la
+aerodinámica: es el denominador.
+
+Falta una advertencia. Estos \SI{7.1}{\tonne} son sólo \ce{CO2}. Si se
+contabiliza el forzamiento radiativo completo, incluidas las estelas de
+condensación, los óxidos de nitrógeno y el vapor de agua, el efecto climático
+total de la aviación es del orden de tres veces el del \ce{CO2} por sí solo
+\parencite{lee2021}, lo que llevaría este vuelo a unas \SI{21}{\tonne} de
+\ce{CO2} equivalente. Ese multiplicador depende de la altitud, de la latitud,
+de la hora del día y de la humedad de la capa de aire que se atraviesa, y por
+tanto \textbf{la huella real de este vuelo no está determinada por el
+queroseno que se quema}. Es la última y quizá la más incómoda de las razones
+por las que el cálculo es complicado.
+
+\section{¿Por qué es un cálculo complicado?}
+\label{sec:complicado}
+
+La ecuación se resuelve en cinco líneas y la aritmética es la de una
+calculadora de bolsillo. Lo complicado no es la ecuación: es que
+\textbf{ninguno de sus cuatro factores es un dato, todos son resultados de otro
+problema}, y que el propio problema está definido de forma implícita. Doy diez
+razones, cada una con su magnitud medida en este ejercicio, y las resumo en el
+Cuadro~\ref{cuadro:porque}.
+
+\subsection{Razón 1: el combustible pesa, y hay que llevarlo}
+
+Es la dificultad estructural del problema y está en la
+ecuación~\eqref{eq:edo}: el peso aparece a la vez como lo que hay que sostener
+y como lo que se está consumiendo. De ahí el logaritmo, y de ahí que el
+problema sea \textbf{implícito}: no se puede calcular el combustible sin saber
+el peso, y no se puede saber el peso sin conocer el combustible.
+
+La consecuencia práctica se mide con la derivada de la
+ecuación~\eqref{eq:breguet} respecto a la carga de pago:
+\begin{equation}
+\frac{d\,m_{\text{comb}}}{d\,m_{\text{pago}}} = e^{x}-1 = \num{0.290}.
+\end{equation}
+Cada kilogramo de carga extra en este vuelo obliga a embarcar
+\SI{0.29}{\kilogram} más de queroseno, y por tanto el peso al despegue sube
+\SI{1.29}{\kilogram}. Es el \textbf{efecto bola de nieve} del diseño
+aeronáutico. En un vuelo de \SI{15000}{\kilo\meter} el mismo factor vale
+\num{1.15}, es decir que un kilogramo de carga cuesta más de un kilogramo de
+combustible, y en un avión de diseño el efecto se realimenta también a través
+del ala y del tren de aterrizaje, que hay que agrandar. Por eso el diseño
+preliminar de un avión es un bucle iterativo y no una fórmula
+\parencite{raymer2018}.
+
+\subsection{Razón 2: la ecuación sólo vale en la condición en la que no se
+vuela}
+
+La ecuación~\eqref{eq:breguet} se obtuvo integrando con \(\eta_o\), \(L/D\) y
+\(V\) constantes. Un vuelo real no tiene ninguna de las tres constantes. A
+medida que el avión adelgaza, el \(C_L\) necesario baja, y con él el punto de
+la polar en el que se vuela y por tanto el \(L/D\); la práctica habitual es
+subir de altitud en escalones (\emph{step climb}) precisamente para mantener el
+\(L/D\) cerca de su óptimo, lo que a su vez cambia la densidad, el número de
+Mach y el rendimiento del motor. La integral exacta requiere la polar del ala y
+el mapa del motor, y entonces ya no es una integral cerrada: es una simulación
+paso a paso.
+
+\subsection{Razón 3: hay fases de vuelo que la ecuación no describe}
+
+El enunciado autoriza a ignorar el ascenso y el descenso, y en este caso la
+autorización es benigna. El coste energético mínimo de subir a
+\SI{6000}{\meter} y acelerar a \SI{300}{\meter\per\second} es
+\begin{equation}
+m\,g\,h + \tfrac{1}{2}m V^{2}
+ = \SI{589}{\mega\joule} + \SI{450}{\mega\joule} = \SI{1039}{\mega\joule},
+\end{equation}
+que a \(\eta_o h = \SI{12.84}{\mega\joule\per\kilogram}\) de trabajo útil por
+kilogramo de queroseno son \SI{81}{\kilogram}, un 3,6 por ciento del total.
+Pero ese es el mínimo termodinámico: durante el ascenso el avión vuela con
+\(C_L\) alto, arrastre inducido alto y motor fuera de su punto óptimo, y el
+consumo real de la fase de ascenso de un vuelo de este tipo es del orden del
+doble. En vuelos cortos la fase de ascenso puede ser la mitad del consumo total,
+y ahí la ecuación de Bréguet directamente no sirve.
+
+\subsection{Razón 4: la normativa manda más que la física}
+
+Ningún avión despega con el combustible que necesita. Despega con el
+combustible que necesita más la contingencia, más el alternativo, más la
+reserva final, más el rodaje. En este vuelo eso son \SI{518}{\kilogram}
+adicionales, un \textbf{23 por ciento} \parencite{easa965}, y ese 23 por ciento
+tiene que estar ahí aunque el vuelo transcurra sin novedad. La
+Figura~\ref{fig:cascada} lo detalla. Es un caso claro de una restricción que no
+está en ninguna ecuación de la mecánica del vuelo y que sin embargo determina si
+el avión puede hacer el viaje.
+
+\subsection{Razón 5: los dos factores que dominan son los dos más difíciles de
+conocer}
+
+El Cuadro~\ref{cuadro:sensibilidad} lo cuantifica: \(\eta_o\) y \(L/D\) mueven
+el resultado un 40 y un 36 por ciento respectivamente en su rango plausible,
+mientras que la densidad energética lo mueve un 1 por ciento. Y \(\eta_o\) y
+\(L/D\) no son datos tabulados: son funciones del número de Mach, de la
+altitud, del peso, del régimen del motor, de la temperatura del aire y del
+estado de la superficie del avión. Obtenerlos con precisión exige un modelo
+aerodinámico y un modelo de motor, es decir exige haber resuelto ya el problema
+de diseño. Se acaba en la situación paradójica de que \textbf{la parte fácil del
+cálculo es la ecuación y la parte difícil son los datos que hay que meterle}.
+
+\subsection{Razón 6: la densidad energética no es un número, es un intervalo}
+
+El poder calorífico inferior del Jet A-1 varía entre \num{42.8} y
+\SI{43.2}{\mega\joule\per\kilogram} según el lote, la densidad del combustible
+varía entre \num{775} y \SI{840}{\kilogram\per\meter\cubed} con la temperatura
+y el origen del crudo \parencite{chevron2007}, y la diferencia entre el poder
+calorífico inferior y el superior es del 8 por ciento. El avión reposta en
+litros y consume en kilogramos, de modo que el mismo repostaje da un alcance
+distinto en un día caluroso que en uno frío. Es un efecto pequeño y es el tipo
+de detalle que separa una estimación de una cifra operativa.
+
+\subsection{Razón 7: la distancia tampoco es un número}
+
+Boston y Los Ángeles están a \SI{4193}{\kilo\meter} de círculo máximo, y el
+enunciado usa \SI{5000}{\kilo\meter}, un 19 por ciento más. La ruta real es más
+larga que el círculo máximo por el encaminamiento del tráfico aéreo, y sobre
+todo el alcance efectivo depende del viento: la corriente en chorro sobre
+Norteamérica sopla de oeste a este con \num{50} a
+\SI{100}{\kilo\meter\per\hour} habituales, lo que en este vuelo, que va contra
+ella, equivale a alargar la distancia entre un 8 y un 15 por ciento. La
+ecuación de Bréguet trabaja con velocidad respecto al aire y con distancia
+respecto al suelo, y quien no separe las dos cosas se equivoca en la dirección
+del vuelo.
+
+\subsection{Razón 8: los errores no se suman, se multiplican}
+
+El resultado depende de \(x = Rg/[\eta_o h (L/D)]\) a través de una
+exponencial. Para \(x\) pequeño el error relativo se transmite casi
+proporcionalmente, pero a medida que \(x\) crece la transmisión se amplifica:
+en un vuelo transpacífico con \(x \approx 0{,}8\), un error del 10 por ciento en
+el \(L/D\) produce un error del 15 por ciento en el combustible. Y como los
+cuatro factores entran multiplicados, un error del 10 por ciento en cada uno de
+los tres que se estiman no da un 10 por ciento de error: da un 30 por ciento en
+\(x\) si se alinean en el mismo sentido.
+
+\subsection{Razón 9: los datos de entrada no son libres, están acoplados}
+
+Esta es la razón que más me ha sorprendido al hacer el ejercicio y está
+desarrollada en la sección~\ref{sec:coherencia}. El enunciado fija cuatro cosas
+por separado (peso, velocidad, altitud y \(L/D\)) y esas cuatro cosas están
+ligadas por la ecuación de sustentación y por la polar del ala. Al comprobar el
+cierre resulta que a Mach 0,948 y \SI{6000}{\meter} un avión de
+\SI{10}{\tonne} tiene un \(C_L\) de \num{0.123} y por tanto un \(L/D\) máximo
+de \num{5.6}, no de 15. Con el \(L/D\) coherente, el combustible necesario es
+de \SI{4958}{\kilogram}, el 50 por ciento del peso al despegue, y el avión no
+existe. \textbf{En un problema real no se puede elegir cada dato de entrada por
+separado}, y comprobar que el conjunto cierra es tan trabajoso como resolver la
+ecuación.
+
+\subsection{Razón 10: lo que se quiere saber no es el queroseno}
+
+Si la pregunta última es la huella climática, el queroseno es un buen
+subrogado del \ce{CO2} (la relación es estequiométrica y fija, \num{3.16}) y un
+subrogado mediocre del efecto climático total, porque dos tercios de ese efecto
+no son \ce{CO2} sino estelas de condensación, óxidos de nitrógeno y vapor de
+agua estratosférico \parencite{lee2021}, y esos dos tercios dependen de por
+dónde y a qué hora se vuela, no de cuánto se quema. Dos vuelos con el mismo
+consumo pueden tener efectos climáticos que difieran en un factor dos según
+atraviesen o no una capa de aire sobresaturada de hielo. La ecuación de Bréguet
+contesta con precisión a una pregunta que no es exactamente la que interesa.
+
+\begin{table}[htbp]
+\small
+\caption{Las diez razones, ordenadas por la magnitud del efecto que tienen en
+\emph{este} problema. Cálculo propio.}
+\label{cuadro:porque}
+\begin{tabularx}{\textwidth}{@{}p{0.5cm}Xrp{3.5cm}@{}}
+\toprule
+\textbf{\#} & \textbf{Razón} & \textbf{Efecto medido aquí} &
+\textbf{Naturaleza} \\
+\midrule
+9 & Los datos de entrada están acoplados por la física y el conjunto no cierra
+  & \(+120\) \% & incoherencia del enunciado \\
+1 & El combustible pesa: el problema es implícito y hay bola de nieve
+  & \(+29\) \% por lectura; \num{0.29} kg por kg de carga
+  & estructural, insalvable \\
+4 & Reservas normativas de combustible
+  & \(+23\) \% & regulatoria \\
+5 & \(\eta_o\) y \(L/D\) son los que dominan y son los más difíciles de estimar
+  & \(\pm 40\) \% y \(\pm 36\) \% & de modelado \\
+7 & La distancia no es la distancia: encaminamiento y viento
+  & \(-15\) a \(+9\) \% & de datos \\
+2 & La ecuación supone constante lo que no lo es
+  & del orden del 5 al 10 \% & de modelado \\
+8 & Los errores se multiplican y la exponencial los amplifica
+  & \(\times 1{,}5\) a \(x\approx 0{,}8\) & propagación \\
+3 & Ascenso y descenso quedan fuera de la ecuación
+  & \(+3{,}6\) \% mínimo, el doble en la práctica
+  & de alcance del modelo \\
+6 & La densidad energética es un intervalo, no un número
+  & \(\pm 1\) \% (\(-7\) \% si se confunde con el superior)
+  & de datos \\
+10 & Lo que se quiere saber es el efecto climático, no el queroseno
+  & \(\times 3\) sobre el \ce{CO2} & de definición del problema \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{La respuesta corta}
+
+Si tuviera que contestar la pregunta en dos frases: \textbf{es complicado
+porque el combustible es a la vez la respuesta y uno de los datos}, lo que
+convierte una división en una ecuación implícita con efecto de realimentación;
+y porque \textbf{de los cuatro factores de la ecuación, tres son resultados de
+otros tres problemas de ingeniería} (el motor, el ala y la estructura) que sólo
+se conocen cuando el avión ya está diseñado. Lo que el ejercicio esconde, y es
+lo que a mí me parece la lección de fondo del módulo, es que la ecuación de
+Bréguet no es una herramienta de cálculo: es una \textbf{herramienta de
+descomposición}. Su valor no está en el número que da, sino en que separa
+limpiamente el problema en cuatro figuras de mérito independientes,
+\(\eta_o\), \(h\), \(L/D\) y la fracción estructural, y dice exactamente cuánto
+vale mejorar cada una \parencite{deweck2022}. Por eso se sigue usando en las
+hojas de ruta tecnológicas de la aviación un siglo después de
+\textcite{coffin1920}, cuando hace décadas que existen simuladores que dan la
+cifra con dos órdenes de magnitud más de precisión.
+
+\section{Respuesta final}
+
+\begin{table}[htbp]
+\small
+\caption{Respuesta a las dos preguntas del enunciado.}
+\label{cuadro:final}
+\begin{tabularx}{\textwidth}{@{}p{4.6cm}X@{}}
+\toprule
+\textbf{Pregunta} & \textbf{Respuesta} \\
+\midrule
+\textbf{¿Cuánto queroseno hace falta?}
+& \textbf{\SI{2248}{\kilogram}}, es decir 2,25 toneladas o unos
+  \SI{2800}{\litro}, para el crucero de \SI{5000}{\kilo\meter}. Son el
+  \textbf{22,5 por ciento} del peso al despegue, \SI{96.2}{\giga\joule} de
+  energía química y \SI{7.1}{\tonne} de \ce{CO2}. Si las \SI{10}{\tonne} se
+  interpretan como peso sin combustible, la cifra es \SI{2900}{\kilogram}; con
+  la forma lineal de la ecuación, \SI{2547}{\kilogram}; con las reservas
+  normativas puestas, \SI{2847}{\kilogram}. La duración del crucero es de
+  \SI{4.63}{\hour}. \\
+\addlinespace
+\textbf{¿Por qué es un cálculo complicado?}
+& Porque el combustible pesa y hay que transportarlo, lo que hace el problema
+  implícito y logarítmico en lugar de proporcional; porque tres de los cuatro
+  factores de la ecuación (\(\eta_o\), \(L/D\) y la fracción estructural) son
+  resultados de otros problemas de ingeniería y no datos; porque la ecuación
+  supone constante todo lo que en un vuelo real varía; porque la normativa
+  añade un 23 por ciento que no está en ninguna ecuación; y porque, como
+  muestra la sección~\ref{sec:coherencia}, los datos de entrada están acoplados
+  por la física y en este enunciado no cierran: a Mach 0,948 y
+  \SI{6000}{\meter} el \(L/D\) alcanzable es \num{5.6} y no 15, con lo que el
+  combustible real sería \SI{4958}{\kilogram} y el avión no podría hacer el
+  viaje. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Limitaciones}
+
+\begin{enumerate}
+\item \textbf{El resultado principal es el que pide el enunciado, no el que
+  daría un avión real.} Lo digo en este orden a propósito: la cifra de
+  \SI{2248}{\kilogram} es correcta \emph{dados} los datos del enunciado, y los
+  datos del enunciado no describen un avión construible
+  (sección~\ref{sec:coherencia}). Las dos afirmaciones son compatibles.
+\item \textbf{El \(L/D\) alcanzable de \num{5.6} depende de dos supuestos
+  míos}: una superficie alar de \SI{29}{\meter\squared}, tomada de un reactor
+  de negocios real de masa comparable \parencite{learjet75}, y un coeficiente
+  de arrastre parásito de \num{0.022}, que es un valor típico de la literatura
+  de diseño \parencite{anderson1999,raymer2018}. Con un ala mayor el \(C_L\)
+  baja y el \(L/D\) empeora; con un ala mucho menor la carga alar se vuelve
+  impracticable. La conclusión cualitativa es robusta; el número exacto no.
+\item \textbf{No he modelado la divergencia de arrastre transónica.} A Mach
+  0,948 el arrastre de onda añadiría un incremento de \(C_D\) que no he
+  contabilizado, de modo que el \(L/D\) de \num{5.6} es todavía optimista.
+\item \textbf{Las reservas de la Figura~\ref{fig:cascada} son un cálculo
+  propio con supuestos declarados}: aeropuerto alternativo a
+  \num{200} millas náuticas, consumo en espera de
+  \SI{400}{\kilogram\per\hour} y rodaje de \SI{40}{\kilogram}. Un despacho real
+  usaría las tablas del manual de vuelo del avión y las condiciones
+  meteorológicas del día.
+\item \textbf{El incremento por ascenso es un mínimo termodinámico}, no una
+  estimación operativa. Sólo contabiliza la energía potencial y cinética que hay
+  que darle al avión, e ignora que durante el ascenso el \(L/D\) y el
+  \(\eta_o\) son peores que en crucero. El valor real está entre dos y tres
+  veces por encima.
+\item \textbf{La distancia de \SI{4193}{\kilo\meter} es de círculo máximo entre
+  las coordenadas de los dos aeropuertos}, cálculo propio, y no una ruta
+  publicada. La ruta real es más larga.
+\item \textbf{La comparación con el reactor de negocios real usa cifras de
+  catálogo} \parencite{learjet75,aopalearjet}, que corresponden a un alcance con
+  cuatro pasajeros y reservas incluidas, y por tanto no son estrictamente
+  homogéneas con mi cálculo de crucero puro. El factor 1,6 de la comprobación 4
+  es un orden de magnitud, no una medida.
+\item \textbf{El multiplicador de tres para el efecto climático no \ce{CO2}} es
+  el valor central de \textcite{lee2021} para el conjunto de la flota mundial y
+  tiene una incertidumbre grande. Aplicado a un vuelo concreto es indicativo, no
+  cuantitativo, porque el efecto de las estelas depende de la ruta, la altitud
+  y la meteorología de ese vuelo en particular.
+\item \textbf{Los factores de emisión no incluyen el ciclo de vida del
+  combustible.} Los \SI{3.16}{\kilogram} de \ce{CO2} por kilogramo de queroseno
+  son sólo la combustión; la extracción, el refinado y el transporte añaden en
+  torno a un 20 por ciento más \parencite{defra2025}.
+\item \textbf{La densidad energética que uso, \SI{42.8}{\mega\joule\per\kilogram},
+  no es exactamente la del módulo}, que da \SI{42.5}{\mega\joule\per\kilogram}
+  siguiendo la tabla de \textcite{tennekes2009}. La diferencia es del 0,6 por
+  ciento en el resultado y está recogida en el
+  Cuadro~\ref{cuadro:sensibilidad}.
+\end{enumerate}
+
+\printbibliography
+
+\end{document}
