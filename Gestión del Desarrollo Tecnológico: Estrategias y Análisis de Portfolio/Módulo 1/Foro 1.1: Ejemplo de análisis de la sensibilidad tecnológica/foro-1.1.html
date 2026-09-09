@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Foro 1.1. Cuarenta años pidiendo datos a otra máquina: sensibilidad tecnológica de GraphQL frente a REST</title>
+<style>
+  body { font-family: Georgia, "Times New Roman", serif; font-size: 16px;
+         line-height: 1.55; color: #1a1a1a; max-width: 780px;
+         margin: 2rem auto; padding: 0 1rem; }
+  h1 { font-size: 1.6em; line-height: 1.25; margin: 0 0 .2em; }
+  h2 { font-size: 1.25em; margin: 1.8em 0 .5em; }
+  h3 { font-size: 1.05em; margin: 1.4em 0 .4em; }
+  p  { margin: 0 0 .9em; }
+  ul, ol { margin: 0 0 .9em; padding-left: 1.5em; }
+  li { margin-bottom: .45em; }
+  img { max-width: 100%; height: auto; display: block; margin: .6em auto .3em; }
+  table { border-collapse: collapse; width: 100%; margin: .8em 0 1em;
+          font-size: .88em; }
+  th, td { border: 1px solid #b8b8b8; padding: 5px 8px; vertical-align: top;
+           text-align: left; }
+  th { background: #eae2d8; }
+  .sub { font-size: 1.05em; color: #444; margin: 0 0 1.6em; }
+  .cap { font-size: .82em; color: #555; line-height: 1.4; margin: 0 0 1.6em; }
+  .ref { font-size: .85em; line-height: 1.45; }
+  .ref p { margin: 0 0 .5em; padding-left: 1.6em; text-indent: -1.6em; }
+  .num { text-align: right; }
+  blockquote { margin: 1em 0 1.2em; padding: .1em 0 .1em 1.1em;
+               border-left: 3px solid #b6187c; color: #262626; }
+  .eq { text-align: center; font-size: 1.05em; margin: .9em 0 1.1em; }
+</style>
+</head>
+<body>
+
+<h1>Cuarenta años pidiendo datos a otra máquina</h1>
+<p class="sub"><em>Análisis de la sensibilidad tecnológica de GraphQL como alternativa a REST, leído sobre la genealogía RPC, CORBA, SOAP y REST</em><br>
+Carlos Luis Rojas Aragonés</p>
+
+<h2>1. La tecnología que elijo y por qué está en la fase que pide el foro</h2>
+
+<p>Elijo <strong>GraphQL</strong>, el lenguaje de consulta para interfaces de programación que Facebook construyó en 2012 y liberó en 2015, y lo analizo como posible alternativa a REST. Lo elijo por tres razones.</p>
+
+<p>La primera es que está exactamente en la fase que piden los ejemplos del módulo: una tecnología que ya cruzó el punto de inflexión de su curva S, que lleva cuatro o cinco años en la parte alta de esa curva y cuya figura de mérito original está prácticamente agotada, mientras su curva de difusión sigue subiendo. Esa combinación, rendimiento saturado y adopción creciente, es justamente donde el análisis de sensibilidad tiene algo que decir.</p>
+
+<p>La segunda es que GraphQL tiene una genealogía documentada de cuarenta años. No apareció de la nada: es el quinto intento de resolver la misma función, y los cuatro anteriores fracasaron cada uno contra una restricción activa distinta. Poder ver cinco curvas S de la misma función, con cuatro asíntotas ya conocidas, es un lujo que pocas tecnologías ofrecen.</p>
+
+<p>La tercera es personal: decido sobre esto en mi trabajo, y quería comprobar si la decisión que tomo por intuición aguanta cuando se le declara una figura de mérito y se le hace la aritmética.</p>
+
+<h3>Lo que encontré, dicho por adelantado</h3>
+
+<blockquote>
+<p><strong>GraphQL llevó su figura de mérito original hasta el límite teórico en menos de tres años, y desde entonces el problema que la justificaba se ha ido disolviendo por otro lado: la red se hizo rápida.</strong> La ventaja de GraphQL sobre REST, medida en tiempo hasta la vista completa, pasa de un factor 13 en la red móvil de 2012 a un factor 1,03 entre dos servicios del mismo centro de datos. Lo que sostiene hoy a GraphQL ya no es el tiempo de respuesta sino el coste de desarrollo por vista nueva y la gobernanza del esquema. Y sus restricciones activas se mudaron de sitio: ya no están en la red, están en el servidor.</p>
+</blockquote>
+
+<h2>2. La función y la figura de mérito</h2>
+
+<p>Antes de comparar hace falta declarar qué función presta la tecnología y con qué se mide, que es la disciplina que propone de Weck (2022): la figura de mérito es la medida cuantitativa del desempeño en la función prestada, independiente de la implementación que la entregue.</p>
+
+<p><strong>La función es esta:</strong> componer, en un cliente, el conjunto exacto de datos que necesita una vista, cuando esos datos viven en una o varias máquinas remotas.</p>
+
+<p>Sobre esa función declaro cuatro figuras de mérito. La primera es la que gobierna la experiencia y es la que uso como principal:</p>
+
+<p class="eq"><em>T</em> = <em>n</em> · RTT + <em>B</em> / <em>v</em> + <em>T</em><sub>s</sub></p>
+
+<p>donde <em>T</em> es el <strong>tiempo hasta la vista completa</strong>, <em>n</em> el número de viajes de ida y vuelta encadenados, RTT el tiempo de ida y vuelta de la red, <em>B</em> los bytes transferidos, <em>v</em> el ancho de banda y <em>T</em><sub>s</sub> el tiempo de trabajo del servidor. Las otras tres son las componentes que un diseño puede mover:</p>
+
+<ul>
+  <li><em>n</em>, <strong>viajes por vista</strong>. Mínimo teórico: 1.</li>
+  <li>&eta; = <em>B</em><sub>útil</sub> / <em>B</em>, <strong>eficiencia de carga útil</strong>, la fracción de los bytes transferidos que la vista realmente pinta. Máximo teórico: 1.</li>
+  <li><em>E</em>, <strong>esfuerzo de desarrollo por consulta nueva</strong>, en minutos de programador. No tiene mínimo teórico, y es la única de las cuatro que no depende de la red.</li>
+</ul>
+
+<p>Esta separación es la que ordena todo lo que sigue, porque <strong>cada una de las cinco generaciones de esta historia optimizó una figura de mérito distinta</strong> y ninguna de ellas optimizó la de la generación anterior.</p>
+
+<h2>3. Cuatro generaciones antes de GraphQL</h2>
+
+<table>
+  <caption style="caption-side: top; text-align: left; font-size: .88em; padding-bottom: .4em;"><strong>Cuadro 1.</strong> Cinco generaciones para la misma función. Cada una nació optimizando una figura de mérito que la anterior había descuidado, y cada una se detuvo contra una restricción activa distinta.</caption>
+  <tr><th style="width: 7em;">Generación</th><th style="width: 4em;">Origen</th><th>Figura de mérito dominante</th><th>Restricción que la detuvo</th><th>Qué la relevó</th></tr>
+  <tr><td>RPC binario</td><td>1984</td><td>Transparencia: que la llamada remota se escriba como una local</td><td>Heterogeneidad de máquinas y lenguajes; acoplamiento de la interfaz al binario</td><td>Objetos distribuidos</td></tr>
+  <tr><td>CORBA y DCOM</td><td>1991, 1996</td><td>Interoperabilidad entre lenguajes y proveedores</td><td>Peso del intermediario de objetos y objetos remotos de grano fino, muy charlatanes; no atraviesan cortafuegos</td><td>Servicios sobre HTTP</td></tr>
+  <tr><td>SOAP y WS-*</td><td>1998, 2003</td><td>Interoperabilidad <em>entre organizaciones</em> sobre el puerto 80</td><td>Verbosidad del sobre XML y peso del contrato WSDL y de la pila WS-*</td><td>Recursos y JSON</td></tr>
+  <tr><td>REST y JSON</td><td>2000, 2006</td><td>Coste de integración: tiempo hasta la primera llamada correcta</td><td>El recurso tiene forma fija: sobre-entrega y sub-entrega de datos</td><td>Consulta compuesta por el cliente</td></tr>
+  <tr><td>GraphQL</td><td>2012, 2015</td><td>&eta; y <em>n</em>: bytes útiles y un solo viaje por vista</td><td><em>Activa hoy</em>: coste de resolución campo a campo en el servidor</td><td>Todavía nada</td></tr>
+</table>
+
+<h3>RPC: la llamada que finge ser local (1984)</h3>
+
+<p>La idea fundacional está en Birrell y Nelson (1984): hacer que invocar un procedimiento en otra máquina se parezca lo más posible a invocarlo en la propia. La figura de mérito era la transparencia para el programador, y en eso funcionó. Sun ONC RPC la llevó a producción a finales de los ochenta.</p>
+
+<p>La restricción que la detuvo fue la heterogeneidad. El talón y el esqueleto se generaban a partir de una descripción de interfaz, el cliente y el servidor quedaban atados al mismo esquema de serialización, y cualquier cambio en la interfaz rompía a todos los clientes a la vez. Nadie podía publicar una interfaz para un tercero desconocido.</p>
+
+<h3>CORBA y DCOM: objetos remotos (1991 y 1996)</h3>
+
+<p>CORBA aparece en 1991 desde el Object Management Group y DCOM en 1996 desde Microsoft (Wikipedia, 2026a). La figura de mérito se desplaza a la interoperabilidad entre lenguajes y proveedores, y técnicamente lo consiguen.</p>
+
+<p>Se detuvieron contra dos cosas. La primera es el peso del intermediario de objetos: montar un ORB era un proyecto en sí mismo. La segunda, y más letal, es la que en el módulo llamaríamos una restricción del entorno: los objetos remotos de grano fino invitan a hacer muchas llamadas pequeñas, y como <em>T</em> crece linealmente con <em>n</em>, una interfaz charlatana se vuelve inutilizable en cuanto el RTT deja de ser el de una red local. Y encima IIOP no pasaba por los cortafuegos corporativos.</p>
+
+<h3>SOAP y WS-*: el puerto 80 como puerta trasera (1998 a 2003)</h3>
+
+<p>XML-RPC en 1998 y luego SOAP resolvieron el problema del cortafuegos por la vía más pragmática que existía: envolverlo todo en XML y mandarlo por HTTP, que es el único puerto que ninguna organización cierra (Wikipedia, 2026b). SOAP 1.2 llega a recomendación del W3C en junio de 2003 (World Wide Web Consortium, 2003), con WSDL para el contrato y una pila de especificaciones WS-* alrededor.</p>
+
+<p>La figura de mérito pasó a ser la interoperabilidad entre organizaciones, y esa sí la resolvió: la banca y los sistemas de reservas siguen funcionando con SOAP hoy. Pero la restricción activa se volvió el propio sobre. Un mensaje SOAP con sus cabeceras, sus espacios de nombres y su tipado explícito multiplica por varias veces la carga útil, y el contrato WSDL hace que publicar un cambio sea un acto de coordinación entre equipos. En mi tabla de figuras de mérito, SOAP tiene la &eta; más baja de las cinco generaciones.</p>
+
+<h3>REST y JSON: el coste de integración por encima de todo (2000 a 2006)</h3>
+
+<p>Fielding (2000) describe REST en su tesis del año 2000, no como un producto sino como el estilo arquitectónico que el propio HTTP ya encarnaba. Con JSON como formato, REST optimizó una figura de mérito que las tres generaciones anteriores habían ignorado: <strong>el tiempo que tarda un desarrollador ajeno en hacer su primera llamada correcta.</strong> Sin ORB, sin generación de código, sin contrato previo, con una URL y un navegador.</p>
+
+<p>Ese fue el salto real y por eso REST ganó. Sigue ganando: en 2025 el 93 por ciento de los desarrolladores encuestados por Postman declaran usar REST (Postman, 2025).</p>
+
+<p>Y su restricción activa es la que dio origen a GraphQL: <strong>el recurso tiene forma fija</strong>. El servidor decide qué campos lleva un usuario, y los lleva siempre, los use la vista o no. De ahí los dos síntomas clásicos:</p>
+
+<ul>
+  <li><strong>Sobre-entrega</strong>: la vista pide un nombre y una foto, y recibe el objeto usuario entero. Brito, Mombach y Valente (2019) migraron siete sistemas reales de REST a GraphQL y midieron que la respuesta mediana pasaba de 93,5 campos a 5,5. Es decir, <strong>el 94 por ciento de los campos que REST devolvía no se usaban</strong>, y en bytes la reducción mediana fue del 99 por ciento.</li>
+  <li><strong>Sub-entrega</strong>: la vista necesita datos anidados y el recurso no los trae, así que el cliente encadena peticiones. Eso hace crecer <em>n</em>, que va multiplicado por el RTT.</li>
+</ul>
+
+<img src="figuras/figura-1.png" alt="Cinco curvas S para la misma función, 1980 a 2032">
+<p class="cap"><strong>Figura 1.</strong> La función no cambió en cuarenta años; la figura de mérito, sí. Cada carril dibuja una logística ajustada a mano sobre las fechas documentadas de aparición, inflexión y saturación de esa generación, normalizada al techo de su propia figura de mérito: la transparencia para RPC (Birrell y Nelson, 1984), la interoperabilidad entre lenguajes para CORBA y DCOM (Wikipedia, 2026a), la interoperabilidad entre organizaciones para SOAP (World Wide Web Consortium, 2003), el coste de integración para REST (Fielding, 2000) y la eficiencia de entrega para GraphQL (Byron, 2015). Las curvas son elaboración propia y sirven para leer la forma y el relevo, no para leer un valor de un año concreto. Las flechas grises marcan el relevo: cada generación arranca cuando la anterior toca su asíntota.</p>
+
+<h2>4. Qué trajo GraphQL, y por qué en 2012</h2>
+
+<p>En 2011 y 2012 Facebook estaba reescribiendo sus aplicaciones móviles nativas después de que su apuesta por la web móvil resultara, en palabras de su propio fundador, el mayor error estratégico de la compañía. Nick Schrock, Lee Byron, Dan Schafer y Jonathan Dan construyeron un prototipo llamado SuperGraph que en el verano de 2012 ya servía el muro de noticias de la aplicación de iOS (Postman, 2024).</p>
+
+<p>La idea es una sola y es la que rompe la restricción de REST: <strong>que sea el cliente quien declare la forma exacta del resultado</strong>, sobre un esquema tipado que el servidor publica. Un solo punto de entrada, una sola petición, una respuesta que tiene la misma forma que la consulta.</p>
+
+<p>El Cuadro 2 pone números a lo que eso significa en la pantalla que motivó el invento.</p>
+
+<table>
+  <caption style="caption-side: top; text-align: left; font-size: .88em; padding-bottom: .4em;"><strong>Cuadro 2.</strong> El escenario de cálculo: una pantalla de muro con 20 publicaciones, su autor y tres comentarios con autor por publicación. Los tamaños de objeto son mi estimación de un objeto completo típico frente a los campos que la vista pinta de verdad. Cálculo propio.</caption>
+  <tr><th>Entidad</th><th class="num">Unidades</th><th class="num">Objeto completo</th><th class="num">Campos de la vista</th><th class="num">Total REST / GraphQL</th></tr>
+  <tr><td>Perfil del usuario</td><td class="num">1</td><td class="num">1,8 kB</td><td class="num">0,08 kB</td><td class="num">1,8 / 0,1 kB</td></tr>
+  <tr><td>Publicaciones</td><td class="num">20</td><td class="num">3,2 kB</td><td class="num">0,40 kB</td><td class="num">64,0 / 8,0 kB</td></tr>
+  <tr><td>Autor de cada publicación</td><td class="num">20</td><td class="num">1,8 kB</td><td class="num">0,08 kB</td><td class="num">36,0 / 1,6 kB</td></tr>
+  <tr><td>Comentarios</td><td class="num">60</td><td class="num">1,1 kB</td><td class="num">0,12 kB</td><td class="num">66,0 / 7,2 kB</td></tr>
+  <tr><td>Autor de cada comentario</td><td class="num">60</td><td class="num">1,8 kB</td><td class="num">0,08 kB</td><td class="num">108,0 / 4,8 kB</td></tr>
+  <tr><td colspan="4"><strong>Bytes transferidos <em>B</em></strong></td><td class="num"><strong>275,8 / 21,7 kB</strong></td></tr>
+  <tr><td colspan="4"><strong>Eficiencia de carga útil &eta;</strong></td><td class="num"><strong>8 % / 100 %</strong></td></tr>
+  <tr><td colspan="4"><strong>Peticiones HTTP</strong></td><td class="num"><strong>102 / 1</strong></td></tr>
+  <tr><td colspan="4"><strong>Viajes encadenados <em>n</em></strong></td><td class="num"><strong>17 (HTTP/1.1) o 4 (HTTP/2) / 1</strong></td></tr>
+</table>
+
+<p>Tres cosas de ese cuadro merecen comentario.</p>
+
+<p>La primera: mi &eta; para REST sale del 8 por ciento, mientras Brito et al. (2019) midieron un 1 por ciento en bytes sobre sistemas reales. Mi escenario es deliberadamente conservador y aun así la diferencia es de un factor 13.</p>
+
+<p>La segunda: las 102 peticiones no se convierten en 102 viajes. Sobre HTTP/1.1, con seis conexiones simultáneas por servidor, son 17 rondas. Sobre HTTP/2, que llegó en mayo de 2015 y multiplexa sobre una sola conexión (Belshe, Peon y Thomson, 2015), lo que queda son los cuatro niveles de dependencia del grafo de datos. <strong>HTTP/2 le quitó a GraphQL tres cuartas partes de su ventaja el mismo año en que GraphQL se publicó.</strong> Es el dato más incómodo de todo este trabajo y volveré sobre él.</p>
+
+<p>La tercera: <em>n</em> = 1 es el mínimo teórico. GraphQL no puede mejorar más por ese eje. Eso es lo que significa estar cerca de la asíntota.</p>
+
+<h2>5. ¿Cuánto tiempo transcurrió hasta que empezó a ser viable?</h2>
+
+<p>La pregunta no tiene una respuesta sino cinco, porque «viable» significa cosas distintas según quién pregunte. La Figura 2 las separa.</p>
+
+<img src="figuras/figura-2.png" alt="Cronología de GraphQL y curva S de difusión">
+<p class="cap"><strong>Figura 2.</strong> Panel A: hitos documentados y los cinco umbrales de viabilidad. Fechas de Postman (2024), Byron (2015), GitHub (2016), Lardinois (2018), Apollo GraphQL (2024), GraphQL Foundation (2025) y Shopify (2026b). Panel B: curva de difusión empresarial. Los puntos llenos son las dos referencias de Gartner recogidas por IBM (2023) y WunderGraph (2026), menos del 10 por ciento en 2021 y menos del 30 por ciento en 2024; el punto blanco de 2027 es la previsión de Gartner de más del 60 por ciento; el punto gris es Postman, que mide desarrolladores y no empresas y por eso no es comparable (Postman, 2025). La logística está ajustada a los dos puntos de Gartner y su asíntota se ha fijado en 100 por falta de un dato que la acote, que es el supuesto más débil de la figura.</p>
+
+<ol>
+  <li><strong>Viable dentro de Facebook: meses.</strong> Del prototipo de la primavera de 2012 a servir el muro de noticias en el verano de 2012 (Postman, 2024). Fue tan rápido porque la tecnología precursora ya estaba: Facebook llevaba años operando TAO, una capa de datos con forma de grafo, y FQL, un lenguaje de consulta propio. GraphQL no inventó el grafo, inventó la forma de pedirlo.</li>
+  <li><strong>Usable por un tercero: tres años.</strong> La especificación y la implementación de referencia se publican el 14 de septiembre de 2015 (Byron, 2015).</li>
+  <li><strong>Probada en público a escala: cuatro años.</strong> GitHub publica su API GraphQL en septiembre de 2016 (GitHub, 2016). Fue la primera API GraphQL pública grande, y es la fecha que yo tomaría como el verdadero arranque de la curva S de difusión.</li>
+  <li><strong>Con andamiaje de empresa: siete años.</strong> La gobernanza llega en noviembre de 2018 con la GraphQL Foundation bajo la Linux Foundation (Lardinois, 2018), y la pieza que faltaba para organizaciones grandes, la federación, en mayo de 2019 (Apollo GraphQL, 2024). Netflix la adopta en 2020 y hoy opera un grafo federado con más de mil millones de peticiones diarias, más de diez mil tipos y campos y más de quinientos desarrolladores activos (InfoQ, 2020, 2022).</li>
+  <li><strong>Obligatoria en un dominio: doce años.</strong> Shopify declara heredada su REST Admin API el 1 de octubre de 2024 y obliga a GraphQL en las aplicaciones públicas nuevas desde el 1 de abril de 2025 (Shopify, 2025, 2026b). Ese es el momento en que GraphQL deja de ser una elección y pasa a ser una condición de contrato.</li>
+</ol>
+
+<p>Y si se cuenta la genealogía completa, la respuesta es otra: <strong>veintiocho años</strong> desde Birrell y Nelson (1984) hasta la concepción de GraphQL en 2012, con una generación nueva cada siete u ocho años.</p>
+
+<p>Lo que me parece más útil de esta lista es el desfase entre el punto 2 y el punto 5: <strong>nueve años entre que la tecnología está terminada y que alguien la impone.</strong> La curva S de rendimiento y la curva S de difusión no van juntas, y confundirlas es el error clásico de una hoja de ruta.</p>
+
+<h2>6. La figura de mérito medida, y su sensibilidad</h2>
+
+<p>Aquí está el núcleo del trabajo. Aplico la ecuación del apartado 2 al escenario del Cuadro 2 en cinco entornos de red, desde el 3G de 2012 hasta dos servicios en el mismo centro de datos, y comparo cuatro arquitecturas. Fijo <em>T</em><sub>s</sub> = 50 ms para todas, de modo que la comparación aísle lo que la arquitectura de la interfaz sí controla.</p>
+
+<img src="figuras/figura-3.png" alt="Descomposición del tiempo hasta la vista completa y sensibilidad al RTT">
+<p class="cap"><strong>Figura 3.</strong> La ventaja de GraphQL no es una propiedad de GraphQL: es una función del RTT. Panel A: descomposición de la ecuación del apartado 2 para el escenario del Cuadro 2 en la red móvil de 2012. Panel B: la misma comparación repetida en cinco entornos de red, cada uno con su RTT y el ancho de banda típico de esa tecnología (1,5, 20, 100, 300 y 10.000 Mbit/s). Elaboración propia con <em>B</em> = 275,8 kB para REST, <em>B</em> = 21,7 kB para GraphQL y <em>T</em><sub>s</sub> = 50 ms para ambos. Los cinco puntos son escenarios discretos, no una función continua del RTT: la recta que los une solo ayuda a leer la tendencia.</p>
+
+<p>Los resultados están en la Figura 3 y son estos:</p>
+
+<ul>
+  <li>En la red de 2012, 3G con 200 ms de ida y vuelta, GraphQL entrega la pantalla en 366 ms frente a los 4.921 ms de REST sobre HTTP/1.1. Es un <strong>factor 13,5</strong>, y explica sin ningún misterio por qué la tecnología nació en el equipo de móvil de Facebook y no en otro sitio.</li>
+  <li>Sobre HTTP/2 y todavía en 3G la ventaja cae a <strong>6,4</strong>. Sobre 4G, a <strong>3,3</strong>. Sobre 5G, a <strong>2,1</strong>. Sobre fibra doméstica, a <strong>1,4</strong>. Entre dos servicios del mismo centro de datos, a <strong>1,03</strong>.</li>
+  <li>El Panel A enseña además algo que no esperaba: <strong>un endpoint compuesto a medida da exactamente el mismo tiempo que GraphQL</strong>, 366 ms. En la figura de mérito principal son indistinguibles.</li>
+</ul>
+
+<h3>Lo que se aprende declarando bien la figura de mérito</h3>
+
+<p>Los dos últimos puntos, juntos, cambian el argumento de venta de GraphQL.</p>
+
+<p>Si la única figura de mérito fuera <em>T</em>, la conclusión sería que <strong>GraphQL solo se justifica cuando el consumidor está lejos</strong>: aplicaciones móviles, mercados con red pobre, clientes en otro continente. Y que entre servicios de un mismo centro de datos no aporta nada, que es exactamente lo que ocurre en la práctica y por qué ahí ganan REST y gRPC, que Google publicó en febrero de 2015 sobre HTTP/2 (Google, 2015).</p>
+
+<p>Pero hay una segunda figura de mérito, <em>E</em>, el esfuerzo por consulta nueva, y ahí sí se separan GraphQL y el endpoint a medida. Brito y Valente (2020) hicieron un experimento controlado con 22 estudiantes que implementaron ocho consultas en las dos tecnologías: <strong>la mediana fue de 9 minutos con REST y 6 con GraphQL</strong>, un 33 por ciento menos, y la ventaja crecía con la complejidad de la consulta. El endpoint a medida, además, exige un despliegue del servidor por cada pantalla nueva; GraphQL, ninguno.</p>
+
+<p>Es la misma lección de la aviación: cuando una figura de mérito se satura, el valor de la tecnología no desaparece, se muda a otra figura de mérito. La de GraphQL se mudó del tiempo de respuesta al coste marginal de la vista número cincuenta.</p>
+
+<h2>7. Restricciones activas del diseño</h2>
+
+<p>La pregunta pide las restricciones activas que limitan el rendimiento del sistema. En el lenguaje del módulo, una restricción es activa cuando está ligada en el óptimo: relajarla mejora la figura de mérito, y relajar cualquier otra no hace nada. Con esa definición, y a la vista de la Figura 3, la lista de GraphQL ha cambiado de orden en los últimos diez años.</p>
+
+<table>
+  <caption style="caption-side: top; text-align: left; font-size: .88em; padding-bottom: .4em;"><strong>Cuadro 3.</strong> Las cinco restricciones activas del diseño de GraphQL, ordenadas por cuánto limitan hoy la figura de mérito. Las tres primeras comparten mitigación, y esa mitigación tiene un coste común.</caption>
+  <tr><th style="width: 9em;">Restricción activa</th><th>De dónde sale</th><th>Qué límite impone</th><th>Mitigación y su coste</th></tr>
+  <tr><td><strong>1. Resolución campo a campo</strong></td><td>La especificación resuelve cada campo por separado; una lista de <em>n</em> elementos con un campo que consulta el almacén genera <em>n</em>+1 accesos</td><td>Gobierna <em>T</em><sub>s</sub>, que en redes rápidas es ya el 98 % de <em>T</em></td><td>DataLoader agrupa por ciclo del bucle de eventos, o se compila el árbol a SQL. Coste: es responsabilidad del programador, no de la plataforma</td></tr>
+  <tr><td><strong>2. Espacio de consulta no acotado</strong></td><td>El cliente compone; el coste no se puede leer de la URL</td><td>La misma ruta puede costar 1 unidad o un millón. Escape halló problemas de consumo de recursos no restringido en el 69 % de 160 endpoints públicos</td><td>Coste calculado por consulta: Shopify da 1.000 puntos por ventana y repone entre 50 y 500 por segundo. Coste: la capacidad pasa a ser un problema de esquema</td></tr>
+  <tr><td><strong>3. Sin caché HTTP intermedia</strong></td><td>POST a un único punto de entrada: ni CDN, ni proxy, ni caché del navegador</td><td>Pierde el acierto de borde, que en REST es gratis y llega al 70 u 80 %</td><td>Consultas persistidas con GET y hash. Coste: vuelve a atar el cliente al despliegue del servidor</td></tr>
+  <tr><td><strong>4. Errores fuera de HTTP</strong></td><td>Se responde 200 con un array <code>errors</code></td><td>Cortafuegos, balanceadores y observabilidad por código de estado dejan de ver los fallos</td><td>Tipos de resultado en el esquema. Coste: disciplina, no tecnología</td></tr>
+  <tr><td><strong>5. Gobernanza del esquema</strong></td><td>Un grafo único compartido por muchos equipos</td><td>Fija el tamaño mínimo de organización a partir del cual compensa</td><td>Federación, registro de esquemas y comprobación de composición. Coste: una plataforma y un equipo que la sostenga</td></tr>
+</table>
+
+<h3>La restricción dominante se mudó de la red al servidor</h3>
+
+<p>Esta es, para mí, la conclusión más importante del trabajo. En 2012 el término que gobernaba la ecuación era <em>n</em> · RTT: 3.400 de los 4.921 ms, el 69 por ciento. GraphQL atacó ese término y lo llevó a su mínimo teórico, <em>n</em> = 1.</p>
+
+<p>Hoy, entre dos servicios del mismo centro de datos, ese mismo término vale 0,5 ms de un total de 50,5. El 99 por ciento del tiempo es <em>T</em><sub>s</sub>. <strong>GraphQL agotó el eje que optimizaba, y la restricción activa pasó a ser precisamente su propio modelo de ejecución.</strong></p>
+
+<p>Y ese modelo de ejecución tiene un problema estructural, no incidental: la especificación resuelve cada campo de forma independiente, de modo que el resolvedor de un campo dentro de una lista de <em>n</em> elementos se ejecuta <em>n</em> veces. El Panel A de la Figura 4 lo dibuja. La solución canónica, DataLoader, agrupa las claves pedidas dentro de un mismo ciclo del bucle de eventos y las resuelve en un solo acceso (GraphQL Foundation, 2026). Es eficaz, pero conviene ver lo que significa: <strong>el rendimiento de una API GraphQL no depende de la tecnología sino de si el equipo puso el DataLoader</strong>. En REST ese error no se puede cometer, porque el endpoint se escribe entero a mano.</p>
+
+<img src="figuras/figura-4.png" alt="El problema N+1 de resolvedores y el frente de Pareto de las cinco arquitecturas">
+<p class="cap"><strong>Figura 4.</strong> Panel A: el problema <em>N</em>+1 de resolvedores, que es la restricción activa dominante de GraphQL una vez que la red deja de serlo. La curva ingenua es el comportamiento que describe la propia documentación de referencia; la constante es lo que consigue DataLoader agrupando por ciclo del bucle de eventos (GraphQL Foundation, 2026). Panel B: las cinco arquitecturas situadas frente a las dos figuras de mérito que de verdad compiten. Las posiciones en el eje vertical son un índice ordinal de elaboración propia, no una medida: lo que esta figura afirma es la <em>forma</em> del frente, no las coordenadas. SOAP y el <em>backend for frontend</em> escrito a mano están dominados; REST, gRPC y GraphQL están los tres sobre el frente, cada uno en un tramo distinto, y por eso conviven.</p>
+
+<h3>Las tres primeras restricciones comparten medicina, y la medicina tiene un precio</h3>
+
+<p>La consulta persistida resuelve a la vez la 2 y la 3, y ayuda con la 1: el cliente envía un hash en lugar de la consulta, el servidor la busca en un registro, y como es un GET conocido y de coste acotado vuelven a funcionar la caché de borde y la limitación de tasa.</p>
+
+<p>Es la mejor mitigación que existe y por eso hay que ver lo que cuesta. Con consultas persistidas, el cliente ya no puede pedir cualquier cosa: solo puede pedir lo que está registrado, y registrar es un despliegue coordinado. <strong>Es decir, la mitigación devuelve buena parte del acoplamiento entre cliente y servidor que GraphQL vino a eliminar.</strong> No es una contradicción, es un frente de Pareto: se compra rendimiento y seguridad con flexibilidad, y cada organización elige su punto.</p>
+
+<p>El Panel B de la Figura 4 sitúa las cinco arquitecturas sobre ese frente. El resultado es el que explica el estado del mercado mejor que cualquier argumento: <strong>REST, gRPC y GraphQL están los tres sobre el frente de Pareto.</strong> Ninguno domina a los otros. SOAP y el endpoint a medida sí están dominados. Por eso REST sigue en el 93 por ciento y GraphQL en el 33 (Postman, 2025), y por eso la pregunta «¿GraphQL sustituirá a REST?» está mal planteada: no se sustituye a un punto del frente, se elige otro punto.</p>
+
+<h2>8. Dónde está GraphQL hoy y qué haría yo con esto</h2>
+
+<p>Poniendo las tres curvas juntas, la lectura es esta:</p>
+
+<ol>
+  <li><strong>La curva S de rendimiento está prácticamente terminada.</strong> <em>n</em> = 1 es el mínimo teórico y &eta; próxima a 1 es el máximo teórico. Por esos dos ejes no queda nada que ganar. Lo que se publica hoy en el ecosistema no mejora la figura de mérito original: mejora el <em>T</em><sub>s</sub> y la gobernanza.</li>
+  <li><strong>La curva S de difusión está justo en su punto de inflexión</strong>, en torno a 2026 según el ajuste del Panel B de la Figura 2. La adopción sigue creciendo nueve años después de que la tecnología estuviera terminada, que es el desfase normal entre las dos curvas.</li>
+  <li><strong>La ventana de sensibilidad se ha estrechado por el lado de la red.</strong> HTTP/2 en 2015 y luego 4G y 5G se llevaron un orden de magnitud de la ventaja. La ventana sigue abierta donde el RTT es alto: móvil en mercados con red pobre, clientes intercontinentales, dispositivos de baja potencia.</li>
+</ol>
+
+<p>Traducido a una decisión, que es para lo que sirve esto: <strong>yo no justificaría hoy una migración a GraphQL con el argumento del tiempo de respuesta</strong>, salvo que el consumidor esté medido y esté lejos. La Figura 3 dice que ese argumento vale un factor 1,4 sobre fibra. Los argumentos que sí aguantan la aritmética son el 33 por ciento de esfuerzo por consulta de Brito y Valente (2020), la eliminación del despliegue por pantalla nueva y la gobernanza de un esquema único cuando hay muchos equipos y muchos clientes, que es el caso de Netflix y de Shopify. Y ninguno de los tres es un argumento de rendimiento.</p>
+
+<h2>9. Limitaciones</h2>
+
+<ol>
+  <li><strong>El escenario del Cuadro 2 es sintético.</strong> Los tamaños de objeto son mi estimación de un caso típico, no una medición. Elegí valores conservadores, y aun así la &eta; que sale para REST, el 8 por ciento, es ocho veces mejor que la mediana medida por Brito et al. (2019) sobre sistemas reales. Con sus números todas mis ventajas serían mayores.</li>
+  <li><strong>Las cinco curvas de la Figura 1 son logísticas ajustadas a mano</strong> sobre fechas documentadas de aparición y saturación, no series observadas. Sirven para leer la forma y el relevo, no un valor.</li>
+  <li><strong>Fijar <em>T</em><sub>s</sub> = 50 ms para las cuatro arquitecturas es una simplificación fuerte y favorable a REST en un sentido y a GraphQL en otro.</strong> Un GraphQL sin DataLoader tendría un <em>T</em><sub>s</sub> mucho peor, que es precisamente la restricción activa del apartado 7, y un REST con 102 peticiones consume mucha más CPU de servidor por vista.</li>
+  <li><strong>Los cinco escenarios de red del Panel B son puntos discretos</strong>, cada uno con su pareja de RTT y ancho de banda. La línea que los une no es una función continua y no debe leerse como tal.</li>
+  <li><strong>La asíntota de la curva de difusión está fijada en 100 por falta de un dato que la acote.</strong> Es el supuesto más débil de todo el trabajo. Si el techo real fuera el 70 por ciento, el punto de inflexión se adelantaría y la previsión de Gartner para 2027 quedaría muy cerca de la saturación.</li>
+  <li><strong>Los dos puntos de Gartner y el de Postman no son comparables</strong>: el primero mide porcentaje de empresas con GraphQL en producción y el segundo porcentaje de desarrolladores encuestados. Van juntos en el Panel B para dar contexto, no para ajustar la curva, y por eso el de Postman está dibujado en gris.</li>
+  <li><strong>El eje vertical del frente de Pareto es ordinal y es mío.</strong> Está construido con mi criterio sobre coste de servidor y de gobernanza. La figura afirma la forma del frente y qué puntos están dominados, no las coordenadas.</li>
+  <li><strong>No he medido nada yo.</strong> Todo lo cuantitativo viene de la literatura citada o de aplicar la ecuación del apartado 2 a un escenario declarado. Un banco de pruebas propio sobre una API real sería el siguiente paso y probablemente cambiaría los detalles, aunque no el orden de magnitud ni la forma de la curva de sensibilidad, que es lo que sostiene la conclusión.</li>
+</ol>
+
+<h2>Referencias</h2>
+
+<div class="ref">
+<p>Apollo GraphQL. (2024). <em>Five years of Apollo Federation: The standard for enterprise API platforms</em>. https://www.apollographql.com/blog/celebrating-five-years-of-apollo-federation</p>
+<p>Belshe, M., Peon, R., &amp; Thomson, M. (2015). <em>Hypertext Transfer Protocol version 2 (HTTP/2)</em> (RFC 7540). Internet Engineering Task Force. https://www.rfc-editor.org/rfc/rfc7540</p>
+<p>Birrell, A. D., &amp; Nelson, B. J. (1984). Implementing remote procedure calls. <em>ACM Transactions on Computer Systems, 2</em>(1), 39–59. https://doi.org/10.1145/2080.357392</p>
+<p>Brito, G., Mombach, T., &amp; Valente, M. T. (2019). Migrating to GraphQL: A practical assessment. <em>IEEE 26th International Conference on Software Analysis, Evolution and Reengineering (SANER)</em>, 140–150. https://doi.org/10.1109/SANER.2019.8667986</p>
+<p>Brito, G., &amp; Valente, M. T. (2020). REST vs GraphQL: A controlled experiment. <em>IEEE International Conference on Software Architecture (ICSA)</em>, 81–91. https://doi.org/10.1109/ICSA47634.2020.00016</p>
+<p>Byron, L. (2015, septiembre). <em>GraphQL: A data query language</em>. Meta Engineering. https://graphql.org/blog/2015-09-14-graphql/</p>
+<p>de Weck, O. L. (2022). <em>Technology roadmapping and development: A quantitative approach to the management of technology</em>. Springer. https://doi.org/10.1007/978-3-030-88346-1</p>
+<p>Escape. (2024). <em>The state of GraphQL security 2024</em>. https://escape.tech/blog/the-state-of-graphql-security-2024/</p>
+<p>Fielding, R. T. (2000). <em>Architectural styles and the design of network-based software architectures</em> [Tesis doctoral, University of California, Irvine]. https://ics.uci.edu/~fielding/pubs/dissertation/fielding_dissertation.pdf</p>
+<p>GitHub. (2016, septiembre). <em>The GitHub GraphQL API</em>. The GitHub Blog. https://github.blog/developer-skills/github/the-github-graphql-api/</p>
+<p>Google. (2015, febrero). <em>Introducing gRPC, a new open source HTTP/2 RPC framework</em>. Google Developers Blog. https://developers.googleblog.com/introducing-grpc-a-new-open-source-http2-rpc-framework/</p>
+<p>GraphQL Foundation. (2025, septiembre). <em>GraphQL specification, September 2025 edition</em>. https://spec.graphql.org/September2025/</p>
+<p>GraphQL Foundation. (2026). <em>DataLoader: Batching and caching for GraphQL resolvers</em>. https://github.com/graphql/dataloader</p>
+<p>IBM. (2023). <em>Seven key insights on GraphQL trends</em>. https://www.ibm.com/think/insights/seven-key-insights-on-graphql-trends</p>
+<p>InfoQ. (2020, diciembre). <em>Netflix adopts GraphQL federation for its API platform</em>. https://www.infoq.com/news/2020/12/netflix-graphql-federation</p>
+<p>InfoQ. (2022, octubre). <em>Scaling GraphQL adoption at Netflix</em>. https://www.infoq.com/news/2022/10/scaling-graphql-netflix/</p>
+<p>Lardinois, F. (2018, noviembre). <em>Facebook's GraphQL gets its own open-source foundation</em>. TechCrunch. https://techcrunch.com/2018/11/06/facebooks-graphql-gets-its-own-open-source-foundation/</p>
+<p>Postman. (2024). <em>What is GraphQL? Part 1: The Facebook years</em>. Postman Blog. https://blog.postman.com/what-is-graphql-part-one-the-facebook-years/</p>
+<p>Postman. (2025). <em>2025 state of the API report</em>. https://www.postman.com/state-of-api/2025/</p>
+<p>Seabra, M., Nazário, M. F., &amp; Pinto, G. (2019). REST or GraphQL? A performance comparative study. <em>XIII Brazilian Symposium on Software Components, Architectures and Reuse (SBCARS)</em>, 123–132. https://doi.org/10.1145/3357141.3357149</p>
+<p>Shopify. (2025). <em>All in on GraphQL</em>. Shopify Partners Blog. https://www.shopify.com/partners/blog/all-in-on-graphql</p>
+<p>Shopify. (2026a). <em>API rate limits: Calculated query cost</em>. https://shopify.dev/docs/api/usage/limits</p>
+<p>Shopify. (2026b). <em>REST Admin API reference</em>. https://shopify.dev/docs/api/admin-rest</p>
+<p>Wikipedia. (2026a). <em>Common Object Request Broker Architecture</em>. https://en.wikipedia.org/wiki/Common_Object_Request_Broker_Architecture</p>
+<p>Wikipedia. (2026b). <em>XML-RPC</em>. https://en.wikipedia.org/wiki/XML-RPC</p>
+<p>World Wide Web Consortium. (2003, junio). <em>SOAP version 1.2 part 1: Messaging framework</em>. https://www.w3.org/TR/soap12-part1/</p>
+<p>WunderGraph. (2026). <em>GraphQL vs REST: 18 claims fact-checked with primary sources</em>. https://wundergraph.com/blog/fact-checking-graphql-vs-rest</p>
+</div>
+
+</body>
+</html>

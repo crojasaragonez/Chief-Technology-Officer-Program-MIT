@@ -1,0 +1,264 @@
+% ---------------------------------------------------------------------------
+% Foro 1.1. Ejemplo de análisis de la sensibilidad tecnológica: GraphQL
+% Referencias consultadas el 9 de septiembre de 2026
+% ---------------------------------------------------------------------------
+
+% --- Marco conceptual del módulo -------------------------------------------
+
+@book{deweck2022,
+  author    = {de Weck, Olivier L.},
+  title     = {Technology roadmapping and development: A quantitative approach
+               to the management of technology},
+  publisher = {Springer},
+  location  = {Cham},
+  year      = {2022},
+  doi       = {10.1007/978-3-030-88346-1}
+}
+
+% --- Genealogía: RPC, CORBA, SOAP, REST ------------------------------------
+
+@article{birrell1984,
+  author  = {Birrell, Andrew D. and Nelson, Bruce Jay},
+  title   = {Implementing remote procedure calls},
+  journal = {ACM Transactions on Computer Systems},
+  volume  = {2},
+  number  = {1},
+  pages   = {39--59},
+  year    = {1984},
+  doi     = {10.1145/2080.357392}
+}
+
+@phdthesis{fielding2000,
+  author      = {Fielding, Roy Thomas},
+  title       = {Architectural styles and the design of network-based software
+                 architectures},
+  institution = {University of California, Irvine},
+  type        = {Tesis doctoral},
+  year        = {2000},
+  url         = {https://ics.uci.edu/~fielding/pubs/dissertation/fielding_dissertation.pdf}
+}
+
+@online{w3c2003soap,
+  author  = {{World Wide Web Consortium}},
+  title   = {{SOAP} version 1.2 part 1: Messaging framework},
+  year    = {2003},
+  month   = {6},
+  urldate = {2026-09-09},
+  note    = {Recomendación del W3C de 24 de junio de 2003},
+  url     = {https://www.w3.org/TR/soap12-part1/}
+}
+
+@online{wikicorba,
+  author  = {{Wikipedia}},
+  title   = {Common {O}bject {R}equest {B}roker {A}rchitecture},
+  year    = {2026},
+  urldate = {2026-09-09},
+  url     = {https://en.wikipedia.org/wiki/Common_Object_Request_Broker_Architecture}
+}
+
+@online{wikixmlrpc,
+  author  = {{Wikipedia}},
+  title   = {{XML-RPC}},
+  year    = {2026},
+  urldate = {2026-09-09},
+  url     = {https://en.wikipedia.org/wiki/XML-RPC}
+}
+
+@online{rfc7540,
+  author  = {Belshe, Mike and Peon, Roberto and Thomson, Martin},
+  title   = {Hypertext {T}ransfer {P}rotocol version 2 ({HTTP/2})},
+  year    = {2015},
+  month   = {5},
+  urldate = {2026-09-09},
+  organization = {{Internet Engineering Task Force}},
+  note    = {RFC 7540, sustituida por la RFC 9113 en 2022},
+  url     = {https://www.rfc-editor.org/rfc/rfc7540}
+}
+
+@online{grpc2015,
+  author  = {{Google}},
+  title   = {Introducing {gRPC}, a new open source {HTTP/2} {RPC} framework},
+  year    = {2015},
+  month   = {2},
+  urldate = {2026-09-09},
+  organization = {Google Developers Blog},
+  url     = {https://developers.googleblog.com/introducing-grpc-a-new-open-source-http2-rpc-framework/}
+}
+
+% --- Origen y estandarización de GraphQL -----------------------------------
+
+@online{graphql2015,
+  author  = {Byron, Lee},
+  title   = {{GraphQL}: A data query language},
+  year    = {2015},
+  month   = {9},
+  urldate = {2026-09-09},
+  organization = {Meta Engineering},
+  url     = {https://graphql.org/blog/2015-09-14-graphql/}
+}
+
+@online{postman2024historia,
+  author  = {{Postman}},
+  title   = {What is {GraphQL}? {P}art 1: The {F}acebook years},
+  year    = {2024},
+  urldate = {2026-09-09},
+  organization = {Postman Blog},
+  url     = {https://blog.postman.com/what-is-graphql-part-one-the-facebook-years/}
+}
+
+@online{github2016,
+  author  = {{GitHub}},
+  title   = {The {GitHub} {GraphQL} {API}},
+  year    = {2016},
+  month   = {9},
+  urldate = {2026-09-09},
+  organization = {The GitHub Blog},
+  url     = {https://github.blog/developer-skills/github/the-github-graphql-api/}
+}
+
+@online{techcrunch2018,
+  author  = {Lardinois, Frederic},
+  title   = {Facebook's {GraphQL} gets its own open-source foundation},
+  year    = {2018},
+  month   = {11},
+  urldate = {2026-09-09},
+  organization = {TechCrunch},
+  url     = {https://techcrunch.com/2018/11/06/facebooks-graphql-gets-its-own-open-source-foundation/}
+}
+
+@online{spec2025,
+  author  = {{GraphQL Foundation}},
+  title   = {{GraphQL} specification, {S}eptember 2025 edition},
+  year    = {2025},
+  month   = {9},
+  urldate = {2026-09-09},
+  url     = {https://spec.graphql.org/September2025/}
+}
+
+@online{apollo2024federacion,
+  author  = {{Apollo GraphQL}},
+  title   = {Five years of {A}pollo {F}ederation: The standard for enterprise
+             {API} platforms},
+  year    = {2024},
+  urldate = {2026-09-09},
+  url     = {https://www.apollographql.com/blog/celebrating-five-years-of-apollo-federation}
+}
+
+@online{netflix2020,
+  author  = {{InfoQ}},
+  title   = {{Netflix} adopts {GraphQL} federation for its {API} platform},
+  year    = {2020},
+  month   = {12},
+  urldate = {2026-09-09},
+  url     = {https://www.infoq.com/news/2020/12/netflix-graphql-federation}
+}
+
+@online{infoq2022netflix,
+  author  = {{InfoQ}},
+  title   = {Scaling {GraphQL} adoption at {Netflix}},
+  year    = {2022},
+  month   = {10},
+  urldate = {2026-09-09},
+  url     = {https://www.infoq.com/news/2022/10/scaling-graphql-netflix/}
+}
+
+% --- Evidencia empírica -----------------------------------------------------
+
+@inproceedings{brito2019,
+  author    = {Brito, Gleison and Mombach, Thais and Valente, Marco Tulio},
+  title     = {Migrating to {GraphQL}: A practical assessment},
+  booktitle = {IEEE 26th International Conference on Software Analysis,
+               Evolution and Reengineering (SANER)},
+  pages     = {140--150},
+  year      = {2019},
+  doi       = {10.1109/SANER.2019.8667986}
+}
+
+@inproceedings{brito2020,
+  author    = {Brito, Gleison and Valente, Marco Tulio},
+  title     = {{REST} vs {GraphQL}: A controlled experiment},
+  booktitle = {IEEE International Conference on Software Architecture (ICSA)},
+  pages     = {81--91},
+  year      = {2020},
+  doi       = {10.1109/ICSA47634.2020.00016}
+}
+
+@inproceedings{seabra2019,
+  author    = {Seabra, Matheus and Naz{\'a}rio, Marcos Felipe and
+               Pinto, Gustavo},
+  title     = {{REST} or {GraphQL}? {A} performance comparative study},
+  booktitle = {XIII Brazilian Symposium on Software Components, Architectures
+               and Reuse (SBCARS)},
+  pages     = {123--132},
+  year      = {2019},
+  doi       = {10.1145/3357141.3357149}
+}
+
+@online{escape2024,
+  author  = {{Escape}},
+  title   = {The state of {GraphQL} security 2024},
+  year    = {2024},
+  urldate = {2026-09-09},
+  url     = {https://escape.tech/blog/the-state-of-graphql-security-2024/}
+}
+
+@online{postman2025,
+  author  = {{Postman}},
+  title   = {2025 state of the {API} report},
+  year    = {2025},
+  urldate = {2026-09-09},
+  url     = {https://www.postman.com/state-of-api/2025/}
+}
+
+@online{wundergraph2026,
+  author  = {{WunderGraph}},
+  title   = {{GraphQL} vs {REST}: 18 claims fact-checked with primary sources},
+  year    = {2026},
+  urldate = {2026-09-09},
+  url     = {https://wundergraph.com/blog/fact-checking-graphql-vs-rest}
+}
+
+@online{ibm2023gartner,
+  author  = {{IBM}},
+  title   = {Seven key insights on {GraphQL} trends},
+  year    = {2023},
+  urldate = {2026-09-09},
+  note    = {Recoge la previsión de Gartner de 2021},
+  url     = {https://www.ibm.com/think/insights/seven-key-insights-on-graphql-trends}
+}
+
+% --- Restricciones activas y sus mitigaciones ------------------------------
+
+@online{dataloader,
+  author  = {{GraphQL Foundation}},
+  title   = {{DataLoader}: Batching and caching for {GraphQL} resolvers},
+  year    = {2026},
+  urldate = {2026-09-09},
+  url     = {https://github.com/graphql/dataloader}
+}
+
+@online{shopify2024rest,
+  author  = {{Shopify}},
+  title   = {{REST} {A}dmin {API} reference},
+  year    = {2026},
+  urldate = {2026-09-09},
+  note    = {API heredada desde el 1 de octubre de 2024},
+  url     = {https://shopify.dev/docs/api/admin-rest}
+}
+
+@online{shopify2025graphql,
+  author  = {{Shopify}},
+  title   = {All in on {GraphQL}},
+  year    = {2025},
+  urldate = {2026-09-09},
+  organization = {Shopify Partners Blog},
+  url     = {https://www.shopify.com/partners/blog/all-in-on-graphql}
+}
+
+@online{shopifylimites,
+  author  = {{Shopify}},
+  title   = {{API} rate limits: Calculated query cost},
+  year    = {2026},
+  urldate = {2026-09-09},
+  url     = {https://shopify.dev/docs/api/usage/limits}
+}
