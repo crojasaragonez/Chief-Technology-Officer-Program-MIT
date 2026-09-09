@@ -73,6 +73,8 @@ Carlos Luis Rojas Aragonés</p>
 
 <h2>3. Cuatro generaciones antes de GraphQL</h2>
 
+<p>Antes de llegar a GraphQL conviene ver contra qué se detuvo cada una de las cuatro generaciones anteriores, porque el patrón se repite y es el que anticipa dónde está hoy el límite de GraphQL. El Cuadro 1 resume las cinco y la Figura 1 las dibuja como lo que son: cinco curvas S encadenadas, cada una midiéndose con su propia regla.</p>
+
 <table>
   <caption style="caption-side: top; text-align: left; font-size: .88em; padding-bottom: .4em;"><strong>Cuadro 1.</strong> Cinco generaciones para la misma función. Cada una nació optimizando una figura de mérito que la anterior había descuidado, y cada una se detuvo contra una restricción activa distinta.</caption>
   <tr><th style="width: 7em;">Generación</th><th style="width: 4em;">Origen</th><th>Figura de mérito dominante</th><th>Restricción que la detuvo</th><th>Qué la relevó</th></tr>
@@ -191,6 +193,8 @@ Carlos Luis Rojas Aragonés</p>
 
 <p>Es la misma lección de la aviación: cuando una figura de mérito se satura, el valor de la tecnología no desaparece, se muda a otra figura de mérito. La de GraphQL se mudó del tiempo de respuesta al coste marginal de la vista número cincuenta.</p>
 
+<p>Conviene añadir que la literatura empírica no es unánime, y que eso encaja con el resultado de la sensibilidad en lugar de contradecirlo. Seabra, Nazário y Pinto (2019) compararon servicios antes y después de migrarlos a GraphQL: hubo mejora en dos de cada tres casos, pero por encima de unas tres mil peticiones por prueba el servicio en GraphQL rindió <em>por debajo</em> de su equivalente en REST. Es exactamente lo que predice la ecuación del apartado 2 cuando el cuello de botella deja de estar en la red y pasa a estar en el servidor, y es el asunto del apartado siguiente.</p>
+
 <h2>7. Restricciones activas del diseño</h2>
 
 <p>La pregunta pide las restricciones activas que limitan el rendimiento del sistema. En el lenguaje del módulo, una restricción es activa cuando está ligada en el óptimo: relajarla mejora la figura de mérito, y relajar cualquier otra no hace nada. Con esa definición, y a la vista de la Figura 3, la lista de GraphQL ha cambiado de orden en los últimos diez años.</p>
@@ -199,7 +203,7 @@ Carlos Luis Rojas Aragonés</p>
   <caption style="caption-side: top; text-align: left; font-size: .88em; padding-bottom: .4em;"><strong>Cuadro 3.</strong> Las cinco restricciones activas del diseño de GraphQL, ordenadas por cuánto limitan hoy la figura de mérito. Las tres primeras comparten mitigación, y esa mitigación tiene un coste común.</caption>
   <tr><th style="width: 9em;">Restricción activa</th><th>De dónde sale</th><th>Qué límite impone</th><th>Mitigación y su coste</th></tr>
   <tr><td><strong>1. Resolución campo a campo</strong></td><td>La especificación resuelve cada campo por separado; una lista de <em>n</em> elementos con un campo que consulta el almacén genera <em>n</em>+1 accesos</td><td>Gobierna <em>T</em><sub>s</sub>, que en redes rápidas es ya el 98 % de <em>T</em></td><td>DataLoader agrupa por ciclo del bucle de eventos, o se compila el árbol a SQL. Coste: es responsabilidad del programador, no de la plataforma</td></tr>
-  <tr><td><strong>2. Espacio de consulta no acotado</strong></td><td>El cliente compone; el coste no se puede leer de la URL</td><td>La misma ruta puede costar 1 unidad o un millón. Escape halló problemas de consumo de recursos no restringido en el 69 % de 160 endpoints públicos</td><td>Coste calculado por consulta: Shopify da 1.000 puntos por ventana y repone entre 50 y 500 por segundo. Coste: la capacidad pasa a ser un problema de esquema</td></tr>
+  <tr><td><strong>2. Espacio de consulta no acotado</strong></td><td>El cliente compone; el coste no se puede leer de la URL</td><td>La misma ruta puede costar 1 unidad o un millón. Escape halló problemas de consumo de recursos no restringido en el 69 % de 160 endpoints públicos analizados (Escape, 2024)</td><td>Coste calculado por consulta: Shopify da 1.000 puntos por ventana y repone entre 50 y 500 por segundo (Shopify, 2026a). Coste: la capacidad pasa a ser un problema de esquema</td></tr>
   <tr><td><strong>3. Sin caché HTTP intermedia</strong></td><td>POST a un único punto de entrada: ni CDN, ni proxy, ni caché del navegador</td><td>Pierde el acierto de borde, que en REST es gratis y llega al 70 u 80 %</td><td>Consultas persistidas con GET y hash. Coste: vuelve a atar el cliente al despliegue del servidor</td></tr>
   <tr><td><strong>4. Errores fuera de HTTP</strong></td><td>Se responde 200 con un array <code>errors</code></td><td>Cortafuegos, balanceadores y observabilidad por código de estado dejan de ver los fallos</td><td>Tipos de resultado en el esquema. Coste: disciplina, no tecnología</td></tr>
   <tr><td><strong>5. Gobernanza del esquema</strong></td><td>Un grafo único compartido por muchos equipos</td><td>Fija el tamaño mínimo de organización a partir del cual compensa</td><td>Federación, registro de esquemas y comprobación de composición. Coste: una plataforma y un equipo que la sostenga</td></tr>

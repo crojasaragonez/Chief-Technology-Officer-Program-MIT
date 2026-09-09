@@ -2,7 +2,8 @@
 """Exporta las figuras de main.tex a PNG e incrusta el resultado en el HTML.
 
 Extrae los entornos tikzpicture de main.tex, los compila con la clase
-`standalone` (una página por figura), los convierte a PNG, los optimiza y
+`standalone` a 11 pt, el mismo cuerpo que main.tex para que el salto de línea
+de los rótulos coincida, los convierte a PNG, los optimiza y
 genera `foro-1.1-tinymce.html` con las imágenes en base64, listo para
 seleccionar todo, copiar y pegar en un editor TinyMCE.
 
@@ -26,7 +27,7 @@ HTML_MAESTRO = "foro-1.1.html"
 HTML_SALIDA = "foro-1.1-tinymce.html"
 DPI = "190"
 
-CABECERA = r"""\documentclass[tikz,border=6pt]{standalone}
+CABECERA = r"""\documentclass[tikz,border=6pt,11pt]{standalone}
 \usepackage[spanish,es-noshorthands]{babel}
 \usepackage{fontspec}
 \setmainfont{Source Serif Pro}

@@ -84,7 +84,7 @@
 \newcommand{\hito}[5]{%
   \draw[#3, thick] ({\tx{#1}},0) -- ({\tx{#1}},#2);%
   \fill[#3] ({\tx{#1}},0) circle (2.2pt);%
-  \node[#5, text width=2.25cm, align=center, font=\scriptsize, inner sep=1.6pt]
+  \node[#5, text width=2.9cm, align=center, font=\scriptsize, inner sep=1.6pt]
        at ({\tx{#1}},#2) {#4};%
 }
 % #1 y, #2 año final, #3 etiqueta, #4 color
@@ -100,7 +100,7 @@
 % #1 y, #2 ms de ida y vuelta, #3 ms de transferencia, #4 ms de servidor,
 % #5 rótulo izquierdo, #6 color del tramo de red, #7 total
 \newcommand{\barraT}[7]{%
-  \node[left, text width=3.35cm, align=right, font=\scriptsize]
+  \node[left, text width=3.6cm, align=right, font=\scriptsize]
        at (-0.12,#1) {#5};%
   \fill[#6] (0,#1-0.27) rectangle ({(#2)*0.002235},#1+0.27);%
   \fill[#6!35] ({(#2)*0.002235},#1-0.27)
@@ -115,9 +115,9 @@
 
 % --- Figura 4: N+1 de resolvedores y frente de Pareto ------------------------
 \newcommand{\nx}[1]{(#1)*0.062}
-\newcommand{\ny}[1]{(#1)*0.034}
+\newcommand{\ny}[1]{(#1)*0.042}
 \newcommand{\fx}[1]{(#1)*0.062}
-\newcommand{\fy}[1]{(#1)*0.036}
+\newcommand{\fy}[1]{(#1)*0.045}
 % #1 x, #2 y, #3 color, #4 etiqueta, #5 posición
 \newcommand{\punto}[5]{%
   \fill[#3] ({\fx{#1}},{\fy{#2}}) circle (2.6pt);%
@@ -213,6 +213,12 @@ las cinco generaciones de esta historia optimizó una figura de mérito distinta
 y ninguna de ellas optimizó la de la generación anterior.
 
 \section{Cuatro generaciones antes de GraphQL}
+
+Antes de llegar a GraphQL conviene ver contra qué se detuvo cada una de las
+cuatro generaciones anteriores, porque el patrón se repite y es el que anticipa
+dónde está hoy el límite de GraphQL. El Cuadro~\ref{cuadro:generaciones} resume
+las cinco y la Figura~\ref{fig:curvass} las dibuja como lo que son: cinco
+curvas S encadenadas, cada una midiéndose con su propia regla.
 
 \begin{table}[t]
 \small
@@ -331,7 +337,7 @@ siempre, los use la vista o no. De ahí los dos síntomas clásicos:
   la ecuación~\eqref{eq:fom} va multiplicado por el RTT.
 \end{itemize}
 
-\begin{figure}[p]
+\begin{figure}[!htb]
 \centering
 \begin{tikzpicture}
 
@@ -380,9 +386,9 @@ siempre, los use la vista o no. De ahí los dos síntomas clásicos:
 \curvaS{5.20}{cGql}{0.40}{2021}{2012}{2026}
 \curvaSp{5.20}{cGql}{0.40}{2021}{2026}{2032}
 \fill[cGql] ({\gx{2026}},{5.20+0.95/(1+exp(-0.40*5))}) circle (2.6pt);
-\node[left, font=\scriptsize\itshape, text=cGql, text width=3.4cm, align=right]
-     at ({\gx{2019.4}},5.86)
-     {hoy: 88 por ciento de su techo\\ en $n$ y en $\eta$};
+\node[left, font=\scriptsize\itshape, text=cGql, text width=4.5cm, align=right]
+     at ({\gx{2019.6}},5.93)
+     {hoy: 88 por ciento de su techo en $n$ y en $\eta$};
 
 % flechas de relevo: del codo de una generación al arranque de la siguiente
 \foreach \p/\q/\a/\b in {1994/1992.8/0/1.30, 2001.2/1999.9/1.30/2.60,
@@ -474,12 +480,12 @@ eje. Eso es lo que significa estar cerca de la asíntota.
 La pregunta no tiene una respuesta sino cinco, porque \enquote{viable} significa
 cosas distintas según quién pregunte. La Figura~\ref{fig:cronologia} las separa.
 
-\begin{figure}[p]
+\begin{figure}[!htb]
 \centering
 \begin{tikzpicture}
 
 % ================= Panel A: cronología y umbrales =================
-\node[anchor=south west, font=\small\bfseries] at (-0.4,4.75)
+\node[anchor=south west, font=\small\bfseries] at (-0.4,3.35)
      {Panel A. De prototipo interno a obligación contractual: trece años};
 
 \draw[cGris!70, -{Stealth[length=5pt]}] (-0.15,0) -- (13.5,0);
@@ -487,28 +493,28 @@ cosas distintas según quién pregunte. La Figura~\ref{fig:cronologia} las separ
   \draw[cGris!70] ({\tx{\a}},0) -- ({\tx{\a}},-0.10);
 }
 \node[below, font=\scriptsize, text=cGris] at ({\tx{2012}},-0.12) {2012};
-\node[below, font=\scriptsize, text=cGris] at ({\tx{2016}},-0.12) {2016};
+\node[below right, font=\scriptsize, text=cGris]
+     at ({\tx{2016}+0.08},-0.12) {2016};
 \node[below, font=\scriptsize, text=cGris] at ({\tx{2020}},-0.12) {2020};
 \node[below, font=\scriptsize, text=cGris] at ({\tx{2024}},-0.12) {2024};
 
-\hito{2012}{1.00}{cGql}{\textbf{2012}\\en producción en el muro de iOS}{above}
-\hito{2015}{2.15}{cGql}{\textbf{sep. 2015}\\especificación y graphql-js
-  abiertos}{above}
-\hito{2016}{1.00}{cRest}{\textbf{sep. 2016}\\GitHub: primera API pública a
-  escala}{above right}
-\hito{2018.5}{3.30}{cRef}{\textbf{2018 y 2019}\\GraphQL Foundation y Apollo
-  Federation v1}{above}
-\hito{2024.5}{2.15}{cVerde}{\textbf{2024 y 2025}\\Shopify: REST heredada y
-  GraphQL obligatorio}{above}
+\hito{2012}{1.05}{cGql}{\textbf{2012}\\en producción en iOS}{above}
+\hito{2015}{2.15}{cGql}{\textbf{sep. 2015}\\especificación abierta}{above}
+\hito{2016}{-1.05}{cRest}{\textbf{sep. 2016}\\GitHub, primera API
+  pública}{below}
+\hito{2018.5}{1.05}{cRef}{\textbf{2018 y 2019}\\Foundation y
+  federación}{above}
+\hito{2024.5}{2.15}{cVerde}{\textbf{2024 y 2025}\\Shopify obliga a
+  GraphQL}{above}
 
-\umbral{-0.62}{2012.4}{meses: viable \emph{dentro} de Facebook}{cGql}
-\umbral{-1.12}{2015.7}{3 años: usable por terceros}{cGql}
-\umbral{-1.62}{2016.7}{4 años: probada en público a escala}{cRest}
-\umbral{-2.12}{2019.4}{7 años: existe andamiaje de empresa}{cRef}
-\umbral{-2.62}{2024.8}{12 años: obligatoria en un dominio}{cVerde}
+\umbral{-2.30}{2012.4}{meses: viable \emph{dentro} de Facebook}{cGql}
+\umbral{-2.78}{2015.7}{3 años: usable por terceros}{cGql}
+\umbral{-3.26}{2016.7}{4 años: probada en público a escala}{cRest}
+\umbral{-3.74}{2019.4}{7 años: existe andamiaje de empresa}{cRef}
+\umbral{-4.22}{2024.8}{12 años: obligatoria en un dominio}{cVerde}
 
 % ================= Panel B: curva S de difusión =================
-\begin{scope}[yshift=-9.4cm]
+\begin{scope}[yshift=-10.1cm]
 \node[anchor=south west, font=\small\bfseries] at (-0.4,4.30)
      {Panel B. La curva S de difusión, que va muy por detrás de la de
       rendimiento};
@@ -625,7 +631,7 @@ hasta dos servicios en el mismo centro de datos, y comparo cuatro
 arquitecturas. Fijo $T_{s} = 50$ ms para todas, de modo que la comparación
 aísle lo que la arquitectura de la interfaz sí controla.
 
-\begin{figure}[p]
+\begin{figure}[!htb]
 \centering
 \begin{tikzpicture}
 
@@ -634,10 +640,10 @@ aísle lo que la arquitectura de la interfaz sí controla.
      {Panel A. Tiempo hasta la vista completa en la red de 2012
       (RTT 200 ms, 1,5 Mbit/s)};
 
-\barraT{2.85}{3400}{1471}{50}{\textbf{REST}\\102 peticiones sobre
-  HTTP/1.1}{cRest}{4.921 ms}
-\barraT{1.95}{800}{1471}{50}{\textbf{REST}\\102 peticiones\\sobre
-  HTTP/2}{cRest}{2.321 ms}
+\barraT{2.85}{3400}{1471}{50}{\textbf{REST} sobre HTTP/1.1\\102
+  peticiones}{cRest}{4.921 ms}
+\barraT{1.95}{800}{1471}{50}{\textbf{REST} sobre HTTP/2\\102
+  peticiones}{cRest}{2.321 ms}
 \barraT{1.05}{200}{116}{50}{\textbf{BFF a medida}\\1 endpoint por
   pantalla}{cSoap}{366 ms}
 \barraT{0.15}{200}{116}{50}{\textbf{GraphQL}\\1 consulta}{cGql}{366 ms}
@@ -653,10 +659,10 @@ aísle lo que la arquitectura de la interfaz sí controla.
 % leyenda
 \fill[cRest] (0,-0.72) rectangle (0.42,-0.48);
 \node[right, font=\scriptsize] at (0.47,-0.60) {viajes de ida y vuelta};
-\fill[cRest!35] (4.3,-0.72) rectangle (4.72,-0.48);
-\node[right, font=\scriptsize] at (4.77,-0.60) {transferencia de los bytes};
-\fill[cGris!55] (8.9,-0.72) rectangle (9.32,-0.48);
-\node[right, font=\scriptsize] at (9.37,-0.60) {trabajo del servidor (50 ms)};
+\fill[cRest!35] (3.95,-0.72) rectangle (4.37,-0.48);
+\node[right, font=\scriptsize] at (4.42,-0.60) {transferencia de los bytes};
+\fill[cGris!55] (8.45,-0.72) rectangle (8.87,-0.48);
+\node[right, font=\scriptsize] at (8.92,-0.60) {trabajo del servidor (50 ms)};
 
 % ================= Panel B: sensibilidad al RTT =================
 \begin{scope}[yshift=-7.3cm]
@@ -774,6 +780,15 @@ valor de la tecnología no desaparece, se muda a otra figura de mérito. La de
 GraphQL se mudó del tiempo de respuesta al coste marginal de la vista número
 cincuenta.
 
+Conviene añadir que la literatura empírica no es unánime, y que eso encaja con
+el resultado de la sensibilidad en lugar de contradecirlo.
+\textcite{seabra2019} compararon servicios antes y después de migrarlos a
+GraphQL: hubo mejora en dos de cada tres casos, pero por encima de unas tres
+mil peticiones por prueba el servicio en GraphQL rindió \emph{por debajo} de su
+equivalente en REST. Es exactamente lo que predice la
+ecuación~\eqref{eq:fom} cuando el cuello de botella deja de estar en la red y
+pasa a estar en el servidor, y es el asunto de la sección siguiente.
+
 \section{Restricciones activas del diseño}
 \label{sec:restricciones}
 
@@ -806,9 +821,10 @@ y esa mitigación tiene un coste común.}
 & El cliente compone; el coste no se puede leer de la URL
 & La misma ruta puede costar 1 unidad o un millón. Escape halló problemas de
   consumo de recursos no restringido en el 69 \% de 160 endpoints públicos
+  analizados \parencite{escape2024}
 & Coste calculado por consulta: Shopify da 1.000 puntos por ventana y repone
-  entre 50 y 500 por segundo. Coste: la capacidad pasa a ser un problema de
-  esquema \\
+  entre 50 y 500 por segundo \parencite{shopifylimites}. Coste: la capacidad
+  pasa a ser un problema de esquema \\
 \addlinespace[2pt]
 \textbf{3. Sin caché HTTP intermedia}
 & POST a un único punto de entrada: ni CDN, ni proxy, ni caché del navegador
@@ -854,14 +870,14 @@ GraphQL no depende de la tecnología sino de si el equipo puso el DataLoader}.
 En REST ese error no se puede cometer, porque el endpoint se escribe entero a
 mano.
 
-\begin{figure}[p]
+\begin{figure}[!htb]
 \centering
 \begin{tikzpicture}
 
 % ================= Panel A: el N+1 de resolvedores =================
-\node[anchor=south west, font=\small\bfseries] at (-0.9,4.15)
+\node[anchor=south west, font=\small\bfseries] at (-0.9,5.02)
      {Panel A. La restricción activa de hoy};
-\node[anchor=south west, font=\scriptsize\itshape, text=cGris] at (-0.9,3.86)
+\node[anchor=south west, font=\scriptsize\itshape, text=cGris] at (-0.9,4.70)
      {accesos al almacén de datos};
 
 \foreach \v in {25,50,75,100} {
@@ -869,7 +885,7 @@ mano.
   \node[left, font=\scriptsize, text=cGris] at (-0.07,{\ny{\v}}) {\v};
 }
 \draw[cGris!70] (0,0) -- (6.45,0);
-\draw[cGris!70] (0,0) -- (0,3.70);
+\draw[cGris!70] (0,0) -- (0,4.55);
 \foreach \a in {20,40,60,80,100} {
   \draw[cGris!70] ({\nx{\a}},0) -- ({\nx{\a}},-0.09);
   \node[below, font=\scriptsize, text=cGris] at ({\nx{\a}},-0.09) {\a};
@@ -883,20 +899,20 @@ mano.
 
 \draw[cVerde, very thick] ({\nx{0}},{\ny{2}}) -- ({\nx{100}},{\ny{2}});
 \node[right, font=\scriptsize, text=cVerde, align=left]
-     at ({\nx{40}},{\ny{9}}) {con DataLoader: 2 accesos,\\constante en $n$};
+     at ({\nx{37}},{\ny{18}}) {con DataLoader: 2 accesos,\\constante en $n$};
 
 \draw[cGris!80, dashed] ({\nx{20}},0) -- ({\nx{20}},{\ny{21}});
 \fill[cAviso] ({\nx{20}},{\ny{21}}) circle (2.2pt);
 \fill[cVerde] ({\nx{20}},{\ny{2}}) circle (2.2pt);
-\draw[cGris!80, thin] ({\nx{19.6}},{\ny{56}}) -- ({\nx{20.6}},{\ny{25}});
+\draw[cGris!80, thin] ({\nx{28}},{\ny{74}}) -- ({\nx{20.7}},{\ny{25}});
 \node[right, font=\scriptsize, text=cGris, align=left, inner sep=3pt]
-     at ({\nx{18}},{\ny{62}}) {mi escenario:\\21 accesos\\frente a 2};
+     at ({\nx{5}},{\ny{84}}) {mi escenario:\\21 accesos\\frente a 2};
 
 % ================= Panel B: frente de Pareto =================
 \begin{scope}[xshift=9.3cm]
-\node[anchor=south west, font=\small\bfseries] at (-0.9,4.15)
+\node[anchor=south west, font=\small\bfseries] at (-0.9,5.02)
      {Panel B. Por qué las tres conviven};
-\node[anchor=south west, font=\scriptsize\itshape, text=cGris] at (-0.9,3.86)
+\node[anchor=south west, font=\scriptsize\itshape, text=cGris] at (-0.9,4.70)
      {coste de servidor y de gobernanza (índice propio)};
 
 \foreach \v in {25,50,75,100} {
@@ -904,7 +920,7 @@ mano.
   \node[left, font=\scriptsize, text=cGris] at (-0.07,{\fy{\v}}) {\v};
 }
 \draw[cGris!70] (0,0) -- (6.45,0);
-\draw[cGris!70] (0,0) -- (0,3.90);
+\draw[cGris!70] (0,0) -- (0,4.80);
 \foreach \a in {25,50,75,100} {
   \draw[cGris!70] ({\fx{\a}},0) -- ({\fx{\a}},-0.09);
   \node[below, font=\scriptsize, text=cGris] at ({\fx{\a}},-0.09) {\a};
@@ -921,7 +937,7 @@ mano.
 \draw[cVerde, very thick, dash pattern=on 5pt off 2pt]
   ({\fx{8}},{\fy{20}}) -- ({\fx{35}},{\fy{25}}) -- ({\fx{98}},{\fy{45}});
 \node[below right, font=\scriptsize\itshape, text=cVerde, align=left]
-     at ({\fx{57}},{\fy{31}}) {frente de Pareto};
+     at ({\fx{60}},{\fy{30}}) {frente de Pareto};
 
 \punto{4}{75}{cSoap}{SOAP y WS-$\ast$}{above right}
 \punto{8}{20}{cRest}{REST y JSON}{below right}
@@ -929,8 +945,10 @@ mano.
 \punto{95}{65}{cGris}{BFF a medida}{above left}
 \punto{98}{45}{cGql}{GraphQL}{above}
 
+\draw[cAviso!65, -{Stealth[length=3.5pt]}, thin]
+     ({\fx{44}},{\fy{52}}) -- ({\fx{47}},{\fy{40}});
 \node[font=\scriptsize\itshape, text=cAviso, align=center]
-     at ({\fx{55}},{\fy{41}}) {zona dominada};
+     at ({\fx{44}},{\fy{58}}) {zona dominada};
 \end{scope}
 
 \end{tikzpicture}
