@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Foro 2.1. Cuatrocientos choferes y un solo escenario: marco cuantitativo para evaluar el impacto de una adopción tecnológica</title>
+<style>
+  body { font-family: Georgia, "Times New Roman", serif; font-size: 16px;
+         line-height: 1.55; color: #1a1a1a; max-width: 780px;
+         margin: 2rem auto; padding: 0 1rem; }
+  h1 { font-size: 1.6em; line-height: 1.25; margin: 0 0 .2em; }
+  h2 { font-size: 1.25em; margin: 1.8em 0 .5em; }
+  h3 { font-size: 1.05em; margin: 1.4em 0 .4em; }
+  p  { margin: 0 0 .9em; }
+  ul, ol { margin: 0 0 .9em; padding-left: 1.5em; }
+  li { margin-bottom: .45em; }
+  img { max-width: 100%; height: auto; display: block; margin: .6em auto .3em; }
+  table { border-collapse: collapse; width: 100%; margin: .8em 0 1em;
+          font-size: .88em; }
+  th, td { border: 1px solid #b8b8b8; padding: 5px 8px; vertical-align: top;
+           text-align: left; }
+  th { background: #eae2d8; }
+  .sub { font-size: 1.05em; color: #444; margin: 0 0 1.6em; }
+  .cap { font-size: .82em; color: #555; line-height: 1.4; margin: 0 0 1.6em; }
+  .ref { font-size: .85em; line-height: 1.45; }
+  .ref p { margin: 0 0 .5em; padding-left: 1.6em; text-indent: -1.6em; }
+  .num { text-align: right; }
+  blockquote { margin: 1em 0 1.2em; padding: .1em 0 .1em 1.1em;
+               border-left: 3px solid #603e94; color: #262626; }
+  .eq { text-align: center; font-size: 1.05em; margin: .9em 0 1.1em; }
+</style>
+</head>
+<body>
+
+<h1>Cuatrocientos choferes y un solo escenario</h1>
+<p class="sub"><em>Marco cuantitativo para evaluar el impacto de adoptar una capa de agentes de inteligencia artificial sobre la arquitectura de un sistema de planificación logística</em><br>
+Carlos Luis Rojas Aragonés</p>
+
+<h2>1. El caso, en una ficha</h2>
+
+<p>La tecnología que analizo es una <strong>capa de agentes de inteligencia artificial</strong> integrada en el proceso de planificación semanal de una empresa de transporte de carga por carretera que opera en todo Estados Unidos con unos 400 choferes y sus equipos. El Cuadro 1 responde, en corto, a las preguntas del planteamiento; el resto del documento construye el marco que permite responderlas con números en lugar de con impresiones.</p>
+
+<table>
+  <caption style="caption-side: top; text-align: left; font-size: .88em; padding-bottom: .4em;"><strong>Cuadro 1.</strong> El caso, respondido en corto. Cada fila remite al apartado donde la respuesta se sostiene con el cálculo.</caption>
+  <tr><th style="width: 32%;">Pregunta</th><th>Respuesta</th></tr>
+  <tr><td>¿Qué tecnología nueva se integró?</td><td>Una capa de agentes de inteligencia artificial que compone y evalúa escenarios completos de horario semanal (apartado 5)</td></tr>
+  <tr><td>¿En qué sistema se integró?</td><td>En el proceso de planificación de una empresa de transporte de carga a todo Estados Unidos, unos 400 choferes con equipo, que necesitaba datos de cinco sistemas distintos para producir un solo horario</td></tr>
+  <tr><td>¿Cómo funcionaba la tecnología anterior?</td><td>Exportación manual de los cinco sistemas a una hoja de cálculo maestra y aplicación de reglas por parte de dos planificadores a tiempo completo: 48 horas de persona por escenario, un escenario por semana</td></tr>
+  <tr><td>¿Aportó valor añadido? ¿Por qué?</td><td>Sí, y el mecanismo es preciso: no calculó mejor, <em>calculó más veces</em>. Pasar de 1 a 120 escenarios por ciclo convierte un proceso de satisfacción en uno de optimización muestreada (apartado 4)</td></tr>
+  <tr><td>¿Cuál fue el coste de la adopción?</td><td>Unos $100.000 de implantación y $2.900 al mes de operación (apartado 6)</td></tr>
+  <tr><td>¿Cómo afectó al coste del producto final?</td><td>El precio al cliente no bajó. El coste por milla cargada cayó alrededor de un 0,26 por ciento, que sobre el margen operativo típico del sector supone del orden del 5 por ciento (apartado 6)</td></tr>
+</table>
+
+<h3>Lo que encontré, dicho por adelantado</h3>
+
+<blockquote>
+<p><strong>La tecnología no compró velocidad de cálculo: compró número de escenarios.</strong> El proceso anterior producía uno solo por ciclo porque un escenario costaba 48 horas de persona; la capa de agentes produce 120 en 40 minutos. Calibrando un modelo de estadísticos de orden sobre el ahorro observado, el escenario número veinte ya recoge el 73 por ciento del ahorro y el número ciento veinte aporta 1,56 dólares al día. <strong>Y el impacto sobre la arquitectura fue deliberadamente nulo</strong>: seis interfaces nuevas, ningún sistema de registro modificado y dos horas para volver atrás. Esa reversibilidad, y no la calidad del modelo, es lo que hizo defendible una inversión de 100.000 dólares.</p>
+</blockquote>
+
+<h3>Nota sobre las cifras</h3>
+
+<p>Distingo dos clases de número, porque mezclarlas es la forma más rápida de que un análisis de adopción parezca más sólido de lo que es. <strong>Anclas</strong> (experiencia directa en el proyecto): unos 400 choferes con equipo; dos planificadores a tiempo completo; ciclo de planificación semanal; <strong>260 días de operación al año</strong>, es decir cinco días por semana; ahorro reportado de al menos $1.000 por día trabajado; implantación en torno a $100.000; repago antes del primer año; recurso habitual a terceros para cubrir cargas.</p>
+
+<p><strong>Parámetros modelados</strong> (elaboración propia, declarados donde se usan): millas por chofer y semana, porcentaje de millas en vacío, cargas por semana, sobrecoste de ceder una carga, reparto del ahorro entre partidas, rampa de adopción, número de escenarios por ciclo y la dispersión &sigma; del coste de los planes. Los costes unitarios del sector vienen de fuentes públicas citadas.</p>
+
+<h2>2. Qué hay que medir, y por qué el ahorro no basta</h2>
+
+<p>El planteamiento pide un marco y un método para evaluar cuantitativamente el impacto de la adopción <em>sobre la arquitectura</em>, actual o futura, del producto. Esa precisión importa: la mayoría de las evaluaciones de adopción miden solo el retorno económico y tratan la arquitectura como un detalle de implantación. El informe de Challapally et al. (2025) sobre 300 iniciativas empresariales encuentra que el 95 por ciento de los pilotos de inteligencia artificial generativa no produce retorno medible, y atribuye el fallo no a la calidad de los modelos sino a la integración y al encaje en el flujo de trabajo. Es decir, al impacto arquitectónico.</p>
+
+<p>Por eso el método que propongo mide <strong>tres cosas y no una</strong>: la figura de mérito del proceso, la huella sobre la arquitectura y la sensibilidad de ambas a los supuestos. El Cuadro 2 lo resume en cinco pasos.</p>
+
+<table>
+  <caption style="caption-side: top; text-align: left; font-size: .88em; padding-bottom: .4em;"><strong>Cuadro 2.</strong> El método en cinco pasos. La columna de la derecha es lo que produjo cada paso en este caso concreto.</caption>
+  <tr><th style="width: 4%;"></th><th style="width: 26%;">Paso</th><th>Qué produce</th><th>Resultado en este caso</th></tr>
+  <tr><td>1</td><td>Declarar la función y la figura de mérito <em>del proceso</em>, no de la tecnología</td><td>Una ecuación de coste con unidades</td><td>Coste total del plan semanal, ecuación (1)</td></tr>
+  <tr><td>2</td><td>Medir la línea base con el sistema actual</td><td>Un número y su descomposición</td><td>$2,80 por milla cargada, un escenario por ciclo</td></tr>
+  <tr><td>3</td><td>Localizar la restricción activa</td><td>La variable cuya relajación mueve la figura de mérito</td><td>No era el cálculo ni los datos: era el número de escenarios que cabía en el ciclo</td></tr>
+  <tr><td>4</td><td>Situar la tecnología en la arquitectura y medir su huella</td><td>Superficie <em>S</em>, intrusión <em>P</em> y reversión <em>R</em></td><td><em>S</em> = 6 interfaces, <em>P</em> = 0 sistemas de registro, <em>R</em> = 2 horas</td></tr>
+  <tr><td>5</td><td>Calcular el impacto y su sensibilidad</td><td>&Delta;, repago y el diagrama de tornado</td><td>$1.282 por día trabajado, repago en 6,1 meses, y el supuesto que decide es la rampa de adopción</td></tr>
+</table>
+
+<h3>Las dos familias de métricas</h3>
+
+<p><strong>Figura de mérito del proceso.</strong> Siguiendo la disciplina de de Weck (2022), la declaro sobre la función prestada y no sobre la implementación. La función es convertir la demanda semanal de cargas en una asignación factible de choferes, equipos y citas que cumpla las reglas de horas de servicio y los compromisos con el cliente. El coste de un plan <em>P</em> es</p>
+
+<p class="eq"><em>C</em>(<em>P</em>) = <em>c</em><sub>m</sub> <em>M</em>(<em>P</em>) + <em>T</em>(<em>P</em>) + <em>D</em>(<em>P</em>) + <em>L</em> &nbsp;&nbsp;&nbsp;(1)</p>
+
+<p>donde <em>M</em>(<em>P</em>) son las millas totales del plan (cargadas más vacías), <em>c</em><sub>m</sub> el coste marginal por milla, <em>T</em>(<em>P</em>) el sobrecoste de las cargas que hay que ceder a terceros, <em>D</em>(<em>P</em>) el coste de detención y tiempo muerto y <em>L</em> el coste de planificar. El impacto de la adopción es &Delta; = <em>C</em>(<em>P</em><sub>base</sub>) &minus; <em>C</em>(<em>P</em><sub>agentes</sub>).</p>
+
+<p><strong>Impacto arquitectónico.</strong> Deliberadamente no lo colapso en un único índice, porque las tres dimensiones que importan no son conmensurables:</p>
+
+<ul>
+  <li><em>S</em>, <strong>superficie de integración</strong>: número de interfaces nuevas, contando por separado las de lectura y las de escritura.</li>
+  <li><em>P</em>, <strong>profundidad de la intrusión</strong>: número de sistemas de registro cuyo esquema o cuyo código hay que modificar. El valor que importa es si es cero o no lo es.</li>
+  <li><em>R</em>, <strong>tiempo de reversión</strong>: horas necesarias para volver al proceso anterior si la tecnología falla o el proveedor desaparece.</li>
+</ul>
+
+<p><em>R</em> es la métrica que casi nunca se escribe y la que más decide, porque fija cuánto riesgo se puede asumir y, por tanto, cuánto se puede invertir.</p>
+
+<h2>3. Pasos 1 y 2: la línea base</h2>
+
+<p>La empresa mueve del orden de 960.000 millas por semana (400 choferes a unas 2.400 millas cada uno). Tomo <em>c</em><sub>m</sub> = $2,34 por milla, que es el coste marginal medio del sector en 2025 según el American Transportation Research Institute (2026), y un 16,5 por ciento de millas en vacío, que es la referencia de las flotas de alquiler público para ese mismo año (FreightWaves, 2025). Con un recorrido cargado medio de 600 millas salen unas 1.340 cargas por semana, de las cuales unas 80 se cedían a terceros; el sobrecoste de cederlas es el margen bruto del corretaje, entre el 12 y el 20 por ciento del flete (Anderson Trucking Service, 2026), que sobre una carga típica deja unos $235.</p>
+
+<p>El coste de detención que uso, $63 por hora, está dentro del rango habitual del sector, cuya magnitud agregada documenta el American Transportation Research Institute (2024): 3.600 millones de dólares en gasto directo y 11.500 millones en productividad perdida solo en 2023.</p>
+
+<p>Las reglas que el plan no puede violar son las horas de servicio de la Federal Motor Carrier Safety Administration (2026): 11 horas de conducción tras 10 de descanso, dentro de una ventana de 14 horas, con un límite de 70 horas en 8 días. Son restricciones duras: ningún escenario que las incumpla es un escenario.</p>
+
+<p>Con esos parámetros, la línea base es un coste de millas de unos 117 millones de dólares al año y <strong>$2,80 por milla cargada</strong>. Y, sobre todo, un escenario por ciclo.</p>
+
+<p>Un apunte que decide el resto de la aritmética: <strong>la empresa opera 260 días al año</strong>, cinco por semana, de modo que ese es el denominador de toda anualización que sigue. Un ahorro diario se multiplica por 260 y no por 365, lo que recorta casi un 30 por ciento cualquier cifra anual frente a la tentación de anualizar sobre el calendario.</p>
+
+<h2>4. Paso 3: la restricción activa no era el cálculo</h2>
+
+<p>Este es el paso que cambia el análisis, y es donde el marco gana su sueldo.</p>
+
+<p>La lectura intuitiva de la adopción es que los agentes «calculan mejor». No es eso. Los dos planificadores aplicaban reglas correctas y conocían la operación mejor que cualquier modelo. Lo que no podían hacer era <em>repetir</em>: construir un escenario completo de 1.340 cargas les costaba unas 48 horas de persona, y la ventana entre que se cierra la demanda y hay que publicar el horario daba para uno. Cuando uno funcionaba, se quedaban con él. Eso es exactamente el comportamiento de satisfacción que describe Simon (1956): ante un entorno demasiado grande para explorarlo, el decisor no busca el óptimo, busca el primer resultado que supere el umbral de aceptabilidad.</p>
+
+<p><strong>La restricción activa, por tanto, era el coste humano por escenario.</strong> Y eso admite un modelo. Si el coste de un plan factible se distribuye alrededor de una media &mu; con dispersión &sigma;, y el sistema genera <em>N</em> planes y se queda con el mejor, el coste esperado del elegido es el mínimo de <em>N</em> extracciones. Por la teoría de estadísticos de orden (David y Nagaraja, 2003), el ahorro esperado frente a quedarse con una sola extracción es</p>
+
+<p class="eq"><em>a</em>(<em>N</em>) = &sigma; &middot; <em>E</em>[ max{<em>Z</em><sub>1</sub>, …, <em>Z</em><sub><em>N</em></sub>} ],&nbsp;&nbsp; <em>Z</em><sub><em>i</em></sub> ~ <em>N</em>(0, 1) &nbsp;&nbsp;&nbsp;(2)</p>
+
+<p>Calibro &sigma; con el único dato que tengo del sistema real: a <em>N</em> = 120 el ahorro observado es de $1.282 por día trabajado, y <em>E</em>[max] para <em>N</em> = 120 vale 2,57, de modo que &sigma; = $499 al día. El Panel A de la Figura 3 dibuja la curva resultante, y su forma es la conclusión más útil de todo el trabajo:</p>
+
+<ul>
+  <li><strong>El escenario veinte ya recoge el 73 por ciento del ahorro.</strong> Los cien siguientes aportan el 27 restante.</li>
+  <li>El escenario marginal vale $6,34 al día entre el 20 y el 50, $1,56 entre el 100 y el 120, y $0,61 más allá de 120.</li>
+  <li>A un coste de cómputo de $0,55 por escenario (los $1.430 al mes de inferencia repartidos entre 120 escenarios por ciclo y 21,7 ciclos al mes), el <strong>óptimo económico está en torno a los 300 escenarios por ciclo</strong>, no en 120. La diferencia son unos $53 al día, es decir $13.800 al año sobre los 260 días de operación, que es la recomendación concreta que sale de aplicar el marco.</li>
+</ul>
+
+<p>Esto reordena la pregunta de la adopción. La tecnología relevante no era «inteligencia artificial» como categoría: era <em>cualquier cosa que abaratase el escenario en tres órdenes de magnitud</em>. Los agentes lo consiguieron porque las reglas de la operación eran en buena parte tácitas y cambiantes, y expresarlas en lenguaje natural sobre datos ya existentes resultó más barato que formalizarlas en un modelo matemático, que es la alternativa que examino en el apartado siguiente.</p>
+
+<h2>5. Paso 4: dónde se inserta y qué toca de la arquitectura</h2>
+
+<p>La Figura 1 pone el antes y el después uno encima del otro. Lo importante no es lo que aparece en el Panel B, sino lo que <em>no</em> aparece: ninguna caja del Panel A cambia de forma.</p>
+
+<img src="figuras/figura-1.png" alt="Arquitectura antes y después de la adopción de la capa de agentes">
+<p class="cap"><strong>Figura 1.</strong> La adopción no tocó ningún sistema de registro. Los cinco orígenes de datos del Panel A son exactamente los mismos del Panel B y ninguno cambió de esquema: lo que se añadió fue una capa de lectura por delante y un único conector de escritura por detrás, después de que una persona apruebe el plan. Esa decisión de inserción es la que fija las tres métricas arquitectónicas del apartado 2, y es también la que explica por qué la reversión cuesta dos horas: apagar la capa devuelve el proceso a la hoja de cálculo sin migrar nada. Elaboración propia.</p>
+
+<p>Antes de construir nada se compararon cuatro maneras de relajar la restricción activa. El Cuadro 3 las pone con sus tres métricas arquitectónicas al lado del retorno, que es la comparación que el marco exige hacer y que casi nunca se hace.</p>
+
+<table>
+  <caption style="caption-side: top; text-align: left; font-size: .88em; padding-bottom: .4em;"><strong>Cuadro 3.</strong> Las cuatro opciones consideradas, con su huella arquitectónica junto al retorno. El ahorro es la estimación previa a la decisión, salvo la última fila, que es lo realizado. Elaboración propia.</caption>
+  <tr><th style="width: 20%;">Opción</th><th style="width: 7%;"><em>S</em></th><th style="width: 6%;"><em>P</em></th><th>Por qué se descartó o se eligió</th><th style="width: 14%;" class="num">Neto anual</th></tr>
+  <tr><td>Duplicar el equipo de planificación</td><td>0</td><td>0</td><td>Solo lleva <em>N</em> de 1 a 2 (dos personas más), y la ecuación (2) dice que el segundo escenario vale $282 al día, $73.000 al año, frente a $130.000 de coste</td><td class="num">&minus;$57.000</td></tr>
+  <tr><td>Módulo del proveedor del TMS</td><td>interno</td><td><strong>1</strong></td><td>Modifica un sistema de registro y solo ve los datos del propio TMS: ni horas de servicio ni mantenimiento. Reversión en semanas</td><td class="num">+$129.000</td></tr>
+  <tr><td>Solver matemático a medida</td><td>6</td><td>0</td><td>Exige formalizar todas las reglas, y buena parte son tácitas y cambian cada temporada. El coste no está en el solver sino en mantener el modelo</td><td class="num">+$147.000</td></tr>
+  <tr><td><strong>Capa de agentes</strong> <em>(elegida)</em></td><td>6</td><td><strong>0</strong></td><td>Única opción que deja los cinco sistemas de registro intactos y se apaga en dos horas. Acepta reglas en lenguaje natural, que es la forma en que la operación las tiene escritas. Se estimó en $199.000 (a $900 diarios) y rindió $298.000</td><td class="num"><strong>+$298.000</strong></td></tr>
+</table>
+
+<p>La comparación entre la tercera y la cuarta fila es la más instructiva. Sobre el papel, un modelo de optimización matemática domina a una capa de agentes: encuentra el óptimo, no una muestra. Pero la figura de mérito relevante no es la calidad del óptimo sobre las reglas formalizadas, sino sobre las reglas reales, y en esta operación una fracción grande de las reglas es tácita («a este cliente no se le manda un conductor nuevo») y cambia con la temporada. <strong>El solver optimiza mejor un problema que no es el problema.</strong> Esa es la razón técnica por la que ganó la capa de agentes, y no la novedad de la tecnología.</p>
+
+<h2>6. Paso 5: el impacto calculado</h2>
+
+<p>La Figura 2 descompone de dónde sale el ahorro y en qué se fue la inversión, y el Panel B de la Figura 3 dibuja el flujo de caja acumulado.</p>
+
+<img src="figuras/figura-2.png" alt="Descomposición del ahorro semanal y reparto de la inversión">
+<p class="cap"><strong>Figura 2.</strong> Panel A: las cuatro partidas del ahorro, por semana de operación de cinco días. El 86 por ciento del total está en decisiones de asignación (no ceder una carga, no rodar en vacío), que es precisamente lo que mejora al comparar más escenarios. Panel B: el reparto de los $100.000 de implantación. Menos de la mitad del dinero se fue en la parte propiamente de inteligencia artificial; el resto fue integración, interfaz y puesta en marcha, que es el reparto que Challapally et al. (2025) señala como el que separa los pilotos que rinden de los que no. Elaboración propia sobre los parámetros del apartado 3.</p>
+
+<img src="figuras/figura-3.png" alt="Rendimiento del escenario marginal y flujo de caja acumulado">
+<p class="cap"><strong>Figura 3.</strong> Panel A: la ecuación (2) calibrada con &sigma; = $499 por día trabajado sobre el único punto observado, <em>N</em> = 120. La curva de coste supone $0,55 por escenario evaluado. El cruce de las pendientes sitúa el óptimo económico alrededor de 300 escenarios, y el máximo es plano entre 200 y 400, de modo que la recomendación es robusta aunque el valor exacto no lo sea. Panel B: flujo de caja acumulado, con el ahorro anualizado sobre 260 días de operación y una rampa de adopción del 20, 45, 70, 85 y 95 por ciento en los cinco primeros meses. Elaboración propia.</p>
+
+<p>El resultado: <strong>$6.408 de ahorro por semana de operación</strong>, es decir $1.282 por día trabajado y $333.216 al año sobre los 260 días que la empresa opera, contra $34.800 anuales de coste recurrente. El neto es de <strong>$298.416 al año</strong> sobre una inversión de $100.000, con repago en <strong>6,1 meses</strong> y un saldo acumulado de $147.000 al cierre del primer año.</p>
+
+<p>Ese repago coincide con lo que recuerdo haber reportado en su momento, «antes del primer año», pero el margen es menos cómodo de lo que parece. El apartado siguiente lo cuantifica: con una rampa de adopción lenta el repago se va a 8,2 meses, y con un ahorro un 40 por ciento inferior al modelado, a 9,5. El calendario de un año deja de ser holgura y pasa a ser límite.</p>
+
+<h3>Y el coste del producto final</h3>
+
+<p>Aquí la respuesta honesta es menos espectacular que la cifra de ahorro. <strong>El precio al cliente no bajó.</strong> Lo que ocurrió fue que se dejó de pagar el margen del intermediario en casi una cuarta parte de las cargas que antes se cedían, y ese dinero se quedó dentro. Sobre un coste operativo del orden de 117 millones de dólares al año, $298.000 son un <strong>0,26 por ciento</strong> del coste unitario: el coste por milla cargada pasa de unos $2,802 a unos $2,795. Parece poco, y como reducción de coste lo es. Pero el margen operativo de un transportista de carga completa está en el entorno del 4 al 5 por ciento y sigue comprimido (American Transportation Research Institute, 2026), de modo que esos 0,26 puntos de coste equivalen a algo del orden del <strong>5 por ciento del beneficio operativo</strong>. Esa es la magnitud correcta con la que presentar la adopción, y no el porcentaje sobre el coste.</p>
+
+<h2>7. La sensibilidad: qué supuesto decide el resultado</h2>
+
+<p>Un marco que da un número sin decir de qué depende no sirve para decidir. El Panel A de la Figura 4 repite el cálculo del repago moviendo cada supuesto por separado.</p>
+
+<img src="figuras/figura-4.png" alt="Diagrama de tornado del repago y mapa de retorno frente a reversibilidad">
+<p class="cap"><strong>Figura 4.</strong> Panel A: diagrama de tornado del repago. La barra más corta es la que casi todo el mundo discute primero, el coste recurrente de los modelos, y la segunda más larga es la que casi nadie presupuesta, la velocidad con que la organización adopta la herramienta. Panel B: las cuatro opciones del Cuadro 3 situadas frente a las dos dimensiones que deciden. El eje horizontal es el tiempo de reversión, y en él contratar personas resulta <em>menos</em> reversible que encender un servicio. La flecha une la estimación previa con el resultado realizado. Elaboración propia.</p>
+
+<p>Tres lecturas, por orden de utilidad:</p>
+
+<ol>
+  <li><strong>El coste recurrente de la inteligencia artificial es la variable menos importante de todas.</strong> Moverlo un 40 por ciento arriba o abajo cambia el repago en tres décimas de mes. Es, sin embargo, la primera pregunta que aparece en cualquier comité, y conviene poder contestarla con este gráfico en lugar de con una opinión.</li>
+  <li><strong>La segunda variable más decisiva es organizativa, no técnica.</strong> La velocidad de la rampa de adopción mueve el repago entre 4,9 y 8,2 meses, casi tanto como el ahorro mismo. Dicho de otro modo: el dinero que hay que gastar al margen del software es el de formación, confianza y acompañamiento del planificador, y ese gasto compite en importancia con el propio sistema.</li>
+  <li><strong>Recortar escenarios sigue siendo la segunda palanca más floja.</strong> Bajar de 120 a 20 por ciclo, que es una reducción de seis veces en cómputo, empeora el repago de 6,1 a 8,0 meses: cuesta, pero menos que cualquier otra cosa salvo el precio de los modelos. Es la otra cara de la curva del Panel A de la Figura 3, y el sitio donde recortar duele menos si hiciera falta abaratar la operación de golpe.</li>
+</ol>
+
+<h2>8. Las restricciones activas después de la adopción</h2>
+
+<p>Como en cualquier sistema, relajar la restricción dominante no elimina el problema: lo traslada. El Cuadro 4 recoge dónde está ahora el límite, ordenado por cuánto pesa hoy.</p>
+
+<table>
+  <caption style="caption-side: top; text-align: left; font-size: .88em; padding-bottom: .4em;"><strong>Cuadro 4.</strong> Las restricciones activas después de la adopción, ordenadas por cuánto limitan hoy la figura de mérito. Elaboración propia.</caption>
+  <tr><th style="width: 22%;">Restricción activa</th><th>Qué límite impone</th><th>Mitigación y su coste</th></tr>
+  <tr><td><strong>1. Tasa de aceptación del planificador</strong></td><td>El sistema propone y una persona aprueba, de modo que el ahorro real es el ahorro teórico multiplicado por la fracción de planes aceptados. Es el techo efectivo de toda la adopción</td><td>Explicar cada decisión y dejar editar el plan. Coste: parte del ahorro se pierde en cada edición manual</td></tr>
+  <tr><td><strong>2. Calidad y latencia de los datos de origen</strong></td><td>Un escenario no puede ser mejor que los datos que lo alimentan, y el ELD y el TMS no siempre coinciden en dónde está un equipo</td><td>Reconciliación y reglas de precedencia entre fuentes. Coste: trabajo continuo, no un proyecto</td></tr>
+  <tr><td><strong>3. Reglas tácitas no capturadas</strong></td><td>Lo que nadie escribió nunca no entra en la función objetivo, y reaparece como una edición manual del plan</td><td>Realimentar las ediciones al sistema. Coste: exige registrar el porqué de cada edición, que es disciplina, no tecnología</td></tr>
+  <tr><td><strong>4. Escenarios por ciclo</strong></td><td>Hoy limita poco: pasar de 120 a 300 valdría unos $13.800 al año, un 5 por ciento del neto</td><td>Más cómputo. Coste: lineal en el número de escenarios y, por tanto, fácilmente ajustable</td></tr>
+  <tr><td><strong>5. Dependencia del proveedor</strong></td><td>Riesgo de precio y de continuidad sobre una pieza que no se controla</td><td>Las tres métricas del apartado 2: con <em>P</em> = 0 y <em>R</em> = 2 horas, el riesgo está acotado por construcción</td></tr>
+</table>
+
+<p>Merece la pena subrayar la primera, porque es la que más se parece a lo que Challapally et al. (2025) describe. El límite del sistema no lo pone el modelo: lo pone cuánto se fía de él la persona que firma el horario. Y la única palanca sobre esa variable es la que aparece en el Panel A de la Figura 4 como «rampa de adopción».</p>
+
+<h2>9. Lo que me llevo del ejercicio</h2>
+
+<ol>
+  <li><strong>La pregunta correcta no es qué tecnología adoptar sino qué restricción está activa.</strong> Aquí no lo estaba la calidad de las decisiones, sino el número de veces que se podían tomar. Cualquier tecnología que abaratase el escenario habría servido; los agentes ganaron porque las reglas estaban en prosa y no en ecuaciones.</li>
+  <li><strong>El impacto arquitectónico se puede medir antes de construir</strong>, y con tres números que caben en una línea: <em>S</em> = 6, <em>P</em> = 0, <em>R</em> = 2 horas. Esos tres números son lo que hizo que una inversión de $100.000 fuera una decisión pequeña y no una apuesta.</li>
+  <li><strong>Los rendimientos decrecientes llegan antes de lo que parece.</strong> El 73 por ciento del ahorro está en los primeros veinte escenarios. Un planteamiento que hubiera exigido un despliegue diez veces mayor para empezar habría destruido el caso de negocio sin mejorar el resultado.</li>
+  <li><strong>La variable que hay que presupuestar y casi nunca se presupuesta es la rampa de adopción</strong>, que en el tornado pesa casi tanto como el ahorro y mucho más que el coste de los modelos.</li>
+</ol>
+
+<h2>10. Limitaciones</h2>
+
+<ol>
+  <li><strong>Solo tengo siete anclas reales</strong> y todo lo demás está modelado. Los parámetros de operación (millas, cargas, porcentaje de vacío, reparto del ahorro) son estimaciones propias calibradas con costes unitarios públicos, no mediciones de la empresa.</li>
+  <li><strong>La ecuación (2) supone que los costes de los planes son extracciones independientes de una normal</strong>, y no lo son: los agentes exploran de forma dirigida, no aleatoria, y los planes comparten estructura. El modelo capta bien la <em>forma</em> de los rendimientos decrecientes y mal el valor absoluto de cada punto.</li>
+  <li><strong>&sigma; está calibrada sobre un único punto observado</strong>, el ahorro a <em>N</em> = 120. Con un solo punto, la curva completa depende enteramente de la forma funcional supuesta.</li>
+  <li><strong>El óptimo de 300 escenarios es una extrapolación</strong> más allá del rango observado, y es la afirmación más frágil del documento. Lo que sí sostiene la curva es que 120 no es un número especial y que conviene medirlo.</li>
+  <li><strong>La rampa de adopción es inventada.</strong> Elegí 20, 45, 70, 85 y 95 por ciento porque es una progresión razonable, no porque la midiera. El tornado muestra que es el segundo supuesto más decisivo, de modo que es también la limitación más costosa de las de esta lista.</li>
+  <li><strong>Tres de las cuatro opciones del Cuadro 3 nunca se construyeron</strong>, de modo que sus cifras son estimaciones previas a la decisión que jamás se contrastaron: son comparables entre sí por método, no por evidencia. Por eso el eje vertical del Panel B de la Figura 4 mezcla un valor realizado con cuatro estimados, y la figura afirma la posición relativa de las opciones, no sus coordenadas.</li>
+  <li><strong>No cuento el coste de las dos personas como ahorro.</strong> Los planificadores siguieron en la empresa, dedicados a excepciones y a relación con clientes. Contarlos habría añadido unos $130.000 al año y habría hecho el caso artificialmente mejor.</li>
+</ol>
+
+<h2>Referencias</h2>
+
+<div class="ref">
+<p>American Transportation Research Institute. (2024, septiembre). <em>Costs and consequences of truck driver detention</em>. https://truckingresearch.org/2024/09/new-research-documents-substantial-financial-and-safety-impacts-from-truck-driver-detention/</p>
+<p>American Transportation Research Institute. (2026, julio). <em>An analysis of the operational costs of trucking: 2026 update</em>. https://truckingresearch.org/2026/07/new-atri-report-details-accelerating-costs-and-low-profitability-despite-cuts/</p>
+<p>Anderson Trucking Service. (2026). <em>How freight brokerages make money, explained</em>. https://www.atsinc.com/blog/how-freight-brokerages-make-money-explained</p>
+<p>Challapally, A., Pease, C., Raskar, R., &amp; Chari, P. (2025, julio). <em>The GenAI divide: State of AI in business 2025</em>. MIT Project NANDA. https://mlq.ai/media/quarterly_decks/v0.1_State_of_AI_in_Business_2025_Report.pdf</p>
+<p>David, H. A., &amp; Nagaraja, H. N. (2003). <em>Order statistics</em> (3.ª ed.). Wiley. https://doi.org/10.1002/0471722162</p>
+<p>de Weck, O. L. (2022). <em>Technology roadmapping and development: A quantitative approach to the management of technology</em>. Springer. https://doi.org/10.1007/978-3-030-88346-1</p>
+<p>Federal Motor Carrier Safety Administration. (2026). <em>Hours of service of drivers</em>. U.S. Department of Transportation. https://www.fmcsa.dot.gov/regulations/hours-of-service</p>
+<p>FreightWaves. (2025). <em>What you need to know about empty miles in trucking</em>. https://www.freightwaves.com/news/what-you-need-to-know-about-empty-miles-in-trucking</p>
+<p>Simon, H. A. (1956). Rational choice and the structure of the environment. <em>Psychological Review, 63</em>(2), 129–138. https://doi.org/10.1037/h0042769</p>
+</div>
+
+</body>
+</html>

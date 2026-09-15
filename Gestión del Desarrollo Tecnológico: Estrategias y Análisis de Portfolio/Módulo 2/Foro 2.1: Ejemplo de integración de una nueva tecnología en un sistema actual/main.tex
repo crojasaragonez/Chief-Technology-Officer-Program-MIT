@@ -1,0 +1,952 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage[version=4]{mhchem}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,backgrounds,patterns,decorations.pathreplacing}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.3cm}
+% Los rótulos de las figuras usan nodos de ancho fijo con texto alineado, y la
+% bibliografía compone en modo sloppy: ambos generan avisos de línea holgada
+% que son cosméticos. Se silencian para que `make check` siga siendo sensible
+% a los desbordes reales.
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.42em}
+\setlist{nosep}
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.06}
+\renewcommand{\floatpagefraction}{0.72}
+\setcounter{topnumber}{2}
+\setcounter{totalnumber}{3}
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy\small}
+\setlength{\bibitemsep}{0.28em}
+\setlength{\bibhang}{1.4em}
+
+\sisetup{
+  output-decimal-marker = {,},
+  group-separator = {.},
+  group-minimum-digits = 4,
+  detect-all
+}
+
+% Colores: el gris de los sistemas de registro, el ámbar del proceso manual,
+% el violeta de la capa de agentes, el azul del dinero, el verde de la mejora
+% y el rojo del aviso.
+\definecolor{cFuente}{RGB}{104,110,126}
+\definecolor{cManual}{RGB}{166,92,34}
+\definecolor{cAgente}{RGB}{96,62,148}
+\definecolor{cDato}{RGB}{36,102,148}
+\definecolor{cVerde}{RGB}{56,120,86}
+\definecolor{cGris}{RGB}{132,124,112}
+\definecolor{cAviso}{RGB}{176,42,42}
+\definecolor{cRef}{RGB}{70,90,112}
+
+% --- Figura 1: cajas y flechas de la arquitectura ---------------------------
+% #1 identificador, #2 x, #3 y, #4 ancho, #5 color, #6 texto
+\newcommand{\caja}[6]{%
+  \node[draw=#5, fill=#5!8, rounded corners=2pt, text width=#4, align=center,
+        font=\scriptsize, inner sep=2pt, minimum height=0.42cm] (#1) at (#2,#3)
+       {#6};%
+}
+% #1 origen, #2 destino, #3 color
+\newcommand{\flecha}[3]{%
+  \draw[#3, -{Stealth[length=4pt]}, thin] (#1) -- (#2);%
+}
+
+% --- Figura 2: barras de ahorro y de inversión ------------------------------
+\newcommand{\ax}[1]{(#1)*0.00215}
+\newcommand{\bx}[1]{(#1)*0.193}   % el valor se pasa en miles de dólares
+% #1 y, #2 valor, #3 color, #4 rótulo izquierdo, #5 rótulo derecho
+\newcommand{\barraA}[5]{%
+  \node[left, text width=4.7cm, align=right, font=\scriptsize] at (-0.12,#1)
+       {#4};%
+  \fill[#3] (0,#1-0.20) rectangle ({\ax{#2}},#1+0.20);%
+  \node[right, font=\scriptsize\bfseries, text=#3] at ({\ax{#2}+0.12},#1) {#5};%
+}
+\newcommand{\barraB}[5]{%
+  \node[left, text width=4.7cm, align=right, font=\scriptsize] at (-0.12,#1)
+       {#4};%
+  \fill[#3] (0,#1-0.20) rectangle ({\bx{#2}},#1+0.20);%
+  \node[right, font=\scriptsize\bfseries, text=#3] at ({\bx{#2}+0.12},#1) {#5};%
+}
+
+% --- Figura 3: escenarios marginales y flujo de caja ------------------------
+\newcommand{\sx}[1]{log10(#1)*1.950}
+\newcommand{\sy}[1]{(#1)*0.00250}
+\newcommand{\cxm}[1]{(#1)*0.470}
+\newcommand{\cym}[1]{(#1)*0.0165} % el valor se pasa en miles de dólares
+
+% --- Figura 4: tornado de sensibilidad y mapa arquitectónico ----------------
+\newcommand{\mx}[1]{((#1)-4.0)*1.80}
+% #1 y, #2 extremo bajo, #3 extremo alto, #4 rótulo, #5 texto del rango
+\newcommand{\barraT}[5]{%
+  \node[left, text width=3.35cm, align=right, font=\scriptsize] at (-0.12,#1)
+       {#4};%
+  \fill[cDato!75] ({\mx{#2}},#1-0.20) rectangle ({\mx{#3}},#1+0.20);%
+  \node[right, font=\scriptsize, text=cDato] at ({\mx{#3}+0.12},#1) {#5};%
+}
+\newcommand{\rx}[1]{log10(#1)*1.950}
+\newcommand{\ry}[1]{((#1)+80)*0.0108}
+% #1 x, #2 y, #3 color, #4 etiqueta, #5 posición
+\newcommand{\puntoM}[5]{%
+  \fill[#3] ({\rx{#1}},{\ry{#2}}) circle (2.6pt);%
+  \node[#5, font=\scriptsize, text=#3, inner sep=3pt, align=center]
+       at ({\rx{#1}},{\ry{#2}}) {#4};%
+}
+
+\title{\vspace{-1.2cm}\textbf{Cuatrocientos choferes y un solo escenario}\\
+\large Marco cuantitativo para evaluar el impacto de adoptar una capa de
+agentes de inteligencia artificial sobre la arquitectura de un sistema de
+planificación logística}
+\author{Carlos Luis Rojas Aragonés\\
+\small Gestión del Desarrollo Tecnológico: Estrategias y Análisis de Portfolio}
+\date{\small 15 de septiembre de 2026}
+
+\begin{document}
+
+\maketitle
+\vspace{-0.8em}
+
+\section{El caso, en una ficha}
+
+La tecnología que analizo es una \textbf{capa de agentes de inteligencia
+artificial} integrada en el proceso de planificación semanal de una empresa de
+transporte de carga por carretera que opera en todo Estados Unidos con unos
+400 choferes y sus equipos. El Cuadro~\ref{cuadro:ficha} responde, en corto, a
+las preguntas del planteamiento; el resto del documento construye el marco que
+permite responderlas con números en lugar de con impresiones.
+
+\begin{table}[b]
+\small
+\caption{El caso, respondido en corto. Cada fila remite al apartado donde la
+respuesta se sostiene con el cálculo.}
+\label{cuadro:ficha}
+\begin{tabularx}{\textwidth}{@{}p{5.1cm}X@{}}
+\toprule
+\textbf{Pregunta} & \textbf{Respuesta} \\
+\midrule
+¿Qué tecnología nueva se integró?
+& Una capa de agentes de inteligencia artificial que compone y evalúa
+  escenarios completos de horario semanal (apartado~\ref{sec:arquitectura}) \\
+\addlinespace[2pt]
+¿En qué sistema se integró?
+& En el proceso de planificación de una empresa de transporte de carga a todo
+  Estados Unidos, unos 400 choferes con equipo, que necesitaba datos de cinco
+  sistemas distintos para producir un solo horario \\
+\addlinespace[2pt]
+¿Cómo funcionaba la tecnología anterior?
+& Exportación manual de los cinco sistemas a una hoja de cálculo maestra y
+  aplicación de reglas por parte de dos planificadores a tiempo completo:
+  48 horas de persona por escenario, un escenario por semana \\
+\addlinespace[2pt]
+¿Aportó valor añadido? ¿Por qué?
+& Sí, y el mecanismo es preciso: no calculó mejor, \emph{calculó más veces}.
+  Pasar de 1 a 120 escenarios por ciclo convierte un proceso de satisfacción
+  en uno de optimización muestreada (apartado~\ref{sec:restriccion}) \\
+\addlinespace[2pt]
+¿Cuál fue el coste de la adopción?
+& Unos \$100.000 de implantación y \$2.900 al mes de operación
+  (apartado~\ref{sec:impacto}) \\
+\addlinespace[2pt]
+¿Cómo afectó al coste del producto final?
+& El precio al cliente no bajó. El coste por milla cargada cayó alrededor de
+  un 0,26 por ciento, que sobre el margen operativo típico del sector supone
+  del orden del 5 por ciento (apartado~\ref{sec:impacto}) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection*{Lo que encontré, dicho por adelantado}
+
+\begin{quote}
+\textbf{La tecnología no compró velocidad de cálculo: compró número de
+escenarios.} El proceso anterior producía uno solo por ciclo porque un
+escenario costaba 48 horas de persona; la capa de agentes produce 120 en 40
+minutos. Calibrando un modelo de estadísticos de orden sobre el ahorro
+observado, el escenario número veinte ya recoge el 73 por ciento del ahorro y
+el número ciento veinte aporta 1,56 dólares al día. \textbf{Y el impacto sobre
+la arquitectura fue deliberadamente nulo}: seis interfaces nuevas, ningún
+sistema de registro modificado y dos horas para volver atrás. Esa
+reversibilidad, y no la calidad del modelo, es lo que hizo defendible una
+inversión de 100.000 dólares.
+\end{quote}
+
+\subsection*{Nota sobre las cifras}
+
+Distingo dos clases de número, porque mezclarlas es la forma más rápida de que
+un análisis de adopción parezca más sólido de lo que es. \textbf{Anclas} (experiencia directa en el proyecto): unos 400 choferes con
+equipo; dos planificadores a tiempo completo; ciclo de planificación semanal;
+\textbf{260 días de operación al año}, es decir cinco días por semana; ahorro
+reportado de al menos \$1.000 por día trabajado; implantación en torno a
+\$100.000; repago antes del primer año; recurso habitual a terceros para
+cubrir cargas.
+
+\textbf{Parámetros modelados} (elaboración propia, declarados donde se usan):
+millas por chofer y semana, porcentaje de millas en vacío, cargas por semana,
+sobrecoste de ceder una carga, reparto del ahorro entre partidas, rampa de
+adopción, número de escenarios por ciclo y la dispersión $\sigma$ del coste de
+los planes. Los costes unitarios del sector vienen de fuentes públicas
+citadas.
+
+\section{Qué hay que medir, y por qué el ahorro no basta}
+
+El planteamiento pide un marco y un método para evaluar cuantitativamente el
+impacto de la adopción \emph{sobre la arquitectura}, actual o futura, del
+producto. Esa precisión importa: la mayoría de las evaluaciones de adopción
+miden solo el retorno económico y tratan la arquitectura como un detalle de
+implantación. El informe de \textcite{nanda2025} sobre 300 iniciativas
+empresariales encuentra que el 95 por ciento de los pilotos de inteligencia
+artificial generativa no produce retorno medible, y atribuye el fallo no a la
+calidad de los modelos sino a la integración y al encaje en el flujo de
+trabajo. Es decir, al impacto arquitectónico.
+
+Por eso el método que propongo mide \textbf{tres cosas y no una}: la figura de
+mérito del proceso, la huella sobre la arquitectura y la sensibilidad de ambas
+a los supuestos. El Cuadro~\ref{cuadro:metodo} lo resume en cinco pasos.
+
+\begin{table}[t]
+\small
+\caption{El método en cinco pasos. La columna de la derecha es lo que produjo
+cada paso en este caso concreto.}
+\label{cuadro:metodo}
+\begin{tabularx}{\textwidth}{@{}p{0.45cm}p{3.9cm}XX@{}}
+\toprule
+& \textbf{Paso} & \textbf{Qué produce} & \textbf{Resultado en este caso} \\
+\midrule
+1 & Declarar la función y la figura de mérito \emph{del proceso}, no de la
+    tecnología
+  & Una ecuación de coste con unidades
+  & Coste total del plan semanal, ecuación~\eqref{eq:fom} \\
+\addlinespace[2pt]
+2 & Medir la línea base con el sistema actual
+  & Un número y su descomposición
+  & \$2,80 por milla cargada, un escenario por ciclo \\
+\addlinespace[2pt]
+3 & Localizar la restricción activa
+  & La variable cuya relajación mueve la figura de mérito
+  & No era el cálculo ni los datos: era el número de escenarios que cabía en
+    el ciclo \\
+\addlinespace[2pt]
+4 & Situar la tecnología en la arquitectura y medir su huella
+  & Superficie $S$, intrusión $P$ y reversión $R$
+  & $S = 6$ interfaces, $P = 0$ sistemas de registro, $R = 2$ horas \\
+\addlinespace[2pt]
+5 & Calcular el impacto y su sensibilidad
+  & $\Delta$, repago y el diagrama de tornado
+  & \$1.282 por día trabajado, repago en 6,1 meses, y el supuesto que decide es
+    la rampa de adopción \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection*{Las dos familias de métricas}
+
+\textbf{Figura de mérito del proceso.} Siguiendo la disciplina de
+\textcite{deweck2022}, la declaro sobre la función prestada y no sobre la
+implementación. La función es convertir la demanda semanal de cargas en una
+asignación factible de choferes, equipos y citas que cumpla las reglas de
+horas de servicio y los compromisos con el cliente. El coste de un plan $P$ es
+
+\begin{equation}
+C(P) \;=\; c_{m}\, M(P) \;+\; T(P) \;+\; D(P) \;+\; L
+\label{eq:fom}
+\end{equation}
+
+donde $M(P)$ son las millas totales del plan (cargadas más vacías), $c_{m}$ el
+coste marginal por milla, $T(P)$ el sobrecoste de las cargas que hay que ceder
+a terceros, $D(P)$ el coste de detención y tiempo muerto y $L$ el coste de
+planificar. El impacto de la adopción es
+$\Delta = C(P_{\text{base}}) - C(P_{\text{agentes}})$.
+
+\textbf{Impacto arquitectónico.} Deliberadamente no lo colapso en un único
+índice, porque las tres dimensiones que importan no son conmensurables:
+
+\begin{itemize}
+\item $S$, \textbf{superficie de integración}: número de interfaces nuevas,
+  contando por separado las de lectura y las de escritura.
+\item $P$, \textbf{profundidad de la intrusión}: número de sistemas de
+  registro cuyo esquema o cuyo código hay que modificar. El valor que importa
+  es si es cero o no lo es.
+\item $R$, \textbf{tiempo de reversión}: horas necesarias para volver al
+  proceso anterior si la tecnología falla o el proveedor desaparece.
+\end{itemize}
+
+$R$ es la métrica que casi nunca se escribe y la que más decide, porque fija
+cuánto riesgo se puede asumir y, por tanto, cuánto se puede invertir.
+
+\section{Pasos 1 y 2: la línea base}
+
+La empresa mueve del orden de 960.000 millas por semana (400 choferes a unas
+2.400 millas cada uno). Tomo $c_{m} = \$2{,}34$ por milla, que es el coste
+marginal medio del sector en 2025 según \textcite{atri2026}, y un 16,5 por
+ciento de millas en vacío, que es la referencia de las flotas de alquiler
+público para ese mismo año \parencite{freightwaves2025vacio}. Con un recorrido
+cargado medio de 600 millas salen unas 1.340 cargas por semana, de las cuales
+unas 80 se cedían a terceros; el sobrecoste de cederlas es el margen bruto del
+corretaje, entre el 12 y el 20 por ciento del flete
+\parencite{ats2026corretaje}, que sobre una carga típica deja unos \$235.
+
+El coste de detención que uso, \$63 por hora, está dentro del rango
+habitual del sector, cuya magnitud agregada documenta
+\textcite{atridetencion2024}: 3.600 millones de dólares en gasto directo y
+11.500 millones en productividad perdida solo en 2023.
+
+Las reglas que el plan no puede violar son las horas de servicio de la
+\textcite{fmcsahos}: 11 horas de conducción tras 10 de descanso, dentro de una
+ventana de 14 horas, con un límite de 70 horas en 8 días. Son restricciones
+duras: ningún escenario que las incumpla es un escenario.
+
+Con esos parámetros, la línea base es un coste de millas de unos 117 millones
+de dólares al año y \textbf{\$2,80 por milla cargada}. Y, sobre todo, un
+escenario por ciclo.
+
+Un apunte que decide el resto de la aritmética: \textbf{la empresa opera 260
+días al año}, cinco por semana, de modo que ese es el denominador de toda
+anualización que sigue. Un ahorro diario se multiplica por 260 y no por 365,
+lo que recorta casi un 30 por ciento cualquier cifra anual frente a la
+tentación de anualizar sobre el calendario.
+
+\section{Paso 3: la restricción activa no era el cálculo}
+\label{sec:restriccion}
+
+Este es el paso que cambia el análisis, y es donde el marco gana su sueldo.
+
+La lectura intuitiva de la adopción es que los agentes \enquote{calculan
+mejor}. No es eso. Los dos planificadores aplicaban reglas correctas y
+conocían la operación mejor que cualquier modelo. Lo que no podían hacer era
+\emph{repetir}: construir un escenario completo de 1.340 cargas les costaba
+unas 48 horas de persona, y la ventana entre que se cierra la demanda y hay
+que publicar el horario daba para uno. Cuando uno funcionaba, se quedaban con
+él. Eso es exactamente el comportamiento de satisfacción que describe
+\textcite{simon1956}: ante un entorno demasiado grande para explorarlo, el
+decisor no busca el óptimo, busca el primer resultado que supere el umbral de
+aceptabilidad.
+
+\textbf{La restricción activa, por tanto, era el coste humano por escenario.}
+Y eso admite un modelo. Si el coste de un plan factible se distribuye
+alrededor de una media $\mu$ con dispersión $\sigma$, y el sistema genera $N$
+planes y se queda con el mejor, el coste esperado del elegido es el mínimo de
+$N$ extracciones. Por la teoría de estadísticos de orden
+\parencite{david2003}, el ahorro esperado frente a quedarse con una sola
+extracción es
+
+\begin{equation}
+a(N) \;=\; \sigma \cdot E\!\left[\max\{Z_{1},\dots,Z_{N}\}\right],
+\qquad Z_{i} \sim \mathcal{N}(0,1)
+\label{eq:orden}
+\end{equation}
+
+Calibro $\sigma$ con el único dato que tengo del sistema real: a $N = 120$ el
+ahorro observado es de \$1.282 por día trabajado, y $E[\max]$ para $N = 120$
+vale 2,57, de modo que $\sigma = \$499$ al día. El Panel A de la
+Figura~\ref{fig:escenarios} dibuja la curva resultante, y su forma es la
+conclusión más útil de todo el trabajo:
+
+\begin{itemize}
+\item \textbf{El escenario veinte ya recoge el 73 por ciento del ahorro.} Los
+  cien siguientes aportan el 27 restante.
+\item El escenario marginal vale \$6,34 al día entre el 20 y el 50, \$1,56
+  entre el 100 y el 120, y \$0,61 más allá de 120.
+\item A un coste de cómputo de \$0,55 por escenario (los \$1.430 al mes de
+  inferencia repartidos entre 120 escenarios por ciclo y 21,7 ciclos al mes),
+  el \textbf{óptimo
+  económico está en torno a los 300 escenarios por ciclo}, no en 120. La
+  diferencia son unos \$53 al día, es decir \$13.800 al año sobre los 260 días
+  de operación, que es la recomendación concreta que sale de aplicar el marco.
+\end{itemize}
+
+Esto reordena la pregunta de la adopción. La tecnología relevante no era
+\enquote{inteligencia artificial} como categoría: era \emph{cualquier cosa que
+abaratase el escenario en tres órdenes de magnitud}. Los agentes lo
+consiguieron porque las reglas de la operación eran en buena parte tácitas y
+cambiantes, y expresarlas en lenguaje natural sobre datos ya existentes
+resultó más barato que formalizarlas en un modelo matemático, que es la
+alternativa que examino en el apartado siguiente.
+
+\section{Paso 4: dónde se inserta y qué toca de la arquitectura}
+\label{sec:arquitectura}
+
+La Figura~\ref{fig:arquitectura} pone el antes y el después uno encima del
+otro. Lo importante no es lo que aparece en el Panel B, sino lo que
+\emph{no} aparece: ninguna caja del Panel A cambia de forma.
+
+\begin{figure}[!htb]
+\centering
+\begin{tikzpicture}
+
+% ================= Panel A: el proceso anterior =================
+\node[anchor=south west, font=\small\bfseries] at (-0.15,3.02)
+     {Panel A. Antes: cinco exportaciones a mano, dos personas y un escenario};
+
+\caja{fa0}{1.58}{2.32}{2.95cm}{cFuente}{TMS: cargas y citas}
+\caja{fa1}{1.58}{1.74}{2.95cm}{cFuente}{ELD: horas de servicio}
+\caja{fa2}{1.58}{1.16}{2.95cm}{cFuente}{Mantenimiento}
+\caja{fa3}{1.58}{0.58}{2.95cm}{cFuente}{Personal y nómina}
+\caja{fa4}{1.58}{0.00}{2.95cm}{cFuente}{Tarifas de mercado}
+
+\caja{expo}{5.20}{1.16}{2.0cm}{cManual}{Exportación\\manual a CSV\\cada lunes}
+\caja{hoja}{8.60}{1.16}{2.85cm}{cManual}{Hoja de cálculo\\2 planificadores\\48 h-persona\\por escenario}
+\caja{hora}{11.90}{1.16}{2.05cm}{cManual}{Horario semanal\\\textbf{un escenario}}
+\caja{envi}{14.80}{1.16}{1.85cm}{cFuente}{TMS y correo\\a 400 choferes}
+
+\foreach \i in {0,1,2,3,4} { \flecha{fa\i.east}{expo.west}{cGris} }
+\flecha{expo.east}{hoja.west}{cManual}
+\flecha{hoja.east}{hora.west}{cManual}
+\flecha{hora.east}{envi.west}{cManual}
+
+\node[anchor=north west, font=\scriptsize\itshape, text=cAviso,
+      text width=11.5cm, align=left] at (4.15,-0.52)
+     {ciclo de 3 días $\cdot$ $N = 1$ escenario $\cdot$ 0 interfaces
+      automáticas $\cdot$ las reglas viven en la cabeza de dos personas};
+
+% ================= Panel B: después de la adopción =================
+\begin{scope}[yshift=-5.40cm]
+\node[anchor=south west, font=\small\bfseries] at (-0.15,3.58)
+     {Panel B. Después: una capa de lectura, cuatro agentes y 120 escenarios};
+
+\caja{fb0}{1.58}{2.32}{2.95cm}{cFuente}{TMS: cargas y citas}
+\caja{fb1}{1.58}{1.74}{2.95cm}{cFuente}{ELD: horas de servicio}
+\caja{fb2}{1.58}{1.16}{2.95cm}{cFuente}{Mantenimiento}
+\caja{fb3}{1.58}{0.58}{2.95cm}{cFuente}{Personal y nómina}
+\caja{fb4}{1.58}{0.00}{2.95cm}{cFuente}{Tarifas de mercado}
+
+% recuadro de la superficie arquitectónica nueva
+\draw[cAgente!55, dashed, rounded corners=3pt] (4.03,-0.80) rectangle (16.02,3.30);
+
+\caja{inte}{5.10}{1.16}{1.75cm}{cAgente}{Capa de integración\\\emph{solo lectura}\\5 conectores}
+
+\draw[cAgente!35, rounded corners=3pt] (6.18,-0.62) rectangle (10.14,2.94);
+\node[anchor=south, font=\scriptsize\bfseries, text=cAgente] at (8.16,2.96)
+     {Orquestador de agentes};
+\caja{ag0}{8.16}{2.48}{3.5cm}{cAgente}{Disponibilidad\\y horas de servicio}
+\caja{ag1}{8.16}{1.60}{3.5cm}{cAgente}{Coste por milla\\y tarifas de mercado}
+\caja{ag2}{8.16}{0.72}{3.5cm}{cAgente}{Cobertura\\y cesión a terceros}
+\caja{ag3}{8.16}{-0.16}{3.5cm}{cAviso}{Verificador de reglas\\duras (FMCSA)}
+
+\caja{moto}{12.00}{1.16}{2.15cm}{cAgente}{Motor de escenarios\\\textbf{120 planes}\\40 min por ciclo}
+\caja{revi}{14.90}{1.16}{1.85cm}{cVerde}{Revisión del planificador\\1 conector de escritura}
+
+\foreach \i in {0,1,2,3,4} { \flecha{fb\i.east}{inte.west}{cGris} }
+\flecha{inte.east}{ag1.west}{cAgente}
+\flecha{ag1.east}{moto.west}{cAgente}
+\flecha{moto.east}{revi.west}{cAgente}
+
+\draw[cVerde, -{Stealth[length=4pt]}, thin]
+      (revi.south) -- (14.90,-1.18) -- (-0.32,-1.18) -- (-0.32,2.32)
+      -- (fb0.west);
+\node[above, font=\scriptsize\itshape, text=cVerde, inner sep=2pt]
+     at (10.4,-1.18) {escritura del plan aprobado};
+
+\node[anchor=north west, font=\scriptsize\itshape, text=cVerde,
+      text width=11.8cm, align=left] at (4.10,-1.38)
+     {superficie nueva $S = 6$ interfaces (5 de lectura, 1 de escritura)
+      $\cdot$ intrusión $P = 0$ sistemas de registro modificados
+      $\cdot$ reversión $R = 2$ horas};
+\end{scope}
+
+\end{tikzpicture}
+\caption{La adopción no tocó ningún sistema de registro. Los cinco orígenes de
+datos del Panel A son exactamente los mismos del Panel B y ninguno cambió de
+esquema: lo que se añadió fue una capa de lectura por delante y un único
+conector de escritura por detrás, después de que una persona apruebe el plan.
+Esa decisión de inserción es la que fija las tres métricas arquitectónicas del
+apartado~2, y es también la que explica por qué la reversión cuesta dos horas:
+apagar la capa devuelve el proceso a la hoja de cálculo sin migrar nada.
+Elaboración propia.}
+\label{fig:arquitectura}
+\end{figure}
+
+Antes de construir nada se compararon cuatro maneras de relajar la restricción
+activa. El Cuadro~\ref{cuadro:opciones} las pone con sus tres métricas
+arquitectónicas al lado del retorno, que es la comparación que el marco exige
+hacer y que casi nunca se hace.
+
+\begin{table}[t]
+\small
+\caption{Las cuatro opciones consideradas, con su huella arquitectónica junto
+al retorno. El ahorro es la estimación previa a la decisión, salvo la última
+fila, que es lo realizado. Elaboración propia.}
+\label{cuadro:opciones}
+\begin{tabularx}{\textwidth}{@{}p{3.5cm}ccX>{\raggedleft\arraybackslash}p{2.1cm}@{}}
+\toprule
+\textbf{Opción} & \textbf{$S$} & \textbf{$P$} & \textbf{Por qué se descartó o
+se eligió} & \textbf{Neto anual} \\
+\midrule
+Duplicar el equipo de planificación
+& 0 & 0
+& Solo lleva $N$ de 1 a 2 (dos personas más), y la ecuación~\eqref{eq:orden}
+  dice que el segundo escenario vale \$282 al día, \$73.000 al año, frente a
+  \$130.000 de coste
+& $-$\$57.000 \\
+\addlinespace[2pt]
+Módulo del proveedor del TMS
+& interno & \textbf{1}
+& Modifica un sistema de registro y solo ve los datos del propio TMS: ni horas
+  de servicio ni mantenimiento. Reversión en semanas
+& $+$\$129.000 \\
+\addlinespace[2pt]
+Solver matemático a medida
+& 6 & 0
+& Exige formalizar todas las reglas, y buena parte son tácitas y cambian cada
+  temporada. El coste no está en el solver sino en mantener el modelo
+& $+$\$147.000 \\
+\addlinespace[2pt]
+\textbf{Capa de agentes}\newline\emph{(elegida)}
+& 6 & \textbf{0}
+& Única opción que deja los cinco sistemas de registro intactos y se apaga en
+  dos horas. Acepta reglas en lenguaje natural, que es la forma en que la
+  operación las tiene escritas. Se estimó en \$199.000 (a \$900 diarios) y
+  rindió \$298.000
+& \textbf{$+$\$298.000} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+La comparación entre la tercera y la cuarta fila es la más instructiva. Sobre
+el papel, un modelo de optimización matemática domina a una capa de agentes:
+encuentra el óptimo, no una muestra. Pero la figura de mérito relevante no es
+la calidad del óptimo sobre las reglas formalizadas, sino sobre las reglas
+reales, y en esta operación una fracción grande de las reglas es tácita
+(\enquote{a este cliente no se le manda un conductor nuevo}) y cambia con la
+temporada. \textbf{El solver optimiza mejor un problema que no es el
+problema.} Esa es la razón técnica por la que ganó la capa de agentes, y no la
+novedad de la tecnología.
+
+\section{Paso 5: el impacto calculado}
+\label{sec:impacto}
+
+La Figura~\ref{fig:dinero} descompone de dónde sale el ahorro y en qué se fue
+la inversión, y el Panel B de la Figura~\ref{fig:escenarios} dibuja el flujo
+de caja acumulado.
+
+\begin{figure}[!htb]
+\centering
+\begin{tikzpicture}
+
+% ================= Panel A: de dónde sale el ahorro =================
+\node[anchor=south west, font=\small\bfseries] at (-4.90,3.40)
+     {Panel A. De dónde sale el ahorro, por semana de operación de cinco días};
+
+\barraA{3.00}{3055}{cDato}{\textbf{Cargas no cedidas a terceros}\\80 a 67 por
+  semana, \$235 cada una}{\$3.055}
+\barraA{2.25}{2471}{cDato}{\textbf{Millas en vacío evitadas}\\16,50 \% a
+  16,39 \% de 960.000 millas}{\$2.471}
+\barraA{1.50}{630}{cDato}{\textbf{Detención evitada}\\10 h a \$63 la hora}
+  {\$630}
+\barraA{0.75}{252}{cDato}{\textbf{Horas extra y recobros}\\9 h a \$28 la hora}
+  {\$252}
+
+\draw[cVerde, thick, rounded corners=2pt] (-4.92,-0.17) rectangle (8.00,0.36);
+\node[right, font=\scriptsize, text=cVerde!60!black] at (-4.82,0.095)
+     {\textbf{Total: \$6.408 por semana de operación = \$1.282 por día
+      trabajado = \$333.216 al año} sobre 260 días};
+
+% ================= Panel B: en qué se fue la inversión =================
+\begin{scope}[yshift=-4.12cm]
+\node[anchor=south west, font=\small\bfseries] at (-4.90,3.40)
+     {Panel B. En qué se fue la inversión de \$100.000};
+
+\barraB{3.00}{18}{cAgente}{Descubrimiento y\\formalización de reglas}
+  {\$18.000}
+\barraB{2.25}{27}{cAgente}{Capa de integración\\de lectura, 5 conectores}
+  {\$27.000}
+\barraB{1.50}{34}{cAgente}{Orquestación de agentes\\y motor de escenarios}
+  {\$34.000}
+\barraB{0.75}{13}{cAgente}{Panel de revisión\\y conector de escritura}
+  {\$13.000}
+\barraB{0.00}{8}{cAgente}{Puesta en marcha,\\ajuste y formación}{\$8.000}
+
+\draw[cGris, thick, rounded corners=2pt] (-4.92,-0.92) rectangle (8.00,-0.39);
+\node[right, font=\scriptsize, text=cGris!50!black] at (-4.82,-0.655)
+     {\textbf{Recurrente: \$2.900 al mes} en modelos, infraestructura y
+      mantenimiento, es decir \$34.800 al año};
+\end{scope}
+
+\end{tikzpicture}
+\caption{Panel A: las cuatro partidas del ahorro, por semana de operación de
+cinco días. El 86 por ciento del total está en decisiones de asignación (no
+ceder una carga, no rodar en vacío), que es precisamente lo que mejora al
+comparar más escenarios. Panel B: el reparto de los \$100.000 de implantación.
+Menos de la mitad del dinero se fue en la parte propiamente de inteligencia
+artificial; el resto fue integración, interfaz y puesta en marcha, que es el
+reparto que \textcite{nanda2025} señala como el que separa los pilotos que
+rinden de los que no. Elaboración propia sobre los parámetros del apartado~3.}
+\label{fig:dinero}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\begin{tikzpicture}
+
+% ================= Panel A: rendimiento del escenario marginal ============
+\node[anchor=south west, font=\small\bfseries] at (-0.85,4.78)
+     {Panel A. Lo que vale el escenario número $N$};
+\node[anchor=south west, font=\scriptsize\itshape, text=cGris] at (-0.85,4.48)
+     {dólares al día};
+
+\foreach \v in {400,800,1200,1600} {
+  \draw[cGris!28] (0,{\sy{\v}}) -- (6.10,{\sy{\v}});
+  \node[left, font=\scriptsize, text=cGris] at (-0.07,{\sy{\v}}) {\v};
+}
+\draw[cGris!70] (0,0) -- (6.10,0);
+\draw[cGris!70] (0,0) -- (0,4.35);
+\foreach \n in {1,3,10,30,100,300,1000} {
+  \draw[cGris!70] ({\sx{\n}},0) -- ({\sx{\n}},-0.09);
+  \node[below, font=\scriptsize, text=cGris] at ({\sx{\n}},-0.09) {\n};
+}
+\node[below, font=\scriptsize, text=cGris] at (3.0,-0.50)
+     {escenarios por ciclo, $N$ (escala logarítmica)};
+
+% ahorro bruto
+\draw[cDato, very thick]
+  ({\sx{1}},{\sy{0}}) -- ({\sx{2}},{\sy{282}}) -- ({\sx{5}},{\sy{580}}) --
+  ({\sx{10}},{\sy{768}}) -- ({\sx{20}},{\sy{932}}) -- ({\sx{50}},{\sy{1122}}) --
+  ({\sx{100}},{\sy{1251}}) -- ({\sx{200}},{\sy{1370}}) --
+  ({\sx{500}},{\sy{1515}}) -- ({\sx{1000}},{\sy{1617}});
+\node[right, font=\scriptsize, text=cDato, align=left]
+     at ({\sx{1.15}},{\sy{1520}}) {ahorro bruto $a(N)$};
+
+% coste de cómputo
+\draw[cAviso, very thick, dashed]
+  ({\sx{1}},{\sy{0.55}}) -- ({\sx{10}},{\sy{5.5}}) -- ({\sx{100}},{\sy{55}}) --
+  ({\sx{1000}},{\sy{550}});
+\node[left, font=\scriptsize, text=cAviso, align=right]
+     at ({\sx{900}},{\sy{265}}) {coste de cómputo};
+
+% ahorro neto
+\draw[cVerde, very thick, dash pattern=on 5pt off 2pt]
+  ({\sx{1}},{\sy{0}}) -- ({\sx{5}},{\sy{577}}) -- ({\sx{20}},{\sy{921}}) --
+  ({\sx{50}},{\sy{1094}}) -- ({\sx{200}},{\sy{1260}}) --
+  ({\sx{300}},{\sy{1270}}) -- ({\sx{1000}},{\sy{1067}});
+\node[right, font=\scriptsize, text=cVerde, inner sep=3pt]
+     at ({\sx{1000}},{\sy{1000}}) {neto};
+
+% hitos
+\draw[cGris!80, dotted] ({\sx{20}},0) -- ({\sx{20}},{\sy{932}});
+\fill[cDato] ({\sx{20}},{\sy{932}}) circle (2.4pt);
+\node[below right, font=\scriptsize, text=cGris, align=left, inner sep=2pt]
+     at ({\sx{20}},{\sy{880}}) {$N = 20$:\\73 \% del ahorro};
+
+\fill[cDato] ({\sx{120}},{\sy{1282}}) circle (2.6pt);
+\node[above left, font=\scriptsize, text=cDato, align=right, inner sep=3pt]
+     at ({\sx{120}},{\sy{1282}}) {hoy: 120};
+
+\draw[cVerde, fill=white, thick] ({\sx{300}},{\sy{1270}}) circle (2.6pt);
+\node[above right, font=\scriptsize, text=cVerde, inner sep=3pt]
+     at ({\sx{300}},{\sy{1270}}) {óptimo: $\approx 300$};
+
+% ================= Panel B: flujo de caja acumulado =================
+\begin{scope}[xshift=8.60cm]
+\node[anchor=south west, font=\small\bfseries] at (-0.90,4.78)
+     {Panel B. Flujo de caja acumulado};
+\node[anchor=south west, font=\scriptsize\itshape, text=cGris] at (-0.90,4.48)
+     {miles de dólares};
+
+\foreach \v/\t in {-100/{-100},-50/{-50},0/0,50/50,100/100,150/150} {
+  \draw[cGris!28] (0,{\cym{\v}}) -- (5.90,{\cym{\v}});
+  \node[left, font=\scriptsize, text=cGris] at (-0.07,{\cym{\v}}) {\t};
+}
+\draw[cGris!70] (0,{\cym{-100}}) -- (0,{\cym{168}});
+\draw[cGris] (0,0) -- (5.90,0);
+\foreach \m in {0,2,4,6,8,10,12} {
+  \draw[cGris!70] ({\cxm{\m}},{\cym{-100}}) -- ({\cxm{\m}},{\cym{-100}-0.09});
+  \node[below, font=\scriptsize, text=cGris]
+       at ({\cxm{\m}},{\cym{-100}-0.09}) {\m};
+}
+\node[below, font=\scriptsize, text=cGris] at (2.95,{\cym{-100}-0.50})
+     {meses desde la puesta en marcha};
+
+\draw[cVerde, very thick]
+  ({\cxm{0}},{\cym{-100}}) -- ({\cxm{1}},{\cym{-97.3}}) --
+  ({\cxm{2}},{\cym{-87.8}}) -- ({\cxm{3}},{\cym{-71.2}}) --
+  ({\cxm{4}},{\cym{-50.5}}) -- ({\cxm{5}},{\cym{-27.0}}) --
+  ({\cxm{6}},{\cym{-2.2}}) -- ({\cxm{7}},{\cym{22.7}}) --
+  ({\cxm{8}},{\cym{47.6}}) -- ({\cxm{9}},{\cym{72.4}}) --
+  ({\cxm{10}},{\cym{97.3}}) -- ({\cxm{11}},{\cym{122.2}}) --
+  ({\cxm{12}},{\cym{147.0}});
+\foreach \m/\v in {0/-100,3/-71.2,6/-2.2,9/72.4,12/147.0} {
+  \fill[cVerde] ({\cxm{\m}},{\cym{\v}}) circle (2.2pt);
+}
+
+\draw[cAviso, dashed] ({\cxm{6.09}},{\cym{-100}}) -- ({\cxm{6.09}},{\cym{100}});
+\node[left, font=\scriptsize, text=cAviso, align=right, inner sep=3pt]
+     at ({\cxm{5.95}},{\cym{118}}) {repago:\\6,1 meses};
+\node[above left, font=\scriptsize\bfseries, text=cVerde, inner sep=3pt]
+     at ({\cxm{12}},{\cym{147.0}}) {$+$\$147.000};
+\end{scope}
+
+\end{tikzpicture}
+\caption{Panel A: la ecuación~\eqref{eq:orden} calibrada con $\sigma = \$499$
+por día trabajado sobre el único punto observado, $N = 120$. La curva de coste
+supone \$0,55 por escenario evaluado. El cruce de las pendientes sitúa el
+óptimo económico alrededor de 300 escenarios, y el máximo es plano entre 200 y
+400, de modo que la recomendación es robusta aunque el valor exacto no lo sea.
+Panel B: flujo de caja acumulado, con el ahorro anualizado sobre 260 días de
+operación y una rampa de adopción del 20, 45, 70, 85 y 95 por ciento en los
+cinco primeros meses. Elaboración propia.}
+\label{fig:escenarios}
+\end{figure}
+
+El resultado: \textbf{\$6.408 de ahorro por semana de operación}, es decir
+\$1.282 por día trabajado y \$333.216 al año sobre los 260 días que la empresa
+opera, contra \$34.800 anuales de coste recurrente. El neto es de
+\textbf{\$298.416 al año} sobre una inversión de \$100.000, con repago en
+\textbf{6,1 meses} y un saldo acumulado de \$147.000 al cierre del primer año.
+
+Ese repago coincide con lo que recuerdo haber reportado en su momento,
+\enquote{antes del primer año}, pero el margen es menos cómodo de lo que
+parece. El apartado siguiente lo cuantifica: con una rampa de adopción lenta
+el repago se va a 8,2 meses, y con un ahorro un 40 por ciento inferior al
+modelado, a 9,5. El calendario de un año deja de ser holgura y pasa a ser
+límite.
+
+\subsection*{Y el coste del producto final}
+
+Aquí la respuesta honesta es menos espectacular que la cifra de ahorro.
+\textbf{El precio al cliente no bajó.} Lo que ocurrió fue que se dejó de pagar
+el margen del intermediario en casi una cuarta parte de las cargas que antes
+se cedían, y ese dinero se quedó dentro. Sobre un coste operativo del orden de
+117 millones de dólares al año, \$298.000 son un \textbf{0,26 por ciento} del
+coste unitario: el coste por milla cargada pasa de unos \$2,802 a unos
+\$2,795. Parece poco, y como reducción de coste lo es. Pero el margen
+operativo de un transportista de carga completa está en el entorno del 4 al 5
+por ciento y sigue comprimido \parencite{atri2026}, de modo que esos 0,26
+puntos de coste equivalen a algo del orden del \textbf{5 por ciento del
+beneficio operativo}. Esa es la
+magnitud correcta con la que presentar la adopción, y no el porcentaje sobre
+el coste.
+
+\section{La sensibilidad: qué supuesto decide el resultado}
+
+Un marco que da un número sin decir de qué depende no sirve para decidir. El
+Panel A de la Figura~\ref{fig:sensibilidad} repite el cálculo del repago
+moviendo cada supuesto por separado.
+
+\begin{figure}[!htb]
+\centering
+\begin{tikzpicture}
+
+% ================= Panel A: tornado del repago =================
+\node[anchor=south west, font=\small\bfseries] at (-3.45,4.28)
+     {Panel A. Meses hasta el repago cuando se mueve un supuesto cada vez};
+
+\barraT{3.60}{4.77}{9.51}{Ahorro diario\\del plan, $\pm$40 \%}{4,8 a 9,5}
+\barraT{2.85}{4.86}{8.19}{Velocidad de la\\rampa de adopción}{4,9 a 8,2}
+\barraT{2.10}{4.45}{7.70}{Coste de\\implantación, $\pm$40 \%}{4,5 a 7,7}
+\barraT{1.35}{6.09}{7.95}{Escenarios por ciclo,\\de 120 a 20}{6,1 a 8,0}
+\barraT{0.60}{5.82}{6.38}{Coste recurrente\\de la IA, $\pm$40 \%}{5,8 a 6,4}
+
+\draw[cAviso, thick] ({\mx{6.09}},0.15) -- ({\mx{6.09}},4.05);
+\node[above, font=\scriptsize, text=cAviso, inner sep=2pt]
+     at ({\mx{6.09}},4.05) {caso base: 6,1 meses};
+
+\draw[cGris!70] (0,0.20) -- ({\mx{10}},0.20);
+\foreach \t in {4,5,6,7,8,9,10} {
+  \draw[cGris!70] ({\mx{\t}},0.20) -- ({\mx{\t}},0.11);
+  \node[below, font=\scriptsize, text=cGris] at ({\mx{\t}},0.11) {\t};
+}
+\node[below, font=\scriptsize, text=cGris] at ({\mx{7}},-0.28)
+     {meses hasta el repago};
+
+% ================= Panel B: mapa de impacto arquitectónico =================
+\begin{scope}[yshift=-6.05cm]
+\node[anchor=south west, font=\small\bfseries] at (-0.95,4.72)
+     {Panel B. Las cuatro opciones: retorno frente a reversibilidad};
+\node[anchor=south west, font=\scriptsize\itshape, text=cGris] at (-0.95,4.42)
+     {ahorro anual neto, en miles de dólares};
+
+\fill[cVerde!7] (0,{\ry{85}}) rectangle ({\rx{20}},{\ry{315}});
+
+\foreach \v in {0,100,200,300} {
+  \draw[cGris!28] (0,{\ry{\v}}) -- (6.20,{\ry{\v}});
+  \node[left, font=\scriptsize, text=cGris] at (-0.07,{\ry{\v}}) {\v};
+}
+\draw[cGris!70] (0,0) -- (6.20,0);
+\draw[cGris!70] (0,0) -- (0,4.32);
+\foreach \h/\t in {2/{2 h},8/{8 h},24/{1 día},168/{1 sem.},720/{1 mes}} {
+  \draw[cGris!70] ({\rx{\h}},0) -- ({\rx{\h}},-0.09);
+  \node[below, font=\scriptsize, text=cGris] at ({\rx{\h}},-0.09) {\t};
+}
+\node[below, font=\scriptsize, text=cGris] at (3.1,-0.50)
+     {tiempo de reversión $R$ (escala logarítmica)};
+
+\node[font=\scriptsize\itshape, text=cVerde!60!black, align=center]
+     at ({\rx{6}},{\ry{115}}) {esquina preferible};
+
+\draw[cVerde, -{Stealth[length=4.5pt]}, thin]
+     ({\rx{2}},{\ry{212}}) -- ({\rx{2}},{\ry{285}});
+
+\puntoM{2}{298}{cVerde}{\textbf{capa de agentes:} realizado}{right}
+\puntoM{2}{199}{cGris}{estimado antes de decidir}{right}
+\puntoM{168}{147}{cDato}{solver a medida}{above}
+\puntoM{720}{129}{cManual}{módulo del TMS ($P = 1$)}{below}
+\puntoM{336}{-57}{cAviso}{duplicar el equipo}{above left}
+\end{scope}
+
+\end{tikzpicture}
+\caption{Panel A: diagrama de tornado del repago. La barra más corta es la que
+casi todo el mundo discute primero, el coste recurrente de los modelos, y la
+segunda más larga es la que casi nadie presupuesta, la velocidad con que la
+organización adopta la herramienta. Panel B: las cuatro opciones del
+Cuadro~\ref{cuadro:opciones} situadas frente a las dos dimensiones que
+deciden. El eje horizontal es el tiempo de reversión, y en él contratar
+personas resulta \emph{menos} reversible que encender un servicio. La flecha
+une la estimación previa con el resultado realizado. Elaboración propia.}
+\label{fig:sensibilidad}
+\end{figure}
+
+Tres lecturas, por orden de utilidad:
+
+\begin{enumerate}
+\item \textbf{El coste recurrente de la inteligencia artificial es la variable
+  menos importante de todas.} Moverlo un 40 por ciento arriba o abajo cambia
+  el repago en tres décimas de mes. Es, sin embargo, la primera pregunta que
+  aparece en cualquier comité, y conviene poder contestarla con este gráfico
+  en lugar de con una opinión.
+\item \textbf{La segunda variable más decisiva es organizativa, no técnica.}
+  La velocidad de la rampa de adopción mueve el repago entre 4,9 y 8,2 meses,
+  casi tanto como el ahorro mismo. Dicho de otro modo: el dinero que hay que
+  gastar al margen del software es el de formación, confianza y acompañamiento
+  del planificador, y ese gasto compite en importancia con el propio sistema.
+\item \textbf{Recortar escenarios sigue siendo la segunda palanca más floja.}
+  Bajar de 120 a 20 por ciclo, que es una reducción de seis veces en cómputo,
+  empeora el repago de 6,1 a 8,0 meses: cuesta, pero menos que cualquier otra
+  cosa salvo el precio de los modelos. Es la otra cara de la curva del Panel A
+  de la Figura~\ref{fig:escenarios}, y el sitio donde recortar duele menos si
+  hiciera falta abaratar la operación de golpe.
+\end{enumerate}
+
+\section{Las restricciones activas después de la adopción}
+
+Como en cualquier sistema, relajar la restricción dominante no elimina el
+problema: lo traslada. El Cuadro~\ref{cuadro:restricciones} recoge dónde está
+ahora el límite, ordenado por cuánto pesa hoy.
+
+\begin{table}[!htb]
+\small
+\caption{Las restricciones activas después de la adopción, ordenadas por
+cuánto limitan hoy la figura de mérito. Elaboración propia.}
+\label{cuadro:restricciones}
+\begin{tabularx}{\textwidth}{@{}p{3.4cm}XX@{}}
+\toprule
+\textbf{Restricción activa} & \textbf{Qué límite impone} &
+\textbf{Mitigación y su coste} \\
+\midrule
+\textbf{1. Tasa de aceptación del planificador}
+& El sistema propone y una persona aprueba, de modo que el ahorro real es el
+  ahorro teórico multiplicado por la fracción de planes aceptados. Es el techo
+  efectivo de toda la adopción
+& Explicar cada decisión y dejar editar el plan. Coste: parte del ahorro se
+  pierde en cada edición manual \\
+\addlinespace[2pt]
+\textbf{2. Calidad y latencia de los datos de origen}
+& Un escenario no puede ser mejor que los datos que lo alimentan, y el ELD y
+  el TMS no siempre coinciden en dónde está un equipo
+& Reconciliación y reglas de precedencia entre fuentes. Coste: trabajo
+  continuo, no un proyecto \\
+\addlinespace[2pt]
+\textbf{3. Reglas tácitas no capturadas}
+& Lo que nadie escribió nunca no entra en la función objetivo, y reaparece
+  como una edición manual del plan
+& Realimentar las ediciones al sistema. Coste: exige registrar el porqué de
+  cada edición, que es disciplina, no tecnología \\
+\addlinespace[2pt]
+\textbf{4. Escenarios por ciclo}
+& Hoy limita poco: pasar de 120 a 300 valdría unos \$13.800 al año, un 5 por
+  ciento del neto
+& Más cómputo. Coste: lineal en el número de escenarios y, por tanto,
+  fácilmente ajustable \\
+\addlinespace[2pt]
+\textbf{5. Dependencia del proveedor}
+& Riesgo de precio y de continuidad sobre una pieza que no se controla
+& Las tres métricas del apartado~2: con $P = 0$ y $R = 2$ horas, el riesgo
+  está acotado por construcción \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Merece la pena subrayar la primera, porque es la que más se parece a lo que
+\textcite{nanda2025} describe. El límite del sistema no lo pone el modelo: lo
+pone cuánto se fía de él la persona que firma el horario. Y la única palanca
+sobre esa variable es la que aparece en el Panel A de la
+Figura~\ref{fig:sensibilidad} como \enquote{rampa de adopción}.
+
+\section{Lo que me llevo del ejercicio}
+
+\begin{enumerate}
+\item \textbf{La pregunta correcta no es qué tecnología adoptar sino qué
+  restricción está activa.} Aquí no lo estaba la calidad de las decisiones,
+  sino el número de veces que se podían tomar. Cualquier tecnología que
+  abaratase el escenario habría servido; los agentes ganaron porque las reglas
+  estaban en prosa y no en ecuaciones.
+\item \textbf{El impacto arquitectónico se puede medir antes de construir}, y
+  con tres números que caben en una línea: $S = 6$, $P = 0$, $R = 2$ horas.
+  Esos tres números son lo que hizo que una inversión de \$100.000 fuera una
+  decisión pequeña y no una apuesta.
+\item \textbf{Los rendimientos decrecientes llegan antes de lo que parece.} El
+  73 por ciento del ahorro está en los primeros veinte escenarios. Un
+  planteamiento que hubiera exigido un despliegue diez veces mayor para
+  empezar habría destruido el caso de negocio sin mejorar el resultado.
+\item \textbf{La variable que hay que presupuestar y casi nunca se
+  presupuesta es la rampa de adopción}, que en el tornado pesa casi tanto como
+  el ahorro y mucho más que el coste de los modelos.
+\end{enumerate}
+
+\section{Limitaciones}
+
+\begin{enumerate}
+\item \textbf{Solo tengo siete anclas reales} y todo lo demás está modelado.
+  Los parámetros de operación (millas, cargas, porcentaje de vacío, reparto
+  del ahorro) son estimaciones propias calibradas con costes unitarios
+  públicos, no mediciones de la empresa.
+\item \textbf{La ecuación~\eqref{eq:orden} supone que los costes de los planes
+  son extracciones independientes de una normal}, y no lo son: los agentes
+  exploran de forma dirigida, no aleatoria, y los planes comparten estructura.
+  El modelo capta bien la \emph{forma} de los rendimientos decrecientes y mal
+  el valor absoluto de cada punto.
+\item \textbf{$\sigma$ está calibrada sobre un único punto observado}, el
+  ahorro a $N = 120$. Con un solo punto, la curva completa depende enteramente
+  de la forma funcional supuesta.
+\item \textbf{El óptimo de 300 escenarios es una extrapolación} más allá del
+  rango observado, y es la afirmación más frágil del documento. Lo que sí
+  sostiene la curva es que 120 no es un número especial y que conviene medirlo.
+\item \textbf{La rampa de adopción es inventada.} Elegí 20, 45, 70, 85 y 95
+  por ciento porque es una progresión razonable, no porque la midiera. El
+  tornado muestra que es el segundo supuesto más decisivo, de modo que es
+  también la limitación más costosa de las de esta lista.
+\item \textbf{Tres de las cuatro opciones del Cuadro~\ref{cuadro:opciones}
+  nunca se construyeron}, de modo que sus cifras son estimaciones previas a la
+  decisión que jamás se contrastaron: son comparables entre sí por método, no
+  por evidencia. Por eso el eje vertical del Panel B de la
+  Figura~\ref{fig:sensibilidad} mezcla un valor realizado con cuatro
+  estimados, y la figura afirma la posición relativa de las opciones, no sus
+  coordenadas.
+\item \textbf{No cuento el coste de las dos personas como ahorro.} Los
+  planificadores siguieron en la empresa, dedicados a excepciones y a relación
+  con clientes. Contarlos habría añadido unos \$130.000 al año y habría hecho
+  el caso artificialmente mejor.
+\end{enumerate}
+
+\printbibliography
+
+\end{document}
