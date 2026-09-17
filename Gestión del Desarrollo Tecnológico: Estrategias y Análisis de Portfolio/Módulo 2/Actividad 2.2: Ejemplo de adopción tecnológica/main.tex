@@ -1,0 +1,479 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,backgrounds,decorations.pathreplacing}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.3cm}
+% Los rótulos de las figuras usan nodos de ancho fijo con texto alineado, y la
+% bibliografía compone en modo sloppy: ambos generan avisos de línea holgada
+% que son cosméticos. Se silencian para que `make check` siga siendo sensible
+% a los desbordes reales.
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.42em}
+\setlist{nosep}
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.06}
+\renewcommand{\floatpagefraction}{0.72}
+\setcounter{topnumber}{2}
+
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy\small}
+\setlength{\bibitemsep}{0.28em}
+\setlength{\bibhang}{1.4em}
+
+\sisetup{
+  output-decimal-marker = {,},
+  group-separator = {.},
+  group-minimum-digits = 4,
+  detect-all
+}
+
+% Colores: el azul del silicio propio, el gris del x86 al que sustituye, el
+% verde de la mejora medida, el ámbar de la respuesta de los competidores y el
+% rojo de lo que la adopción costó.
+\definecolor{cApple}{RGB}{36,102,148}
+\definecolor{cX86}{RGB}{104,110,126}
+\definecolor{cVerde}{RGB}{56,120,86}
+\definecolor{cAmbar}{RGB}{166,92,34}
+\definecolor{cAviso}{RGB}{176,42,42}
+\definecolor{cGris}{RGB}{132,124,112}
+
+% --- Panel A: rendimiento multinúcleo frente a potencia de paquete ----------
+\newcommand{\px}[1]{(#1)*0.205}
+\newcommand{\py}[1]{(#1)*0.19}   % el valor se pasa en miles de puntos
+% #1 x (vatios), #2 y (puntos), #3 color, #4 posición del rótulo, #5 rótulo
+\newcommand{\punto}[5]{%
+  \fill[#3] ({\px{#1}},{\py{#2}}) circle (2.5pt);%
+  \node[#4, font=\scriptsize, text=#3, inner sep=3.2pt, align=center]
+       at ({\px{#1}},{\py{#2}}) {#5};%
+}
+
+% --- Panel B: trayectoria temporal de la figura de mérito -------------------
+\newcommand{\tx}[1]{((#1)-2020)*0.98}
+\newcommand{\ty}[1]{(#1)*0.19}   % el valor se pasa en miles de puntos
+% #1 año, #2 puntos, #3 color, #4 posición, #5 rótulo
+\newcommand{\hito}[5]{%
+  \fill[#3] ({\tx{#1}},{\ty{#2}}) circle (2.3pt);%
+  \node[#4, font=\scriptsize, text=#3, inner sep=3pt] at
+       ({\tx{#1}},{\ty{#2}}) {#5};%
+}
+
+\title{\vspace{-1.2cm}\textbf{El paquete lo cambió todo}\\
+\large Impacto neto de la adopción de Apple Silicon en el Mac, del M1 (2020)
+al M5 (2025), sobre el producto, sus consumidores, sus competidores y el
+mercado}
+\author{Carlos Luis Rojas Aragonés\\
+\small Gestión del Desarrollo Tecnológico: Estrategias y Análisis de Portfolio}
+\date{\small 16 de septiembre de 2026}
+
+\begin{document}
+
+\maketitle
+\vspace{-0.8em}
+
+\section{El caso, en una ficha}
+
+El ejemplo que traigo es la sustitución de los procesadores x86-64 de Intel
+por un sistema en chip propio de arquitectura Arm en toda la línea Mac,
+anunciada en junio de 2020 y aún en curso cinco generaciones después
+\autocite{apple2020transicion}. Es un buen caso precisamente por lo que señala
+el planteamiento del módulo: no fue un cambio de proveedor, fue un cambio de
+arquitectura, y el ejercicio consiste en separar cuánto del resultado viene
+del silicio y cuánto de haber movido una interfaz de sitio.
+
+\subsection*{Lo que encontré, dicho por adelantado}
+
+\begin{quote}
+\textbf{Lo que se adoptó no fue un procesador más rápido: fue la desaparición
+de la interfaz de memoria del sistema.} El rendimiento por vatio es la
+consecuencia, no la causa. Frente al Mac Intel al que sustituyó, el M1
+multiplicó por 2,0 la puntuación multinúcleo y por 2,7 el rendimiento por
+vatio, y la línea siguió creciendo al 16,5 por ciento anual hasta el M5. Pero
+el dato que mejor mide el impacto neto no está en el Mac: está en que Intel
+integró la memoria en el paquete cuatro años después, Qualcomm entró en el PC
+con los propios arquitectos que habían diseñado esos núcleos y Microsoft
+redefinió su gama en torno a una métrica que en 2020 no existía. \textbf{Y el
+coste fue real}: el 90 por ciento de los elementos del sistema hubo que
+tocarlos, y el comprador perdió la memoria ampliable, la GPU externa y el
+arranque nativo de Windows.
+\end{quote}
+
+\begin{table}[H]
+\small
+\caption{La adopción, en corto.}
+\label{cuadro:ficha}
+\begin{tabularx}{\textwidth}{@{}p{4.3cm}X@{}}
+\toprule
+\textbf{Dimensión} & \textbf{Dato} \\
+\midrule
+Producto de referencia
+& Mac con procesador Intel, GPU discreta AMD en la gama alta, memoria fuera
+  del paquete y coprocesador T2 \\
+\addlinespace[2pt]
+Tecnología adoptada
+& Sistema en chip propio (AArch64) con CPU heterogénea, GPU, Neural Engine,
+  codificadores de vídeo y memoria LPDDR en el mismo paquete \\
+\addlinespace[2pt]
+Calendario
+& Anuncio en junio de 2020; primeros equipos con M1 el 10 de noviembre de
+  2020; transición cerrada en junio de 2023, 31 meses después
+  \autocite{apple2020m1,apple2023macpro} \\
+\addlinespace[2pt]
+Alcance del análisis
+& Cinco generaciones, de M1 (5 nm, 2020) a M5 (tercera generación de 3 nm,
+  octubre de 2025) \autocite{apple2025m5} \\
+\addlinespace[2pt]
+Figuras de mérito
+& Principal: rendimiento multinúcleo sostenido por vatio de paquete.
+  Secundarias: ancho de banda de memoria, autonomía real y coste por punto de
+  rendimiento para el comprador \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection*{Nota sobre las cifras}
+
+Separo tres clases de número, porque mezclarlas haría parecer el análisis más
+sólido de lo que es. \textbf{Publicadas por el fabricante}: fechas, proceso de
+fabricación, transistores, ancho de banda de memoria, autonomía declarada,
+precios de lista y ventas netas del segmento Mac de los informes anuales
+\autocite{apple10k}. \textbf{Medidas por terceros}: las puntuaciones de
+Geekbench 6 son medianas de resultados públicos, con una dispersión del orden
+del 5 por ciento, y las uso solo para comparar órdenes de magnitud
+\autocite{geekbench2026}. \textbf{Estimaciones propias}, marcadas donde
+aparecen: las potencias de paquete sostenidas, el recuento de elementos de la
+descomposición del sistema, el coste por punto de rendimiento y las tasas de
+crecimiento derivadas.
+
+\section{Qué se sustituyó exactamente}
+
+El caso del sistema de impresión digital que vimos en el módulo mide el
+esfuerzo de adopción sobre la matriz de estructura de diseño y llega al 8,5
+por ciento de cambio respecto del sistema de referencia. Aplicando la misma
+lógica de matriz delta a una descomposición del Mac en unos 32 elementos entre
+componentes, interfaces y capas de software, el resultado de esta adopción es
+del orden del 90 por ciento (Cuadro~\ref{cuadro:delta}). Es la diferencia
+entre una mejora de componente y lo que \textcite{henderson1990} llaman
+innovación arquitectónica: los componentes siguen haciendo lo mismo, pero la
+forma en que se conectan cambia por completo.
+
+\begin{table}[H]
+\small
+\caption{Matriz delta de la adopción, en la línea del paso 3 del caso del
+módulo. El recuento de elementos es elaboración propia sobre una
+descomposición de 32 elementos y sirve para dimensionar el esfuerzo, no como
+inventario exhaustivo.}
+\label{cuadro:delta}
+\begin{tabularx}{\textwidth}{@{}p{2.55cm}p{1.15cm}X@{}}
+\toprule
+\textbf{Categoría} & \textbf{N.\textsuperscript{o}} & \textbf{Elementos} \\
+\midrule
+Añadidos & 9
+& Sistema en chip unificado; memoria LPDDR dentro del paquete; Neural Engine;
+  codificadores de vídeo dedicados; Secure Enclave integrado; Rosetta 2;
+  binarios universales; cadena de arranque con política local; virtualización
+  nativa de sistemas Arm \\
+\addlinespace[2pt]
+Eliminados & 6
+& Procesador Intel; chipset acompañante; coprocesador T2; GPU discreta AMD;
+  módulos de memoria fuera del paquete; Boot Camp y soporte de GPU externa \\
+\addlinespace[2pt]
+Modificados & 14
+& Placa base y alimentación; sistema térmico (el MacBook Air pierde el
+  ventilador); Thunderbolt pasa a integrarse; pila gráfica Metal, que deja de
+  copiar datos entre memorias; controladores de terceros, de extensiones de
+  núcleo a DriverKit; cadena de compilación; firma y notarización; macOS 11 \\
+\addlinespace[2pt]
+Sin cambio & 3
+& Pantalla, teclado y trackpad, es decir, casi todo lo que el usuario toca \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+La interfaz que desaparece es la clave técnica de todo lo demás. En el sistema
+de referencia, la CPU hablaba con la DRAM por un bus externo y con la GPU por
+PCI Express, y cada copia de datos entre ambas costaba tiempo y energía. Al
+poner la memoria en el paquete y hacerla visible para CPU, GPU y Neural Engine
+a la vez, esa copia deja de existir. Por eso el ancho de banda crece de unos
+60 GB/s en el portátil Intel de referencia a 68 GB/s en el M1 y a 153 GB/s en
+el M5, y en las variantes Max y Ultra a 400 y 800 GB/s, cifras que un portátil
+de memoria modular no puede alcanzar sin pagar un coste energético que no cabe
+en el chasis.
+
+\section{Las figuras de mérito}
+
+\begin{table}[b]
+\small
+\caption{Figuras de mérito del silicio. La referencia Intel es el procesador
+del MacBook Pro de 13 pulgadas de 2020, el equipo al que sustituyó
+directamente el primer M1. Las potencias de paquete y la fila de rendimiento por vatio
+son estimaciones propias. La última fila compara MacBook Air con MacBook Air,
+y su columna de 2025 corresponde al modelo con M4, el más reciente de esa
+gama con autonomía publicada.}
+\label{cuadro:fom}
+\begin{tabularx}{\textwidth}{@{}Xrrrr@{}}
+\toprule
+\textbf{Figura de mérito} & \textbf{Intel 2020} & \textbf{M1 2020} &
+\textbf{M5 2025} & \textbf{M5/Intel} \\
+\midrule
+Geekbench 6, un núcleo (puntos) & 1.550 & 2.350 & 4.130 & 2,7$\times$ \\
+Geekbench 6, multinúcleo (puntos) & 4.300 & 8.400 & 17.800 & 4,1$\times$ \\
+Ancho de banda de memoria (GB/s) & 60 & 68 & 153 & 2,6$\times$ \\
+Proceso de fabricación (nm) & 10 & 5 & 3 & \\
+Potencia de paquete sostenida (W) & 28 & 20 & 25 & 0,9$\times$ \\
+\addlinespace[2pt]
+\textbf{Multinúcleo por vatio (puntos/W)} & \textbf{154} & \textbf{420} &
+\textbf{712} & \textbf{4,6}$\times$ \\
+Autonomía de vídeo del MacBook Air (h) & 12 & 18 & 18 & 1,5$\times$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+La figura de mérito que ordena el caso es el rendimiento multinúcleo por vatio
+de paquete, porque es la que fija a la vez la autonomía, el volumen del chasis
+y el ruido, que son los tres atributos por los que el cliente paga en un
+portátil. El Cuadro~\ref{cuadro:fom} la sitúa junto a las demás. El salto
+inicial es de 154 a 420 puntos por vatio, un factor de 2,7, y el acumulado
+hasta el M5 es de 4,6.
+
+Sobre la trayectoria posterior, que es la parte del ejemplo que más interesa
+al usuario del producto, la tasa de crecimiento compuesta de la figura de
+mérito multinúcleo entre el M1 (noviembre de 2020) y el M5 (octubre de 2025),
+es decir 4,92 años, es
+
+\begin{equation}
+g \;=\; \left(\frac{17.800}{8.400}\right)^{1/4,92} - 1 \;=\; 0{,}165
+\qquad\Longrightarrow\qquad
+t_{2} \;=\; \frac{\ln 2}{\ln(1+g)} \;=\; 4{,}5 \text{ años}
+\label{eq:cagr}
+\end{equation}
+
+un 16,5 por ciento anual y una duplicación cada cuatro años y medio. Conviene
+ser honesto con lo que esto significa: es una tasa buena y sostenida, pero no
+es extraordinaria en términos históricos, y la parte del salto que impresionó
+en 2020 no se repitió. El cambio de arquitectura se cobra una sola vez.
+
+\begin{figure}[!htb]
+\centering
+\begin{tikzpicture}
+
+% ----- Panel A -----
+\begin{scope}
+  \node[anchor=west, font=\small\bfseries] at (-1.5,4.35)
+       {A. Dónde está cada silicio};
+  \node[anchor=west, font=\scriptsize, text=cGris] at (-1.5,3.95)
+       {Multinúcleo Geekbench 6 frente a potencia de paquete estimada};
+  % ejes
+  \draw[cGris, thin] (0,0) -- (6.9,0);
+  \draw[cGris, thin] (0,0) -- (0,3.75);
+  \foreach \w in {10,20,30}
+    \draw[cGris, thin] ({\px{\w}},0) -- ({\px{\w}},-0.08)
+      node[below, font=\scriptsize, text=cGris] {\w\,W};
+  \foreach \p/\r in {5/5.000,10/10.000,15/15.000}
+    \draw[cGris, thin] (0,{\py{\p}}) -- (-0.08,{\py{\p}})
+      node[left, font=\scriptsize, text=cGris] {\r};
+  % rectas de isoeficiencia
+  \draw[cX86, dashed, thin] (0,0) -- (6.9,{6.9*0.1427});
+  \node[font=\scriptsize, text=cX86, rotate=8.1] at (5.85,0.71)
+       {154 puntos/W};
+  \draw[cApple, dashed, thin] (0,0) -- (5.3,{5.3*0.660});
+  \node[font=\scriptsize, text=cApple, rotate=33.4] at (2.75,2.02)
+       {712 puntos/W};
+  % puntos
+  \punto{28}{4.3}{cX86}{above left}{Intel 2020\\\tiny i7-1068NG7}
+  \punto{30}{10.7}{cX86}{right}{Intel 2024}
+  \punto{28}{15.0}{cAmbar}{above}{AMD 2024}
+  \punto{23}{14.0}{cAmbar}{below right}{Qualcomm 2024}
+  \punto{20}{8.4}{cApple}{left}{M1}
+  \punto{22}{14.8}{cApple}{above left}{M4}
+  \punto{25}{17.8}{cApple}{above}{M5}
+\end{scope}
+
+% ----- Panel B -----
+\begin{scope}[xshift=9.15cm]
+  \node[anchor=west, font=\small\bfseries] at (-1.5,4.35)
+       {B. La trayectoria, generación a generación};
+  \node[anchor=west, font=\scriptsize, text=cGris] at (-1.5,3.95)
+       {Multinúcleo Geekbench 6, 2020 a 2025};
+  \draw[cGris, thin] (0,0) -- (6.0,0);
+  \draw[cGris, thin] (0,0) -- (0,3.75);
+  \foreach \a in {2020,2022,2024}
+    \draw[cGris, thin] ({\tx{\a}},0) -- ({\tx{\a}},-0.08)
+      node[below, font=\scriptsize, text=cGris] {\a};
+  \foreach \p/\r in {5/5.000,10/10.000,15/15.000}
+    \draw[cGris, thin] (0,{\py{\p}}) -- (-0.08,{\py{\p}})
+      node[left, font=\scriptsize, text=cGris] {\r};
+  % serie Apple
+  \draw[cApple, thick]
+    ({\tx{2020.85}},{\ty{8.4}}) -- ({\tx{2022.45}},{\ty{9.7}}) --
+    ({\tx{2023.8}},{\ty{11.7}}) -- ({\tx{2024.8}},{\ty{14.8}}) --
+    ({\tx{2025.8}},{\ty{17.8}});
+  \hito{2020.85}{8.4}{cApple}{above left}{M1}
+  \hito{2022.45}{9.7}{cApple}{below right}{M2}
+  \hito{2023.8}{11.7}{cApple}{below right}{M3}
+  \hito{2024.8}{14.8}{cApple}{below right}{M4}
+  \hito{2025.8}{17.8}{cApple}{above left}{M5}
+  % serie x86 de referencia
+  \draw[cX86, thick, dashed]
+    ({\tx{2020.2}},{\ty{4.3}}) -- ({\tx{2024.7}},{\ty{10.7}});
+  \hito{2020.2}{4.3}{cX86}{below right}{x86 de 2020}
+  \hito{2024.7}{10.7}{cX86}{below right}{x86 de 2024}
+  % anotación de la tasa
+  \node[font=\scriptsize, text=cVerde, align=left, anchor=west]
+       at (0.35,3.30) {16,5\,\% anual, duplicación cada 4,5 años};
+  \node[font=\scriptsize, text=cX86, align=left, anchor=west]
+       at (2.2,1.05) {23\,\% anual desde la mitad};
+\end{scope}
+
+\end{tikzpicture}
+\caption{Panel A: la posición de cada silicio en el plano rendimiento
+multinúcleo frente a potencia. Las rectas punteadas son isoeficiencias; cuanto
+más inclinada, más rendimiento por vatio. Panel B: la misma figura de mérito a
+lo largo del tiempo. La línea x86 crece más deprisa en términos relativos,
+pero desde la mitad del nivel, y lo hace después de adoptar la memoria en el
+paquete. Las potencias del Panel A son estimaciones propias con una
+incertidumbre del orden de $\pm$20 por ciento; las puntuaciones son medianas
+públicas \autocite{geekbench2026}.}
+\label{fig:fom}
+\end{figure}
+
+\section{El impacto sobre el producto y sobre el consumidor}
+
+\textbf{Sobre el producto.} El MacBook Air pasó de 12 a 18 horas de
+reproducción de vídeo y perdió el ventilador, lo que elimina una pieza móvil,
+una entrada de polvo y el modo de fallo más común del chasis. El MacBook Pro
+de 13 pulgadas pasó de 10 a 20 horas de navegación. En la gama alta, la
+memoria unificada de 400 y 800 GB/s permitió ejecutar en un portátil cargas de
+trabajo (vídeo de alta resolución y, después, modelos de lenguaje locales) que
+antes exigían una estación de sobremesa con GPU discreta.
+
+\textbf{Sobre el consumidor, en beneficio.} El precio de lista no subió: el
+MacBook Air costaba 999 dólares con Intel en 2020, 999 con M1 ese mismo
+noviembre y 999 en 2025, ya con 16 GB de memoria unificada de serie
+\autocite{apple2025air}. Manteniendo el precio y usando la puntuación
+multinúcleo como medida del producto entregado, el coste por punto de
+rendimiento del equipo de entrada cae de unos 0,42 dólares en el Air Intel de
+2020 a 0,12 con el M1 y a 0,068 con el M4 de 2025: una reducción del 84 por
+ciento en cinco años, con el precio nominal congelado.
+
+\textbf{Sobre el consumidor, en coste.} Sería deshonesto presentar solo el
+lado bueno. La adopción eliminó la memoria y el almacenamiento ampliables, la
+GPU externa y el arranque nativo de Windows, de modo que el comprador cambió
+modularidad por integración y quedó atado a la configuración que eligió el
+día de la compra, en un producto cuyo incremento de memoria se factura muy por
+encima del precio del componente. Durante la transición, el software x86 se
+ejecutó traducido por Rosetta 2 con una penalización típica del 20 al 30 por
+ciento, y hubo categorías enteras (virtualización de x86, algunas cadenas de
+herramientas científicas, controladores de periféricos especializados) que
+tardaron dos años o más en estar disponibles, cuando lo estuvieron.
+
+\section{El impacto sobre los competidores y sobre el mercado}
+
+\textbf{Intel} perdió una cuenta del orden de 20 millones de unidades anuales,
+pero el efecto relevante no es esa pérdida sino el cambio de eje competitivo.
+En 2024, con la plataforma Core Ultra 200V, Intel integró la memoria LPDDR5X
+en el propio paquete del procesador \autocite{intel2024lunarlake}, que es
+exactamente la decisión arquitectónica del M1 cuatro años después, y la
+abandonó en la generación siguiente por su coste, lo que ilustra que la
+integración no es gratis para quien vende silicio a terceros y no controla el
+producto final. \textbf{AMD} respondió ensanchando el bus de memoria de sus
+procesadores con gráficos integrados hasta niveles antes reservados a las GPU
+discretas. \textbf{Qualcomm} entró en el mercado del PC en 2024 con núcleos
+diseñados por el equipo de Nuvia, fundado por antiguos arquitectos de los
+núcleos de Apple \autocite{qualcomm2024}. Y \textbf{Microsoft} redefinió su
+gama alrededor de los Copilot+ PC exigiendo una unidad neuronal de al menos 40
+billones de operaciones por segundo \autocite{microsoft2024}, es decir, una
+figura de mérito que en 2020 no formaba parte de la conversación del PC y que
+el M1 ya traía de fábrica.
+
+\textbf{Sobre el mercado}, las ventas netas del segmento Mac pasaron de 28.622
+millones de dólares en el ejercicio 2020 a 35.190 en 2021 y 40.177 en 2022, un
+crecimiento del 40 por ciento en dos ejercicios, con una cuota mundial de
+unidades que subió de en torno al 7 al entorno del 10 por ciento
+\autocite{apple10k,idc2026}. El dato que evita la lectura triunfalista es el
+del ejercicio 2023: 29.357 millones, una caída del 27 por ciento. La adopción
+no inmunizó al producto frente al ciclo del mercado de PC ni frente a la
+resaca de la compra masiva de la pandemia. Lo que sí hizo fue mover a Apple
+del segmento en el que competía por gigahercios a uno en el que compite por
+autonomía y rendimiento por vatio, donde su integración vertical es una
+ventaja estructural y no una preferencia de diseño.
+
+\section{El impacto neto}
+
+Reuniendo las cuatro dimensiones que pide el planteamiento, el balance es el
+siguiente. \textbf{Producto}: 2,0 veces el rendimiento multinúcleo y 2,7 veces
+el rendimiento por vatio respecto del equipo al que sustituyó, con 4,6 veces
+acumuladas hasta el M5 y un crecimiento posterior del 16,5 por ciento anual.
+\textbf{Consumidor}: el mismo precio nominal durante cinco años, un 84 por
+ciento menos de coste por punto de rendimiento y un 50 por ciento más de
+autonomía, a cambio de perder modularidad, compatibilidad nativa con Windows y
+la posibilidad de ampliar el equipo después de comprarlo. \textbf{Competidores}:
+la pérdida de una cuenta grande para Intel y, sobre todo, la obligación de
+copiar la decisión arquitectónica y de entrar en una carrera de eficiencia y
+de capacidad neuronal que no habían elegido. \textbf{Mercado}: un 40 por
+ciento más de ingresos del segmento en dos ejercicios, tres puntos de cuota y
+un cambio en la figura de mérito con la que el sector entero se compara.
+
+Y el contraste con el caso del módulo es, para mí, la lección del ejercicio.
+El sistema de impresión digital cambió el 8,5 por ciento de su matriz para
+ganar un 1,3 por ciento de valor percibido. Esta adopción cambió en torno al
+90 por ciento de la suya para multiplicar su figura de mérito por 2,7 de
+golpe. Las dos decisiones pueden ser correctas: lo que no es comparable es el
+riesgo. La segunda solo era defendible porque el esfuerzo de adopción estaba
+casi todo amortizado antes de empezar, en los diez años y los más de dos mil
+millones de unidades de la serie A del iPhone y del iPad. Quien no tenga esa
+línea base previa no puede leer este caso como una receta.
+
+\section{Limitaciones}
+
+\begin{enumerate}
+\item \textbf{Las potencias de paquete son estimaciones propias}, no medidas
+  de laboratorio, y la figura de mérito central del Cuadro~\ref{cuadro:fom}
+  depende directamente de ellas. Un error del 20 por ciento en el denominador
+  mueve el factor de 4,6 a un rango de 3,8 a 5,8.
+\item \textbf{Geekbench 6 no mide el trabajo del usuario.} Es una medida
+  sintética, comparable entre arquitecturas con reservas, y deja fuera la
+  penalización de la emulación, que durante los dos primeros años fue la
+  experiencia real de buena parte del software.
+\item \textbf{El coste por punto de rendimiento supone que el rendimiento es
+  lo que el comprador paga}, y no lo es: paga pantalla, chasis, sistema
+  operativo y servicio. La cifra sirve para comparar un producto consigo mismo
+  a lo largo del tiempo, no para comparar productos distintos.
+\item \textbf{El recuento de elementos de la matriz delta es propio.} Con una
+  descomposición más fina o más gruesa el porcentaje se mueve; lo que no se
+  mueve es el orden de magnitud frente al 8,5 por ciento del caso del módulo.
+\item \textbf{No puedo separar el efecto del cambio de arquitectura del
+  efecto del proceso de fabricación.} Entre 2020 y 2025 hubo tres saltos de
+  nodo, de 5 a 3 nanómetros, y parte de la mejora acumulada pertenece a TSMC y
+  no al diseño. La comparación del Panel A de la Figura~\ref{fig:fom} atenúa
+  ese problema pero no lo resuelve.
+\item \textbf{La atribución causal de la respuesta de los competidores es
+  interpretativa.} Que Intel integrara la memoria en el paquete en 2024 es un
+  hecho; que lo hiciera por el M1 es una lectura razonable, no una afirmación
+  documentada por la empresa.
+\end{enumerate}
+
+\printbibliography
+
+\end{document}

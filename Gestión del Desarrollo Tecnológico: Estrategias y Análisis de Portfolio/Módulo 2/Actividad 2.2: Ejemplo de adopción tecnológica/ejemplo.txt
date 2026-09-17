@@ -1,0 +1,96 @@
+Paso 1: crear un sistema de referencia
+
+El primer paso consiste en describir el producto actual mediante una matriz de estructura de diseño representativa del sistema. Para ello, primero debemos desglosar el sistema en componentes y/o subsistemas.
+
+Cabe destacar que el alcance y el nivel de detalle de la matriz de estructura de diseño afecta al resto del análisis y a la posterior ΔDSM.
+
+La siguiente imagen muestra la matriz de estructura de diseño de referencia del sistema de impresión. El sistema consta de 84 elementos, donde se incluyen conexiones físicas (negro), flujos de masa (rojo), flujos de energía (verde) y flujos de información (azul).
+
+La construcción de la matriz de estructura de diseño del sistema de impresión digital llevó alrededor de 140 horas. La colaboración con el equipo de ingenieros y de producto resultó esencial.
+
+
+Paso 2: determinar la tecnología para la adopción tecnológica
+
+La siguiente imagen corresponde al sistema del iGen3.
+
+En este caso, una demostración previa de las prestaciones de la tecnología corroboró que el nuevo enfoque basado en la conocida técnica de autocorrección de la densidad era potencialmente viable y podría suplir la carencia identificada. Finalmente, el enfoque fue seleccionado, pero se necesitaban más detalles sobre cómo implementar la tecnología y una evaluación del impacto general de su adopción. La tecnología que se aborda en este caso de estudio debería poder aumentar el valor del producto de la próxima generación al optimizar una de las siguientes figuras de mérito: la variedad de los materiales imprimibles, la velocidad de impresión, la fiabilidad, el coste de funcionamiento y la calidad de la imagen.
+
+Paso 3: crear una matriz de estructura de diseño delta (ΔDSM)
+
+Se ha identificado una necesidad de adopción tecnológica en el paso 2. La matriz de estructura de diseño delta (ΔDSM) es una mera representación de la adopción tecnológica en un producto de referencia.
+
+Pasos para construir una ΔDSM:
+
+    Vaciar todas las celdas de la matriz de estructura de diseño de referencia (DSM).
+    Añadir filas y columnas para los elementos N1-N2 y asignar un nombre a los elementos nuevos en la DSM.
+    Completar las celdas correspondientes de la ΔDSM según el código de colores con los elementos y conexiones añadidos, eliminados o modificados recientemente.
+    Tenga en cuenta que los cambios que afectan directa e indirectamente (propagados) a la nueva tecnología deben incluirse en la ΔDSM (Eckert et al., 2004; Griffin et al., 2007).
+
+A continuación, se muestra la ΔDSM tras la adopción de la tecnología de autocorrección de la densidad.
+
+La imagen recoge únicamente aquellos elementos que se han visto afectados por la adopción de la nueva tecnología. Hay un total de 87 cambios: 15 elementos (componentes) han sido añadidos, eliminados o sometidos a revisión; se han efectuado 33 cambios en conexiones físicas; el flujo de masa no ha sufrido cambios; el flujo de energía ha sufrido 7 cambios, y el flujo de información ha sufrido 32 cambios.
+
+
+Paso 4: calcular el esfuerzo de la adopción tecnológica
+
+Para calcular el esfuerzo de la adopción tecnológica, empleamos el número de conexiones y elementos de la DSM y de la ΔDSM.
+
+Resulta que la adopción de las 34 tecnologías de corrección de imagen han supuesto un cambio del 8,5 % con respecto al sistema de referencia.
+
+De la ΔDSM obtenemos una estimación del esfuerzo total en términos de ingeniería, tiempo y recursos que se requiere para que la adopción tecnológica sea viable. El esfuerzo de la adopción tecnológica puede clasificarse en una de las tres categorías siguientes:
+
+    Diseño de componente/esfuerzo de rediseño
+    Interfaz de diseño/esfuerzo de rediseño
+    Esfuerzo que resulta de integrar un sistema (con fase de prueba y validación incluidas)
+
+Paso 5: modelos de rendimiento y coste
+
+En este caso, la introducción de una nueva tecnología en el sistema conlleva el desarrollo de un nuevo modelo de rendimiento capaz de predecir el rendimiento percibido por el cliente J a partir de las 35 variables de ingeniería que están a disposición del equipo de ingeniería y tecnología. El modelo resultante se combinó y correlacionó con los resultados de la prueba de laboratorio para aumentar la precisión de las predicciones de rendimiento.
+
+Se desarrollaron modelos de coste nuevos para calcular la variación del coste de fabricación por unidad y del coste por impresión efectuada con el nuevo sistema de impresión en el sistema general. Para ello, se tuvo en cuenta la información recolectada previamente de otros sistemas de impresión (iGen3), donde la nueva tecnología podría ser potencialmente integrada.
+
+El coste de la impresión puede verse afectado por diversos factores, incluso, por ejemplo, el coste de los materiales y el de la prestación del servicio de impresión.
+
+
+
+Paso 6: calcular el valor V(g) del producto de referencia
+
+Una vez que disponemos de toda la información técnica necesaria para llevar a cabo la adopción tecnológica, debemos calcular el valor del producto actual en el segmento de mercado en el que compite.
+
+El sistema de impresión de este caso de estudio compite con otros productos en el segmento de mercado de la impresión digital.
+
+Según los datos de este segmento de mercado del 2006, el valor del producto de referencia, Vi, equivale a:
+
+El valor K (elasticidad del precio) se ajusta para que el valor del producto Vi sea aproximadamente el doble del precio del producto Pi, lo que concuerda con el supuesto que establece Cook en la industria del automóvil.
+
+Para estimar el valor del cambio que sufrirá el producto a raíz de la adopción de la nueva tecnología, necesitamos la curva de atributos del producto para la métrica de rendimiento seleccionada.
+
+Paso 7: calcular el valor del producto tras la adopción tecnológica
+
+Podemos calcular el valor del sistema de impresión tras la adopción tecnológica a partir de la curva de valor de los atributos generada en el paso 6 y de la métrica de rendimiento proporcionada por el equipo de ingenieros.
+
+A continuación, se muestra la curva de valor normalizado de la figura de mérito relevante para el cliente:
+
+La imagen anterior muestra la curva de valor (normalizado) de la métrica de rendimiento, donde se aprecia la posición actual del producto y la posición que tendrá una vez implementada la nueva tecnología. El valor apenas experimenta una mejora del 1,3 %.
+
+Pasos 8 y 9: determinar el impacto en términos de beneficios y coste
+
+La nueva tecnología ha permitido optimizar el rendimiento del sistema, relevante para el cliente, así como aumentar el número de unidades vendidas y disminuir el coste del servicio para la empresa al reducir el tiempo de inactividad del sistema de impresión, la mano de obra y el número de personas involucradas.
+
+A continuación, se ofrece una estimación general del impacto de la nueva tecnología en términos de beneficios y coste:
+
+    El nuevo producto se producirá por un periodo de cinco años.
+    El tiempo de vida útil del producto es de cinco años.
+    El aumento de los beneficios deriva de la reducción del coste del servicio (menos mantenimiento requerido) cada 1.000 impresiones.
+    Se identifica un coste de inversión no recurrente por un periodo de tres años antes del lanzamiento del producto como consecuencia de la adopción tecnológica (aumento del coste de I+D para desarrollar y certificar el producto y la tecnología).
+    El coste por unidad aumenta cuando se introduce la nueva tecnología en productos individuales.
+
+El equipo de ingeniería ha informado del coste de inversión no recurrente, del coste unitario tras la adopción tecnológica y del ahorro en costes que obtendremos por cada 1.000 impresiones.
+
+Gráfica nominal del ΔNPV de la nueva tecnología de impresión digital:
+
+Paso 10: análisis probabilístico del valor actual neto
+
+En este caso, el rango general de los flujos de caja previstos se mantiene positivo, incluso en los escenarios más pesimistas. El ΔNPV que obtiene el fabricante por adoptar la nueva tecnología siempre está por encima del 0,6. Cuando hay muchas tecnologías candidatas, podemos calcular el ΔNPV de cada una con el objeto de escoger aquella que conlleve un retorno de la inversión mayor y un nivel de riesgo asumible.
+
+La tecnología de autocorrección de la densidad se integró finalmente en el producto iGen4 de Xerox, que llegó a ganar más de 20 premios en su ámbito y se considera uno de los mejores productos desarrollados por la empresa.
