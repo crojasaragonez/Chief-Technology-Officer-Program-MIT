@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Actividad 3.1. Veintiséis decibelios en diez metros: medición del RSSI de un ordenador portátil con iw</title>
+<style>
+  body { font-family: Georgia, "Times New Roman", serif; font-size: 16px;
+         line-height: 1.55; color: #1a1a1a; max-width: 780px;
+         margin: 2rem auto; padding: 0 1rem; }
+  h1 { font-size: 1.6em; line-height: 1.25; margin: 0 0 .2em; }
+  h2 { font-size: 1.25em; margin: 1.8em 0 .5em; }
+  h3 { font-size: 1.05em; margin: 1.4em 0 .4em; }
+  p  { margin: 0 0 .9em; }
+  ul, ol { margin: 0 0 .9em; padding-left: 1.5em; }
+  li { margin-bottom: .45em; }
+  img { max-width: 100%; height: auto; display: block; margin: .6em auto .3em; }
+  table { border-collapse: collapse; width: 100%; margin: .8em 0 1em;
+          font-size: .88em; }
+  th, td { border: 1px solid #b8b8b8; padding: 5px 8px; vertical-align: top;
+           text-align: left; }
+  th { background: #eae2d8; }
+  caption { caption-side: top; text-align: left; font-size: .88em;
+            padding-bottom: .4em; }
+  .sub { font-size: 1.05em; color: #444; margin: 0 0 1.6em; }
+  .cap { font-size: .82em; color: #555; line-height: 1.4; margin: 0 0 1.6em; }
+  .num { text-align: right; }
+  blockquote { margin: 1em 0 1.2em; padding: .1em 0 .1em 1.1em;
+               border-left: 3px solid #603e94; color: #262626; }
+  .eq { text-align: center; font-size: 1.05em; margin: .9em 0 1.1em; }
+  pre { background: #f4f1ec; border: 1px solid #ddd6cc; padding: .6em .8em;
+        font-family: "DejaVu Sans Mono", Consolas, monospace; font-size: .82em;
+        line-height: 1.45; overflow-x: auto; margin: .6em 0 1em; }
+  @media print {
+    body { margin: 0 auto; }
+    table, tr, img, pre, blockquote { break-inside: avoid; }
+    h2, h3 { break-after: avoid; }
+    caption { break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Veintiséis decibelios en diez metros</h1>
+<p class="sub"><em>Medición del indicador de fuerza de la señal recibida (RSSI) de un ordenador portátil con <code>iw</code>, y ajuste de un modelo de pérdida logarítmica con la distancia</em><br>
+Carlos Luis Rojas Aragonés</p>
+
+<p><strong>Actividad 3.1.</strong> Calcule el indicador de fuerza de la señal recibida (RSSI) de un ordenador portátil. El planteamiento pide distanciarse del rúter de forma gradual y registrar la fuerza de la señal en dBm.</p>
+
+<blockquote>
+<p>Lo que medí en cuatro posiciones: la señal cae de <strong>&minus;41 dBm</strong> pegado al rúter a <strong>&minus;67 dBm</strong> a diez metros. Son 26 dB, es decir que la potencia que llega a la antena del portátil se divide por unas <strong>400 veces</strong>, y el enlace sigue funcionando. La caída no es proporcional a la distancia sino a su logaritmo: los tres puntos alejados se ajustan a un exponente de pérdida <em>n</em> = 1,56 con <em>R</em>&sup2; = 0,96.</p>
+</blockquote>
+
+<h2>1. Qué magnitud se mide, exactamente</h2>
+
+<p>Conviene separar dos cosas que el enunciado junta. El estándar IEEE 802.11 define el RSSI como un entero sin unidades en una escala propia de cada fabricante, entre 0 y un valor máximo que el propio fabricante elige; no es una potencia y no es comparable entre tarjetas. Lo que interesa en ingeniería es la magnitud física que hay detrás: la <strong>potencia recibida</strong>, expresada en dBm, es decir en decibelios referidos a un milivatio:</p>
+
+<p class="eq"><em>P</em>[dBm] = 10 &middot; log<sub>10</sub>(<em>P</em>[mW] / 1 mW)</p>
+
+<p>En Linux el controlador de la tarjeta entrega al núcleo ese valor ya convertido a dBm a través de la interfaz <code>nl80211</code>, y es el número que aparece en el campo <code>signal</code>. Por eso todo el documento trabaja en dBm y no en porcentaje: el porcentaje es una escala inventada sobre el dato, no el dato.</p>
+
+<h2>2. La elección de la herramienta</h2>
+
+<p>Medí con <strong><code>iw</code></strong>, la utilidad de línea de órdenes que habla directamente con el subsistema inalámbrico del núcleo Linux mediante <code>nl80211</code>. El Cuadro 1 recoge las alternativas que consideré y el motivo de descartarlas.</p>
+
+<table>
+  <caption><strong>Cuadro 1.</strong> Herramientas consideradas para leer la potencia recibida. El criterio decisivo es si devuelven dBm o una escala derivada.</caption>
+  <tr><th style="width: 24%;">Herramienta</th><th style="width: 30%;">Qué entrega</th><th>Decisión</th></tr>
+  <tr><td><code>iw dev … link</code></td><td><code>signal</code> en dBm, más frecuencia, tasas de transmisión y BSSID</td><td><strong>Elegida.</strong> Es la magnitud física, sin escalar; no necesita privilegios de administrador para leer el enlace; la salida es estable y se puede registrar con un guion</td></tr>
+  <tr><td><code>iwconfig</code></td><td><code>Signal level</code>, a veces en dBm y a veces en unidades arbitrarias según el controlador</td><td>Descartada. Se apoya en las Wireless Extensions, una interfaz obsoleta y sin mantenimiento desde hace más de una década</td></tr>
+  <tr><td><code>nmcli dev wifi</code></td><td>Columna <code>SIGNAL</code> de 0 a 100</td><td>Descartada. Ese porcentaje es una correspondencia definida por NetworkManager sobre el valor en dBm: pierde información y no es la unidad que pide el planteamiento</td></tr>
+  <tr><td><code>wavemon</code></td><td>Panel interactivo con la señal en dBm y su historia reciente</td><td>Descartada como instrumento, útil como comprobación. Es una capa de presentación sobre las mismas llamadas que usa <code>iw</code>, de modo que no aporta un dato distinto y sí dificulta el registro reproducible</td></tr>
+  <tr><td><code>netsh wlan show interfaces</code> (Windows) y las aplicaciones de móvil</td><td>Porcentaje de calidad, o dBm sin calibración documentada</td><td>Descartadas. O no dan dBm, o no dicen cómo los obtienen</td></tr>
+</table>
+
+<p>Hay un punto que no es de comodidad sino de método: la cadena de medida debe ser la más corta posible entre el radio y el número que se anota. <code>iw</code> es el último eslabón antes del controlador, y todo lo demás de esta lista está por encima de él.</p>
+
+<h2>3. El comando y la salida</h2>
+
+<p>La interfaz inalámbrica del portátil es <code>wlp194s0</code>. La orden que devuelve el estado del enlace asociado es:</p>
+
+<pre>/usr/sbin/iw dev wlp194s0 link</pre>
+
+<p>La Figura 1 es una captura real de esa salida. Corresponde a una posición intermedia tomada antes de la serie de medidas, y se incluye para documentar el formato del que se extrae el dato, no como uno de los cuatro puntos del Cuadro 3.</p>
+
+<img src="output.png" alt="Salida de iw dev wlp194s0 link, con el campo signal resaltado en -58 dBm">
+<p class="cap"><strong>Figura 1.</strong> Salida de <code>iw dev wlp194s0 link</code>. El campo resaltado, <code>signal: &minus;58 dBm</code>, es la potencia recibida de las tramas más recientes del punto de acceso asociado.</p>
+
+<p>La captura permite además fijar las condiciones del enlace, que hay que declarar porque condicionan la lectura de cualquier medida de señal:</p>
+
+<table>
+  <caption><strong>Cuadro 2.</strong> Campos de la salida y lo que aportan a la medición.</caption>
+  <tr><th style="width: 30%;">Campo</th><th style="width: 24%;">Valor</th><th>Para qué sirve</th></tr>
+  <tr><td><code>Connected to</code></td><td>40:ed:00:55:54:ee</td><td>BSSID del punto de acceso. Comprobarlo en cada punto garantiza que no hubo un cambio de radio a mitad de la serie, lo que invalidaría la comparación</td></tr>
+  <tr><td><code>SSID</code></td><td>ROJAS MORALES</td><td>Red doméstica propia, condición necesaria para medir con legitimidad</td></tr>
+  <tr><td><code>freq</code></td><td>5200 MHz</td><td>Canal 40 de la banda de 5 GHz. La banda importa: a 5 GHz la atenuación con la distancia y con los obstáculos es mayor que a 2,4 GHz</td></tr>
+  <tr><td><code>signal</code></td><td>&minus;58 dBm</td><td><strong>El dato de la actividad</strong></td></tr>
+  <tr><td><code>rx bitrate</code> / <code>tx bitrate</code></td><td>702,0 y 585,0 Mbit/s, VHT-MCS 8 y 7, 80 MHz, 2 flujos</td><td>Consecuencia observable de la señal: con 802.11ac, dos flujos espaciales y 80 MHz de canal, la tarjeta sostiene la modulación alta mientras el margen se lo permite</td></tr>
+  <tr><td><code>beacon int</code> / <code>dtim period</code></td><td>100 y 1</td><td>Cada 100 unidades de tiempo (unos 102 ms) llega una trama de baliza, de modo que el valor de <code>signal</code> se refresca varias veces por segundo aunque no haya tráfico</td></tr>
+</table>
+
+<h2>4. Protocolo de medición</h2>
+
+<ol>
+  <li>Cuatro posiciones, a 0, 3, 6 y 10 metros del rúter, medidas con cinta métrica desde el chasis del punto de acceso hasta el portátil.</li>
+  <li>Portátil abierto, con la misma orientación de la pantalla en las cuatro posiciones y apoyado a la misma altura, para no cambiar el diagrama de radiación de la antena entre puntos.</li>
+  <li>En cada posición, aproximadamente treinta segundos de reposo antes de leer, para que el valor informado por el controlador se estabilice tras el desplazamiento.</li>
+  <li>Verificación del BSSID en cada lectura: la serie completa se tomó contra el mismo punto de acceso y el mismo canal de 5 GHz, sin reasociación.</li>
+  <li>Una lectura por posición, anotada en <code>muestras.csv</code>.</li>
+</ol>
+
+<h2>5. Resultados</h2>
+
+<table>
+  <caption><strong>Cuadro 3.</strong> Medidas registradas. La potencia en nanovatios se obtiene de <em>P</em>[mW] = 10<sup>(dBm/10)</sup> y traduce a unidades lineales lo que la escala logarítmica comprime. La columna del modelo es el ajuste del apartado 6.</caption>
+  <tr><th>Distancia (m)</th><th class="num">Señal (dBm)</th><th class="num">Potencia (nW)</th><th class="num">&Delta; frente a 0 m (dB)</th><th class="num">Modelo (dBm)</th><th class="num">Residuo (dB)</th></tr>
+  <tr><td>0 (junto al rúter)</td><td class="num">&minus;41</td><td class="num">79,4</td><td class="num">0</td><td class="num">no aplica</td><td class="num">no aplica</td></tr>
+  <tr><td>3</td><td class="num">&minus;59</td><td class="num">1,26</td><td class="num">&minus;18</td><td class="num">&minus;59,4</td><td class="num">+0,4</td></tr>
+  <tr><td>6</td><td class="num">&minus;65</td><td class="num">0,32</td><td class="num">&minus;24</td><td class="num">&minus;64,1</td><td class="num">&minus;0,9</td></tr>
+  <tr><td>10</td><td class="num">&minus;67</td><td class="num">0,20</td><td class="num">&minus;26</td><td class="num">&minus;67,5</td><td class="num">+0,5</td></tr>
+</table>
+
+<p>Tres observaciones que el cuadro deja ver y que conviene no pasar por alto:</p>
+
+<ul>
+  <li><strong>La escala engaña en el sentido tranquilizador.</strong> Pasar de &minus;41 a &minus;67 dBm parece un deterioro modesto porque son 26 números; en potencia es dividir por 398. De 79,4 nanovatios a 0,20.</li>
+  <li><strong>El rendimiento decreciente es inmediato.</strong> Los primeros tres metros cuestan 18 dB, es decir el 69 por ciento de toda la pérdida de la serie. Los siete metros siguientes cuestan 8 dB.</li>
+  <li><strong>El enlace no se degrada al ritmo de la señal.</strong> A &minus;58 dBm la tarjeta seguía negociando VHT-MCS 8 con dos flujos. El RSSI acota lo que el enlace puede llegar a hacer, pero no predice por sí solo la tasa efectiva, que depende también del ruido, de la interferencia cocanal y del reparto del tiempo de antena.</li>
+</ul>
+
+<h2>6. Lectura: el exponente de pérdida</h2>
+
+<p>La forma estándar de leer estas cuatro cifras es el modelo de pérdida logarítmica con la distancia, que en términos de potencia recibida se escribe</p>
+
+<p class="eq"><em>P</em>(<em>d</em>) = <em>A</em> &minus; 10 <em>n</em> log<sub>10</sub>(<em>d</em>) &nbsp;&nbsp;&nbsp;(1)</p>
+
+<p>donde <em>A</em> es la potencia recibida a un metro y <em>n</em> el exponente de pérdida, que vale 2 en espacio libre y sube por encima de 3 cuando hay tabiques y obstáculos que atravesar. Ajustando (1) por mínimos cuadrados sobre los tres puntos de 3, 6 y 10 metros, el punto de 0 metros queda fuera porque el logaritmo de cero no está definido y porque a esa distancia no se cumplen las condiciones de campo lejano que el modelo supone:</p>
+
+<p class="eq"><em>P</em>(<em>d</em>) = &minus;51,96 &minus; 15,57 &middot; log<sub>10</sub>(<em>d</em>) &nbsp;&nbsp;&nbsp;&rarr;&nbsp;&nbsp;&nbsp; <em>n</em> = 1,56</p>
+
+<p>con <em>R</em>&sup2; = 0,963 y un error cuadrático medio de 0,65 dB, por debajo del escalón de un decibelio con el que el controlador informa el dato. El ajuste, por tanto, es tan bueno como la resolución del instrumento permite comprobar.</p>
+
+<img src="figuras/grafico.png" alt="Gráfico de la potencia recibida frente a la distancia: -41 dBm a 0 m, -59 a 3 m, -65 a 6 m y -67 a 10 m, con la curva del modelo logarítmico ajustada a los tres últimos puntos">
+<p class="cap"><strong>Figura 2.</strong> Potencia recibida frente a distancia al rúter. Los puntos son las cuatro medidas del Cuadro 3; la curva discontinua es el modelo (1) ajustado a los puntos de 3, 6 y 10 metros y prolongado hasta once. El punto de 0 metros queda claramente por encima de la prolongación de la curva, como corresponde a una medida tomada fuera del intervalo ajustado.</p>
+
+<p><strong>Qué significa <em>n</em> = 1,56.</strong> Un exponente por debajo de 2 quiere decir que entre los 3 y los 10 metros la señal se atenuó <em>menos</em> de lo que lo haría en espacio libre: 8 dB observados frente a los 10,5 dB que predice la propagación libre para ese mismo tramo. No es una anomalía: en interiores es el efecto conocido de la propagación guiada, cuando las paredes de un pasillo o una habitación reflejan el frente de onda y las réplicas llegan a sumarse en fase con la señal directa, de modo que el recinto se comporta parcialmente como una guía de onda. La lectura práctica es que en este trayecto el entorno ayudaba en lugar de estorbar, lo que solo ocurre con visión directa y sin tabiques intermedios.</p>
+
+<p><strong>Y qué significa el punto de 0 metros.</strong> Los 18 dB de caída entre la posición de contacto y los 3 metros son demasiados para el modelo ajustado: si esa posición estuviera a un metro, el ajuste predeciría solo 7,4 dB de caída hasta los 3 metros. La explicación no es que el modelo falle sino que «0 metros» no es cero: si se supone propagación libre entre ambas posiciones, 18 dB corresponden a una separación real de antenas de unos 0,4 metros. Es decir que la primera medida se tomó al lado del rúter, no en su misma antena, y que la pendiente empinada de ese primer tramo es exactamente lo que cabe esperar cuando la distancia se duplica varias veces en poco espacio.</p>
+
+<h2>7. Límites de lo medido</h2>
+
+<ul>
+  <li><strong>Una sola lectura por punto.</strong> Sin repeticiones no hay estimación de dispersión, y la señal en interiores fluctúa por desvanecimiento multitrayecto varios decibelios en el mismo sitio. Lo correcto habría sido promediar del orden de treinta lecturas por posición con un guion, en lugar de anotar una.</li>
+  <li><strong>Tres puntos para ajustar dos parámetros.</strong> El intervalo de confianza de <em>n</em> = 1,56 es, con esa muestra y con un escalón de cuantificación de 1 dB, demasiado ancho para afirmar que el valor real está por debajo de 2. La afirmación defendible es que la atenuación observada es compatible con propagación guiada y no lo es con un trayecto obstruido.</li>
+  <li><strong>El parámetro <em>A</em> no es un balance de enlace.</strong> El ajuste da &minus;51,96 dBm a un metro, pero ese valor sale de extrapolar hacia dentro un ajuste hecho entre 3 y 10 metros, y no incluye la calibración absoluta del receptor. Compararlo con la potencia nominal del punto de acceso para deducir ganancias de antena sería un uso indebido del número.</li>
+  <li><strong>Las extrapolaciones, como tales.</strong> El modelo sitúa el umbral de &minus;70 dBm en 14 metros y el de &minus;75 dBm en 30, pero ambos caen fuera del intervalo medido y cualquier tabique intermedio los acercaría de golpe.</li>
+  <li><strong>No se midió el ruido.</strong> Sin el nivel de ruido no hay relación señal a ruido, que es la magnitud que gobierna de verdad la modulación alcanzable. El RSSI solo cuenta la mitad de la historia.</li>
+</ul>
+
+<h2>8. Conclusión</h2>
+
+<p>La actividad pedía registrar la fuerza de la señal en dBm alejándose del rúter, y el registro está en el Cuadro 3: de &minus;41 dBm en contacto a &minus;67 dBm a diez metros. Lo que el ejercicio enseña, más allá de las cuatro cifras, son tres cosas.</p>
+
+<p>La primera es de unidades. El decibelio comprime, y esa compresión es justamente su utilidad y su trampa: 26 dB se leen como un cambio pequeño y son un factor de 400 en potencia. Cualquier decisión de diseño que se tome sobre la lectura lineal de una escala logarítmica estará mal calibrada.</p>
+
+<p>La segunda es de forma funcional. La señal no cae con la distancia sino con su logaritmo, de modo que el coste de alejarse no es constante: los tres primeros metros se llevaron el 69 por ciento de la pérdida total. En el diseño de una cobertura inalámbrica, eso es lo que hace que la posición del punto de acceso importe más que su potencia.</p>
+
+<p>La tercera es de método, y es la que me parece más transferible. El instrumento elegido determina qué se puede afirmar después. Si hubiera medido con <code>nmcli</code> y anotado porcentajes, tendría cuatro números decrecientes y ninguna posibilidad de ajustar un exponente de pérdida, de convertir a nanovatios ni de comparar con la propagación en espacio libre; el porcentaje habría destruido, antes de escribirlo, todo lo que el apartado 6 pudo calcular. Elegir <code>iw</code> no fue una preferencia de herramienta: fue la condición para que la medida admitiera un modelo.</p>
+
+<h2>Referencias</h2>
+
+<p class="cap">IEEE (2021). <em>IEEE Standard for Information Technology. Telecommunications and Information Exchange between Systems. Local and Metropolitan Area Networks. Part 11: Wireless LAN Medium Access Control (MAC) and Physical Layer (PHY) Specifications</em>, IEEE Std 802.11-2020.<br>
+Rappaport, T. S. (2024). <em>Wireless Communications: Principles and Practice</em>, 3.ª ed., Cambridge University Press. Modelo de pérdida logarítmica con la distancia y valores típicos del exponente <em>n</em> en interiores.<br>
+Proyecto <code>iw</code> y <code>nl80211</code>, documentación del subsistema inalámbrico del núcleo Linux, <code>wireless.docs.kernel.org</code>.</p>
+
+</body>
+</html>
