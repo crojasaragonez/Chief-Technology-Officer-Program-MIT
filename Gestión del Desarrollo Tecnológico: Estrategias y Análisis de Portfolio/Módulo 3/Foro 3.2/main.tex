@@ -1,0 +1,1234 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage[version=4]{mhchem}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,backgrounds,patterns,decorations.pathreplacing}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.3cm}
+% Los rótulos de las figuras usan nodos de ancho fijo con texto alineado, y la
+% bibliografía compone en modo sloppy: ambos generan avisos de línea holgada
+% que son cosméticos. Se silencian para que `make check` siga siendo sensible
+% a los desbordes reales.
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.42em}
+\setlist{nosep}
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.06}
+\renewcommand{\floatpagefraction}{0.72}
+\setcounter{topnumber}{2}
+\setcounter{totalnumber}{3}
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy\small}
+\setlength{\bibitemsep}{0.28em}
+\setlength{\bibhang}{1.4em}
+
+\sisetup{
+  output-decimal-marker = {,},
+  group-separator = {.},
+  group-minimum-digits = 4,
+  detect-all
+}
+
+% Colores: un color por paradigma de comunicación (banda S, banda X, banda Ka
+% y óptico), el rojo de los límites físicos, el gris de los ejes, el violeta
+% del caso de contraste y el verde de lo que se sostiene.
+\definecolor{cS}{RGB}{62,132,168}
+\definecolor{cX}{RGB}{26,58,102}
+\definecolor{cKa}{RGB}{186,86,30}
+\definecolor{cOpt}{RGB}{42,124,78}
+\definecolor{cLim}{RGB}{176,42,42}
+\definecolor{cGris}{RGB}{128,124,118}
+\definecolor{cNet}{RGB}{104,62,148}
+\definecolor{cVerde}{RGB}{56,120,86}
+\definecolor{cDato}{RGB}{36,102,148}
+
+% --- Figura 1: la envolvente de la Red del Espacio Profundo -----------------
+% x: año 1955 a 2035; y: logaritmo decimal de bits por segundo a 5 UA
+\newcommand{\ex}[1]{((#1)-1955)*0.1800}
+\newcommand{\ey}[1]{((#1)+13.6)*0.2450}
+% barras horizontales de tasa (paneles B de las figuras 1 y 3)
+\newcommand{\tx}[1]{(#1)*4.30}
+% #1 y, #2 tasa, #3 color, #4 rótulo izquierdo, #5 rótulo derecho
+\newcommand{\barraT}[5]{%
+  \node[left, text width=4.55cm, align=right, font=\scriptsize] at (-0.12,#1)
+       {#4};%
+  \fill[#3] (0,#1-0.185) rectangle ({\tx{#2}},#1+0.185);%
+  \node[right, font=\scriptsize\bfseries, text=#3] at ({\tx{#2}+0.12},#1)
+       {#5};%
+}
+% la misma barra con la escala ampliada que necesita la figura 3
+\newcommand{\ux}[1]{(#1)*21.00}
+\newcommand{\barraU}[5]{%
+  \node[left, text width=4.55cm, align=right, font=\scriptsize] at (-0.12,#1)
+       {#4};%
+  \fill[#3] (0,#1-0.20) rectangle ({\ux{#2}},#1+0.20);%
+  \node[left, font=\scriptsize\bfseries, text=white] at ({\ux{#2}-0.12},#1)
+       {#5};%
+}
+
+% --- Figura 2: las asíntotas y la escalera de frecuencia --------------------
+\newcommand{\dx}[1]{(#1)*3.55}
+% #1 y, #2 décadas extraídas, #3 décadas restantes, #4 rótulo, #5 nota
+\newcommand{\barraA}[5]{%
+  \node[left, text width=3.9cm, align=right, font=\scriptsize] at (-0.12,#1)
+       {#4};%
+  \fill[cDato] (0,#1-0.185) rectangle ({\dx{#2}},#1+0.185);%
+  \draw[cLim, pattern=north east lines, pattern color=cLim!55]
+       ({\dx{#2}},#1-0.185) rectangle ({\dx{#2}+\dx{#3}},#1+0.185);%
+  \node[right, font=\scriptsize, text=cGris!40!black, align=left]
+       at ({\dx{#2}+\dx{#3}+0.14},#1) {#5};%
+}
+\newcommand{\fy}[1]{(#1)*0.455}
+
+% --- Figura 3: la velocidad de acceso a internet ----------------------------
+\newcommand{\nx}[1]{((#1)-1983)*0.2980}
+\newcommand{\ny}[1]{((#1)-2.0)*0.5150}
+
+% --- Figura 4: las tres series y los tres niveles ---------------------------
+\newcommand{\rx}[1]{((#1)-1955)*0.1560}
+\newcommand{\ry}[1]{(#1)*4.30}
+
+\title{\vspace{-1.2cm}\textbf{Veinte órdenes de magnitud y cuatro asíntotas}\\
+\large Las cuatro afirmaciones sobre el progreso tecnológico, medidas sobre
+los datos de la Red del Espacio Profundo y contrastadas con la velocidad de
+acceso a internet}
+\author{Carlos Luis Rojas Aragonés\\
+\small Gestión del Desarrollo Tecnológico: Estrategias y Análisis de Portfolio}
+\date{\small 22 de septiembre de 2026}
+
+\begin{document}
+
+\maketitle
+\vspace{-0.8em}
+
+\section{Las cuatro afirmaciones, respondidas en corto}
+
+El planteamiento ofrece cuatro afirmaciones sobre cómo progresan las
+tecnologías y pide decidir cuáles son verdaderas. Mi respuesta corta es que la
+pregunta, tal como está redactada, no tiene una respuesta única, y que eso no
+es una evasiva sino el resultado de medir: \textbf{las cuatro afirmaciones son
+la misma curva mirada a tres alturas distintas}, y cada una es verdadera a una
+altura y falsa a las otras. El Cuadro~\ref{cuadro:ficha} lo resume; el resto
+del documento lo sostiene con los números del propio caso.
+
+\begin{table}[b]
+\small
+\caption{Las cuatro afirmaciones del planteamiento, con el veredicto y el
+apartado donde se sostiene con el cálculo. \enquote{Décadas al año} es el
+número de órdenes de magnitud que la figura de mérito gana cada año.}
+\label{cuadro:ficha}
+\begin{tabularx}{\textwidth}{@{}p{0.4cm}>{\raggedright\arraybackslash}p{3.35cm}>{\raggedright\arraybackslash}p{2.5cm}X@{}}
+\toprule
+& \textbf{Afirmación} & \textbf{Veredicto} & \textbf{Por qué} \\
+\midrule
+1 & Todas saturan en una asíntota; el progreso exponencial no existe
+  & Cierta la premisa,\newline falsa la conclusión
+  & Las asíntotas existen y aquí se \emph{demuestran}, no se observan: en 1995
+    la codificación de la DSN ya había consumido el 80 por ciento de toda la
+    ganancia que el teorema de Shannon permitirá jamás. Pero la función ganó
+    20,8 órdenes de magnitud en 64 años (apartado~\ref{sec:af1}) \\
+\addlinespace[2pt]
+2 & Exponencial con tasa decreciente por el ingreso marginal decreciente
+  & Cierta aquí,\newline falsa como ley
+  & La envolvente de la DSN cae de 0,889 a 0,121 décadas al año, así que la
+    conclusión se cumple. Pero el acceso a internet sostuvo 0,179 durante 42
+    años, y el mecanismo que actúa no es un rendimiento marginal genérico sino
+    asíntotas con nombre (apartado~\ref{sec:af2}) \\
+\addlinespace[2pt]
+3 & Exponencial a tasa constante por alternancia de curvas S
+  & \textbf{La más útil}\newline de las cuatro
+  & El mecanismo es literalmente lo que dibuja el gráfico de la JPL: banda S,
+    banda X, banda Ka y óptico. Pero la alternancia \emph{sostiene} el
+    progreso, no garantiza la tasa: en la DSN alterna y aun así decelera
+    (apartado~\ref{sec:af3}) \\
+\addlinespace[2pt]
+4 & Exponencial con tasa creciente por las capacidades humanas
+  & No la sostiene\newline ningún dato realizado
+  & El único tramo acelerado del gráfico de la JPL es el que todavía no ha
+    ocurrido. Y \textcite{bloom2020} miden lo contrario: sostener la tasa de
+    Moore exige hoy 18 veces más investigadores que en 1971
+    (apartado~\ref{sec:af4}) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection*{Lo que encontré, dicho por adelantado}
+
+\begin{quote}
+\textbf{La afirmación 3 describe el mecanismo, la 1 describe el componente, y
+la 2 y la 4 son propiedades empíricas de cada tecnología concreta, no leyes.}
+La Red del Espacio Profundo ganó \textbf{20,8 órdenes de magnitud en 64 años},
+lo que refuta la afirmación 1 en su conclusión; pero su tasa se derrumbó de
+0,889 décadas al año en la era de banda S a 0,121 en la de banda Ka, con una
+\textbf{meseta plana de doce años entre 1993 y 2005}, lo que confirma la
+afirmación 2 y refuta la 4. La velocidad de acceso doméstico a internet, en
+cambio, sostuvo \textbf{0,179 décadas al año durante 42 años}, un
+\num{51} por ciento anual, atravesando tres medios físicos distintos: eso
+confirma la afirmación 3 en su enunciado completo. Misma pregunta, dos
+respuestas opuestas, medidas con la misma unidad.
+\end{quote}
+
+\subsection*{Nota sobre las cifras}
+
+Distingo tres clases de número, porque mezclarlas es la forma más rápida de
+que un argumento sobre curvas S parezca más sólido de lo que es.
+
+\textbf{Lecturas del gráfico} de la capacidad normalizada de la JPL
+\parencite{descanso2015}, que es el dato primario de todo el apartado~3. Son
+lecturas visuales de un eje logarítmico de 24 décadas: les asigno una
+tolerancia de \textbf{$\pm$0,2 décadas} por punto. Eso basta para las
+pendientes, que se calculan sobre diferencias de 2 a 16 décadas, y no basta
+para ningún escalón individual menor de medio orden de magnitud.
+
+\textbf{Valores citados} de fuentes técnicas: la temperatura de ruido del
+sistema de 20,9 K y la relación $E_b/N_0$ de 0,65 dB conseguida por Galileo
+vienen de \textcite{layland1997}; la temperatura del fondo cósmico de
+microondas, 2,725 K, de \textcite{fixsen2009}; las velocidades de los módems y
+de las redes de acceso, de las recomendaciones de la Unión Internacional de
+Telecomunicaciones citadas en el apartado~\ref{sec:internet}.
+
+\textbf{Cálculos propios}, declarados donde se usan: las fronteras entre eras,
+las pendientes en décadas al año, las ganancias teóricas por cambio de banda,
+la capacidad de Shannon del canal telefónico y el reparto entre ganancia ya
+extraída y margen restante del Cuadro~\ref{cuadro:asintotas}.
+
+\section{El criterio que decide: a qué altura se mide}
+
+Antes de los datos hace falta el criterio, porque sin él las cuatro
+afirmaciones son indecidibles. La disciplina que propone \textcite{deweck2022}
+es declarar la figura de mérito sobre \emph{la función prestada} y no sobre la
+implementación, y es exactamente ahí donde las cuatro afirmaciones se separan.
+Hay tres alturas posibles:
+
+\begin{itemize}
+\item \textbf{Componente}: una pieza concreta con una física concreta. El
+  máser refrigerado, el reflector de 70 metros, el código convolucional de
+  longitud 7. Aquí la figura de mérito tiene un techo que se puede escribir
+  como una ecuación.
+\item \textbf{Paradigma}: un conjunto coherente de componentes que comparten
+  un principio de funcionamiento. La banda S, la banda X, la banda Ka, el
+  enlace óptico. Un paradigma agota sus componentes y muere.
+\item \textbf{Función}: lo que el usuario quiere, con independencia de cómo se
+  consiga. Aquí: \emph{mover bits desde una sonda lejana hasta la Tierra}.
+\end{itemize}
+
+La figura de mérito funcional de este caso es la que usa la propia JPL en su
+gráfico de capacidad: \textbf{la tasa de datos del canal, en bits por segundo,
+normalizada a una distancia de 5 unidades astronómicas}, es decir, a la
+distancia de Júpiter. La normalización importa porque la potencia recibida cae
+con el cuadrado de la distancia, de modo que comparar la tasa bruta de una
+sonda lunar con la de una sonda a Neptuno no mide tecnología, mide geometría.
+
+Con esa figura de mérito declarada, las cuatro afirmaciones dejan de ser
+opiniones. La 1 es una afirmación sobre componentes. La 3 es una afirmación
+sobre cómo se encadenan los paradigmas. Y la 2 y la 4 son afirmaciones sobre
+la \emph{pendiente de la envolvente funcional}, que es un número que se mide.
+El Cuadro~\ref{cuadro:eras} y la Figura~\ref{fig:dsn} lo miden.
+
+\section{Los datos: veinte órdenes de magnitud en sesenta y cuatro años}
+\label{sec:datos}
+
+\begin{figure}[!htb]
+\centering
+\begin{tikzpicture}
+
+% ================= Panel A: la envolvente ==============================
+\node[anchor=south west, font=\small\bfseries] at (-0.95,6.22)
+     {Panel A. La capacidad de la Red del Espacio Profundo, 1958 a 2033};
+\node[anchor=south west, font=\scriptsize\itshape, text=cGris] at (-0.95,5.92)
+     {bits por segundo a 5 unidades astronómicas, escala logarítmica};
+
+% rejilla y ejes
+\foreach \v in {-12,-9,-6,-3,0,3,6,9} {
+  \draw[cGris!25] (0,{\ey{\v}}) -- (14.45,{\ey{\v}});
+  \node[left, font=\scriptsize, text=cGris] at (-0.07,{\ey{\v}})
+       {$10^{\v}$};
+}
+\draw[cGris!70] (0,0) -- (0,5.72);
+\draw[cGris!70] (0,0) -- (14.45,0);
+\foreach \a in {1960,1970,1980,1990,2000,2010,2020,2030} {
+  \draw[cGris!70] ({\ex{\a}},0) -- ({\ex{\a}},-0.09);
+  \node[below, font=\scriptsize, text=cGris] at ({\ex{\a}},-0.09) {\a};
+}
+\node[below, font=\scriptsize, text=cGris] at (7.2,-0.50) {año};
+
+% --- era de banda S ---
+\draw[cS, very thick]
+  ({\ex{1958}},{\ey{-13}}) -- ({\ex{1960}},{\ey{-13}}) --
+  ({\ex{1960}},{\ey{-6.0}}) -- ({\ex{1961.5}},{\ey{-6.0}}) --
+  ({\ex{1961.5}},{\ey{-5.5}}) -- ({\ex{1963}},{\ey{-5.5}}) --
+  ({\ex{1963}},{\ey{-4.0}}) -- ({\ex{1965}},{\ey{-4.0}}) --
+  ({\ex{1965}},{\ey{-2.7}}) -- ({\ex{1966}},{\ey{-2.7}}) --
+  ({\ex{1966}},{\ey{-1.3}}) -- ({\ex{1969}},{\ey{-1.3}}) --
+  ({\ex{1969}},{\ey{-0.5}}) -- ({\ex{1971}},{\ey{-0.5}}) --
+  ({\ex{1971}},{\ey{0.5}})  -- ({\ex{1972}},{\ey{0.5}}) --
+  ({\ex{1972}},{\ey{1.0}})  -- ({\ex{1973}},{\ey{1.0}}) --
+  ({\ex{1973}},{\ey{2.0}})  -- ({\ex{1974}},{\ey{2.0}}) --
+  ({\ex{1974}},{\ey{2.6}})  -- ({\ex{1975}},{\ey{2.6}}) --
+  ({\ex{1975}},{\ey{3.0}})  -- ({\ex{1976}},{\ey{3.0}});
+
+% --- era de banda X ---
+\draw[cX, very thick]
+  ({\ex{1976}},{\ey{3.0}})  -- ({\ex{1976}},{\ey{4.3}}) --
+  ({\ex{1977}},{\ey{4.3}})  -- ({\ex{1977}},{\ey{4.7}}) --
+  ({\ex{1979}},{\ey{4.7}})  -- ({\ex{1979}},{\ey{5.0}}) --
+  ({\ex{1981}},{\ey{5.0}})  -- ({\ex{1981}},{\ey{5.15}}) --
+  ({\ex{1986}},{\ey{5.15}}) -- ({\ex{1986}},{\ey{5.3}}) --
+  ({\ex{1987}},{\ey{5.3}})  -- ({\ex{1987}},{\ey{5.4}}) --
+  ({\ex{1989}},{\ey{5.4}})  -- ({\ex{1989}},{\ey{5.5}}) --
+  ({\ex{1993}},{\ey{5.5}})  -- ({\ex{1993}},{\ey{5.7}}) --
+  ({\ex{2005}},{\ey{5.7}});
+
+% --- era de banda Ka ---
+\draw[cKa, very thick]
+  ({\ex{2005}},{\ey{5.7}})  -- ({\ex{2006}},{\ey{5.7}}) --
+  ({\ex{2006}},{\ey{6.0}})  -- ({\ex{2017}},{\ey{6.0}}) --
+  ({\ex{2017}},{\ey{7.05}}) -- ({\ex{2022}},{\ey{7.05}}) --
+  ({\ex{2022}},{\ey{7.78}}) -- ({\ex{2026}},{\ey{7.78}});
+
+% --- era óptica, proyectada ---
+\draw[cOpt, very thick, dash pattern=on 4pt off 2pt]
+  ({\ex{2013}},{\ey{2.0}})  -- ({\ex{2022}},{\ey{2.0}}) --
+  ({\ex{2022}},{\ey{5.7}})  -- ({\ex{2023}},{\ey{5.7}}) --
+  ({\ex{2023}},{\ey{6.8}})  -- ({\ex{2025}},{\ey{6.8}}) --
+  ({\ex{2025}},{\ey{7.6}})  -- ({\ex{2027}},{\ey{7.6}}) --
+  ({\ex{2027}},{\ey{8.0}})  -- ({\ex{2030}},{\ey{8.0}}) --
+  ({\ex{2030}},{\ey{8.6}})  -- ({\ex{2033}},{\ey{8.6}});
+
+% --- rectas de tendencia por era ---
+\draw[cGris!85, dotted, thick]
+  ({\ex{1958}},{\ey{-13}}) -- ({\ex{1976}},{\ey{3.0}});
+\draw[cGris!85, dotted, thick]
+  ({\ex{1977}},{\ey{4.3}}) -- ({\ex{1993}},{\ey{5.7}});
+\draw[cGris!85, dotted, thick]
+  ({\ex{2006}},{\ey{6.0}}) -- ({\ex{2022}},{\ey{7.78}});
+
+% --- anotaciones ---
+\node[right, font=\scriptsize, text=cS, align=left, inner sep=3pt]
+     at ({\ex{1958.4}},{\ey{-12.6}}) {Explorer 1 (1958)};
+\node[right, font=\scriptsize, text=cS, align=left, inner sep=3pt]
+     at ({\ex{1966.5}},{\ey{-9.6}}) {\textbf{banda S:} 0,889 déc./año};
+\draw[cS!70, thin] ({\ex{1966.2}},{\ey{-4.1}}) -- ({\ex{1969.4}},{\ey{-2.6}});
+\node[right, font=\scriptsize, text=cS, align=left, inner sep=3pt]
+     at ({\ex{1969.3}},{\ey{-4.6}}) {antena de 64 m (G), 1966};
+\node[right, font=\scriptsize, text=cX, align=left, inner sep=3pt]
+     at ({\ex{1976.4}},{\ey{3.20}}) {paso a \textbf{banda X} (1976)};
+\node[above, font=\scriptsize, text=cX, align=center, inner sep=3pt]
+     at ({\ex{1983}},{\ey{5.80}}) {\textbf{banda X:} 0,076 déc./año};
+\draw[cLim, thick] ({\ex{1993}},{\ey{5.7}}) -- ({\ex{2005}},{\ey{5.7}});
+\node[below, font=\scriptsize\bfseries, text=cLim, align=center, inner sep=4pt]
+     at ({\ex{1997.5}},{\ey{5.50}}) {meseta de 12 años\\0,007 déc./año};
+\draw[cKa!75, thin] ({\ex{2006.4}},{\ey{5.90}}) -- ({\ex{2008.3}},{\ey{4.30}});
+\node[right, font=\scriptsize, text=cKa, align=left, inner sep=3pt]
+     at ({\ex{2008.1}},{\ey{3.85}}) {\textbf{banda Ka} (2006)\\0,121 déc./año};
+\draw[cKa!75, thin] ({\ex{2018.0}},{\ey{6.90}}) -- ({\ex{2020.0}},{\ey{5.70}});
+\node[left, font=\scriptsize, text=cKa, align=right, inner sep=3pt]
+     at ({\ex{2033}},{\ey{5.35}}) {conjuntos de 34 m (G)};
+\node[left, font=\scriptsize, text=cOpt, align=right, inner sep=3pt]
+     at ({\ex{2012.6}},{\ey{2.0}}) {óptico: LLCD (2013)};
+\node[left, font=\scriptsize, text=cOpt, align=right, inner sep=3pt]
+     at ({\ex{2016.4}},{\ey{8.70}}) {\textbf{óptico (proyectado):}
+     0,228 déc./año};
+
+% ================= Panel B: la tasa por era =============================
+\begin{scope}[xshift=5.60cm, yshift=-5.90cm]
+\node[anchor=south west, font=\small\bfseries] at (-4.75,3.55)
+     {Panel B. La tasa de progreso de la envolvente, era por era};
+
+\barraT{3.00}{0.889}{cS}{\textbf{Banda S}, 1958 a 1976\\16,0 décadas en 18
+  años}{0,889}
+\barraT{2.25}{0.076}{cX}{\textbf{Banda X}, 1977 a 1993\\1,22 décadas en 16
+  años}{0,076}
+\barraT{1.50}{0.007}{cLim}{\textbf{Meseta}, 1993 a 2005\\0,08 décadas en 12
+  años}{0,007}
+\barraT{0.75}{0.121}{cKa}{\textbf{Banda Ka}, 2006 a 2022\\1,93 décadas en 16
+  años}{0,121}
+\barraT{0.00}{0.228}{cOpt}{\textbf{Óptico}, 2023 a 2031\\\emph{proyectado},
+  1,82 décadas en 8 años}{0,228}
+
+\draw[cGris!70] (0,-0.32) -- ({\tx{0.95}},-0.32);
+\foreach \t/\r in {0/0, 0.2/{0,2}, 0.4/{0,4}, 0.6/{0,6}, 0.8/{0,8}} {
+  \draw[cGris!70] ({\tx{\t}},-0.32) -- ({\tx{\t}},-0.41);
+  \node[below, font=\scriptsize, text=cGris] at ({\tx{\t}},-0.41) {\r};
+}
+\node[below, font=\scriptsize, text=cGris] at ({\tx{0.45}},-0.78)
+     {décadas de mejora por año};
+\end{scope}
+
+\end{tikzpicture}
+\caption{Panel A: la capacidad normalizada de la Red del Espacio Profundo,
+redibujada a partir del gráfico de escalones de la JPL
+\parencite{descanso2015}. Cada escalón es una tecnología que entra en
+servicio; el color marca el paradigma de radiofrecuencia. Las rectas punteadas
+son la tendencia de cada era. La lectura clave no es el recorrido total, que
+es enorme, sino que \emph{las rectas punteadas no son paralelas}: cada era
+progresa más despacio que la anterior. Panel B: esa misma información como
+tasa. La primera era avanzó siete veces más deprisa que la de banda Ka, y
+entre 1993 y 2005 la envolvente no se movió. Elaboración propia sobre
+\textcite{descanso2015}.}
+\label{fig:dsn}
+\end{figure}
+
+La Figura~\ref{fig:dsn} redibuja el gráfico de escalones que la JPL publica
+como medida oficial de la capacidad de la red \parencite{descanso2015}, y el
+Cuadro~\ref{cuadro:eras} recoge la aritmética.
+
+El recorrido total es el dato que todo el mundo cita: de $10^{-13}$ bits por
+segundo a la distancia de Júpiter con Explorer 1 en 1958 a unos $6\times10^{7}$
+con los conjuntos de siete antenas de 34 metros en banda Ka en 2022. Son
+\textbf{20,8 órdenes de magnitud en 64 años}, una media de 0,325 décadas al
+año, es decir, multiplicar por 2,11 cada año durante seis décadas. Ninguna
+tecnología terrestre de uso civil se acerca a eso.
+
+Y esa media es \textbf{engañosa}, que es el hallazgo del apartado. Está
+dominada por los primeros dieciocho años: si se retira la era de banda S, los
+46 años restantes suman 4,8 décadas, es decir 0,104 décadas al año, veinte
+veces menos.
+
+\begin{table}[t]
+\small
+\caption{La envolvente de la Red del Espacio Profundo, era por era. Los
+extremos son lecturas del gráfico de la JPL con una tolerancia de $\pm$0,2
+décadas; las pendientes y los tiempos de duplicación son cálculo propio. La
+última fila no ha ocurrido: es la proyección que la propia JPL publica.}
+\label{cuadro:eras}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.35cm}>{\raggedright\arraybackslash}p{1.8cm}>{\raggedleft\arraybackslash}p{1.35cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.65cm}X@{}}
+\toprule
+\textbf{Era} & \textbf{Años} & \textbf{Décadas} & \textbf{Déc./año} &
+\textbf{Duplica en} & \textbf{Qué la cerró} \\
+\midrule
+Banda S & 1958--1976 & 16,00 & \textbf{0,889} & 4,1 meses
+  & La banda de 2,3 GHz agotó su ganancia por apertura y por potencia \\
+\addlinespace[2pt]
+Banda X & 1977--1993 & 1,22 & 0,076 & 47,3 meses
+  & Se agotaron el reflector de 70 m, el máser y la codificación concatenada \\
+\addlinespace[2pt]
+Meseta & 1993--2005 & 0,08 & \textbf{0,007} & 45,6 años
+  & Nada la cerró: no hubo paradigma nuevo ni presupuesto para uno \\
+\addlinespace[2pt]
+Banda Ka & 2006--2022 & 1,93 & 0,121 & 29,9 meses
+  & La absorción atmosférica impide subir más en radiofrecuencia \\
+\addlinespace[2pt]
+\emph{Óptico (proy.)} & \emph{2023--2031} & \emph{1,82} & \emph{0,228} &
+  \emph{15,8 meses} & \emph{Sin cerrar; el salto a 193 THz abre 7,6 décadas
+  teóricas} \\
+\midrule
+\textbf{Total realizado} & \textbf{1958--2022} & \textbf{20,78} &
+  \textbf{0,325} & \textbf{11,1 meses} & \\
+\textbf{Sin la era de S} & \textbf{1977--2022} & \textbf{4,78} &
+  \textbf{0,104} & \textbf{34,8 meses} & \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Afirmación 1: las asíntotas existen, y aquí se demuestran}
+\label{sec:af1}
+
+\textbf{Enunciado:} \emph{todas las tecnologías terminan alcanzando un punto de
+saturación, lo que dificulta su progreso más allá de una asíntota determinada.
+El progreso exponencial no existe.}
+
+Mi respuesta es que la primera frase es cierta y la segunda es falsa, y que el
+caso de la DSN es el mejor sitio posible para verlo porque aquí las asíntotas
+no se conjeturan a partir de los datos: \textbf{se deducen de la física y
+luego se comprueba que los datos las respetan}. Eso es infrecuente. En la
+mayoría de las tecnologías la asíntota se postula porque la curva se aplana, y
+eso es un argumento circular. Aquí no.
+
+El Cuadro~\ref{cuadro:asintotas} recoge las cuatro palancas que la DSN
+controla desde tierra, cada una con su asíntota, el origen físico de esa
+asíntota y cuánta ganancia queda por extraer. El Panel A de la
+Figura~\ref{fig:asintotas} lo dibuja.
+
+\begin{table}[t]
+\small
+\caption{Las cuatro palancas de tierra, su asíntota y el margen que queda. La
+columna de la derecha es la conclusión incómoda: en tres de las cuatro
+palancas, la mayor parte de la ganancia que la física permitirá jamás ya está
+gastada. Cálculo propio sobre los valores citados.}
+\label{cuadro:asintotas}
+\begin{tabularx}{\textwidth}{@{}p{2.4cm}X>{\raggedright\arraybackslash}p{2.6cm}>{\raggedleft\arraybackslash}p{1.65cm}@{}}
+\toprule
+\textbf{Palanca} & \textbf{La asíntota y de dónde sale} &
+\textbf{Extraído y lo que queda} & \textbf{Gastado} \\
+\midrule
+\textbf{Codificación}
+& El teorema de \textcite{shannon1948} fija el mínimo absoluto en
+  $E_b/N_0 = -1{,}59$ dB. Sin codificar hacen falta unos 9,6 dB; Galileo, con
+  un código concatenado $(14,1/4)$ y decodificación en cuatro etapas, bajó a
+  0,65 dB \parencite{layland1997}
+& 8,95 dB / 2,24 dB\newline (0,89 / 0,22 déc.)
+& \textbf{80,0 \%} \\
+\addlinespace[2pt]
+\textbf{Temperatura de ruido}
+& El suelo es el fondo cósmico de microondas, 2,725 K \parencite{fixsen2009},
+  más la atmósfera. La red opera hoy a 20,9 K en banda X sobre la antena de
+  70 m en el cénit \parencite{layland1997}
+& hasta 20,9 K /\newline factor 7,7\newline (0,88 déc.)
+& \textbf{67,9 \%} \\
+\addlinespace[2pt]
+\textbf{Apertura}
+& La ganancia va con el cuadrado del diámetro, pero un reflector orientable se
+  deforma por su propio peso. El paso de 26 a 64 m dio 0,78 décadas; el de 64
+  a 70 m, en 1988, dio 0,08
+& 0,86 déc. /\newline no hay más\newline en un solo plato
+& \textbf{$\approx$100 \%} \\
+\addlinespace[2pt]
+\textbf{Banda}
+& La ganancia va con el cuadrado de la frecuencia. S a X da 1,13 décadas; X a
+  Ka da 1,16. Por encima de 32 GHz la absorción del vapor de agua hace
+  inutilizable la ventana
+& 2,29 déc. /\newline 0 dentro de\newline radiofrecuencia
+& \textbf{$\approx$100 \%} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Los tres números que más me importan de ese cuadro son estos:
+
+\begin{enumerate}
+\item \textbf{La codificación estaba al 80 por ciento de su límite absoluto en
+  1995.} Los ingenieros de la JPL lo sabían y lo escribieron: en 1985
+  publicaron un artículo titulado \enquote{En busca de una ganancia de
+  codificación de 2 dB} \parencite[véase la bibliografía
+  de][]{layland1997}. Ese título es el retrato de una asíntota: cuando una
+  disciplina titula sus artículos con la cifra exacta de lo que le queda por
+  ganar, la afirmación 1 se cumple sin discusión.
+\item \textbf{La mejora de la antena de 64 a 70 metros, en 1988, valió 0,08
+  décadas}, un 20 por ciento de capacidad. Fue una obra civil de años
+  \parencite{layland1997}. Ese es el aspecto exacto del final de una curva S:
+  coste creciente, ganancia decreciente.
+\item \textbf{La escalera de bandas de radiofrecuencia está terminada.} S a X
+  y X a Ka dieron 1,13 y 1,16 décadas cada una, casi idénticas, porque la
+  ganancia va con $f^2$ y las dos razones de frecuencia son parecidas. El
+  siguiente peldaño no existe dentro de la radiofrecuencia.
+\end{enumerate}
+
+Y a pesar de todo eso, la función ganó 20,8 órdenes de magnitud. \textbf{Por
+eso la segunda frase de la afirmación 1 es falsa}: el progreso exponencial no
+solo existe, sino que este caso es uno de los ejemplos más extremos que se
+conocen. Lo que no existe es progreso exponencial \emph{indefinido en un
+componente}, que es una afirmación mucho más modesta y que nadie discute.
+
+Aquí quiero recoger y matizar mi propia intuición inicial, que era que en la
+DSN \enquote{las limitaciones eran más regulaciones humanas que otra cosa},
+por lo que recuerdo de la entrevista al doctor Deutsch \parencite{deutsch2026}.
+Sigo pensando que eso es cierto \emph{hoy}, y el apartado~\ref{sec:af4} lo
+desarrolla. Pero al hacer las cuentas he tenido que corregirme: las
+limitaciones de la codificación y de la temperatura de ruido no son
+regulatorias en absoluto. Son el teorema de Shannon y el fondo cósmico de
+microondas, y no admiten negociación con nadie.
+
+\begin{figure}[!htb]
+\centering
+\begin{tikzpicture}
+
+% ================= Panel A: las cuatro asíntotas =========================
+\node[anchor=south west, font=\small\bfseries] at (-4.05,3.05)
+     {Panel A. Cuánta ganancia queda en cada palanca de tierra};
+
+\barraA{2.45}{0.89}{0.22}{\textbf{Codificación}\\límite de Shannon}
+  {80 \% consumido}
+\barraA{1.75}{1.86}{0.88}{\textbf{Temperatura de ruido}\\fondo cósmico, 2,725 K}
+  {68 \%}
+\barraA{1.05}{0.86}{0.03}{\textbf{Apertura de un plato}\\26 m a 70 m}
+  {$\approx$100 \%}
+\barraA{0.35}{2.29}{0.02}{\textbf{Banda de radio}\\S a X a Ka}{$\approx$100 \%}
+
+\draw[cGris!70] (0,0.05) -- ({\dx{3.0}},0.05);
+\foreach \t/\r in {0/0, 0.5/{0,5}, 1/1, 1.5/{1,5}, 2/2, 2.5/{2,5}, 3/3} {
+  \draw[cGris!70] ({\dx{\t}},0.05) -- ({\dx{\t}},-0.04);
+  \node[below, font=\scriptsize, text=cGris] at ({\dx{\t}},-0.04) {\r};
+}
+\node[below, font=\scriptsize, text=cGris] at ({\dx{1.5}},-0.40)
+     {décadas de mejora};
+\fill[cDato] (0.90,-1.28) rectangle (1.30,-1.01);
+\node[right, font=\scriptsize, text=cGris!30!black] at (1.40,-1.145)
+     {ya extraído};
+\draw[cLim, pattern=north east lines, pattern color=cLim!55]
+     (4.20,-1.28) rectangle (4.60,-1.01);
+\node[right, font=\scriptsize, text=cGris!30!black] at (4.70,-1.145)
+     {queda hasta el límite físico};
+
+% ================= Panel B: la escalera de frecuencia ====================
+\begin{scope}[yshift=-6.85cm]
+\node[anchor=south west, font=\small\bfseries] at (-0.55,4.28)
+     {Panel B. Por qué el siguiente peldaño no está en radiofrecuencia};
+\node[anchor=south west, font=\scriptsize\itshape, text=cGris] at (-0.55,3.98)
+     {décadas de ganancia teórica del salto, por la dependencia con $f^2$};
+
+\foreach \v in {0,2,4,6} {
+  \draw[cGris!25] (0,{\fy{\v}}) -- (12.6,{\fy{\v}});
+  \node[left, font=\scriptsize, text=cGris] at (-0.07,{\fy{\v}}) {\v};
+}
+\draw[cGris!70] (0,0) -- (0,{\fy{7.95}});
+\draw[cGris!70] (0,0) -- (12.6,0);
+
+\fill[cX] (1.10,0) rectangle (2.50,{\fy{1.13}});
+\node[above, font=\scriptsize\bfseries, text=cX] at (1.80,{\fy{1.13}})
+     {1,13};
+\node[below, font=\scriptsize, text=cX, align=center] at (1.80,-0.10)
+     {S a X\\2,3 a 8,4 GHz\\\emph{1976}};
+
+\fill[cKa] (4.10,0) rectangle (5.50,{\fy{1.16}});
+\node[above, font=\scriptsize\bfseries, text=cKa] at (4.80,{\fy{1.16}})
+     {1,16};
+\node[below, font=\scriptsize, text=cKa, align=center] at (4.80,-0.10)
+     {X a Ka\\8,4 a 32 GHz\\\emph{2006}};
+
+\fill[cLim!25] (7.10,0) rectangle (8.50,{\fy{0.001}});
+\draw[cLim, thick] (7.10,0.02) -- (8.50,0.02);
+\node[above, font=\scriptsize\bfseries, text=cLim, align=center]
+     at (7.80,{\fy{0.30}}) {no existe};
+\node[below, font=\scriptsize, text=cLim, align=center] at (7.80,-0.10)
+     {Ka a algo mayor\\el vapor de agua\\cierra la ventana};
+
+\fill[cOpt] (10.10,0) rectangle (11.50,{\fy{7.56}});
+\node[above, font=\scriptsize\bfseries, text=cOpt] at (10.80,{\fy{7.56}})
+     {7,56};
+\node[below, font=\scriptsize, text=cOpt, align=center] at (10.80,-0.10)
+     {Ka a óptico\\32 GHz a 193 THz\\\emph{2023}};
+
+\node[anchor=north west, font=\scriptsize\itshape, text=cGris!30!black,
+      text width=12.2cm, align=left] at (-0.50,-1.28)
+     {Los dos primeros saltos valen casi lo mismo porque las razones de
+      frecuencia son casi iguales. El tercer peldaño no existe: por encima de
+      32 GHz la atmósfera absorbe. Por eso el paradigma siguiente no es una
+      banda de radio mejor sino un láser, y por eso ofrece de golpe más
+      ganancia teórica que todo lo ganado en radiofrecuencia desde 1958.};
+\end{scope}
+
+\end{tikzpicture}
+\caption{Panel A: las cuatro palancas que la red controla desde tierra, con la
+ganancia ya extraída y la que queda hasta el límite físico. Ninguna de las
+cuatro barras rayadas es larga, y dos son prácticamente inexistentes: eso es
+la afirmación 1, comprobada. Panel B: la escalera de frecuencia, que es la
+razón por la que la afirmación 3 puede seguir cumpliéndose pese al Panel A.
+Elaboración propia sobre \textcite{layland1997}, \textcite{shannon1948} y
+\textcite{fixsen2009}.}
+\label{fig:asintotas}
+\end{figure}
+
+\section{Afirmación 2: cierta para esta envolvente, y no por la razón que dice}
+\label{sec:af2}
+
+\textbf{Enunciado:} \emph{las tecnologías experimentan un progreso exponencial,
+pero la tasa de progreso tiende a disminuir con el paso del tiempo, porque
+todas se ven afectadas por la ley de la disminución del ingreso marginal.}
+
+Esta era mi respuesta inicial y sigo pensando que su conclusión es correcta
+para este caso. Los datos del Cuadro~\ref{cuadro:eras} la confirman sin
+ambigüedad: \textbf{0,889, luego 0,076, luego 0,007, luego 0,121 décadas al
+año}. La secuencia es decreciente salvo el repunte final, y ese repunte no
+recupera ni la séptima parte de la tasa original.
+
+Pero hay dos correcciones que tuve que hacerme a mí mismo al medir, y las dos
+importan más que el veredicto.
+
+\textbf{Primera: la palabra \enquote{todas} no se sostiene.} Es una
+generalización que el propio caso no puede probar, porque un caso no prueba
+una ley universal, y que además tiene contraejemplos medidos. El
+apartado~\ref{sec:internet} presenta uno, y no es el único: \textcite{koh2006}
+estudian el progreso funcional de las tecnologías de la información durante
+más de un siglo y encuentran tasas exponenciales sostenidas, no decrecientes,
+en varias funciones; \textcite{farmer2016} y \textcite{nagy2013} llegan a lo
+mismo analizando decenas de series de coste y rendimiento. Si la disminución
+del ingreso marginal fuera una ley universal, esas series no existirían.
+
+\textbf{Segunda, y esta es la que más me hizo cambiar de opinión: el mecanismo
+que enuncia la afirmación no es el que actúa aquí.} \enquote{Ingreso marginal
+decreciente} describe una situación en la que cada unidad adicional de esfuerzo
+rinde un poco menos que la anterior, de forma suave y continua. Lo que la
+Figura~\ref{fig:dsn} muestra no es eso. Muestra tres cosas distintas:
+
+\begin{itemize}
+\item \textbf{Un orden de extracción.} Las primeras dieciséis décadas salieron
+  de poner una antena direccional y un transmisor de verdad en una nave que
+  antes llevaba una antena de látigo. No fue ingenio marginal: fue recoger lo
+  que estaba en el suelo. Cualquier tecnología nueva tiene un tramo así, y
+  confundirlo con una tasa sostenible es el error de previsión más común.
+\item \textbf{Asíntotas duras y nombrables}, las del
+  Cuadro~\ref{cuadro:asintotas}, que no producen una pendiente suavemente
+  decreciente sino un tope.
+\item \textbf{Una meseta de doce años que no tiene causa técnica.} Entre 1993 y
+  2005 la envolvente se movió 0,08 décadas. No fue que costara más conseguir
+  la mejora siguiente: fue que la mejora siguiente exigía cambiar de
+  paradigma, y cambiar de paradigma en una red de antenas de decenas de metros
+  es una decisión de presupuesto plurianual, no de ingeniería. Volveré sobre
+  esto en el apartado~\ref{sec:af4}, porque es donde mi intuición inicial
+  sobre las \enquote{regulaciones humanas} sí acierta de lleno.
+\end{itemize}
+
+Dicho de otro modo: la afirmación 2 acierta en el resultado y se equivoca en la
+causa, y en gestión tecnológica la causa es lo que sirve para decidir. Si uno
+cree que la desaceleración es un ingreso marginal decreciente, la respuesta es
+invertir más en lo mismo. Si uno sabe que es una asíntota física más una
+decisión de capital aplazada, la respuesta es preparar el paradigma siguiente,
+que es lo que la JPL acabó haciendo con el enlace óptico.
+
+\section{Afirmación 3: es el mecanismo correcto, pero no garantiza la tasa}
+\label{sec:af3}
+
+\textbf{Enunciado:} \emph{las tecnologías experimentan un progreso exponencial
+y, en algunos casos, como el de las tecnologías funcionales, la tasa de
+progreso se mantiene más o menos constante, por la alternancia entre curvas
+S.}
+
+Esta es, de las cuatro, \textbf{la más útil}, y comparto la intuición que ya
+tenía: cuando una curva S tiende a la baja, viene otra tecnología a
+reemplazarla. La quiero afinar en dos direcciones, una a favor y otra en
+contra.
+
+\textbf{A favor, y es un argumento fuerte:} el gráfico de la JPL no es que sea
+compatible con la alternancia de curvas S, es que \emph{la dibuja
+explícitamente}. Los cuatro colores de la Figura~\ref{fig:dsn} son cuatro
+paradigmas, y el gráfico original de la JPL incluso lo advierte en su pie: los
+saltos grandes de capacidad proceden de los cambios de banda de frecuencia
+\parencite{descanso2015}. La secuencia es limpia: la banda S agota su apertura
+y su potencia hacia 1975, y en 1976 entra la banda X con un salto de 1,3
+décadas; la banda X agota el máser, el reflector de 70 metros y la
+codificación concatenada hacia 1993, y en 2006 entra la banda Ka; la banda Ka
+agota la ventana atmosférica, y en 2023 entra el óptico, que ya ha demostrado
+267 megabits por segundo desde 0,19 unidades astronómicas
+\parencite{dsoc2023}. Cada paradigma muere por asíntotas propias, que son las
+del Cuadro~\ref{cuadro:asintotas}, y su sucesor no lo mejora: lo sustituye. Es exactamente lo que describe
+\textcite{foster1986} y lo que \textcite{sood2005} encuentran al examinar
+empíricamente la evolución de varias tecnologías: la unidad de análisis útil
+no es la curva sino la familia de curvas que se relevan.
+
+\textbf{En contra, y es la parte que no había visto antes de medir:} la
+alternancia \emph{sostiene} el progreso, pero no lo mantiene a tasa constante.
+La DSN alterna cuatro veces y aun así su tasa cae un factor de siete. La razón
+es que un relevo de paradigma no es gratuito ni instantáneo: entre que la
+banda X se agota, hacia 1993, y que la banda Ka entra en servicio, en 2006,
+pasan doce años en los que no ocurre nada. \textbf{El hueco entre curvas S es
+tan parte del fenómeno como el salto.} Y como la afirmación 3 solo menciona el
+salto, describe bien el mecanismo y mal la consecuencia.
+
+Donde la afirmación 3 se cumple entera, incluida la parte de la tasa constante,
+es en el caso del apartado siguiente. Y creo que la diferencia entre los dos
+casos es la lección más transferible de todo el ejercicio.
+
+\section{Afirmación 4: no la sostiene ningún dato realizado de este caso}
+\label{sec:af4}
+
+\textbf{Enunciado:} \emph{las tecnologías experimentan un progreso exponencial
+y la tasa de progreso aumenta con el paso del tiempo como resultado del
+desarrollo de las capacidades de la humanidad.}
+
+Mi respuesta inicial fue que esto es cierto, porque todo eso ayuda al
+desarrollo. Al medir he tenido que separar dos cosas que había juntado:
+\textbf{que una capacidad ayude no significa que la tasa aumente}. Son
+afirmaciones distintas y solo la segunda es la que hay que comprobar.
+
+Sobre este caso la respuesta es limpia y negativa. \textbf{Ningún tramo
+realizado de la Figura~\ref{fig:dsn} es más rápido que el tramo anterior,
+salvo el paso de la meseta a la banda Ka, que es una recuperación parcial y no
+una aceleración.} El único tramo del gráfico cuya pendiente supera a la
+anterior de forma clara, el óptico a 0,228 décadas al año, es \emph{el que
+todavía no ha ocurrido}. Y conviene notar que es exactamente el tramo donde
+más barata resulta el optimismo.
+
+Hay además un argumento cuantitativo general en contra, y es el que más peso
+tiene: \textcite{bloom2020} miden la productividad de la investigación en
+varios sectores y encuentran que \textbf{mantener la duplicación de densidad
+de transistores de la ley de Moore exige hoy más de 18 veces los
+investigadores que hacían falta a comienzos de los años setenta}. Esa cifra es
+la refutación directa de la afirmación 4 tal como está enunciada: las
+capacidades humanas agregadas sí han crecido, y el efecto observable no ha
+sido una tasa creciente sino una tasa constante comprada cada vez más cara.
+
+Dicho lo cual, la afirmación 4 tiene un caso real a su favor, y sería
+deshonesto no ponerlo. \textcite{sevilla2022} miden el cómputo de entrenamiento
+de los sistemas de aprendizaje automático y encuentran un cambio de régimen
+nítido: antes de 2010 se duplicaba cada 21,3 meses, en línea con la ley de
+Moore, es decir 0,170 décadas al año; desde 2010 se duplica cada 5,7 meses, es
+decir \textbf{0,634 décadas al año}, casi cuatro veces más rápido. Eso es una
+aceleración medida, no proyectada. Pero es una aceleración de \emph{un insumo}
+en \emph{un dominio} durante \emph{una década}, y convertir eso en una ley
+general del progreso tecnológico, que es lo que hace \textcite{kurzweil2001},
+es el mismo error de extrapolación que cometería quien tomase los 0,889
+décadas al año de la era de banda S como la tasa normal de la DSN.
+
+\subsection*{Dónde sí acierta la intuición sobre las limitaciones humanas}
+
+Queda una pieza que creo que es la más interesante del caso, y es donde mi
+lectura inicial de la entrevista al doctor Deutsch \parencite{deutsch2026} sí
+da en el blanco, aunque no como argumento a favor de la afirmación 4 sino como
+matiz a las afirmaciones 2 y 3.
+
+\textbf{La restricción activa de la DSN se ha desplazado de la física a las
+instituciones.} En 1965 lo que limitaba la capacidad era el ruido del
+receptor. En 2026 lo que la limita es, por este orden: el reparto
+internacional del espectro, que decide qué bandas puede usar una sonda; el
+ciclo presupuestario plurianual, que decide cuándo se construye una antena; la
+edad del parque, con reflectores instalados en los años sesenta que hay que
+mantener mientras se construyen los nuevos; y las ventanas de lanzamiento, que
+fijan cuándo una tecnología nueva puede volar. Ninguna de esas cuatro cosas es
+un problema de ingeniería, y las cuatro juntas explican la meseta de 1993 a
+2005 mucho mejor que cualquier asíntota.
+
+Para un director de tecnología eso tiene una consecuencia práctica inmediata:
+en un sistema maduro, \textbf{el calendario del relevo entre curvas S lo fija
+la organización, no el laboratorio}, y por tanto el hueco entre curvas es una
+variable de gestión y no un dato de la naturaleza.
+
+\section{Un caso distinto: la velocidad de acceso a internet desde 1984}
+\label{sec:internet}
+
+\begin{quote}
+El planteamiento pide exponer brevemente un caso tecnológico distinto que me
+interese y cuyo sistema haya evolucionado con el tiempo. El mío es \textbf{la
+velocidad de conexión a internet desde un domicilio}, desde los módems de
+finales de los ochenta hasta la fibra de hoy. Me interesa porque es el caso
+espejo del de la DSN: la misma unidad de medida, el mismo tipo de gráfico y la
+misma alternancia de paradigmas, pero \emph{el resultado opuesto}. Entre 1984
+y 2026 la velocidad pasó de 300 bits por segundo a 10 gigabits por segundo,
+7,52 órdenes de magnitud, atravesando tres medios físicos completamente
+distintos: el canal telefónico de voz, el par de cobre usado en todo su
+espectro y la fibra óptica. Y a diferencia de la DSN, \textbf{lo hizo a una
+tasa prácticamente constante durante cuarenta años}: 0,179 décadas al año, es
+decir un 51 por ciento anual, que es el valor que Jakob Nielsen postuló en
+1998 como ley empírica y que su propia serie personal sigue cumpliendo dos
+décadas después \parencite{nielsen2019}. Es, en mi opinión, el mejor ejemplo
+disponible de la afirmación 3 en su forma completa, incluida la parte que la
+DSN no cumple.
+\end{quote}
+
+\begin{table}[t]
+\small
+\caption{La velocidad de acceso doméstico, hito a hito. Las velocidades son
+las nominales de la norma correspondiente en su sentido descendente. La
+columna de la derecha es lo que cerró cada paradigma, y solo la primera es una
+frontera demostrable. Normas: V.34 \parencite{ituv34}, V.90
+\parencite{ituv90}, ADSL \parencite{itug9921}, ADSL2+ \parencite{itug9925} y
+XGS-PON \parencite{itug98071}.}
+\label{cuadro:internet}
+\begin{tabularx}{\textwidth}{@{}p{2.15cm}>{\raggedright\arraybackslash}p{2.75cm}>{\raggedleft\arraybackslash}p{1.55cm}X@{}}
+\toprule
+\textbf{Paradigma} & \textbf{Norma y año} & \textbf{Velocidad} &
+\textbf{Qué lo cerró} \\
+\midrule
+Canal de voz,\newline 3,1 kHz
+& Bell 212A, 1984\newline ITU-T V.32bis, 1991\newline ITU-T V.34, 1994\newline
+  ITU-T V.90, 1998
+& 300 b/s\newline 14,4 kb/s\newline 33,6 kb/s\newline 56 kb/s
+& \textbf{El teorema de Shannon.} Con 3,1 kHz de ancho y entre 30 y 35 dB de
+  relación señal a ruido, la capacidad del canal está entre 31 y 36 kb/s:
+  V.34 se sentó encima del límite. V.90 solo lo superó dejando de usar el
+  canal analógico en un sentido \\
+\addlinespace[2pt]
+Par de cobre,\newline todo el espectro
+& ITU-T G.992.1, 1999\newline ITU-T G.992.5, 2003\newline VDSL2 y DOCSIS 3.0,
+  2006
+& 1,5 Mb/s\newline 24 Mb/s\newline 100 Mb/s
+& La atenuación del cobre, que crece con la frecuencia y con la longitud del
+  bucle. Se compensó acercando la fibra al abonado, que ya es el paradigma
+  siguiente disfrazado \\
+\addlinespace[2pt]
+Fibra hasta\newline el domicilio
+& ITU-T G.984, 2003\newline ITU-T G.9807.1, 2016
+& 1 Gb/s\newline 10 Gb/s
+& \textbf{Nada físico.} La fibra tiene órdenes de magnitud de margen. Lo que
+  frena hoy es la demanda: por encima de 1 Gb/s el usuario doméstico no
+  distingue la diferencia \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+El Cuadro~\ref{cuadro:internet} y la Figura~\ref{fig:internet} desarrollan el
+caso. Tres cosas merecen subrayarse.
+
+\textbf{La primera asíntota es demostrable, igual que en la DSN.} La capacidad
+de un canal de ancho $B$ con relación señal a ruido $S/N$ es
+
+\begin{equation}
+C \;=\; B \,\log_{2}\!\left(1 + \frac{S}{N}\right)
+\label{eq:shannon}
+\end{equation}
+
+\parencite{shannon1948}. Para el canal telefónico, $B = 3100$ Hz y una
+relación señal a ruido realista de entre 30 y 35 dB, la ecuación
+\eqref{eq:shannon} da entre 30,9 y 36,0 kb/s. La norma V.34 alcanzó 33,6 kb/s
+\parencite{ituv34}. No se quedó cerca del
+límite: se sentó justo encima de él. Y la norma siguiente, V.90, no rompió esa
+barrera mejorando el módem, porque eso es imposible: la rompió
+\emph{cambiando el canal}, aprovechando que el extremo del proveedor ya estaba
+digitalizado y que por tanto una de las dos direcciones se ahorraba una
+conversión analógica \parencite{ituv90}. Eso es literalmente un cambio de
+curva S forzado por una asíntota demostrada.
+
+\textbf{La segunda: las tres eras tienen casi la misma pendiente.} El Panel B
+de la Figura~\ref{fig:internet} las mide: 0,162 décadas al año en el canal de
+voz, 0,177 en el cobre de banda ancha y 0,127 en la fibra, frente al 0,176 que
+predice la regla del 50 por ciento anual de \textcite{nielsen2019}. Tres
+medios físicos radicalmente distintos, tres industrias distintas, tres
+regulaciones distintas, y la misma pendiente dentro del margen de una lectura
+razonable. \textbf{Eso es la afirmación 3 cumplida entera}, y es lo que la DSN
+no consigue.
+
+\textbf{La tercera, y es la que menos esperaba: lo que está frenando la última
+era no es la física.} La fibra tiene margen de sobra; XGS-PON entrega 10
+gigabits y las normas de 25 y 50 gigabits ya están publicadas. Si la pendiente
+del tramo de fibra baja a 0,127 décadas al año no es porque cueste más
+conseguir la mejora, sino porque por encima de un gigabit el usuario doméstico
+deja de notarla y deja de pagarla. \textbf{La restricción activa se ha movido
+de la oferta a la demanda.} Es un desplazamiento distinto del de la DSN, donde
+la restricción se movió de la física a las instituciones, pero el efecto sobre
+la curva es el mismo, y ninguno de los dos aparece en el enunciado de las
+cuatro afirmaciones.
+
+\begin{figure}[!htb]
+\centering
+\begin{tikzpicture}
+
+% ================= Panel A: la serie =====================================
+\node[anchor=south west, font=\small\bfseries] at (-0.95,4.65)
+     {Panel A. Velocidad de acceso doméstico a internet, 1984 a 2026};
+\node[anchor=south west, font=\scriptsize\itshape, text=cGris] at (-0.95,4.35)
+     {bits por segundo en sentido descendente, escala logarítmica};
+
+\foreach \v/\r in {2/{100 b/s}, 3/{1 kb/s}, 4/{10 kb/s}, 5/{100 kb/s},
+                   6/{1 Mb/s}, 7/{10 Mb/s}, 8/{100 Mb/s}, 9/{1 Gb/s},
+                   10/{10 Gb/s}} {
+  \draw[cGris!25] (0,{\ny{\v}}) -- (13.35,{\ny{\v}});
+  \node[left, font=\scriptsize, text=cGris] at (-0.07,{\ny{\v}}) {\r};
+}
+\draw[cGris!70] (0,0) -- (0,{\ny{10.35}});
+\draw[cGris!70] (0,0) -- (13.35,0);
+\foreach \a in {1985,1990,1995,2000,2005,2010,2015,2020,2025} {
+  \draw[cGris!70] ({\nx{\a}},0) -- ({\nx{\a}},-0.09);
+  \node[below, font=\scriptsize, text=cGris] at ({\nx{\a}},-0.09) {\a};
+}
+\node[below, font=\scriptsize, text=cGris] at (6.6,-0.50) {año};
+
+% recta de referencia de Nielsen: +50 % anual desde 300 b/s en 1984
+\draw[cGris, dash pattern=on 2pt off 2pt, thick]
+  ({\nx{1984}},{\ny{2.477}}) -- ({\nx{2026}},{\ny{9.875}});
+\node[right, font=\scriptsize, text=cGris!20!black, rotate=31, inner sep=3pt]
+     at ({\nx{2003}},{\ny{5.55}}) {ley de Nielsen: $+50$ \% anual};
+
+% límite de Shannon del canal de voz
+\fill[cLim!12] (0,{\ny{4.49}}) rectangle (13.35,{\ny{4.557}});
+\draw[cLim, dashed] (0,{\ny{4.557}}) -- (13.35,{\ny{4.557}});
+\node[left, font=\scriptsize, text=cLim, align=right, inner sep=3pt]
+     at ({\nx{2026}},{\ny{3.72}})
+     {límite de Shannon del canal\\telefónico de voz: 31 a 36 kb/s};
+
+% era del canal de voz
+\draw[cNet, very thick]
+  ({\nx{1984}},{\ny{2.477}}) -- ({\nx{1988}},{\ny{2.477}}) --
+  ({\nx{1988}},{\ny{3.380}}) -- ({\nx{1991}},{\ny{3.380}}) --
+  ({\nx{1991}},{\ny{4.158}}) -- ({\nx{1994}},{\ny{4.158}}) --
+  ({\nx{1994}},{\ny{4.459}}) -- ({\nx{1996}},{\ny{4.459}}) --
+  ({\nx{1996}},{\ny{4.526}}) -- ({\nx{1998}},{\ny{4.526}}) --
+  ({\nx{1998}},{\ny{4.748}}) -- ({\nx{2000}},{\ny{4.748}});
+% era del cobre de banda ancha
+\draw[cDato, very thick]
+  ({\nx{2000}},{\ny{4.748}}) -- ({\nx{2000}},{\ny{6.176}}) --
+  ({\nx{2003}},{\ny{6.176}}) -- ({\nx{2003}},{\ny{6.903}}) --
+  ({\nx{2006}},{\ny{6.903}}) -- ({\nx{2006}},{\ny{7.380}}) --
+  ({\nx{2010}},{\ny{7.380}}) -- ({\nx{2010}},{\ny{8.000}}) --
+  ({\nx{2014}},{\ny{8.000}}) -- ({\nx{2014}},{\ny{8.477}}) --
+  ({\nx{2016}},{\ny{8.477}});
+% era de la fibra
+\draw[cOpt, very thick]
+  ({\nx{2016}},{\ny{8.477}}) -- ({\nx{2018}},{\ny{8.477}}) --
+  ({\nx{2018}},{\ny{9.000}}) -- ({\nx{2022}},{\ny{9.000}}) --
+  ({\nx{2022}},{\ny{9.301}}) -- ({\nx{2026}},{\ny{9.301}}) --
+  ({\nx{2026}},{\ny{10.000}});
+
+\node[left, font=\scriptsize, text=cNet, inner sep=3pt]
+     at ({\nx{1999.6}},{\ny{5.35}}) {V.90};
+
+% leyenda de los tres medios, al pie del panel
+\draw[cNet, very thick] (0.15,-1.18) -- (0.85,-1.18);
+\node[right, font=\scriptsize, text=cNet, inner sep=3pt] at (0.90,-1.18)
+     {\textbf{canal de voz}: módem sobre 3,1 kHz};
+\draw[cDato, very thick] (5.55,-1.18) -- (6.25,-1.18);
+\node[right, font=\scriptsize, text=cDato, inner sep=3pt] at (6.30,-1.18)
+     {\textbf{par de cobre}: ADSL, VDSL2, cable};
+\draw[cOpt, very thick] (10.95,-1.18) -- (11.65,-1.18);
+\node[right, font=\scriptsize, text=cOpt, inner sep=3pt] at (11.70,-1.18)
+     {\textbf{fibra}: GPON, XGS-PON};
+
+% ================= Panel B: la tasa por era ==============================
+\begin{scope}[xshift=5.95cm, yshift=-6.30cm]
+\node[anchor=south west, font=\small\bfseries] at (-4.75,3.42)
+     {Panel B. La tasa de progreso, era por era, con la ley de Nielsen};
+
+\barraU{2.35}{0.162}{cNet}{\textbf{Canal de voz}, 1984 a 1998\\2,27 décadas en
+  14 años}{0,162}
+\barraU{1.60}{0.177}{cDato}{\textbf{Cobre}, 2000 a 2012\\2,12 décadas en 12
+  años}{0,177}
+\barraU{0.85}{0.127}{cOpt}{\textbf{Fibra}, 2014 a 2026\\1,52 décadas en 12
+  años}{0,127}
+\barraU{0.10}{0.179}{cGris}{\textbf{Los 42 años juntos}\\7,52 décadas en 42
+  años}{0,179}
+
+\draw[cLim, thick] ({\ux{0.176}},-0.22) -- ({\ux{0.176}},2.80);
+\node[above, font=\scriptsize, text=cLim, align=center, inner sep=2pt]
+     at ({\ux{0.176}},2.80) {ley de Nielsen: 0,176};
+
+\draw[cGris!70] (0,-0.26) -- ({\ux{0.195}},-0.26);
+\foreach \t/\r in {0/0, 0.05/{0,05}, 0.10/{0,10}, 0.15/{0,15}} {
+  \draw[cGris!70] ({\ux{\t}},-0.26) -- ({\ux{\t}},-0.35);
+  \node[below, font=\scriptsize, text=cGris] at ({\ux{\t}},-0.35) {\r};
+}
+\node[below, font=\scriptsize, text=cGris] at ({\ux{0.09}},-0.72)
+     {décadas de mejora por año};
+\end{scope}
+
+\end{tikzpicture}
+\caption{Panel A: la misma figura de mérito y el mismo tipo de gráfico que la
+Figura~\ref{fig:dsn}, aplicados al acceso doméstico a internet. Los tres
+colores son tres medios físicos distintos. La recta gris es la regla del 50
+por ciento anual de \textcite{nielsen2019}, trazada desde el primer punto y no
+ajustada: la serie la sigue durante cuarenta años. La línea roja es la
+capacidad de Shannon del canal telefónico, y se ve que la era del módem no se
+detuvo por falta de ingenio sino porque chocó con ella. Panel B: las
+pendientes de las tres eras son casi iguales, que es justamente lo que no
+ocurre en la Red del Espacio Profundo. Elaboración propia sobre las normas
+citadas en el Cuadro~\ref{cuadro:internet}.}
+\label{fig:internet}
+\end{figure}
+
+\section{Las tres series juntas, y la respuesta que se sostiene}
+
+La Figura~\ref{fig:sintesis} pone las tres series que he usado en la misma
+unidad, décadas de mejora por año, y las tres se comportan de manera distinta:
+la Red del Espacio Profundo decelera, el acceso a internet se mantiene y el
+cómputo de entrenamiento de los modelos de aprendizaje automático acelera. Las
+tres son tecnologías de información, las tres son funcionales en el sentido de
+\textcite{koh2006} y las tres están medidas con figuras de mérito declaradas.
+
+\begin{figure}[!htb]
+\centering
+\begin{tikzpicture}
+
+% ================= Panel A: las tres series ==============================
+\node[anchor=south west, font=\small\bfseries] at (-0.85,4.62)
+     {Panel A. Tres tecnologías de información, tres comportamientos};
+\node[anchor=south west, font=\scriptsize\itshape, text=cGris] at (-0.85,4.32)
+     {décadas de mejora por año de la figura de mérito de cada una};
+
+\foreach \v/\r in {0/0, 0.2/{0,2}, 0.4/{0,4}, 0.6/{0,6}, 0.8/{0,8}} {
+  \draw[cGris!25] (0,{\ry{\v}}) -- (12.0,{\ry{\v}});
+  \node[left, font=\scriptsize, text=cGris] at (-0.07,{\ry{\v}}) {\r};
+}
+\draw[cGris!70] (0,0) -- (0,{\ry{0.95}});
+\draw[cGris!70] (0,0) -- (12.0,0);
+\foreach \a in {1960,1970,1980,1990,2000,2010,2020,2030} {
+  \draw[cGris!70] ({\rx{\a}},0) -- ({\rx{\a}},-0.09);
+  \node[below, font=\scriptsize, text=cGris] at ({\rx{\a}},-0.09) {\a};
+}
+\node[below, font=\scriptsize, text=cGris] at (6.0,-0.50) {año};
+
+% DSN
+\draw[cX, very thick]
+  ({\rx{1958}},{\ry{0.889}}) -- ({\rx{1976}},{\ry{0.889}}) --
+  ({\rx{1976}},{\ry{0.076}}) -- ({\rx{1993}},{\ry{0.076}}) --
+  ({\rx{1993}},{\ry{0.007}}) -- ({\rx{2005}},{\ry{0.007}}) --
+  ({\rx{2005}},{\ry{0.121}}) -- ({\rx{2022}},{\ry{0.121}});
+\draw[cX, very thick, dash pattern=on 4pt off 2pt]
+  ({\rx{2022}},{\ry{0.121}}) -- ({\rx{2022}},{\ry{0.228}}) --
+  ({\rx{2031}},{\ry{0.228}});
+\node[right, font=\scriptsize\bfseries, text=cX, align=left, inner sep=3pt]
+     at ({\rx{1978.5}},{\ry{0.80}}) {Red del Espacio Profundo:\\\emph{decelera}
+     (afirmación 2)};
+\draw[cX, -{Stealth[length=4pt]}, thin]
+     ({\rx{1978}},{\ry{0.76}}) -- ({\rx{1973}},{\ry{0.58}});
+
+% acceso a internet
+\draw[cNet, very thick]
+  ({\rx{1984}},{\ry{0.162}}) -- ({\rx{1998}},{\ry{0.162}}) --
+  ({\rx{1998}},{\ry{0.177}}) -- ({\rx{2012}},{\ry{0.177}}) --
+  ({\rx{2012}},{\ry{0.127}}) -- ({\rx{2026}},{\ry{0.127}});
+\draw[cNet, -{Stealth[length=4pt]}, thin]
+     ({\rx{1990}},{\ry{0.400}}) -- ({\rx{1990}},{\ry{0.205}});
+\node[above, font=\scriptsize\bfseries, text=cNet, align=center,
+      text width=3.45cm, inner sep=3pt]
+     at ({\rx{1990}},{\ry{0.405}}) {acceso a internet:\\\emph{constante}
+     (afirmación 3)};
+
+% cómputo de aprendizaje automático
+\draw[cKa, very thick]
+  ({\rx{1990}},{\ry{0.170}}) -- ({\rx{2010}},{\ry{0.170}}) --
+  ({\rx{2010}},{\ry{0.634}}) -- ({\rx{2022}},{\ry{0.634}});
+\draw[cKa, -{Stealth[length=4pt]}, thin]
+     ({\rx{2026}},{\ry{0.545}}) -- ({\rx{2022.5}},{\ry{0.620}});
+\node[left, font=\scriptsize\bfseries, text=cKa, align=right,
+      inner sep=3pt] at ({\rx{2030}},{\ry{0.475}})
+     {cómputo de entrenamiento:\\\emph{acelera} (afirmación 4)};
+
+% leyenda de las tres series, al pie del panel
+\draw[cX, very thick] (0.15,-1.16) -- (0.85,-1.16);
+\node[right, font=\scriptsize, text=cX, inner sep=3pt] at (0.90,-1.16)
+     {\textbf{Red del Espacio Profundo}};
+\draw[cNet, very thick] (5.05,-1.16) -- (5.75,-1.16);
+\node[right, font=\scriptsize, text=cNet, inner sep=3pt] at (5.80,-1.16)
+     {\textbf{acceso a internet}};
+\draw[cKa, very thick] (8.70,-1.16) -- (9.40,-1.16);
+\node[right, font=\scriptsize, text=cKa, inner sep=3pt] at (9.45,-1.16)
+     {\textbf{cómputo de entrenamiento}};
+
+\node[anchor=north west, font=\scriptsize\itshape, text=cGris!30!black,
+      text width=11.6cm, align=left] at (-0.80,-1.56)
+     {Las tres son tecnologías de información y las tres tienen una figura de
+      mérito funcional bien declarada. Si las afirmaciones 2, 3 y 4 fueran
+      leyes, estas tres líneas tendrían la misma forma. No la tienen, y por eso
+      ninguna de las tres es una ley: son descripciones de casos.};
+
+% ================= Panel B: los tres niveles =============================
+\begin{scope}[yshift=-8.45cm]
+\node[anchor=south west, font=\small\bfseries] at (-0.85,4.90)
+     {Panel B. A qué altura es verdadera cada afirmación};
+
+\draw[cOpt, thick, rounded corners=4pt] (0.10,0.10) rectangle (11.90,4.62);
+\node[anchor=north west, font=\small\bfseries, text=cOpt] at (0.32,4.54)
+     {FUNCIÓN: mover bits desde una sonda lejana};
+\node[anchor=north west, font=\scriptsize, text=cOpt, text width=11.2cm]
+     at (0.32,4.12)
+     {\textbf{Afirmaciones 2 y 4:} son afirmaciones sobre la \emph{pendiente}
+      de la envolvente funcional. No se deducen, se miden, y cada tecnología
+      da un resultado distinto. Aquí: 20,8 décadas en 64 años, decelerando.};
+
+\draw[cKa, thick, rounded corners=4pt] (0.45,0.22) rectangle (11.55,3.08);
+\node[anchor=north west, font=\small\bfseries, text=cKa] at (0.67,3.00)
+     {PARADIGMA: banda S, banda X, banda Ka, óptico};
+\node[anchor=north west, font=\scriptsize, text=cKa, text width=10.5cm]
+     at (0.67,2.58)
+     {\textbf{Afirmación 3:} describe correctamente el mecanismo de relevo.
+      Pero el hueco entre curvas, doce años entre 1993 y 2005, es parte del
+      fenómeno y la afirmación no lo menciona.};
+
+\draw[cLim, thick, rounded corners=4pt] (0.80,0.34) rectangle (11.20,1.52);
+\node[anchor=north west, font=\scriptsize, text=cLim, text width=9.9cm]
+     at (1.02,1.42)
+     {\textbf{COMPONENTE} (máser, reflector, código): \textbf{afirmación 1},
+      verdadera y aquí demostrable. Shannon, el fondo cósmico de microondas,
+      la deformación del reflector, la ventana atmosférica.};
+\end{scope}
+
+\end{tikzpicture}
+\caption{Panel A: las tres series en la misma unidad. La de la DSN es cálculo
+propio sobre \textcite{descanso2015}; la de acceso a internet, cálculo propio
+sobre las normas del Cuadro~\ref{cuadro:internet} y
+\textcite{nielsen2019}; la del cómputo de entrenamiento procede de
+\textcite{sevilla2022}, que mide duplicaciones cada 21,3 meses antes de 2010 y
+cada 5,7 después. Panel B: la estructura de la respuesta. Las cuatro
+afirmaciones no compiten: hablan de tres alturas distintas del mismo sistema.
+Elaboración propia.}
+\label{fig:sintesis}
+\end{figure}
+
+Eso es, para mí, la respuesta al planteamiento. \textbf{Las afirmaciones 1 y 3
+son verdaderas porque describen mecanismos, y los mecanismos se pueden
+verificar en cualquier caso.} La 1 describe qué le pasa a un componente y aquí
+se puede demostrar con Shannon y con el fondo cósmico de microondas. La 3
+describe cómo se relevan los paradigmas y aquí está dibujada en el propio
+gráfico oficial de la JPL.
+
+\textbf{Las afirmaciones 2 y 4 no son verdaderas ni falsas en general, porque
+no son mecanismos sino mediciones}, y la medición da resultados opuestos según
+la tecnología: la 2 se cumple en la DSN y no en el acceso a internet; la 4 no
+se cumple en ninguna de las dos y sí en el cómputo de entrenamiento de
+modelos. Presentarlas como leyes es el error; presentarlas como preguntas que
+hay que contestar midiendo, para cada tecnología concreta y con una figura de
+mérito declarada, es exactamente el método que propone \textcite{deweck2022} y
+es lo único que sirve para decidir dónde invertir.
+
+\section{Lo que me llevo del ejercicio}
+
+\begin{enumerate}
+\item \textbf{La altura a la que se mide decide la respuesta}, y por eso la
+  primera obligación al discutir progreso tecnológico es declarar la figura de
+  mérito y el nivel. Sin eso, las cuatro afirmaciones son indecidibles y la
+  discusión se convierte en un intercambio de anécdotas.
+\item \textbf{La media de sesenta años no describe ningún año.} La DSN
+  promedia 0,325 décadas anuales y no ha tenido jamás un año normal a esa tasa:
+  la cifra la produce un tramo inicial de dieciocho años que nunca se repitió.
+  Extrapolar la media histórica de una tecnología madura es el error de
+  previsión más caro y el más frecuente.
+\item \textbf{El hueco entre curvas S importa tanto como el salto.} Doce años
+  planos entre la banda X y la banda Ka. Para un director de tecnología, la
+  variable de gestión no es cuándo llega la curva siguiente sino cuánto dura el
+  hueco, y eso depende de decisiones de capital tomadas con años de antelación.
+\item \textbf{Conviene saber si la asíntota es demostrable o solo aparente.}
+  Shannon y el fondo cósmico son topes que no se negocian. La lentitud de la
+  fibra hoy, en cambio, es demanda insuficiente, y eso se revierte en cuanto
+  aparece una aplicación que la justifique. Tratar las dos igual lleva a
+  abandonar tecnologías que aún tenían recorrido.
+\item \textbf{La restricción activa se desplaza, y casi nunca avisa.} En la DSN
+  pasó de la física a la institución; en el acceso a internet, de la oferta a
+  la demanda. Ninguno de los dos desplazamientos aparece en el enunciado de las
+  cuatro afirmaciones, y los dos son la información que de verdad hace falta
+  para decidir.
+\end{enumerate}
+
+\section{Limitaciones}
+
+\begin{enumerate}
+\item \textbf{Los datos de la DSN son lecturas visuales de un gráfico
+  logarítmico}, no una tabla publicada. Con una tolerancia de $\pm$0,2 décadas
+  por punto, las pendientes de las eras de banda X y Ka, que se calculan sobre
+  recorridos de 1,2 y 1,9 décadas, arrastran un error relativo que puede llegar
+  al 20 por ciento. El orden de magnitud de la conclusión, que la primera era
+  fue siete veces más rápida que la última, resiste ese error; el valor exacto
+  de cada pendiente, no.
+\item \textbf{Las fronteras entre eras las he elegido yo.} Situar el fin de la
+  era de banda X en 1993 y el comienzo de la de Ka en 2006 es una decisión
+  defendible pero no la única. Moverlas dos o tres años cambia las pendientes,
+  aunque no el sentido de la comparación.
+\item \textbf{Cito la entrevista al doctor Deutsch de memoria}, sin
+  transcripción ni marca de tiempo, y por tanto la atribución de la idea de que
+  las limitaciones actuales son más institucionales que físicas es mi lectura y
+  puede no recoger fielmente lo que dijo. Los argumentos que construyo sobre
+  ella, la meseta de doce años y el desplazamiento de la restricción activa,
+  se sostienen sobre los datos del gráfico y no sobre la entrevista.
+\item \textbf{La serie de velocidad de acceso a internet es una reconstrucción
+  a partir de las normas}, no una medición de velocidades reales entregadas al
+  abonado, que siempre son menores. Usar la velocidad nominal de la norma es
+  coherente a lo largo de los 42 años, que es lo que exige el cálculo de una
+  pendiente, pero sobrestima el nivel absoluto en todos los puntos.
+\item \textbf{El reparto entre ganancia extraída y margen restante del
+  Cuadro~\ref{cuadro:asintotas} mezcla unidades cómodamente.} Convertir
+  decibelios de margen de codificación en décadas de tasa de datos supone que
+  la relación es lineal, y solo lo es aproximadamente y en un régimen
+  determinado. El porcentaje de consumo es una buena guía y no una medida
+  exacta.
+\item \textbf{La tercera era del acceso a internet aún no ha terminado}, de
+  modo que su pendiente de 0,127 décadas al año es provisional: si las normas
+  de 25 y 50 gigabits se despliegan a escala en los próximos años, ese número
+  subirá y mi conclusión sobre el freno por demanda quedaría debilitada.
+\item \textbf{No he comprobado personalmente ninguna de las tres series.} Todas
+  se apoyan en fuentes secundarias, aunque las tres sean fuentes primarias de
+  sus respectivos dominios. En particular, los tiempos de duplicación del
+  cómputo de aprendizaje automático proceden de un único trabajo
+  \parencite{sevilla2022} y su régimen más reciente es corto y sensible a la
+  elección de la muestra.
+\end{enumerate}
+
+\printbibliography
+
+\end{document}

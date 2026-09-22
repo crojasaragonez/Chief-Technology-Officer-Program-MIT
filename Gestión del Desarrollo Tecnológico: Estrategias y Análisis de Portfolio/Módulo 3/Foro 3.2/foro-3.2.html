@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Foro 3.2. Veinte órdenes de magnitud y cuatro asíntotas: las cuatro afirmaciones sobre el progreso tecnológico, medidas</title>
+<style>
+  body { font-family: Georgia, "Times New Roman", serif; font-size: 16px;
+         line-height: 1.55; color: #1a1a1a; max-width: 780px;
+         margin: 2rem auto; padding: 0 1rem; }
+  h1 { font-size: 1.6em; line-height: 1.25; margin: 0 0 .2em; }
+  h2 { font-size: 1.25em; margin: 1.8em 0 .5em; }
+  h3 { font-size: 1.05em; margin: 1.4em 0 .4em; }
+  p  { margin: 0 0 .9em; }
+  ul, ol { margin: 0 0 .9em; padding-left: 1.5em; }
+  li { margin-bottom: .45em; }
+  img { max-width: 100%; height: auto; display: block; margin: .6em auto .3em; }
+  table { border-collapse: collapse; width: 100%; margin: .8em 0 1em;
+          font-size: .88em; }
+  th, td { border: 1px solid #b8b8b8; padding: 5px 8px; vertical-align: top;
+           text-align: left; }
+  th { background: #eae2d8; }
+  .sub { font-size: 1.05em; color: #444; margin: 0 0 1.6em; }
+  .cap { font-size: .82em; color: #555; line-height: 1.4; margin: 0 0 1.6em; }
+  .ref { font-size: .85em; line-height: 1.45; }
+  .ref p { margin: 0 0 .5em; padding-left: 1.6em; text-indent: -1.6em; }
+  .num { text-align: right; }
+  blockquote { margin: 1em 0 1.2em; padding: .1em 0 .1em 1.1em;
+               border-left: 3px solid #1a3a66; color: #262626; }
+  .eq { text-align: center; font-size: 1.05em; margin: .9em 0 1.1em; }
+</style>
+</head>
+<body>
+
+<h1>Veinte órdenes de magnitud y cuatro asíntotas</h1>
+<p class="sub"><em>Las cuatro afirmaciones sobre el progreso tecnológico, medidas sobre los datos de la Red del Espacio Profundo y contrastadas con la velocidad de acceso a internet</em><br>
+Carlos Luis Rojas Aragonés</p>
+
+<h2>1. Las cuatro afirmaciones, respondidas en corto</h2>
+
+<p>El planteamiento ofrece cuatro afirmaciones sobre cómo progresan las tecnologías y pide decidir cuáles son verdaderas. Mi respuesta corta es que la pregunta, tal como está redactada, no tiene una respuesta única, y que eso no es una evasiva sino el resultado de medir: <strong>las cuatro afirmaciones son la misma curva mirada a tres alturas distintas</strong>, y cada una es verdadera a una altura y falsa a las otras. El Cuadro 1 lo resume; el resto del documento lo sostiene con los números del propio caso.</p>
+
+<table>
+  <caption style="caption-side: top; text-align: left; font-size: .88em; padding-bottom: .4em;"><strong>Cuadro 1.</strong> Las cuatro afirmaciones del planteamiento, con el veredicto y el apartado donde se sostiene con el cálculo. «Décadas al año» es el número de órdenes de magnitud que la figura de mérito gana cada año.</caption>
+  <tr><th style="width: 4%;"></th><th style="width: 24%;">Afirmación</th><th style="width: 17%;">Veredicto</th><th>Por qué</th></tr>
+  <tr><td>1</td><td>Todas saturan en una asíntota; el progreso exponencial no existe</td><td>Cierta la premisa, falsa la conclusión</td><td>Las asíntotas existen y aquí se <em>demuestran</em>, no se observan: en 1995 la codificación de la DSN ya había consumido el 80 por ciento de toda la ganancia que el teorema de Shannon permitirá jamás. Pero la función ganó 20,8 órdenes de magnitud en 64 años (apartado 4)</td></tr>
+  <tr><td>2</td><td>Exponencial con tasa decreciente por el ingreso marginal decreciente</td><td>Cierta aquí, falsa como ley</td><td>La envolvente de la DSN cae de 0,889 a 0,121 décadas al año, así que la conclusión se cumple. Pero el acceso a internet sostuvo 0,179 durante 42 años, y el mecanismo que actúa no es un rendimiento marginal genérico sino asíntotas con nombre (apartado 5)</td></tr>
+  <tr><td>3</td><td>Exponencial a tasa constante por alternancia de curvas S</td><td><strong>La más útil</strong> de las cuatro</td><td>El mecanismo es literalmente lo que dibuja el gráfico de la JPL: banda S, banda X, banda Ka y óptico. Pero la alternancia <em>sostiene</em> el progreso, no garantiza la tasa: en la DSN alterna y aun así decelera (apartado 6)</td></tr>
+  <tr><td>4</td><td>Exponencial con tasa creciente por las capacidades humanas</td><td>No la sostiene ningún dato realizado</td><td>El único tramo acelerado del gráfico de la JPL es el que todavía no ha ocurrido. Y Bloom et al. (2020) miden lo contrario: sostener la tasa de Moore exige hoy 18 veces más investigadores que en 1971 (apartado 7)</td></tr>
+</table>
+
+<h3>Lo que encontré, dicho por adelantado</h3>
+
+<blockquote>
+<p><strong>La afirmación 3 describe el mecanismo, la 1 describe el componente, y la 2 y la 4 son propiedades empíricas de cada tecnología concreta, no leyes.</strong> La Red del Espacio Profundo ganó <strong>20,8 órdenes de magnitud en 64 años</strong>, lo que refuta la afirmación 1 en su conclusión; pero su tasa se derrumbó de 0,889 décadas al año en la era de banda S a 0,121 en la de banda Ka, con una <strong>meseta plana de doce años entre 1993 y 2005</strong>, lo que confirma la afirmación 2 y refuta la 4. La velocidad de acceso doméstico a internet, en cambio, sostuvo <strong>0,179 décadas al año durante 42 años</strong>, un 51 por ciento anual, atravesando tres medios físicos distintos: eso confirma la afirmación 3 en su enunciado completo. Misma pregunta, dos respuestas opuestas, medidas con la misma unidad.</p>
+</blockquote>
+
+<h3>Nota sobre las cifras</h3>
+
+<p>Distingo tres clases de número, porque mezclarlas es la forma más rápida de que un argumento sobre curvas S parezca más sólido de lo que es.</p>
+
+<p><strong>Lecturas del gráfico</strong> de la capacidad normalizada de la JPL (Jet Propulsion Laboratory, 2015), que es el dato primario de todo el apartado 3. Son lecturas visuales de un eje logarítmico de 24 décadas: les asigno una tolerancia de <strong>±0,2 décadas</strong> por punto. Eso basta para las pendientes, que se calculan sobre diferencias de 2 a 16 décadas, y no basta para ningún escalón individual menor de medio orden de magnitud.</p>
+
+<p><strong>Valores citados</strong> de fuentes técnicas: la temperatura de ruido del sistema de 20,9 K y la relación <em>E</em><sub>b</sub>/<em>N</em><sub>0</sub> de 0,65 dB conseguida por Galileo vienen de Layland y Rauch (1997); la temperatura del fondo cósmico de microondas, 2,725 K, de Fixsen (2009); las velocidades de los módems y de las redes de acceso, de las recomendaciones de la Unión Internacional de Telecomunicaciones citadas en el apartado 8.</p>
+
+<p><strong>Cálculos propios</strong>, declarados donde se usan: las fronteras entre eras, las pendientes en décadas al año, las ganancias teóricas por cambio de banda, la capacidad de Shannon del canal telefónico y el reparto entre ganancia ya extraída y margen restante del Cuadro 3.</p>
+
+<h2>2. El criterio que decide: a qué altura se mide</h2>
+
+<p>Antes de los datos hace falta el criterio, porque sin él las cuatro afirmaciones son indecidibles. La disciplina que propone de Weck (2022) es declarar la figura de mérito sobre <em>la función prestada</em> y no sobre la implementación, y es exactamente ahí donde las cuatro afirmaciones se separan. Hay tres alturas posibles:</p>
+
+<ul>
+<li><strong>Componente</strong>: una pieza concreta con una física concreta. El máser refrigerado, el reflector de 70 metros, el código convolucional de longitud 7. Aquí la figura de mérito tiene un techo que se puede escribir como una ecuación.</li>
+<li><strong>Paradigma</strong>: un conjunto coherente de componentes que comparten un principio de funcionamiento. La banda S, la banda X, la banda Ka, el enlace óptico. Un paradigma agota sus componentes y muere.</li>
+<li><strong>Función</strong>: lo que el usuario quiere, con independencia de cómo se consiga. Aquí: <em>mover bits desde una sonda lejana hasta la Tierra</em>.</li>
+</ul>
+
+<p>La figura de mérito funcional de este caso es la que usa la propia JPL en su gráfico de capacidad: <strong>la tasa de datos del canal, en bits por segundo, normalizada a una distancia de 5 unidades astronómicas</strong>, es decir, a la distancia de Júpiter. La normalización importa porque la potencia recibida cae con el cuadrado de la distancia, de modo que comparar la tasa bruta de una sonda lunar con la de una sonda a Neptuno no mide tecnología, mide geometría.</p>
+
+<p>Con esa figura de mérito declarada, las cuatro afirmaciones dejan de ser opiniones. La 1 es una afirmación sobre componentes. La 3 es una afirmación sobre cómo se encadenan los paradigmas. Y la 2 y la 4 son afirmaciones sobre la <em>pendiente de la envolvente funcional</em>, que es un número que se mide. El Cuadro 2 y la Figura 1 lo miden.</p>
+
+<h2>3. Los datos: veinte órdenes de magnitud en sesenta y cuatro años</h2>
+
+<img src="figuras/figura-1.png" alt="Figura 1. La capacidad de la Red del Espacio Profundo de 1958 a 2033 y su tasa de progreso era por era">
+<p class="cap"><strong>Figura 1.</strong> Panel A: la capacidad normalizada de la Red del Espacio Profundo, redibujada a partir del gráfico de escalones de la JPL (Jet Propulsion Laboratory, 2015). Cada escalón es una tecnología que entra en servicio; el color marca el paradigma de radiofrecuencia. Las rectas punteadas son la tendencia de cada era. La lectura clave no es el recorrido total, que es enorme, sino que <em>las rectas punteadas no son paralelas</em>: cada era progresa más despacio que la anterior. Panel B: esa misma información como tasa. La primera era avanzó siete veces más deprisa que la de banda Ka, y entre 1993 y 2005 la envolvente no se movió. Elaboración propia sobre Jet Propulsion Laboratory (2015).</p>
+
+<p>La Figura 1 redibuja el gráfico de escalones que la JPL publica como medida oficial de la capacidad de la red (Jet Propulsion Laboratory, 2015), y el Cuadro 2 recoge la aritmética.</p>
+
+<p>El recorrido total es el dato que todo el mundo cita: de 10<sup>−13</sup> bits por segundo a la distancia de Júpiter con Explorer 1 en 1958 a unos 6×10<sup>7</sup> con los conjuntos de siete antenas de 34 metros en banda Ka en 2022. Son <strong>20,8 órdenes de magnitud en 64 años</strong>, una media de 0,325 décadas al año, es decir, multiplicar por 2,11 cada año durante seis décadas. Ninguna tecnología terrestre de uso civil se acerca a eso.</p>
+
+<p>Y esa media es <strong>engañosa</strong>, que es el hallazgo del apartado. Está dominada por los primeros dieciocho años: si se retira la era de banda S, los 46 años restantes suman 4,8 décadas, es decir 0,104 décadas al año, veinte veces menos.</p>
+
+<table>
+  <caption style="caption-side: top; text-align: left; font-size: .88em; padding-bottom: .4em;"><strong>Cuadro 2.</strong> La envolvente de la Red del Espacio Profundo, era por era. Los extremos son lecturas del gráfico de la JPL con una tolerancia de ±0,2 décadas; las pendientes y los tiempos de duplicación son cálculo propio. La última fila no ha ocurrido: es la proyección que la propia JPL publica.</caption>
+  <tr><th>Era</th><th>Años</th><th class="num">Décadas</th><th class="num">Déc./año</th><th class="num">Duplica en</th><th>Qué la cerró</th></tr>
+  <tr><td>Banda S</td><td>1958&ndash;1976</td><td class="num">16,00</td><td class="num"><strong>0,889</strong></td><td class="num">4,1 meses</td><td>La banda de 2,3 GHz agotó su ganancia por apertura y por potencia</td></tr>
+  <tr><td>Banda X</td><td>1977&ndash;1993</td><td class="num">1,22</td><td class="num">0,076</td><td class="num">47,3 meses</td><td>Se agotaron el reflector de 70 m, el máser y la codificación concatenada</td></tr>
+  <tr><td>Meseta</td><td>1993&ndash;2005</td><td class="num">0,08</td><td class="num"><strong>0,007</strong></td><td class="num">45,6 años</td><td>Nada la cerró: no hubo paradigma nuevo ni presupuesto para uno</td></tr>
+  <tr><td>Banda Ka</td><td>2006&ndash;2022</td><td class="num">1,93</td><td class="num">0,121</td><td class="num">29,9 meses</td><td>La absorción atmosférica impide subir más en radiofrecuencia</td></tr>
+  <tr><td><em>Óptico (proy.)</em></td><td><em>2023&ndash;2031</em></td><td class="num"><em>1,82</em></td><td class="num"><em>0,228</em></td><td class="num"><em>15,8 meses</em></td><td><em>Sin cerrar; el salto a 193 THz abre 7,6 décadas teóricas</em></td></tr>
+  <tr><td><strong>Total realizado</strong></td><td><strong>1958&ndash;2022</strong></td><td class="num"><strong>20,78</strong></td><td class="num"><strong>0,325</strong></td><td class="num"><strong>11,1 meses</strong></td><td></td></tr>
+  <tr><td><strong>Sin la era de S</strong></td><td><strong>1977&ndash;2022</strong></td><td class="num"><strong>4,78</strong></td><td class="num"><strong>0,104</strong></td><td class="num"><strong>34,8 meses</strong></td><td></td></tr>
+</table>
+
+<h2>4. Afirmación 1: las asíntotas existen, y aquí se demuestran</h2>
+
+<p><strong>Enunciado:</strong> <em>todas las tecnologías terminan alcanzando un punto de saturación, lo que dificulta su progreso más allá de una asíntota determinada. El progreso exponencial no existe.</em></p>
+
+<p>Mi respuesta es que la primera frase es cierta y la segunda es falsa, y que el caso de la DSN es el mejor sitio posible para verlo porque aquí las asíntotas no se conjeturan a partir de los datos: <strong>se deducen de la física y luego se comprueba que los datos las respetan</strong>. Eso es infrecuente. En la mayoría de las tecnologías la asíntota se postula porque la curva se aplana, y eso es un argumento circular. Aquí no.</p>
+
+<p>El Cuadro 3 recoge las cuatro palancas que la DSN controla desde tierra, cada una con su asíntota, el origen físico de esa asíntota y cuánta ganancia queda por extraer. El Panel A de la Figura 2 lo dibuja.</p>
+
+<table>
+  <caption style="caption-side: top; text-align: left; font-size: .88em; padding-bottom: .4em;"><strong>Cuadro 3.</strong> Las cuatro palancas de tierra, su asíntota y el margen que queda. La columna de la derecha es la conclusión incómoda: en tres de las cuatro palancas, la mayor parte de la ganancia que la física permitirá jamás ya está gastada. Cálculo propio sobre los valores citados.</caption>
+  <tr><th style="width: 16%;">Palanca</th><th>La asíntota y de dónde sale</th><th style="width: 18%;">Extraído y lo que queda</th><th style="width: 11%;" class="num">Gastado</th></tr>
+  <tr><td><strong>Codificación</strong></td><td>El teorema de Shannon (1948) fija el mínimo absoluto en <em>E</em><sub>b</sub>/<em>N</em><sub>0</sub> = −1,59 dB. Sin codificar hacen falta unos 9,6 dB; Galileo, con un código concatenado (14, 1/4) y decodificación en cuatro etapas, bajó a 0,65 dB (Layland y Rauch, 1997)</td><td>8,95 dB / 2,24 dB<br>(0,89 / 0,22 déc.)</td><td class="num"><strong>80,0 %</strong></td></tr>
+  <tr><td><strong>Temperatura de ruido</strong></td><td>El suelo es el fondo cósmico de microondas, 2,725 K (Fixsen, 2009), más la atmósfera. La red opera hoy a 20,9 K en banda X sobre la antena de 70 m en el cénit (Layland y Rauch, 1997)</td><td>hasta 20,9 K / factor 7,7<br>(0,88 déc.)</td><td class="num"><strong>67,9 %</strong></td></tr>
+  <tr><td><strong>Apertura</strong></td><td>La ganancia va con el cuadrado del diámetro, pero un reflector orientable se deforma por su propio peso. El paso de 26 a 64 m dio 0,78 décadas; el de 64 a 70 m, en 1988, dio 0,08</td><td>0,86 déc. / no hay más en un solo plato</td><td class="num"><strong>≈100 %</strong></td></tr>
+  <tr><td><strong>Banda</strong></td><td>La ganancia va con el cuadrado de la frecuencia. S a X da 1,13 décadas; X a Ka da 1,16. Por encima de 32 GHz la absorción del vapor de agua hace inutilizable la ventana</td><td>2,29 déc. / 0 dentro de radiofrecuencia</td><td class="num"><strong>≈100 %</strong></td></tr>
+</table>
+
+<p>Los tres números que más me importan de ese cuadro son estos:</p>
+
+<ol>
+<li><strong>La codificación estaba al 80 por ciento de su límite absoluto en 1995.</strong> Los ingenieros de la JPL lo sabían y lo escribieron: en 1985 publicaron un artículo titulado «En busca de una ganancia de codificación de 2 dB» (véase la bibliografía de Layland y Rauch, 1997). Ese título es el retrato de una asíntota: cuando una disciplina titula sus artículos con la cifra exacta de lo que le queda por ganar, la afirmación 1 se cumple sin discusión.</li>
+<li><strong>La mejora de la antena de 64 a 70 metros, en 1988, valió 0,08 décadas</strong>, un 20 por ciento de capacidad. Fue una obra civil de años (Layland y Rauch, 1997). Ese es el aspecto exacto del final de una curva S: coste creciente, ganancia decreciente.</li>
+<li><strong>La escalera de bandas de radiofrecuencia está terminada.</strong> S a X y X a Ka dieron 1,13 y 1,16 décadas cada una, casi idénticas, porque la ganancia va con <em>f</em><sup>2</sup> y las dos razones de frecuencia son parecidas. El siguiente peldaño no existe dentro de la radiofrecuencia.</li>
+</ol>
+
+<p>Y a pesar de todo eso, la función ganó 20,8 órdenes de magnitud. <strong>Por eso la segunda frase de la afirmación 1 es falsa</strong>: el progreso exponencial no solo existe, sino que este caso es uno de los ejemplos más extremos que se conocen. Lo que no existe es progreso exponencial <em>indefinido en un componente</em>, que es una afirmación mucho más modesta y que nadie discute.</p>
+
+<p>Aquí quiero recoger y matizar mi propia intuición inicial, que era que en la DSN «las limitaciones eran más regulaciones humanas que otra cosa», por lo que recuerdo de la entrevista al doctor Deutsch (Deutsch, 2026). Sigo pensando que eso es cierto <em>hoy</em>, y el apartado 7 lo desarrolla. Pero al hacer las cuentas he tenido que corregirme: las limitaciones de la codificación y de la temperatura de ruido no son regulatorias en absoluto. Son el teorema de Shannon y el fondo cósmico de microondas, y no admiten negociación con nadie.</p>
+
+<img src="figuras/figura-2.png" alt="Figura 2. Cuánta ganancia queda en cada palanca de tierra y la escalera de frecuencia">
+<p class="cap"><strong>Figura 2.</strong> Panel A: las cuatro palancas que la red controla desde tierra, con la ganancia ya extraída y la que queda hasta el límite físico. Ninguna de las cuatro barras rayadas es larga, y dos son prácticamente inexistentes: eso es la afirmación 1, comprobada. Panel B: la escalera de frecuencia, que es la razón por la que la afirmación 3 puede seguir cumpliéndose pese al Panel A. Elaboración propia sobre Layland y Rauch (1997), Shannon (1948) y Fixsen (2009).</p>
+
+<h2>5. Afirmación 2: cierta para esta envolvente, y no por la razón que dice</h2>
+
+<p><strong>Enunciado:</strong> <em>las tecnologías experimentan un progreso exponencial, pero la tasa de progreso tiende a disminuir con el paso del tiempo, porque todas se ven afectadas por la ley de la disminución del ingreso marginal.</em></p>
+
+<p>Esta era mi respuesta inicial y sigo pensando que su conclusión es correcta para este caso. Los datos del Cuadro 2 la confirman sin ambigüedad: <strong>0,889, luego 0,076, luego 0,007, luego 0,121 décadas al año</strong>. La secuencia es decreciente salvo el repunte final, y ese repunte no recupera ni la séptima parte de la tasa original.</p>
+
+<p>Pero hay dos correcciones que tuve que hacerme a mí mismo al medir, y las dos importan más que el veredicto.</p>
+
+<p><strong>Primera: la palabra «todas» no se sostiene.</strong> Es una generalización que el propio caso no puede probar, porque un caso no prueba una ley universal, y que además tiene contraejemplos medidos. El apartado 8 presenta uno, y no es el único: Koh y Magee (2006) estudian el progreso funcional de las tecnologías de la información durante más de un siglo y encuentran tasas exponenciales sostenidas, no decrecientes, en varias funciones; Farmer y Lafond (2016) y Nagy et al. (2013) llegan a lo mismo analizando decenas de series de coste y rendimiento. Si la disminución del ingreso marginal fuera una ley universal, esas series no existirían.</p>
+
+<p><strong>Segunda, y esta es la que más me hizo cambiar de opinión: el mecanismo que enuncia la afirmación no es el que actúa aquí.</strong> «Ingreso marginal decreciente» describe una situación en la que cada unidad adicional de esfuerzo rinde un poco menos que la anterior, de forma suave y continua. Lo que la Figura 1 muestra no es eso. Muestra tres cosas distintas:</p>
+
+<ul>
+<li><strong>Un orden de extracción.</strong> Las primeras dieciséis décadas salieron de poner una antena direccional y un transmisor de verdad en una nave que antes llevaba una antena de látigo. No fue ingenio marginal: fue recoger lo que estaba en el suelo. Cualquier tecnología nueva tiene un tramo así, y confundirlo con una tasa sostenible es el error de previsión más común.</li>
+<li><strong>Asíntotas duras y nombrables</strong>, las del Cuadro 3, que no producen una pendiente suavemente decreciente sino un tope.</li>
+<li><strong>Una meseta de doce años que no tiene causa técnica.</strong> Entre 1993 y 2005 la envolvente se movió 0,08 décadas. No fue que costara más conseguir la mejora siguiente: fue que la mejora siguiente exigía cambiar de paradigma, y cambiar de paradigma en una red de antenas de decenas de metros es una decisión de presupuesto plurianual, no de ingeniería. Volveré sobre esto en el apartado 7, porque es donde mi intuición inicial sobre las «regulaciones humanas» sí acierta de lleno.</li>
+</ul>
+
+<p>Dicho de otro modo: la afirmación 2 acierta en el resultado y se equivoca en la causa, y en gestión tecnológica la causa es lo que sirve para decidir. Si uno cree que la desaceleración es un ingreso marginal decreciente, la respuesta es invertir más en lo mismo. Si uno sabe que es una asíntota física más una decisión de capital aplazada, la respuesta es preparar el paradigma siguiente, que es lo que la JPL acabó haciendo con el enlace óptico.</p>
+
+<h2>6. Afirmación 3: es el mecanismo correcto, pero no garantiza la tasa</h2>
+
+<p><strong>Enunciado:</strong> <em>las tecnologías experimentan un progreso exponencial y, en algunos casos, como el de las tecnologías funcionales, la tasa de progreso se mantiene más o menos constante, por la alternancia entre curvas S.</em></p>
+
+<p>Esta es, de las cuatro, <strong>la más útil</strong>, y comparto la intuición que ya tenía: cuando una curva S tiende a la baja, viene otra tecnología a reemplazarla. La quiero afinar en dos direcciones, una a favor y otra en contra.</p>
+
+<p><strong>A favor, y es un argumento fuerte:</strong> el gráfico de la JPL no es que sea compatible con la alternancia de curvas S, es que <em>la dibuja explícitamente</em>. Los cuatro colores de la Figura 1 son cuatro paradigmas, y el gráfico original de la JPL incluso lo advierte en su pie: los saltos grandes de capacidad proceden de los cambios de banda de frecuencia (Jet Propulsion Laboratory, 2015). La secuencia es limpia: la banda S agota su apertura y su potencia hacia 1975, y en 1976 entra la banda X con un salto de 1,3 décadas; la banda X agota el máser, el reflector de 70 metros y la codificación concatenada hacia 1993, y en 2006 entra la banda Ka; la banda Ka agota la ventana atmosférica, y en 2023 entra el óptico, que ya ha demostrado 267 megabits por segundo desde 0,19 unidades astronómicas (NASA, 2023). Cada paradigma muere por asíntotas propias, que son las del Cuadro 3, y su sucesor no lo mejora: lo sustituye. Es exactamente lo que describe Foster (1986) y lo que Sood y Tellis (2005) encuentran al examinar empíricamente la evolución de varias tecnologías: la unidad de análisis útil no es la curva sino la familia de curvas que se relevan.</p>
+
+<p><strong>En contra, y es la parte que no había visto antes de medir:</strong> la alternancia <em>sostiene</em> el progreso, pero no lo mantiene a tasa constante. La DSN alterna cuatro veces y aun así su tasa cae un factor de siete. La razón es que un relevo de paradigma no es gratuito ni instantáneo: entre que la banda X se agota, hacia 1993, y que la banda Ka entra en servicio, en 2006, pasan doce años en los que no ocurre nada. <strong>El hueco entre curvas S es tan parte del fenómeno como el salto.</strong> Y como la afirmación 3 solo menciona el salto, describe bien el mecanismo y mal la consecuencia.</p>
+
+<p>Donde la afirmación 3 se cumple entera, incluida la parte de la tasa constante, es en el caso del apartado siguiente. Y creo que la diferencia entre los dos casos es la lección más transferible de todo el ejercicio.</p>
+
+<h2>7. Afirmación 4: no la sostiene ningún dato realizado de este caso</h2>
+
+<p><strong>Enunciado:</strong> <em>las tecnologías experimentan un progreso exponencial y la tasa de progreso aumenta con el paso del tiempo como resultado del desarrollo de las capacidades de la humanidad.</em></p>
+
+<p>Mi respuesta inicial fue que esto es cierto, porque todo eso ayuda al desarrollo. Al medir he tenido que separar dos cosas que había juntado: <strong>que una capacidad ayude no significa que la tasa aumente</strong>. Son afirmaciones distintas y solo la segunda es la que hay que comprobar.</p>
+
+<p>Sobre este caso la respuesta es limpia y negativa. <strong>Ningún tramo realizado de la Figura 1 es más rápido que el tramo anterior, salvo el paso de la meseta a la banda Ka, que es una recuperación parcial y no una aceleración.</strong> El único tramo del gráfico cuya pendiente supera a la anterior de forma clara, el óptico a 0,228 décadas al año, es <em>el que todavía no ha ocurrido</em>. Y conviene notar que es exactamente el tramo donde más barata resulta el optimismo.</p>
+
+<p>Hay además un argumento cuantitativo general en contra, y es el que más peso tiene: Bloom et al. (2020) miden la productividad de la investigación en varios sectores y encuentran que <strong>mantener la duplicación de densidad de transistores de la ley de Moore exige hoy más de 18 veces los investigadores que hacían falta a comienzos de los años setenta</strong>. Esa cifra es la refutación directa de la afirmación 4 tal como está enunciada: las capacidades humanas agregadas sí han crecido, y el efecto observable no ha sido una tasa creciente sino una tasa constante comprada cada vez más cara.</p>
+
+<p>Dicho lo cual, la afirmación 4 tiene un caso real a su favor, y sería deshonesto no ponerlo. Sevilla et al. (2022) miden el cómputo de entrenamiento de los sistemas de aprendizaje automático y encuentran un cambio de régimen nítido: antes de 2010 se duplicaba cada 21,3 meses, en línea con la ley de Moore, es decir 0,170 décadas al año; desde 2010 se duplica cada 5,7 meses, es decir <strong>0,634 décadas al año</strong>, casi cuatro veces más rápido. Eso es una aceleración medida, no proyectada. Pero es una aceleración de <em>un insumo</em> en <em>un dominio</em> durante <em>una década</em>, y convertir eso en una ley general del progreso tecnológico, que es lo que hace Kurzweil (2001), es el mismo error de extrapolación que cometería quien tomase los 0,889 décadas al año de la era de banda S como la tasa normal de la DSN.</p>
+
+<h3>Dónde sí acierta la intuición sobre las limitaciones humanas</h3>
+
+<p>Queda una pieza que creo que es la más interesante del caso, y es donde mi lectura inicial de la entrevista al doctor Deutsch (Deutsch, 2026) sí da en el blanco, aunque no como argumento a favor de la afirmación 4 sino como matiz a las afirmaciones 2 y 3.</p>
+
+<p><strong>La restricción activa de la DSN se ha desplazado de la física a las instituciones.</strong> En 1965 lo que limitaba la capacidad era el ruido del receptor. En 2026 lo que la limita es, por este orden: el reparto internacional del espectro, que decide qué bandas puede usar una sonda; el ciclo presupuestario plurianual, que decide cuándo se construye una antena; la edad del parque, con reflectores instalados en los años sesenta que hay que mantener mientras se construyen los nuevos; y las ventanas de lanzamiento, que fijan cuándo una tecnología nueva puede volar. Ninguna de esas cuatro cosas es un problema de ingeniería, y las cuatro juntas explican la meseta de 1993 a 2005 mucho mejor que cualquier asíntota.</p>
+
+<p>Para un director de tecnología eso tiene una consecuencia práctica inmediata: en un sistema maduro, <strong>el calendario del relevo entre curvas S lo fija la organización, no el laboratorio</strong>, y por tanto el hueco entre curvas es una variable de gestión y no un dato de la naturaleza.</p>
+
+<h2>8. Un caso distinto: la velocidad de acceso a internet desde 1984</h2>
+
+<blockquote>
+<p>El planteamiento pide exponer brevemente un caso tecnológico distinto que me interese y cuyo sistema haya evolucionado con el tiempo. El mío es <strong>la velocidad de conexión a internet desde un domicilio</strong>, desde los módems de finales de los ochenta hasta la fibra de hoy. Me interesa porque es el caso espejo del de la DSN: la misma unidad de medida, el mismo tipo de gráfico y la misma alternancia de paradigmas, pero <em>el resultado opuesto</em>. Entre 1984 y 2026 la velocidad pasó de 300 bits por segundo a 10 gigabits por segundo, 7,52 órdenes de magnitud, atravesando tres medios físicos completamente distintos: el canal telefónico de voz, el par de cobre usado en todo su espectro y la fibra óptica. Y a diferencia de la DSN, <strong>lo hizo a una tasa prácticamente constante durante cuarenta años</strong>: 0,179 décadas al año, es decir un 51 por ciento anual, que es el valor que Jakob Nielsen postuló en 1998 como ley empírica y que su propia serie personal sigue cumpliendo dos décadas después (Nielsen, 2019). Es, en mi opinión, el mejor ejemplo disponible de la afirmación 3 en su forma completa, incluida la parte que la DSN no cumple.</p>
+</blockquote>
+
+<table>
+  <caption style="caption-side: top; text-align: left; font-size: .88em; padding-bottom: .4em;"><strong>Cuadro 4.</strong> La velocidad de acceso doméstico, hito a hito. Las velocidades son las nominales de la norma correspondiente en su sentido descendente. La columna de la derecha es lo que cerró cada paradigma, y solo la primera es una frontera demostrable.</caption>
+  <tr><th style="width: 14%;">Paradigma</th><th style="width: 19%;">Norma y año</th><th style="width: 11%;" class="num">Velocidad</th><th>Qué lo cerró</th></tr>
+  <tr><td>Canal de voz, 3,1 kHz</td><td>Bell 212A, 1984<br>ITU-T V.32bis, 1991<br>ITU-T V.34, 1994<br>ITU-T V.90, 1998</td><td class="num">300 b/s<br>14,4 kb/s<br>33,6 kb/s<br>56 kb/s</td><td><strong>El teorema de Shannon.</strong> Con 3,1 kHz de ancho y entre 30 y 35 dB de relación señal a ruido, la capacidad del canal está entre 31 y 36 kb/s: V.34 se sentó encima del límite. V.90 solo lo superó dejando de usar el canal analógico en un sentido</td></tr>
+  <tr><td>Par de cobre, todo el espectro</td><td>ITU-T G.992.1, 1999<br>ITU-T G.992.5, 2003<br>VDSL2 y DOCSIS 3.0, 2006</td><td class="num">1,5 Mb/s<br>24 Mb/s<br>100 Mb/s</td><td>La atenuación del cobre, que crece con la frecuencia y con la longitud del bucle. Se compensó acercando la fibra al abonado, que ya es el paradigma siguiente disfrazado</td></tr>
+  <tr><td>Fibra hasta el domicilio</td><td>ITU-T G.984, 2003<br>ITU-T G.9807.1, 2016</td><td class="num">1 Gb/s<br>10 Gb/s</td><td><strong>Nada físico.</strong> La fibra tiene órdenes de magnitud de margen. Lo que frena hoy es la demanda: por encima de 1 Gb/s el usuario doméstico no distingue la diferencia</td></tr>
+</table>
+
+<p>El Cuadro 4 y la Figura 3 desarrollan el caso. Tres cosas merecen subrayarse.</p>
+
+<p><strong>La primera asíntota es demostrable, igual que en la DSN.</strong> La capacidad de un canal de ancho <em>B</em> con relación señal a ruido <em>S</em>/<em>N</em> es</p>
+
+<p class="eq"><em>C</em> = <em>B</em> log<sub>2</sub>(1 + <em>S</em>/<em>N</em>)</p>
+
+<p>(Shannon, 1948). Para el canal telefónico, <em>B</em> = 3100 Hz y una relación señal a ruido realista de entre 30 y 35 dB, la ecuación da entre 30,9 y 36,0 kb/s. La norma V.34 alcanzó 33,6 kb/s. No se quedó cerca del límite: se sentó justo encima de él. Y la norma siguiente, V.90, no rompió esa barrera mejorando el módem, porque eso es imposible: la rompió <em>cambiando el canal</em>, aprovechando que el extremo del proveedor ya estaba digitalizado y que por tanto una de las dos direcciones se ahorraba una conversión analógica. Eso es literalmente un cambio de curva S forzado por una asíntota demostrada.</p>
+
+<p><strong>La segunda: las tres eras tienen casi la misma pendiente.</strong> El Panel B de la Figura 3 las mide: 0,162 décadas al año en el canal de voz, 0,177 en el cobre de banda ancha y 0,127 en la fibra, frente al 0,176 que predice la regla del 50 por ciento anual de Nielsen (2019). Tres medios físicos radicalmente distintos, tres industrias distintas, tres regulaciones distintas, y la misma pendiente dentro del margen de una lectura razonable. <strong>Eso es la afirmación 3 cumplida entera</strong>, y es lo que la DSN no consigue.</p>
+
+<p><strong>La tercera, y es la que menos esperaba: lo que está frenando la última era no es la física.</strong> La fibra tiene margen de sobra; XGS-PON entrega 10 gigabits y las normas de 25 y 50 gigabits ya están publicadas. Si la pendiente del tramo de fibra baja a 0,127 décadas al año no es porque cueste más conseguir la mejora, sino porque por encima de un gigabit el usuario doméstico deja de notarla y deja de pagarla. <strong>La restricción activa se ha movido de la oferta a la demanda.</strong> Es un desplazamiento distinto del de la DSN, donde la restricción se movió de la física a las instituciones, pero el efecto sobre la curva es el mismo, y ninguno de los dos aparece en el enunciado de las cuatro afirmaciones.</p>
+
+<img src="figuras/figura-3.png" alt="Figura 3. Velocidad de acceso doméstico a internet de 1984 a 2026 y su tasa era por era">
+<p class="cap"><strong>Figura 3.</strong> Panel A: la misma figura de mérito y el mismo tipo de gráfico que la Figura 1, aplicados al acceso doméstico a internet. Los tres colores son tres medios físicos distintos. La recta gris es la regla del 50 por ciento anual de Nielsen (2019), trazada desde el primer punto y no ajustada: la serie la sigue durante cuarenta años. La línea roja es la capacidad de Shannon del canal telefónico, y se ve que la era del módem no se detuvo por falta de ingenio sino porque chocó con ella. Panel B: las pendientes de las tres eras son casi iguales, que es justamente lo que no ocurre en la Red del Espacio Profundo. Elaboración propia sobre las normas citadas en el Cuadro 4.</p>
+
+<h2>9. Las tres series juntas, y la respuesta que se sostiene</h2>
+
+<p>La Figura 4 pone las tres series que he usado en la misma unidad, décadas de mejora por año, y las tres se comportan de manera distinta: la Red del Espacio Profundo decelera, el acceso a internet se mantiene y el cómputo de entrenamiento de los modelos de aprendizaje automático acelera. Las tres son tecnologías de información, las tres son funcionales en el sentido de Koh y Magee (2006) y las tres están medidas con figuras de mérito declaradas.</p>
+
+<img src="figuras/figura-4.png" alt="Figura 4. Tres tecnologías de información con tres comportamientos, y los tres niveles de agregación">
+<p class="cap"><strong>Figura 4.</strong> Panel A: las tres series en la misma unidad. La de la DSN es cálculo propio sobre Jet Propulsion Laboratory (2015); la de acceso a internet, cálculo propio sobre las normas del Cuadro 4 y Nielsen (2019); la del cómputo de entrenamiento procede de Sevilla et al. (2022), que mide duplicaciones cada 21,3 meses antes de 2010 y cada 5,7 después. Panel B: la estructura de la respuesta. Las cuatro afirmaciones no compiten: hablan de tres alturas distintas del mismo sistema. Elaboración propia.</p>
+
+<p>Eso es, para mí, la respuesta al planteamiento. <strong>Las afirmaciones 1 y 3 son verdaderas porque describen mecanismos, y los mecanismos se pueden verificar en cualquier caso.</strong> La 1 describe qué le pasa a un componente y aquí se puede demostrar con Shannon y con el fondo cósmico de microondas. La 3 describe cómo se relevan los paradigmas y aquí está dibujada en el propio gráfico oficial de la JPL.</p>
+
+<p><strong>Las afirmaciones 2 y 4 no son verdaderas ni falsas en general, porque no son mecanismos sino mediciones</strong>, y la medición da resultados opuestos según la tecnología: la 2 se cumple en la DSN y no en el acceso a internet; la 4 no se cumple en ninguna de las dos y sí en el cómputo de entrenamiento de modelos. Presentarlas como leyes es el error; presentarlas como preguntas que hay que contestar midiendo, para cada tecnología concreta y con una figura de mérito declarada, es exactamente el método que propone de Weck (2022) y es lo único que sirve para decidir dónde invertir.</p>
+
+<h2>10. Lo que me llevo del ejercicio</h2>
+
+<ol>
+<li><strong>La altura a la que se mide decide la respuesta</strong>, y por eso la primera obligación al discutir progreso tecnológico es declarar la figura de mérito y el nivel. Sin eso, las cuatro afirmaciones son indecidibles y la discusión se convierte en un intercambio de anécdotas.</li>
+<li><strong>La media de sesenta años no describe ningún año.</strong> La DSN promedia 0,325 décadas anuales y no ha tenido jamás un año normal a esa tasa: la cifra la produce un tramo inicial de dieciocho años que nunca se repitió. Extrapolar la media histórica de una tecnología madura es el error de previsión más caro y el más frecuente.</li>
+<li><strong>El hueco entre curvas S importa tanto como el salto.</strong> Doce años planos entre la banda X y la banda Ka. Para un director de tecnología, la variable de gestión no es cuándo llega la curva siguiente sino cuánto dura el hueco, y eso depende de decisiones de capital tomadas con años de antelación.</li>
+<li><strong>Conviene saber si la asíntota es demostrable o solo aparente.</strong> Shannon y el fondo cósmico son topes que no se negocian. La lentitud de la fibra hoy, en cambio, es demanda insuficiente, y eso se revierte en cuanto aparece una aplicación que la justifique. Tratar las dos igual lleva a abandonar tecnologías que aún tenían recorrido.</li>
+<li><strong>La restricción activa se desplaza, y casi nunca avisa.</strong> En la DSN pasó de la física a la institución; en el acceso a internet, de la oferta a la demanda. Ninguno de los dos desplazamientos aparece en el enunciado de las cuatro afirmaciones, y los dos son la información que de verdad hace falta para decidir.</li>
+</ol>
+
+<h2>11. Limitaciones</h2>
+
+<ol>
+<li><strong>Los datos de la DSN son lecturas visuales de un gráfico logarítmico</strong>, no una tabla publicada. Con una tolerancia de ±0,2 décadas por punto, las pendientes de las eras de banda X y Ka, que se calculan sobre recorridos de 1,2 y 1,9 décadas, arrastran un error relativo que puede llegar al 20 por ciento. El orden de magnitud de la conclusión, que la primera era fue siete veces más rápida que la última, resiste ese error; el valor exacto de cada pendiente, no.</li>
+<li><strong>Las fronteras entre eras las he elegido yo.</strong> Situar el fin de la era de banda X en 1993 y el comienzo de la de Ka en 2006 es una decisión defendible pero no la única. Moverlas dos o tres años cambia las pendientes, aunque no el sentido de la comparación.</li>
+<li><strong>Cito la entrevista al doctor Deutsch de memoria</strong>, sin transcripción ni marca de tiempo, y por tanto la atribución de la idea de que las limitaciones actuales son más institucionales que físicas es mi lectura y puede no recoger fielmente lo que dijo. Los argumentos que construyo sobre ella, la meseta de doce años y el desplazamiento de la restricción activa, se sostienen sobre los datos del gráfico y no sobre la entrevista.</li>
+<li><strong>La serie de velocidad de acceso a internet es una reconstrucción a partir de las normas</strong>, no una medición de velocidades reales entregadas al abonado, que siempre son menores. Usar la velocidad nominal de la norma es coherente a lo largo de los 42 años, que es lo que exige el cálculo de una pendiente, pero sobrestima el nivel absoluto en todos los puntos.</li>
+<li><strong>El reparto entre ganancia extraída y margen restante del Cuadro 3 mezcla unidades cómodamente.</strong> Convertir decibelios de margen de codificación en décadas de tasa de datos supone que la relación es lineal, y solo lo es aproximadamente y en un régimen determinado. El porcentaje de consumo es una buena guía y no una medida exacta.</li>
+<li><strong>La tercera era del acceso a internet aún no ha terminado</strong>, de modo que su pendiente de 0,127 décadas al año es provisional: si las normas de 25 y 50 gigabits se despliegan a escala en los próximos años, ese número subirá y mi conclusión sobre el freno por demanda quedaría debilitada.</li>
+<li><strong>No he comprobado personalmente ninguna de las tres series.</strong> Todas se apoyan en fuentes secundarias, aunque las tres sean fuentes primarias de sus respectivos dominios. En particular, los tiempos de duplicación del cómputo de aprendizaje automático proceden de un único trabajo (Sevilla et al., 2022) y su régimen más reciente es corto y sensible a la elección de la muestra.</li>
+</ol>
+
+<h2>Referencias</h2>
+
+<div class="ref">
+<p>Bloom, N., Jones, C. I., Van Reenen, J. y Webb, M. (2020). Are ideas getting harder to find? <em>American Economic Review</em>, <em>110</em>(4), 1104&ndash;1144. https://doi.org/10.1257/aer.20180338</p>
+<p>de Weck, O. L. (2022). <em>Technology roadmapping and development: A quantitative approach to the management of technology</em>. Springer. https://doi.org/10.1007/978-3-030-88346-1</p>
+<p>Deutsch, L. J. (2026). <em>Entrevista sobre la evolución de la Red del Espacio Profundo</em> [material audiovisual del curso].</p>
+<p>Farmer, J. D. y Lafond, F. (2016). How predictable is technological progress? <em>Research Policy</em>, <em>45</em>(3), 647&ndash;665. https://doi.org/10.1016/j.respol.2015.11.001</p>
+<p>Fixsen, D. J. (2009). The temperature of the cosmic microwave background. <em>The Astrophysical Journal</em>, <em>707</em>(2), 916&ndash;920. https://doi.org/10.1088/0004-637X/707/2/916</p>
+<p>Foster, R. N. (1986). <em>Innovation: The attacker's advantage</em>. Summit Books.</p>
+<p>International Telecommunication Union. (1998). <em>Recommendation ITU-T V.34: A modem operating at data signalling rates of up to 33 600 bit/s for use on the general switched telephone network</em>. https://www.itu.int/rec/T-REC-V.34</p>
+<p>International Telecommunication Union. (1998). <em>Recommendation ITU-T V.90: A digital modem and analogue modem pair for use on the PSTN at data signalling rates of up to 56 000 bit/s downstream</em>. https://www.itu.int/rec/T-REC-V.90</p>
+<p>International Telecommunication Union. (1999). <em>Recommendation ITU-T G.992.1: Asymmetric digital subscriber line (ADSL) transceivers</em>. https://www.itu.int/rec/T-REC-G.992.1</p>
+<p>International Telecommunication Union. (2009). <em>Recommendation ITU-T G.992.5: Asymmetric digital subscriber line transceivers 2 (ADSL2), extended bandwidth (ADSL2plus)</em>. https://www.itu.int/rec/T-REC-G.992.5</p>
+<p>International Telecommunication Union. (2016). <em>Recommendation ITU-T G.9807.1: 10-Gigabit-capable symmetric passive optical network (XGS-PON)</em>. https://www.itu.int/rec/T-REC-G.9807.1</p>
+<p>Jet Propulsion Laboratory. (2015). <em>Profile of deep space communications capability: Growth of normalized deep space communications capacity</em>. DESCANSO. https://descanso.jpl.nasa.gov/performmetrics/stairstep.pdf</p>
+<p>Koh, H. y Magee, C. L. (2006). A functional approach for studying technological progress: Application to information technology. <em>Technological Forecasting and Social Change</em>, <em>73</em>(9), 1061&ndash;1083. https://doi.org/10.1016/j.techfore.2006.06.001</p>
+<p>Kurzweil, R. (2001). <em>The law of accelerating returns</em>. https://www.thekurzweillibrary.com/the-law-of-accelerating-returns</p>
+<p>Layland, J. W. y Rauch, L. L. (1997). <em>The evolution of technology in the Deep Space Network: A history of the Advanced Systems Program</em> (TDA Progress Report 42-130). Jet Propulsion Laboratory. https://ipnpr.jpl.nasa.gov/progress_report/42-130/130H.pdf</p>
+<p>NASA. (2023). <em>Deep Space Optical Communications (DSOC): Fact sheet</em>. Jet Propulsion Laboratory. https://www.nasa.gov/wp-content/uploads/2023/07/dsoc-fact-sheet-06152023.pdf</p>
+<p>Nagy, B., Farmer, J. D., Bui, Q. M. y Trancik, J. E. (2013). Statistical basis for predicting technological progress. <em>PLoS ONE</em>, <em>8</em>(2), e52669. https://doi.org/10.1371/journal.pone.0052669</p>
+<p>Nielsen, J. (2019). <em>Nielsen's law of internet bandwidth</em>. Nielsen Norman Group. https://www.nngroup.com/articles/law-of-bandwidth/</p>
+<p>Sevilla, J., Heim, L., Ho, A., Besiroglu, T., Hobbhahn, M. y Villalobos, P. (2022). Compute trends across three eras of machine learning. En <em>2022 International Joint Conference on Neural Networks (IJCNN)</em> (pp. 1&ndash;8). https://doi.org/10.1109/IJCNN55064.2022.9891914</p>
+<p>Shannon, C. E. (1948). A mathematical theory of communication. <em>Bell System Technical Journal</em>, <em>27</em>(3), 379&ndash;423. https://doi.org/10.1002/j.1538-7305.1948.tb01338.x</p>
+<p>Sood, A. y Tellis, G. J. (2005). Technological evolution and radical innovation. <em>Journal of Marketing</em>, <em>69</em>(3), 152&ndash;168. https://doi.org/10.1509/jmkg.69.3.152.66361</p>
+</div>
+
+</body>
+</html>
