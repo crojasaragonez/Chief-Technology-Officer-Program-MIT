@@ -1,4 +1,4 @@
-# Módulo 4. Gestión del conocimiento: Google Drive y NotebookLM.
+# Foro 4.1. Gestión del conocimiento: Google Drive y NotebookLM.
 #
 #   make pdf    compone main.pdf con LuaLaTeX y Biber
 #   make html   regenera figuras/*.png desde main.tex y produce el HTML con
@@ -10,8 +10,8 @@
 
 FUENTE      = main.tex
 PDF         = main.pdf
-HTML_FUENTE = foro-4.html
-HTML_FINAL  = foro-4-tinymce.html
+HTML_FUENTE = foro-4.1.html
+HTML_FINAL  = foro-4.1-tinymce.html
 FIGURAS     = figuras
 
 .PHONY: all pdf html check clean

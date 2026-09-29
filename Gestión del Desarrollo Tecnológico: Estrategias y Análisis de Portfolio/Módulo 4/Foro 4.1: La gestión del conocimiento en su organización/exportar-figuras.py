@@ -4,7 +4,7 @@
 Extrae los entornos tikzpicture de main.tex, los compila con la clase
 `standalone` a 11 pt, el mismo cuerpo que main.tex para que el salto de línea
 de los rótulos coincida, los convierte a PNG, los optimiza y
-genera `foro-4-tinymce.html` con las imágenes en base64, listo para
+genera `foro-4.1-tinymce.html` con las imágenes en base64, listo para
 seleccionar todo, copiar y pegar en un editor TinyMCE.
 
 El preámbulo de las figuras no se duplica aquí: se extrae del propio main.tex,
@@ -23,8 +23,8 @@ import sys
 
 AQUI = pathlib.Path(__file__).resolve().parent
 FIGDIR = AQUI / "figuras"
-HTML_MAESTRO = "foro-4.html"
-HTML_SALIDA = "foro-4-tinymce.html"
+HTML_MAESTRO = "foro-4.1.html"
+HTML_SALIDA = "foro-4.1-tinymce.html"
 DPI = "190"
 
 CABECERA = r"""\documentclass[tikz,border=6pt,11pt]{standalone}
