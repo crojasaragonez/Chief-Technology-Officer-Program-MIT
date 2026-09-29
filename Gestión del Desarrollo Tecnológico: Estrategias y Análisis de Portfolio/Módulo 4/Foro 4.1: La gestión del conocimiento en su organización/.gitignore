@@ -1,0 +1,13 @@
+# Artefactos de LuaLaTeX / Biber (se regeneran con `make pdf`)
+*.aux
+*.bcf
+*.bbl
+*.blg
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+figuras.pdf
+figuras.tex
+
+# El PDF final (main.pdf) SÍ se versiona: es el entregable de la actividad.

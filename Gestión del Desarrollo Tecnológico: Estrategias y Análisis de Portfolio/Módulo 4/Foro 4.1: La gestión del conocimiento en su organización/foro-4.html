@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Conocimiento compartido en una empresa 100% virtual</title>
+<style>
+  body { font-family: Georgia, "Times New Roman", serif; font-size: 16px;
+         line-height: 1.55; color: #1a1a1a; max-width: 780px;
+         margin: 2rem auto; padding: 0 1rem; }
+  h1 { font-size: 1.6em; line-height: 1.25; margin: 0 0 .2em; }
+  h2 { font-size: 1.25em; margin: 1.8em 0 .5em; }
+  p  { margin: 0 0 .9em; }
+  ul { margin: 0 0 .9em; padding-left: 1.5em; }
+  li { margin-bottom: .45em; }
+  img { max-width: 100%; height: auto; display: block; margin: .6em auto .3em; }
+  .sub { font-size: 1.05em; color: #444; margin: 0 0 1.6em; }
+  .cap { font-size: .82em; color: #555; line-height: 1.4; margin: 0 0 1.6em; }
+  .ref { font-size: .85em; line-height: 1.45; }
+  .ref p { margin: 0 0 .5em; padding-left: 1.6em; text-indent: -1.6em; }
+</style>
+</head>
+<body>
+
+<h1>Conocimiento compartido en una empresa 100% virtual</h1>
+<p class="sub"><em>Cómo se crea, se guarda y se consulta el conocimiento con Google Drive y NotebookLM</em><br>
+Carlos Luis Rojas Aragonés</p>
+
+<h2>1. Cómo se gestiona y retiene el conocimiento</h2>
+
+<p>En mi empresa el conocimiento nuevo entra sobre todo por las personas. Se fomenta que los líderes técnicos asistan a conferencias de tecnología y, a su regreso, compartan con el resto del equipo lo que se puede aplicar al negocio. No se trata de repetir la conferencia, sino de filtrarla: quien asistió decide qué ideas son relevantes para nosotros y las traduce a nuestro contexto.</p>
+
+<p>Este paso es la conversión de conocimiento tácito en explícito que Nonaka y Takeuchi (1995) llaman <em>externalización</em>: lo que el líder aprendió escuchando y conversando se convierte en una presentación o un documento que otros pueden leer. Sin ese paso, el conocimiento se queda en la cabeza de quien viajó y se pierde cuando esa persona cambia de puesto.</p>
+
+<h2>2. El sistema: Google Drive y NotebookLM</h2>
+
+<p>Sí contamos con un sistema, y es deliberadamente sencillo. Cada departamento (Ventas, Operaciones y Tecnología) crea y mantiene actualizada su propia documentación en Google Drive. Sobre esos documentos usamos NotebookLM, la herramienta de Google Workspace que responde preguntas apoyándose únicamente en las fuentes que se le entregan y cita el fragmento de donde sale cada respuesta (Google, 2026). La Figura 1 muestra cómo se relacionan las piezas.</p>
+
+<img src="figuras/figura-1.png" alt="Figura 1. El ecosistema de gestión del conocimiento dentro de Google Workspace: departamentos, Google Drive y NotebookLM">
+<p class="cap"><strong>Figura 1.</strong> El ecosistema de gestión del conocimiento dentro de Google Workspace. Cada departamento es dueño de su unidad compartida en Google Drive; NotebookLM usa esos documentos como fuentes y responde a cualquier persona de la empresa citando el documento de origen. Las conferencias alimentan el sistema desde fuera, a través de los líderes técnicos.</p>
+
+<h2>3. ¿Da buenos resultados?</h2>
+
+<p>Creo que sí, por tres razones:</p>
+
+<ul>
+  <li><strong>Sirve a los dos extremos de la antigüedad.</strong> A una persona nueva le evita tener que saber a quién preguntar; a una persona con muchos años en la empresa le ahorra buscar un documento cuyo nombre ya no recuerda.</li>
+  <li><strong>Somos una empresa 100% virtual.</strong> No hay pasillo ni café donde el conocimiento se transmita de forma informal, así que lo que no está escrito prácticamente no existe. La documentación compartida por departamento no es un complemento: es el medio principal por el que el conocimiento circula.</li>
+  <li><strong>La responsabilidad está repartida.</strong> Como cada departamento mantiene lo suyo, la información la actualiza quien la conoce mejor, y no un equipo central que se convierte en cuello de botella.</li>
+</ul>
+
+<p>La condición para que funcione es la disciplina de actualización. NotebookLM responde con lo que hay en Drive, de modo que un documento desactualizado produce una respuesta desactualizada, eso sí, bien citada. Como advierten Davenport y Prusak (1998), un repositorio de conocimiento sólo aporta valor mientras la organización cultive el hábito de alimentarlo; la herramienta facilita el acceso, pero no sustituye ese hábito.</p>
+
+<h2>Referencias</h2>
+
+<div class="ref">
+<p>Davenport, T. H., &amp; Prusak, L. (1998). <em>Working knowledge: How organizations manage what they know</em>. Harvard Business School Press.</p>
+<p>Google. (2026). <em>NotebookLM</em>. Consultado el 28 de septiembre de 2026, en <a href="https://notebooklm.google/">https://notebooklm.google/</a></p>
+<p>Nonaka, I., &amp; Takeuchi, H. (1995). <em>The knowledge-creating company: How Japanese companies create the dynamics of innovation</em>. Oxford University Press.</p>
+</div>
+
+</body>
+</html>

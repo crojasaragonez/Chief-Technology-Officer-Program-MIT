@@ -1,0 +1,9 @@
+¿Cómo se gestiona y retiene el conocimiento en la empresa en la que trabaja?
+  Se fomenta que los líderes técnicos asistan a conferencias de tecnología y las personas que van, luego transmiten el conocimiento relacionado a lo que se puede aplicar al negocio.
+
+¿Su organización cuenta con algún tipo de sistema de gestión del conocimiento?
+  Utilizamos Google Drive + NotebookLM donde cada departamento crea y mantiene la información actualizada.
+
+En caso afirmativo, ¿cree que da buenos resultados?
+  Si, creo que es una herramienta útil tanto para las personas con muchos años en la organización como para las personas nuevas.
+  Algo que debo decir es que somos una compañía 100% virtual entonces tener documentación compartida en cada departamento es fundamental.
