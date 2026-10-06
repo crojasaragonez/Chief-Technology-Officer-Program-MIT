@@ -1,0 +1,608 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt,maxcitenames=2]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.3cm}
+% Los rótulos de las figuras usan nodos de ancho fijo y la bibliografía compone
+% en modo sloppy: ambos generan avisos de línea holgada que son cosméticos.
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.42em}
+\setlist{nosep}
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.06}
+\renewcommand{\floatpagefraction}{0.72}
+\setcounter{topnumber}{2}
+
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy\small}
+\setlength{\bibitemsep}{0.28em}
+\setlength{\bibhang}{1.4em}
+
+\sisetup{
+  output-decimal-marker = {,},
+  group-separator = {.},
+  group-minimum-digits = 4,
+  detect-all
+}
+
+% Colores: el granate del coste de secuenciar (el mismo tono que el gráfico
+% del módulo), el azul de la ley de Moore, el verde de los datos oficiales del
+% NHGRI, el ámbar de la producción mundial y el gris del texto secundario.
+\definecolor{cCoste}{RGB}{163,31,52}
+\definecolor{cMoore}{RGB}{42,120,190}
+\definecolor{cNhgri}{RGB}{36,122,82}
+\definecolor{cProd}{RGB}{176,110,20}
+\definecolor{cEje}{RGB}{26,58,102}
+\definecolor{cGris}{RGB}{120,116,110}
+
+\pgfplotsset{
+  informe/.style={
+    width=\textwidth, height=7.2cm,
+    tick label style={font=\footnotesize},
+    label style={font=\footnotesize},
+    legend style={font=\footnotesize, draw=cGris!50, fill=white,
+      fill opacity=0.92, text opacity=1, cells={anchor=west}},
+    grid=major, major grid style={cGris!22},
+    axis line style={cGris!80},
+    /pgf/number format/.cd, use comma, 1000 sep={.},
+  },
+}
+
+\tikzset{
+  every node/.append style={execute at begin node={\hyphenpenalty=10000}},
+  % Celda de la matriz 5x5: #1 es el color de relleno
+  celda/.style={draw=cGris!60, fill=#1, minimum width=2.85cm,
+    minimum height=1.32cm, text width=2.6cm, align=center,
+    font=\scriptsize, inner sep=2pt},
+  cabecera/.style={font=\footnotesize\bfseries, text=cEje, align=center},
+}
+
+% Celda de la matriz: #1 columna (1 a 5), #2 fila (1 a 5), #3 estilo de
+% relleno, #4 texto
+\newcommand{\celda}[4]{%
+  \node[celda=#3] (c#1#2) at ({2.4+(#1-0.5)*2.85},{-(#2-0.5)*1.32}) {#4};}
+
+\begin{document}
+
+% --- Portada -----------------------------------------------------------------
+\begin{titlepage}
+\centering
+\vspace*{3.2cm}
+{\large\scshape Gestión del Desarrollo Tecnológico:\\
+Estrategias y Análisis de Portfolio\par}
+\vspace{0.5cm}
+{\normalsize Módulo 5. Actividad 5.3: Posición del ADN en la matriz tecnológica\par}
+\vspace{2.6cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vspace{0.7cm}
+{\LARGE\bfseries Leer la vida a precio de saldo\par}
+\vspace{0.5cm}
+{\large Dónde cae la secuenciación del ADN en la matriz 5\,×\,5\\
+y a qué ritmo se ha abaratado desde el año 2000\par}
+\vspace{0.7cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vfill
+{\large Carlos Luis Rojas Aragonés\par}
+\vspace{0.3cm}
+{\normalsize Chief Technology Officer Program\par}
+\vspace{0.3cm}
+{\normalsize 5 de octubre de 2026\par}
+\vspace*{1.5cm}
+\end{titlepage}
+
+% --- Cuerpo ------------------------------------------------------------------
+\section{Las dos respuestas, por adelantado}
+\label{sec:respuestas}
+
+\textbf{Pregunta 1. ¿En qué celda de la matriz 5\,×\,5 coloco la secuenciación
+del ADN?} En la intersección del operando \textbf{información} con el proceso
+\textbf{transformar}. Un secuenciador toma una molécula física que pertenece a
+un organismo vivo y la convierte en un dato digital: una cadena de letras A, C,
+G y T con su calidad asociada. El organismo no sale modificado; lo que se crea
+es información. La celda vecina de \emph{organismos vivos por transformar} le
+corresponde a la tecnología complementaria, la edición genética, y la
+secuenciación queda justo en la frontera entre ambas columnas
+(sección~\ref{sec:matriz}).
+
+\textbf{Pregunta 2. ¿Cuál es la tasa anual de mejora del coste de secuenciar un
+genoma humano completo desde el año 2000?} Leída en el gráfico del módulo, la
+curva de coste baja de unos \num{2,2e5} en el año 2000 a algo más de 1 en
+2019, en la misma escala: un factor de \num{192000} en diecinueve años. Eso es
+una \textbf{mejora de aproximadamente el 90~\% anual}. Dicho de las otras dos
+maneras equivalentes, \textbf{el coste se multiplica cada año por 0,53} (cae un
+47~\%) y \textbf{se reduce a la mitad cada 13 meses}. Es más del doble del
+ritmo de la ley de Moore \parencite{moore1965}, que en el mismo gráfico mejora un 40~\% anual y se
+reduce a la mitad cada dos años (sección~\ref{sec:tasa}).
+
+Los datos oficiales del NHGRI, que no salen del gráfico sino de los costes
+reales de sus centros de secuenciación, confirman la cifra de manera
+independiente: un 93~\% anual entre 2001 y 2019 y un 80~\% anual si se extiende
+hasta 2022, cuando el genoma costaba 525 dólares frente a los 95 millones de
+2001 (sección~\ref{sec:nhgri}). La media, sin embargo, esconde tres épocas muy
+distintas, y esa es la conclusión que más le importa a quien gestiona una
+cartera tecnológica (sección~\ref{sec:eras}).
+
+\section{\texorpdfstring{La matriz tecnológica 5\,×\,5}{La matriz tecnológica 5 × 5}}
+\label{sec:matriz}
+
+\subsection*{Qué clasifica la matriz}
+
+La matriz clasifica las tecnologías por su función, no por su disciplina ni por
+su industria. \textcite{deweck2022} parte de una idea simple: toda tecnología
+ejecuta al menos un \emph{proceso} sobre al menos un \emph{operando}, el objeto
+que cambia de estado. La versión clásica de \textcite{vanwyk1988} era una
+cuadrícula de 3\,×\,3, con materia, energía e información como operandos y
+transformar, transportar y almacenar como procesos. De Weck la amplía a
+5\,×\,5 añadiendo dos operandos, los \textbf{organismos vivos} y el
+\textbf{valor} (el dinero y los activos financieros), y dos procesos,
+\textbf{intercambiar} y \textbf{controlar}. La figura~\ref{fig:matriz} la
+reproduce con un ejemplo por celda y marca dónde cae la secuenciación y las
+tecnologías genómicas que la rodean.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+  % cabeceras de columna (operandos) y de fila (procesos)
+  \foreach \t [count=\j] in {Materia, Energía, Información, Organismos\\vivos, Valor}
+    \node[cabecera] at ({2.4+(\j-0.5)*2.85},0.55) {\t};
+  \foreach \t [count=\i] in {Transformar, Transportar, Almacenar, Intercambiar, Controlar}
+    \node[cabecera, anchor=east] at (2.25,{-(\i-0.5)*1.32}) {\t};
+  \node[font=\scriptsize\itshape, text=cGris, anchor=south] at (9.525,1.55)
+    {operando: el objeto que cambia de estado};
+  \node[font=\scriptsize\itshape, text=cGris, rotate=90, anchor=south]
+    at (0.15,-3.3) {proceso};
+
+  % fila 1: transformar
+  \celda{1}{1}{cCoste!14}{Síntesis de ADN,\\fundición, impresión 3D}
+  \celda{2}{1}{white}{Motor, turbina,\\panel solar}
+  \celda{3}{1}{cCoste!80}{\color{white}\bfseries Secuenciación\\de ADN}
+  \celda{4}{1}{cCoste!14}{Edición genética\\(CRISPR), cirugía}
+  \celda{5}{1}{white}{Banca de inversión,\\emisión de moneda}
+  % fila 2: transportar
+  \celda{1}{2}{white}{Camión, tubería,\\cinta transportadora}
+  \celda{2}{2}{white}{Red eléctrica\\de transmisión}
+  \celda{3}{2}{cCoste!14}{Fibra óptica, nube\\(datos genómicos)}
+  \celda{4}{2}{white}{Ambulancia,\\avión de pasajeros}
+  \celda{5}{2}{white}{Transferencia\\interbancaria}
+  % fila 3: almacenar
+  \celda{1}{3}{white}{Silo, almacén,\\contenedor}
+  \celda{2}{3}{white}{Batería, embalse}
+  \celda{3}{3}{cCoste!14}{Disco, archivo de\\genomas, datos en ADN}
+  \celda{4}{3}{cCoste!14}{Biobanco,\\criopreservación}
+  \celda{5}{3}{white}{Banco, cartera\\de activos}
+  % fila 4: intercambiar
+  \celda{1}{4}{white}{Puerto, mercado\\de materias primas}
+  \celda{2}{4}{white}{Mercado eléctrico\\mayorista}
+  \celda{3}{4}{cCoste!14}{GenBank, GISAID,\\Internet}
+  \celda{4}{4}{white}{Trasplante,\\banco de semillas}
+  \celda{5}{4}{white}{Bolsa de valores}
+  % fila 5: controlar
+  \celda{1}{5}{white}{Válvula, robot\\industrial}
+  \celda{2}{5}{white}{Regulador de red,\\termostato}
+  \celda{3}{5}{white}{Software de control,\\criptografía}
+  \celda{4}{5}{cCoste!14}{Medicina de precisión,\\marcapasos}
+  \celda{5}{5}{white}{Banco central,\\auditoría}
+
+  % la celda elegida y la flecha que muestra el cambio de operando
+  \draw[cCoste, line width=1.6pt] (c31.south west) rectangle (c31.north east);
+  \draw[-{Stealth[length=2.4mm]}, line width=1.1pt, cEje]
+    (11.25,1.0) to[bend right=28]
+    node[midway, above, font=\scriptsize\bfseries, text=cEje] {lee}
+    (8.95,1.0);
+\end{tikzpicture}
+\caption{Matriz tecnológica 5\,×\,5 de operandos por procesos, según la
+estructura de \textcite{deweck2022}, con un ejemplo propio en cada celda. La
+celda granate es la que propongo para la secuenciación del ADN; la flecha
+indica que su materia prima procede de la columna de organismos vivos y su
+producto cae en la de información. Las celdas rosadas son las tecnologías
+genómicas que la rodean.}
+\label{fig:matriz}
+\end{figure}
+
+\subsection*{Por qué información por transformar, y no otra celda}
+
+La regla para ubicar una tecnología es preguntarse qué objeto sale de ella con
+un estado distinto del que tenía al entrar. Aplicada al secuenciador, la
+respuesta es inequívoca: entra una muestra de ADN y sale un archivo. El
+cuadro~\ref{tab:celdas} recorre las cuatro celdas que podrían reclamar la
+secuenciación y explica por qué tres de ellas no encajan.
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{@{}p{3.6cm}X p{1.9cm}@{}}
+\toprule
+\textbf{Celda candidata} & \textbf{Argumento} & \textbf{Veredicto} \\
+\midrule
+Información por transformar &
+  El producto es un dato nuevo, la secuencia, que antes no existía en forma
+  legible. Sus figuras de mérito son de información: coste por genoma, bases
+  leídas por día, error por base (puntuación Phred) y longitud de lectura. &
+  \textbf{Celda principal} \\
+Organismos vivos por transformar &
+  La muestra viene de un organismo, pero el organismo no cambia. Esta celda
+  pertenece a la edición genética, que sí altera al ser vivo. &
+  Frontera, no celda \\
+Información por almacenar &
+  El ADN es el soporte de información más denso que se conoce y existe
+  investigación para guardar datos en él, pero esa es otra tecnología. El
+  secuenciador lee el soporte; no lo usa para guardar. &
+  Celda vecina \\
+Materia por transformar &
+  Hay química en el proceso (amplificación, fluoróforos, nanoporos), pero es
+  el medio, no el fin. Nadie compra un secuenciador por los reactivos que
+  consume. &
+  Descartada \\
+\bottomrule
+\end{tabularx}
+\caption{Celdas candidatas para la secuenciación del ADN.}
+\label{tab:celdas}
+\end{table}
+
+La matriz también revela algo útil para la gestión: la secuenciación es la
+\emph{puerta de entrada} de un ecosistema que ocupa media columna de
+información. Cada genoma secuenciado hay que transportarlo, almacenarlo e
+intercambiarlo (filas 2 a 4 de esa columna), y sólo entonces se convierte en
+control sobre un organismo vivo, que es lo que hace la medicina de precisión.
+Cuando el coste de la primera celda se desploma, como muestra la sección
+siguiente, el cuello de botella se desplaza a las demás. Un genoma humano a
+30 veces de cobertura ocupa del orden de un centenar de gigabytes de datos
+crudos; con secuenciar barato, almacenar y analizar se vuelve la parte cara.
+
+\section{La tasa anual de mejora desde el año 2000}
+\label{sec:tasa}
+
+\subsection*{Método}
+
+Una figura de mérito que progresa de forma exponencial cumple
+$\mathrm{FOM}(t) = \mathrm{FOM}_0\,(1+r)^{t-t_0}$, donde $r$ es la tasa anual
+de mejora \parencite{deweck2022}. El coste es una figura de mérito en la que
+menos es mejor, así que se trabaja con su inverso, los genomas que se pueden
+secuenciar por dólar. Con los costes $C_0$ en el año $t_0$ y $C_1$ en el año
+$t_1$:
+\begin{equation}
+  r = \left(\frac{C_0}{C_1}\right)^{1/(t_1-t_0)} - 1,
+  \qquad
+  d = 1 - \left(\frac{C_1}{C_0}\right)^{1/(t_1-t_0)},
+  \qquad
+  T_{1/2} = \frac{\ln 2}{\ln(1+r)}.
+  \label{eq:tasa}
+\end{equation}
+$r$ es la mejora anual, $d$ la reducción anual del coste y $T_{1/2}$ el tiempo
+que tarda el coste en reducirse a la mitad. Las tres expresan el mismo dato.
+
+Hay una ventaja importante en este método. El gráfico del módulo es una
+adaptación del de \textcite{shendure2017} y su rotulación es ambigua: el título
+central dice \enquote{coste por genoma humano} y el eje derecho, en el mismo
+color, dice \enquote{coste por MB}. Los valores absolutos tampoco coinciden con
+ninguna de las dos magnitudes en las series oficiales (en 2012 la curva marca
+unos 2 dólares). Para la tasa da igual: la ecuación~\eqref{eq:tasa} sólo usa
+el \emph{cociente} entre dos lecturas, y un cambio de escala o de unidades
+multiplica numerador y denominador por el mismo factor. La pendiente en escala
+logarítmica es la misma se lea el eje que se lea.
+
+\subsection*{Lectura del gráfico}
+
+Para no depender de una lectura a ojo, digitalicé las tres curvas del gráfico
+píxel a píxel, calibrando los ejes con las marcas de graduación (70,2 píxeles
+por década en vertical y 52,4 por año en horizontal). La
+figura~\ref{fig:grafico} reconstruye la curva de coste con esos datos y la
+compara con la línea de la ley de Moore del propio gráfico.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[informe,
+  ymode=log, xmin=1995, xmax=2019.2, ymin=0.4, ymax=4e9,
+  xtick={1996,1998,...,2018},
+  /pgf/number format/1000 sep={},
+  ylabel={Coste en la escala del gráfico (dólares)},
+  legend pos=north east,
+]
+\addplot[cMoore, thick, dashed, domain=1995:2019, samples=2]
+  {1e9*10^(-(x-1995)*3.51/24)};
+\addlegendentry{Ley de Moore: $\times 0{,}71$ por año}
+\addplot[cCoste, very thick] table[x=anio, y=valor] {datos/grafico-coste.dat};
+\addlegendentry{Coste de secuenciar (digitalizado)}
+\addplot[black, thick, densely dotted, mark=*, mark size=2.2pt,
+  mark options={solid, fill=white}]
+  coordinates {(2000,218872) (2019,1.14)};
+\addlegendentry{Tasa media 2000-2019: $\times 0{,}53$ por año}
+\node[font=\scriptsize, anchor=south west, align=left] at (axis cs:2000.2,3e5)
+  {2000: \num{2,19e5}};
+\node[font=\scriptsize, anchor=south east, align=right] at (axis cs:2018.8,1.6)
+  {2019: 1,14};
+\draw[cEje, -{Stealth}] (axis cs:2004.6,1.2e2) -- (axis cs:2007.8,1.2e2);
+\node[font=\scriptsize, text=cEje, align=left, anchor=east]
+  at (axis cs:2004.5,1.2e2) {454 e Illumina:\\caída de 8.000 veces\\en seis años};
+\end{axis}
+\end{tikzpicture}
+\caption{Curva de coste del gráfico del módulo, digitalizada, frente a la ley
+de Moore. La recta punteada une las lecturas de 2000 y 2019; su pendiente es la
+tasa media que pide la actividad. Fuente: elaboración propia a partir del
+gráfico del módulo, adaptado de \textcite{shendure2017}.}
+\label{fig:grafico}
+\end{figure}
+
+El cuadro~\ref{tab:calculo} aplica la ecuación~\eqref{eq:tasa} a las lecturas.
+La tasa media de 2000 a 2019 es del \textbf{89,7~\% anual}. Para acotar el
+error de lectura supuse un margen de una décima de década (un 26~\% del valor)
+en cada extremo y en el sentido desfavorable: la tasa queda entre el
+\textbf{85~\% y el 94~\%}. Un ajuste por mínimos cuadrados en escala
+logarítmica sobre todos los puntos de 2000 a 2019 da una cifra más alta, del
+111~\%, porque la caída abrupta de la mitad del periodo pesa más que los
+extremos planos; prefiero la tasa entre extremos porque es la que responde a
+la pregunta, que es cuánto mejoró el coste \emph{desde} el año 2000 hasta hoy.
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+\textbf{Periodo} & \textbf{Factor} & \textbf{Años} & \textbf{Mejora $r$} &
+  \textbf{Caída $d$} & \textbf{$T_{1/2}$} \\
+\midrule
+\textbf{2000-2019 (respuesta)} & \num{192000} & 19 & \textbf{89,7~\%} &
+  47,3~\% & 13 meses \\
+\quad Margen de lectura & & & 85-94~\% & 46-49~\% & 12-14 meses \\
+\quad Ajuste logarítmico & & & 111~\% & 53~\% & 11 meses \\
+\midrule
+Ley de Moore (mismo gráfico) & \num{3200} & 24 & 40,0~\% & 28,6~\% &
+  25 meses \\
+\bottomrule
+\end{tabular}
+\caption{Tasa anual de mejora del coste, calculada con la
+ecuación~\eqref{eq:tasa} sobre la curva digitalizada.}
+\label{tab:calculo}
+\end{table}
+
+Una precisión sobre \enquote{genoma humano completo}. El genoma que se
+publicó en 2003 todavía tenía alrededor de un 8~\% sin resolver, sobre todo
+centrómeros y regiones repetitivas, y la primera secuencia de verdad completa,
+de telómero a telómero, no llegó hasta 2022 \parencite{nurk2022}. El coste que
+mide el gráfico, y el que mide el NHGRI, es el de un genoma con calidad de
+referencia según los estándares de cada época, que es la convención habitual.
+
+\section{Contraste con los datos oficiales del NHGRI}
+\label{sec:nhgri}
+
+El National Human Genome Research Institute publica desde 2001 el coste real
+de secuenciar un genoma humano en los centros que financia, con todos los
+gastos incluidos: reactivos, personal, amortización de equipos, gestión de
+datos y gastos indirectos \parencite{nhgri2023}. Es la fuente canónica de esta
+curva, y como no procede del gráfico del módulo sirve como comprobación
+independiente (figura~\ref{fig:nhgri}).
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[informe,
+  ymode=log, xmin=2001, xmax=2023.3, ymin=40, ymax=3e8,
+  xtick={2001,2003,...,2023},
+  /pgf/number format/1000 sep={},
+  ylabel={Coste por genoma humano (dólares)},
+  legend pos=north east,
+]
+\addplot[cMoore, thick, dashed, domain=2001.708:2023, samples=2]
+  {95263071.9*0.5^((x-2001.708)/2)};
+\addlegendentry{Si hubiera seguido la ley de Moore}
+\addplot[cNhgri, very thick, mark=*, mark size=1.1pt]
+  table[x=anio, y=genoma] {datos/nhgri-genoma.dat};
+\addlegendentry{Coste real, NHGRI}
+\addplot[only marks, mark=square*, mark size=2.2pt, cCoste]
+  coordinates {(2022.4,100) (2022.75,200)};
+\addlegendentry{Costes anunciados por fabricantes}
+\node[font=\scriptsize, anchor=west, text=cNhgri] at (axis cs:2001.9,9.5e7)
+  {2001: 95,3 millones};
+\node[font=\scriptsize, anchor=south, text=cNhgri, align=center]
+  at (axis cs:2021.2,1.4e3) {2022: 525 \$};
+\node[font=\scriptsize, anchor=east, text=cCoste, align=center]
+  at (axis cs:2022.1,140) {200 y 100 \$};
+\draw[cEje, -{Stealth}] (axis cs:2010.1,2e5) -- (axis cs:2008.5,5e5);
+\node[font=\scriptsize, text=cEje, anchor=west, align=left]
+  at (axis cs:2010.2,2e5) {2008: llega la secuenciación\\de nueva generación};
+\end{axis}
+\end{tikzpicture}
+\caption{Coste por genoma humano según el NHGRI (77 observaciones de 2001 a
+2022) frente a una trayectoria hipotética que se redujera a la mitad cada dos
+años desde el mismo punto de partida. Los cuadrados son los costes anunciados
+en 2022 por \textcite{illumina2022} y \textcite{ultima2022}, que no son
+costes totales comparables con la serie. Fuentes: \textcite{nhgri2023};
+\textcite{datahub2023}.}
+\label{fig:nhgri}
+\end{figure}
+
+Los resultados coinciden con el gráfico del módulo. Entre septiembre de 2001 y
+principios de 2019 la mejora es del \textbf{93,2~\% anual}, a tres puntos y
+medio de la lectura del gráfico. Si se extiende hasta mayo de 2022, cuando la
+serie se detiene en 525 dólares, la tasa baja al \textbf{79,7~\% anual},
+porque se añaden tres años de la fase más lenta. Ambas cifras confirman el
+orden de magnitud de la respuesta: una mejora del 80 al 90~\% anual, el doble
+largo de la ley de Moore. La recta azul de la figura~\ref{fig:nhgri} pone ese
+contraste en dinero: con el ritmo de Moore, un genoma costaría hoy unos
+\num{74000} dólares, no 525.
+
+\section{Una media que esconde tres épocas}
+\label{sec:eras}
+
+La tasa media es la respuesta correcta a la pregunta, pero no es una buena
+herramienta de planificación, porque el coste no bajó a ritmo constante. Bajó
+en tres escalones, que se ven en las dos curvas y que el
+cuadro~\ref{tab:eras} y la figura~\ref{fig:eras} separan.
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{@{}p{3.2cm}Xrr@{}}
+\toprule
+\textbf{Época} & \textbf{Tecnología dominante} & \textbf{Gráfico} &
+  \textbf{NHGRI} \\
+\midrule
+Sanger capilar & Electroforesis capilar automatizada (ABI 3730): un fragmento
+  por capilar, 96 a la vez. Mejora incremental de un diseño dominante. &
+  76~\% & 53~\% \\
+Nueva generación & 454, Illumina GA, GAII y HiSeq: millones de fragmentos en
+  paralelo sobre una sola superficie. Cambio de arquitectura. &
+  348~\% & 451~\% \\
+Maduración & Química de Illumina consolidada; mejoras de rendimiento por
+  equipo y competencia de nuevos fabricantes al final del periodo. &
+  10~\% & 29~\% \\
+\midrule
+\textbf{Periodo completo} & & \textbf{90~\%} & \textbf{80~\%} \\
+\bottomrule
+\end{tabularx}
+\caption{Mejora anual del coste en cada época. Cortes del gráfico: 2000-2004,
+2004-2010 y 2010-2019. Cortes del NHGRI, con su propia cronología:
+2001-2007, 2007-2011 y 2011-2022.}
+\label{tab:eras}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[informe, height=6.6cm,
+  ybar, bar width=17pt, ymin=0, ymax=520,
+  symbolic x coords={Sanger, NGS, Maduración, Total},
+  xticklabels={Sanger capilar, Nueva generación, Maduración, Periodo completo},
+  xtick=data, enlarge x limits=0.18,
+  ylabel={Mejora anual del coste (\%)},
+  nodes near coords, every node near coord/.append style={font=\scriptsize,
+    fill=white, inner sep=1pt},
+  legend style={at={(0.98,0.97)}, anchor=north east},
+  xmajorgrids=false,
+]
+\addplot[fill=cCoste, draw=cCoste] coordinates
+  {(Sanger,76.4) (NGS,347.6) (Maduración,10.5) (Total,89.7)};
+\addlegendentry{Gráfico del módulo}
+\addplot[fill=cNhgri, draw=cNhgri] coordinates
+  {(Sanger,53.1) (NGS,451.2) (Maduración,29.0) (Total,79.7)};
+\addlegendentry{NHGRI}
+\draw[draw=cMoore, line width=0.8pt, dash pattern=on 3pt off 2pt] ({rel axis cs:0,0}|-{axis cs:Sanger,40})
+  -- ({rel axis cs:1,0}|-{axis cs:Sanger,40});
+\addlegendimage{line legend, cMoore, thick, dashed}
+\addlegendentry{Ley de Moore (40~\%)}
+\end{axis}
+\end{tikzpicture}
+\caption{Mejora anual del coste por época. Sólo la maduración posterior a 2010
+queda por debajo de la ley de Moore; la época de nueva generación la supera
+por un factor de diez.}
+\label{fig:eras}
+\end{figure}
+
+Las tres épocas son las tres fases de una sucesión de curvas S. La primera es
+la mejora incremental de una tecnología dominante, la electroforesis capilar,
+que ya mejoraba más deprisa que los chips. La segunda es un \emph{salto de
+curva}: la secuenciación masiva en paralelo no hizo más rápido lo mismo, sino
+que cambió la arquitectura, y en seis años redujo el coste unas \num{8000}
+veces según el gráfico. La tercera es la parte alta de la nueva curva S, con
+rendimientos decrecientes de la química de Illumina, hasta que los anuncios de
+2022 de 200 y 100 dólares por genoma señalan el inicio de otro posible salto
+\parencite{illumina2022,ultima2022}.
+
+Para un CTO esto tiene una lectura práctica. Si en 2010 alguien hubiera
+extrapolado la tasa de la época anterior para presupuestar un programa
+genómico a diez años, habría sobrestimado el coste final de forma enorme. Si
+hubiera extrapolado la tasa de 2004 a 2010, lo habría subestimado por varios
+órdenes de magnitud. La tasa media de 90~\% anual es correcta como historia,
+pero la decisión depende de saber en qué tramo de la curva S está la
+tecnología hoy.
+
+\section{Material de apoyo: la otra cara de la misma curva}
+\label{sec:produccion}
+
+El gráfico del módulo tiene una tercera curva que la pregunta no usa: la
+producción mundial de secuenciación, en kilobases por día. La digitalicé con
+el mismo procedimiento. Pasó de unos 56 kilobases diarias en el año 2000 a
+unos 440 millones en 2014: una mejora del \textbf{211~\% anual}, que duplica la
+capacidad mundial cada siete meses, tres veces más rápido de lo que cayó el
+coste.
+
+Las dos curvas están ligadas. La figura~\ref{fig:wright} enfrenta el coste con
+la producción en los años en que el gráfico tiene ambas, de 2000 a 2014, en
+escala logarítmica en los dos ejes. Los puntos caen casi sobre una recta
+($R^2 = 0{,}995$) de pendiente $-0{,}77$: cada vez que la producción mundial
+se multiplica por diez, el coste se divide por 5,9. Es la forma de la ley de
+\textcite{wright1936}, la curva de experiencia, aunque con una advertencia
+metodológica: Wright usa la producción \emph{acumulada}, y aquí sólo tengo el
+ritmo diario, así que la relación describe el acoplamiento entre volumen y
+coste pero no prueba en qué sentido va la causa. Lo más probable es que vaya
+en los dos: el abaratamiento abrió usos nuevos y el volumen financió la
+siguiente generación de equipos, el ciclo que \textcite{carlson2003} describió
+para las tecnologías biológicas cuando la segunda época apenas empezaba.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[informe, height=6.8cm,
+  xmode=log, ymode=log, xmin=20, xmax=2e9, ymin=0.5, ymax=1e6,
+  xlabel={Producción mundial (kilobases por día)},
+  ylabel={Coste en la escala del gráfico},
+  legend pos=north east,
+]
+\addplot[only marks, mark=*, mark size=1.5pt, cProd]
+  table[x=produccion, y=coste] {datos/coste-vs-produccion.dat};
+\addlegendentry{Años 2000 a 2014}
+\addplot[cCoste, thick, domain=40:1e9, samples=2] {10^(6.491)*x^(-0.7713)};
+\addlegendentry{Ajuste: $C \propto P^{-0{,}77}$, $R^2=0{,}995$}
+\node[font=\scriptsize, anchor=south west] at (axis cs:60,2.4e5) {2000};
+\node[font=\scriptsize, anchor=west] at (axis cs:6e8,1.5) {2014};
+\end{axis}
+\end{tikzpicture}
+\caption{Coste de secuenciar frente a producción mundial, ambos leídos del
+gráfico del módulo. La relación es casi exactamente una ley de potencia.}
+\label{fig:wright}
+\end{figure}
+
+\section{Conclusiones}
+\label{sec:conclusiones}
+
+\begin{enumerate}[leftmargin=1.4em, itemsep=0.4em]
+  \item \textbf{La secuenciación del ADN pertenece a la celda de información
+    por transformar}, en la frontera con la columna de organismos vivos: lee
+    un objeto biológico y produce información. La edición genética es su
+    complemento en la celda de al lado, y la columna de información que queda
+    por debajo (transportar, almacenar, intercambiar) es donde se desplaza el
+    cuello de botella cuando secuenciar se vuelve barato.
+  \item \textbf{La tasa anual de mejora del coste desde el año 2000 es de
+    aproximadamente el 90~\%} según el gráfico del módulo (entre 85 y 94~\%
+    con el margen de lectura): el coste cae un 47~\% cada año y se reduce a la
+    mitad cada 13 meses. Los datos del NHGRI la confirman con un 93~\% hasta
+    2019 y un 80~\% hasta 2022.
+  \item \textbf{Es más del doble del ritmo de la ley de Moore}, que en el mismo
+    gráfico mejora un 40~\% anual. Con ese ritmo, un genoma costaría hoy unos
+    \num{74000} dólares en lugar de 525.
+  \item \textbf{La media resume tres épocas muy distintas}: 76~\% anual con
+    Sanger, 350~\% con la secuenciación de nueva generación y apenas 10~\% en
+    la maduración posterior a 2010. Para planificar no sirve la media, sirve
+    saber en qué tramo de la curva S se está.
+\end{enumerate}
+
+\printbibliography[title={Referencias}]
+
+\end{document}
