@@ -1,0 +1,163 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{csquotes}
+\usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt,maxcitenames=2]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.3cm}
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\setlist{nosep}
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy\small}
+\setlength{\bibitemsep}{0.3em}
+
+% Colores: verde para los avances de la ciencia, terracota para los hitos de
+% gobernanza, azul oscuro para el eje del tiempo y gris para el texto
+% secundario.
+\definecolor{cCiencia}{RGB}{36,122,82}
+\definecolor{cGob}{RGB}{186,86,30}
+\definecolor{cEje}{RGB}{26,58,102}
+\definecolor{cGris}{RGB}{120,116,110}
+
+\tikzset{
+  % los rótulos de la figura no se dividen con guion
+  every node/.append style={execute at begin node={\hyphenpenalty=10000}},
+  hito/.style={draw=#1, fill=#1!9, thick, rounded corners=2pt,
+    text width=1.74cm, align=center, inner sep=2.5pt, font=\scriptsize},
+  anio/.style={font=\footnotesize\bfseries, text=cEje},
+  punto/.style={circle, fill=#1, inner sep=0pt, minimum size=5pt},
+  carril/.style={font=\footnotesize\bfseries, text=#1, anchor=west},
+}
+
+\begin{document}
+
+% --- Portada -----------------------------------------------------------------
+\begin{titlepage}
+\centering
+\vspace*{3.2cm}
+{\large\scshape Gestión del Desarrollo Tecnológico:\\
+Estrategias y Análisis de Portfolio\par}
+\vspace{0.5cm}
+{\normalsize Módulo 5. Foro 5.1: Bioética\par}
+\vspace{2.6cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vspace{0.7cm}
+{\LARGE\bfseries Entender la vida\\[0.2em]
+antes de rediseñarla\par}
+\vspace{0.5cm}
+{\large Por qué la biotecnología necesita más herramientas\\
+y estándares comunes, no prohibiciones\par}
+\vspace{0.7cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vfill
+{\large Carlos Luis Rojas Aragonés\par}
+\vspace{0.3cm}
+{\normalsize Chief Technology Officer Program\par}
+\vspace{0.3cm}
+{\normalsize 5 de octubre de 2026\par}
+\vspace*{1.5cm}
+\end{titlepage}
+
+% --- Cuerpo ------------------------------------------------------------------
+\section*{1. La vida sigue siendo un misterio}
+
+Cada organismo vivo es, por sí mismo, extraordinario. En \emph{The Body},
+\textcite{bryson2019} recuerda que en la escuela le enseñaron que los
+elementos químicos de un cuerpo humano costaban unos pocos dólares; la Royal
+Society of Chemistry calculó en 2013 que en realidad rondan los 151\,000
+dólares. Aun así, ni los científicos más brillantes del planeta podrían
+ensamblar con ellos una persona. Ni siquiera una célula: el genoma sintético
+de \textcite{gibson2010} tuvo que instalarse en una bacteria que ya existía.
+
+\section*{2. Usar todas las herramientas a nuestro alcance}
+
+Por eso creo que debemos aprovechar toda herramienta que nos ayude a entender
+los organismos. AlphaFold resolvió un problema de cincuenta años, predecir la
+forma de las proteínas, y les valió a Hassabis y Jumper el Nobel de Química
+2024, compartido con David Baker por diseñar proteínas nuevas
+\parencite{nobel2024}. Los concursos abiertos aceleran este avance: en el de
+Adaptyv sobre EGFR, 130 equipos enviaron 1\,131 diseños y el ganador se unió a
+su objetivo ocho veces más fuerte que el anticuerpo comercial cetuximab
+\parencite{cotet2025}. Hoy Anthropic y Adaptyv financian la validación de más
+de 5\,000 diseños contra cinco enfermedades y publicarán todos los resultados,
+incluidos los negativos \parencite{proteinbase2026}.
+
+\section*{3. Límites sí, pero como estándar mundial}
+
+No propongo eliminar las regulaciones, sino estandarizarlas como práctica
+mundial, en la línea del marco de la \textcite{oms2021}. El caso de He Jiankui,
+que en 2018 editó embriones humanos \parencite{cyranoski2018}, muestra el
+riesgo de que alguien actúe por su cuenta. Aun con ese riesgo, el balance de
+CRISPR, Nobel 2020 para Charpentier y Doudna \parencite{nobel2020}, es
+claramente positivo:
+
+\begin{itemize}[leftmargin=1.2em, itemsep=0.25em]
+  \item \textbf{Casgevy (2023).} 29 de 31 pacientes con anemia falciforme
+    quedaron sin crisis de dolor \parencite{fda2023}.
+  \item \textbf{Bebé KJ (2025).} Primera edición genética diseñada para un solo
+    paciente, en seis meses \parencite{musunuru2025}.
+\end{itemize}
+
+Lo resume la Figura~\ref{fig:linea}.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1.88cm]
+  % Eje del tiempo
+  \draw[very thick, cEje, -{Stealth[length=2.8mm]}] (-0.45,0) -- (8.5,0);
+
+  % Hitos de la ciencia, sobre el eje
+  \foreach \x/\a/\t in {
+      0/2010/{Genoma sintético en una célula existente},
+      1/2012/{Se publica CRISPR programable},
+      3/2020/{AlphaFold 2 y Nobel a CRISPR},
+      5/2023/{Casgevy, primera terapia CRISPR},
+      6/2024/{Nobel a AlphaFold y al diseño de proteínas},
+      7/2025/{Bebé KJ: edición a la medida},
+      8/2026/{Anthropic × Adaptyv: 5\,000 diseños abiertos}} {
+    \node[punto=cCiencia] at (\x,0) {};
+    \draw[cCiencia, thick] (\x,0) -- (\x,0.42);
+    \node[hito=cCiencia, anchor=south] at (\x,0.42) {\t};
+    \node[anio, anchor=north] at (\x,-0.12) {\a};
+  }
+
+  % Hitos de la gobernanza, bajo el eje
+  \foreach \x/\a/\t in {
+      2/2018/{He Jiankui edita embriones humanos},
+      4/2021/{Marco de gobernanza de la OMS}} {
+    \node[punto=cGob] at (\x,0) {};
+    \node[anio, anchor=south] at (\x,0.12) {\a};
+    \draw[cGob, thick] (\x,0) -- (\x,-0.42);
+    \node[hito=cGob, anchor=north] at (\x,-0.42) {\t};
+  }
+
+  % Carriles
+  \node[carril=cCiencia] at (-0.45,2.35) {Ciencia y tecnología};
+  \node[carril=cGob]     at (5.3,-1.15) {Gobernanza y ética};
+\end{tikzpicture}
+\caption{La ciencia avanza y la gobernanza la acompaña. Sobre el eje, los
+avances que nos ayudan a entender y corregir la vida
+\parencite{gibson2010,jinek2012,jumper2021,fda2023,nobel2024,musunuru2025,proteinbase2026};
+bajo el eje, los hitos que muestran por qué hacen falta reglas comunes
+\parencite{cyranoski2018,oms2021}.}
+\label{fig:linea}
+\end{figure}
+
+\printbibliography[title={Referencias}]
+
+\end{document}
