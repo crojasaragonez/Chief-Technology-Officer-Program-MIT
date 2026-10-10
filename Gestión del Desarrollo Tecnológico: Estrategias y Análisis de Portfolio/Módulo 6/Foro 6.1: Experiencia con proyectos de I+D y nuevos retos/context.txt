@@ -1,0 +1,28 @@
+En este módulo, hemos visto algunos ejemplos de proyectos de I+D. Ahora, le animamos a publicar sus respuestas a las siguientes preguntas:
+
+    ¿En qué tipo de proyectos de I+D ha participado?
+    ¿Cuál fue el resultado?
+    ¿Cuál es el problema más importante que suelen plantear los proyectos de I+D según su propia experiencia?
+
+    Financiación inestable
+    Falta de personal
+    Objetivos inalcanzables
+    Crecimiento lento
+    Corrupción del alcance
+    Complejidad excesiva
+
+
+Draft de respuesta:
+
+En la industria del desarrollo de software bajo el modelo de staff augmentation, hay un concepto que se llama informalmente el "bench".
+Son ingenieros que terminan proyectos o contratos con clientes y pasan un tiempo esperando el inicio de otro proyecto.
+Como experiencia propia, nosotros utilizamos estos recursos para desarrollar un departamento que produjo muchas innovaciones que siguien funcionando hasta el día de hoy y son parte del core de la compañia.
+
+¿En qué tipo de proyectos de I+D ha participado?
+    La gran mayoría fueron proyectos pilotos y de I+D de tecnologías bastante estables que pusimos a trabajar juntas para resolver problemas reales.
+
+¿Cuál fue el resultado?
+    De por lo menos 50 proyectos desarrollados 3 se implementaron. 2 de ellos ayudan al core del negocio y mantienen la empresa funcionando de manera más o menos automatizada.
+
+¿Cuál es el problema más importante que suelen plantear los proyectos de I+D según su propia experiencia?
+    El presupuesto siempre es un tema, por eso cada proyecto debe venir con una promesa atractiva y alineada con la estrategia de la compañía.

@@ -1,0 +1,149 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{csquotes}
+\usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt,maxcitenames=2]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.3cm}
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\setlist{nosep}
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy\small}
+\setlength{\bibitemsep}{0.3em}
+
+% Colores: verde para los proyectos que hoy son parte del núcleo del negocio,
+% terracota para el que se implementó sin llegar al núcleo, gris para los
+% pilotos que no avanzaron y azul oscuro para los rótulos.
+\definecolor{cNucleo}{RGB}{36,122,82}
+\definecolor{cImpl}{RGB}{186,86,30}
+\definecolor{cEje}{RGB}{26,58,102}
+\definecolor{cGris}{RGB}{120,116,110}
+
+\tikzset{
+  % los rótulos de la figura no se dividen con guion
+  every node/.append style={execute at begin node={\hyphenpenalty=10000}},
+  piloto/.style={circle, fill=#1, inner sep=0pt, minimum size=3.6mm},
+  leyenda/.style={font=\small, anchor=west, text width=7.2cm, align=flush left},
+  cifra/.style={font=\large\bfseries, text=#1, anchor=east},
+}
+
+\begin{document}
+
+% --- Portada -----------------------------------------------------------------
+\begin{titlepage}
+\centering
+\vspace*{3.2cm}
+{\large\scshape Gestión del Desarrollo Tecnológico:\\
+Estrategias y Análisis de Portfolio\par}
+\vspace{0.5cm}
+{\normalsize Módulo 6. Foro 6.1: Experiencia con proyectos de I+D\\
+y nuevos retos\par}
+\vspace{2.6cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vspace{0.7cm}
+{\LARGE\bfseries El bench como laboratorio\par}
+\vspace{0.5cm}
+{\large Cómo el tiempo entre contratos se convirtió\\
+en innovación que sostiene el negocio\par}
+\vspace{0.7cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vfill
+{\large Carlos Luis Rojas Aragonés\par}
+\vspace{0.3cm}
+{\normalsize Chief Technology Officer Program\par}
+\vspace{0.3cm}
+{\normalsize 10 de octubre de 2026\par}
+\vspace*{1.5cm}
+\end{titlepage}
+
+% --- Cuerpo ------------------------------------------------------------------
+\section*{1. El bench: holgura que se puede invertir}
+
+En el desarrollo de software bajo el modelo de \emph{staff augmentation}
+existe lo que informalmente llamamos el \enquote{bench}: ingenieros que
+terminan un proyecto o contrato con un cliente y esperan el inicio del
+siguiente. En lugar de tratarlos como costo ocioso, los usamos para formar un
+departamento de innovación. \textcite{nohria1996} encontraron que cierta
+holgura organizacional favorece la innovación, siempre que no sea excesiva;
+el bench es exactamente esa holgura.
+
+\section*{2. ¿En qué tipo de proyectos he participado?}
+
+Sobre todo en pilotos de I+D aplicada. No inventamos tecnologías nuevas:
+combinamos tecnologías ya estables y las pusimos a trabajar juntas para
+resolver problemas reales.
+
+\section*{3. ¿Cuál fue el resultado?}
+
+De al menos 50 pilotos, 3 se implementaron y 2 forman hoy parte del núcleo de
+la compañía, porque mantienen la operación funcionando de forma casi
+automatizada (Figura~\ref{fig:pilotos}). Parece poco, pero
+\textcite{stevens1997} estimaron que hacen falta unos 125 proyectos pequeños
+para obtener un solo éxito comercial. El embudo es normal; lo importante es
+que los ganadores paguen con creces los intentos que no prosperaron.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+  % Cuadrícula de 50 pilotos: 10 columnas por 5 filas
+  \foreach \i in {0,...,49} {
+    \pgfmathtruncatemacro{\col}{mod(\i,10)}
+    \pgfmathtruncatemacro{\fila}{\i/10}
+    \ifnum\i<2
+      \def\tono{cNucleo}
+    \else\ifnum\i<3
+      \def\tono{cImpl}
+    \else
+      \def\tono{cGris!45}
+    \fi\fi
+    \node[piloto=\tono] at (0.55*\col, -0.55*\fila) {};
+  }
+
+  % Leyenda con las cifras
+  \node[cifra=cNucleo] at (7.25,0)     {2};
+  \node[leyenda] at (7.3,0)     {en el núcleo del negocio, operando hoy};
+  \node[cifra=cImpl] at (7.25,-1.1)  {1};
+  \node[leyenda] at (7.3,-1.1)  {implementado fuera del núcleo};
+  \node[cifra=cGris] at (7.25,-2.2)  {47};
+  \node[leyenda] at (7.3,-2.2)  {pilotos que no avanzaron, pero dejaron
+    aprendizaje y práctica al equipo};
+
+  \node[piloto=cNucleo] at (6.3,0)    {};
+  \node[piloto=cImpl]   at (6.3,-1.1) {};
+  \node[piloto=cGris!45] at (6.3,-2.2) {};
+\end{tikzpicture}
+\caption{Destino de los pilotos de I+D desarrollados con ingenieros del bench.
+Cada círculo es un piloto: 3 de 50 llegaron a producción (6\,\%), una tasa
+favorable frente a la referencia de un éxito por cada 125 proyectos pequeños
+\parencite{stevens1997}.}
+\label{fig:pilotos}
+\end{figure}
+
+\section*{4. El problema más importante: la financiación inestable}
+
+De las opciones planteadas elijo la financiación inestable. El bench es
+intermitente por naturaleza: cuando llega un contrato, el ingeniero vuelve a
+facturar y el piloto se congela; además, cada hora de I+D compite con horas
+facturables. Por eso cada proyecto debe nacer con una promesa atractiva y
+alineada con la estrategia de la compañía, y pasar por puertas de decisión
+explícitas, como en el modelo Stage-Gate de \textcite{cooper1990}, para
+continuar, pausar o cerrar a tiempo.
+
+\printbibliography[title={Referencias}]
+
+\end{document}
