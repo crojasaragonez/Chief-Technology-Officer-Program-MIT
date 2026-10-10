@@ -1,0 +1,201 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{csquotes}
+\usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt,maxcitenames=2]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.3cm}
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\setlist{nosep}
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy\small}
+\setlength{\bibitemsep}{0.3em}
+
+% Colores: verde para Apple Silicon, terracota para el rendimiento multinúcleo,
+% azul oscuro para ejes y rótulos y gris para la competencia.
+\definecolor{cApple}{RGB}{36,122,82}
+\definecolor{cMulti}{RGB}{186,86,30}
+\definecolor{cEje}{RGB}{26,58,102}
+\definecolor{cGris}{RGB}{120,116,110}
+
+\pgfplotsset{
+  foro/.style={
+    font=\small,
+    axis line style={cEje},
+    tick style={cEje},
+    every tick label/.append style={font=\small, text=cEje},
+    label style={font=\small, text=cEje},
+    /pgf/number format/use comma,
+    /pgf/number format/1000 sep={\,},
+  },
+}
+
+\begin{document}
+
+% --- Portada -----------------------------------------------------------------
+\begin{titlepage}
+\centering
+\vspace*{3.2cm}
+{\large\scshape Gestión del Desarrollo Tecnológico:\\
+Estrategias y Análisis de Portfolio\par}
+\vspace{0.5cm}
+{\normalsize Módulo 6. Foro 6.2: Ejemplos de innovaciones tecnológicas\\
+que han contribuido al aumento de la productividad\par}
+\vspace{2.6cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vspace{0.7cm}
+{\LARGE\bfseries De M1 a M6\par}
+\vspace{0.5cm}
+{\large Cómo Apple Silicon cambió lo que una computadora\\
+puede hacer con cada vatio\par}
+\vspace{0.7cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vfill
+{\large Carlos Luis Rojas Aragonés\par}
+\vspace{0.3cm}
+{\normalsize Chief Technology Officer Program\par}
+\vspace{0.3cm}
+{\normalsize 10 de octubre de 2026\par}
+\vspace*{1.5cm}
+\end{titlepage}
+
+% --- Cuerpo ------------------------------------------------------------------
+Este comentario resume un artículo que publiqué en mi blog
+\parencite{rojas2026}, a partir de lo que estudié en este programa.
+
+\section*{1. La innovación: el chip, la memoria y el sistema como un solo diseño}
+
+En junio de 2020 Apple anunció que el Mac dejaría los procesadores de Intel
+por chips propios \parencite{apple2020transicion}. El M1, de noviembre de ese
+año, integró CPU, GPU y aceleradores en un sistema en un chip, con memoria
+unificada en el mismo paquete \parencite{apple2020m1}. La innovación no fue
+solo el procesador: Apple diseñó chip, sistema operativo y producto a la vez,
+y preparó la transición del software con Rosetta~2 y los binarios Universal~2.
+Aun así, el ecosistema tardó en ponerse al día: Docker Desktop no tuvo
+soporte estable hasta abril de 2021 \parencite{docker2021}.
+
+\section*{2. Efectos en el rendimiento}
+
+El MacBook Air con M1 eliminó el ventilador y anunció hasta 18 horas de
+reproducción de video: el silencio dejó de depender de una carga ligera. Seis
+generaciones después, el rendimiento de un núcleo creció 1,9 veces y el
+multinúcleo 3,1 veces, en parte porque se pasó de 8 a 12 núcleos
+\parencite{timm2026}. Lo muestra la Figura~\ref{fig:evolucion}.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[foro,
+    width=12cm, height=6.2cm,
+    symbolic x coords={M1,M2,M3,M4,M5,M6}, xtick=data,
+    ymin=0.8, ymax=3.4, ytick={1,1.5,2,2.5,3},
+    yticklabel={\pgfmathprintnumber{\tick}×},
+    ylabel={Rendimiento relativo a M1},
+    ymajorgrids, grid style={cGris!25},
+    axis x line*=bottom, axis y line*=left,
+    enlarge x limits=0.06, clip=false]
+  \addplot[cMulti, very thick, mark=*, mark size=2.2pt]
+    table[x=chip, y expr=\thisrow{multi}/1816] {
+      chip multi
+      M1 1816
+      M2 2183
+      M3 2558
+      M4 3600
+      M5 3957
+      M6 5674
+    } node[pos=1, anchor=west, xshift=4pt, font=\small\bfseries, text=cMulti]
+      {3,1×};
+  \addplot[cApple, very thick, mark=*, mark size=2.2pt]
+    table[x=chip, y expr=\thisrow{mono}/428] {
+      chip mono
+      M1 428
+      M2 461
+      M3 545
+      M4 644
+      M5 733
+      M6 823
+    } node[pos=1, anchor=west, xshift=4pt, font=\small\bfseries, text=cApple]
+      {1,9×};
+  \node[font=\small, text=cMulti, anchor=west] at (axis cs:M2,2.75)
+    {Multinúcleo: de 1\,816 a 5\,674 puntos};
+  \node[font=\small, text=cApple, anchor=west] at (axis cs:M2,2.45)
+    {Un núcleo: de 428 a 823 puntos};
+\end{axis}
+\end{tikzpicture}
+\caption{Evolución de los chips base de Apple Silicon en Cinebench 2026.1,
+normalizada respecto a M1. Son agregados de la comunidad con configuraciones y
+refrigeración distintas, y M6 tiene una sola observación \parencite{timm2026}.}
+\label{fig:evolucion}
+\end{figure}
+
+Lo más relevante, sin embargo, es el trabajo por vatio. En las pruebas de
+\textcite{notebookcheck2026}, que miden la potencia de todo el sistema, el M6
+supera en eficiencia multinúcleo a los equipos de Intel, AMD y Qualcomm
+evaluados (Figura~\ref{fig:eficiencia}). No es invencible: el MacBook Air
+con M4 rinde más puntos por vatio y el Snapdragon X2 Elite Extreme logra más
+rendimiento multinúcleo absoluto.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[foro,
+    width=12cm, height=6.2cm,
+    xbar, bar width=9pt,
+    xmin=0, xmax=45,
+    symbolic y coords={AMD,Intel,Snapdragon,M5,M6,MacBook Air M4},
+    ytick={AMD,Intel,Snapdragon,M5,M6,MacBook Air M4},
+    bar shift=0pt,
+    xlabel={Puntos multinúcleo por vatio (Cinebench 2024)},
+    xmajorgrids, grid style={cGris!25},
+    axis x line*=bottom, axis y line*=left,
+    nodes near coords, every node near coord/.append style={font=\small,
+      text=cEje, /pgf/number format/fixed, /pgf/number format/precision=1},
+    enlarge y limits=0.12]
+  \addplot[fill=cApple, draw=none] coordinates {
+    (39,MacBook Air M4) (32.5,M6) (27.5,M5)};
+  \addplot[fill=cGris!55, draw=none] coordinates {
+    (22.2,Snapdragon) (17.8,Intel) (13.4,AMD)};
+\end{axis}
+\end{tikzpicture}
+\caption{Eficiencia multinúcleo de sistemas seleccionados, medida con la
+potencia de todo el equipo y una pantalla externa. No mide la duración de la
+batería \parencite{notebookcheck2026}.}
+\label{fig:eficiencia}
+\end{figure}
+
+\section*{3. Efectos más allá de los benchmarks}
+
+La memoria unificada permite que la GPU use la misma memoria que la CPU, sin
+el límite de la VRAM de una tarjeta gráfica. Por eso hoy considero al Mac la
+mejor opción para desarrollar con modelos de lenguaje locales. La integración
+tiene un precio: la memoria se elige al comprar y no se puede ampliar, y
+Rosetta tendrá funciones limitadas a partir de macOS~28.
+
+\section*{4. Lo que me llevo como CTO}
+
+Apple afirma que el M6 ofrece hasta 2,4 veces el rendimiento multinúcleo
+del M1 \parencite{apple2026m6}, pero la lección no está en el número. A veces basta
+con cambiar una pieza; otras, el límite está en cómo trabajan juntas las
+piezas. Apple aceptó el costo de rediseñar esas relaciones y construyó un
+camino para que las aplicaciones la siguieran.
+
+\printbibliography[title={Referencias}]
+
+\end{document}

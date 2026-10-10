@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Foro 6.2. De M1 a M6: cómo Apple Silicon cambió lo que una computadora puede hacer con cada vatio</title>
+<style>
+  body { font-family: Georgia, "Times New Roman", serif; font-size: 16px;
+         line-height: 1.55; color: #1a1a1a; max-width: 780px;
+         margin: 2rem auto; padding: 0 1rem; }
+  h1 { font-size: 1.6em; line-height: 1.25; margin: 0 0 .2em; }
+  h2 { font-size: 1.25em; margin: 1.8em 0 .5em; }
+  p  { margin: 0 0 .9em; }
+  img { max-width: 100%; height: auto; display: block; margin: .6em auto .3em; }
+  .sub { font-size: 1.05em; color: #444; margin: 0 0 1.6em; }
+  .cap { font-size: .82em; color: #555; line-height: 1.4; margin: 0 0 1.6em; }
+  .ref { font-size: .85em; line-height: 1.45; }
+  .ref p { margin: 0 0 .5em; padding-left: 1.6em; text-indent: -1.6em; }
+</style>
+</head>
+<body>
+
+<h1>De M1 a M6</h1>
+<p class="sub"><em>Cómo Apple Silicon cambió lo que una computadora puede hacer con cada vatio</em><br>
+Carlos Luis Rojas Aragonés</p>
+
+<p>Este comentario resume un artículo que publiqué en mi blog (Rojas Aragonés, 2026), a partir de lo que estudié en este programa.</p>
+
+<h2>1. La innovación: el chip, la memoria y el sistema como un solo diseño</h2>
+
+<p>En junio de 2020 Apple anunció que el Mac dejaría los procesadores de Intel por chips propios (Apple, 2020a). El M1, de noviembre de ese año, integró CPU, GPU y aceleradores en un sistema en un chip, con memoria unificada en el mismo paquete (Apple, 2020b). La innovación no fue solo el procesador: Apple diseñó chip, sistema operativo y producto a la vez, y preparó la transición del software con Rosetta&nbsp;2 y los binarios Universal&nbsp;2. Aun así, el ecosistema tardó en ponerse al día: Docker Desktop no tuvo soporte estable hasta abril de 2021 (Docker, 2021).</p>
+
+<h2>2. Efectos en el rendimiento</h2>
+
+<p>El MacBook Air con M1 eliminó el ventilador y anunció hasta 18 horas de reproducción de video: el silencio dejó de depender de una carga ligera. Seis generaciones después, el rendimiento de un núcleo creció 1,9 veces y el multinúcleo 3,1 veces, en parte porque se pasó de 8 a 12 núcleos (Timm, 2026). Lo muestra la Figura 1.</p>
+
+<img src="figuras/figura-1.png" alt="Figura 1. Rendimiento relativo a M1 de M1 a M6: un núcleo sube a 1,9 veces y multinúcleo a 3,1 veces">
+<p class="cap"><strong>Figura 1.</strong> Evolución de los chips base de Apple Silicon en Cinebench 2026.1, normalizada respecto a M1. Son agregados de la comunidad con configuraciones y refrigeración distintas, y M6 tiene una sola observación (Timm, 2026).</p>
+
+<p>Lo más relevante, sin embargo, es el trabajo por vatio. En las pruebas de Notebookcheck (2026), que miden la potencia de todo el sistema, el M6 supera en eficiencia multinúcleo a los equipos de Intel, AMD y Qualcomm evaluados (Figura 2). No es invencible: el MacBook Air con M4 rinde más puntos por vatio y el Snapdragon X2 Elite Extreme logra más rendimiento multinúcleo absoluto.</p>
+
+<img src="figuras/figura-2.png" alt="Figura 2. Puntos multinúcleo por vatio: MacBook Air M4 39; M6 32,5; M5 27,5; Snapdragon 22,2; Intel 17,8; AMD 13,4">
+<p class="cap"><strong>Figura 2.</strong> Eficiencia multinúcleo de sistemas seleccionados, medida con la potencia de todo el equipo y una pantalla externa. No mide la duración de la batería (Notebookcheck, 2026).</p>
+
+<h2>3. Efectos más allá de los benchmarks</h2>
+
+<p>La memoria unificada permite que la GPU use la misma memoria que la CPU, sin el límite de la VRAM de una tarjeta gráfica. Por eso hoy considero al Mac la mejor opción para desarrollar con modelos de lenguaje locales. La integración tiene un precio: la memoria se elige al comprar y no se puede ampliar, y Rosetta tendrá funciones limitadas a partir de macOS&nbsp;28.</p>
+
+<h2>4. Lo que me llevo como CTO</h2>
+
+<p>Apple afirma que el M6 ofrece hasta 2,4 veces el rendimiento multinúcleo del M1 (Apple, 2026), pero la lección no está en el número. A veces basta con cambiar una pieza; otras, el límite está en cómo trabajan juntas las piezas. Apple aceptó el costo de rediseñar esas relaciones y construyó un camino para que las aplicaciones la siguieran.</p>
+
+<h2>Referencias</h2>
+
+<div class="ref">
+<p>Apple. (2020a, 22 de junio). <em>Apple announces Mac transition to Apple silicon</em>. https://www.apple.com/newsroom/2020/06/apple-announces-mac-transition-to-apple-silicon/</p>
+<p>Apple. (2020b, 10 de noviembre). <em>Apple unleashes M1</em>. https://www.apple.com/newsroom/2020/11/apple-unleashes-m1/</p>
+<p>Apple. (2026, 25 de agosto). <em>Apple introduces M6 and M5 Ultra for a big leap in performance and AI compute</em>. https://www.apple.com/newsroom/2026/08/apple-introduces-m6-and-m5-ultra-for-a-big-leap-in-performance-and-ai-compute/</p>
+<p>Docker. (2021, 15 de abril). <em>Released: Docker Desktop for Mac [Apple silicon]</em>. https://www.docker.com/blog/released-docker-desktop-for-mac-apple-silicon/</p>
+<p>Notebookcheck. (2026). <em>Apple M6 SoC analysis: Apple's 2 nm chip crushes AMD, Intel, Qualcomm</em>. https://www.notebookcheck.net/Apple-M6-SoC-Analysis-Apple-s-2-nm-chip-crushes-AMD-Intel-Qualcomm.1404057.0.html</p>
+<p>Rojas Aragonés, C. L. (2026, 21 de septiembre). <em>From M1 to M6: The decision that made me rethink the Mac</em>. https://crojasaragonez.github.io/blog/from-m1-to-m6-apple-silicon/</p>
+<p>Timm, J.-F. (2026, 21 de septiembre). <em>Apple M6 Benchmarks: So schnell ist er im Vergleich zu M5, M4, M3, M2 &amp; M1</em>. ComputerBase. https://www.computerbase.de/artikel/prozessoren/apple-m6-m5-m4-m3-m2-m1-benchmarks.99501/</p>
+</div>
+
+</body>
+</html>
