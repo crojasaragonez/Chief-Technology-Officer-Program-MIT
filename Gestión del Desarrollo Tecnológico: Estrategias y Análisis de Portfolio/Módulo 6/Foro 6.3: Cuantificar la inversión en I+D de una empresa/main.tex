@@ -1,0 +1,306 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands,es-tabla]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{csquotes}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt,maxcitenames=2]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.3cm}
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\setlist{nosep}
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy\small}
+\setlength{\bibitemsep}{0.3em}
+
+% Colores: morado Nubank para el desarrollo capitalizado y los hitos de
+% tecnología, verde para la infraestructura tecnológica, lila para el personal
+% de tecnología (la parte estimada), terracota para los hitos de negocio, gris
+% para la cuadrícula y azul oscuro para ejes y rótulos.
+\definecolor{cCapit}{RGB}{130,10,209}
+\definecolor{cInfra}{RGB}{36,122,82}
+\definecolor{cPersonal}{RGB}{196,160,232}
+\definecolor{cNegocio}{RGB}{186,86,30}
+\definecolor{cEje}{RGB}{26,58,102}
+\definecolor{cGris}{RGB}{120,116,110}
+
+\tikzset{
+  % los rótulos de la figura no se dividen con guion
+  every node/.append style={execute at begin node={\hyphenpenalty=10000}},
+  hito/.style={draw=#1, fill=#1!9, thick, rounded corners=2pt,
+    text width=1.78cm, align=center, inner sep=2.5pt, font=\scriptsize},
+  anio/.style={font=\footnotesize\bfseries, text=cEje},
+  punto/.style={circle, fill=#1, inner sep=0pt, minimum size=5pt},
+  carril/.style={font=\footnotesize\bfseries, text=#1, anchor=west},
+}
+
+\pgfplotsset{
+  foro/.style={
+    font=\small,
+    axis line style={cEje},
+    tick style={cEje},
+    every tick label/.append style={font=\small, text=cEje},
+    label style={font=\small, text=cEje},
+    /pgf/number format/use comma,
+    /pgf/number format/1000 sep={\,},
+  },
+}
+
+\begin{document}
+
+% --- Portada -----------------------------------------------------------------
+\begin{titlepage}
+\centering
+\vspace*{3.2cm}
+{\large\scshape Gestión del Desarrollo Tecnológico:\\
+Estrategias y Análisis de Portfolio\par}
+\vspace{0.5cm}
+{\normalsize Módulo 6. Foro 6.3: Cuantificar la inversión en I+D\\
+de una empresa\par}
+\vspace{2.6cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vspace{0.7cm}
+{\LARGE\bfseries Cuánto invierte Nubank en I+D\par}
+\vspace{0.5cm}
+{\large Una estimación a partir de su 20-F, cuando la cifra\\
+no aparece en los estados financieros\par}
+\vspace{0.7cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vfill
+{\large Carlos Luis Rojas Aragonés\par}
+\vspace{0.3cm}
+{\normalsize Chief Technology Officer Program\par}
+\vspace{0.3cm}
+{\normalsize 10 de octubre de 2026\par}
+\vspace*{1.5cm}
+\end{titlepage}
+
+% --- Cuerpo ------------------------------------------------------------------
+Elegí Nubank (Nu Holdings), el banco digital que ha puesto a correr a la
+banca tradicional en Brasil, México y Colombia. Es relevante para mi hoja de
+ruta porque su núcleo bancario, NuCore, es propio y está construido sobre la
+nube \parencite{nu2026}: es un caso real de lo que una plataforma moderna
+puede hacer frente a sistemas heredados.
+
+\section*{1. De una tarjeta morada a 131 millones de clientes}
+
+David Vélez, colombiano con MBA de Stanford, llegó a Brasil como inversor de
+Sequoia. Ese proyecto no prosperó, pero le dio la idea de un neobanco
+\parencite{lankenau2023}. Nubank se fundó en 2013, emitió su primera tarjeta
+de crédito en 2014 y llegó a México en 2019 y a Colombia en 2020. En 2021
+salió a la Bolsa de Nueva York y recaudó 2\,300 millones de dólares
+\parencite{nu2026}.
+
+A finales de 2025 sumaba 131 millones de clientes: 113 millones en Brasil
+(el 62\,\% de los adultos del país), 14 millones en México y más de 4 millones
+en Colombia. En abril de 2025 recibió la autorización para iniciar su conversión
+en banco en México y, en enero de 2026, la aprobación condicional para abrir un banco
+nacional en Estados Unidos \parencite{nu2026}. La Figura~\ref{fig:linea}
+resume el recorrido.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=2.12cm]
+  % Eje del tiempo
+  \draw[very thick, cEje, -{Stealth[length=2.8mm]}] (-0.45,0) -- (7.5,0);
+
+  % Años, todos bajo el eje
+  \foreach \x/\a in {0/2013, 1/2014, 2/2019, 3/2020, 4/2021, 5/2024,
+      6/2025, 7/2026} {
+    \node[anio, anchor=north] at (\x,-0.1) {\a};
+  }
+
+  % Hitos de tecnología e I+D, sobre el eje
+  \foreach \x/\t in {
+      3/{Compra Plataformatec y Cognitect (Clojure, Datomic)},
+      5/{Compra Hyperplane, laboratorio de IA},
+      6/{Publica nuFormer, su modelo fundacional},
+      7/{nuFormer decide crédito en producción}} {
+    \node[punto=cCapit] at (\x,0) {};
+    \draw[cCapit, thick] (\x,0) -- (\x,0.42);
+    \node[hito=cCapit, anchor=south] at (\x,0.42) {\t};
+  }
+
+  % Hitos de negocio, bajo el eje
+  \foreach \x/\t in {
+      0/{Fundación en São Paulo},
+      1/{Primera tarjeta de crédito},
+      2/{Llega a México},
+      3/{Llega a Colombia},
+      4/{Sale a bolsa en Nueva York},
+      6/{Inicia su conversión a banco en México},
+      7/{Aprobación condicional en EE.\,UU.}} {
+    \node[punto=cNegocio] at (\x,0) {};
+    \draw[cNegocio, thick] (\x,-0.5) -- (\x,-0.62);
+    \node[hito=cNegocio, anchor=north] at (\x,-0.62) {\t};
+  }
+
+  % Carriles
+  \node[carril=cCapit]    at (-0.45,1.55) {Tecnología e I+D};
+  \node[carril=cNegocio]  at (-0.45,-2.05) {Negocio y expansión};
+\end{tikzpicture}
+\caption{Hitos de Nubank. Sobre el eje, las apuestas tecnológicas; bajo el
+eje, el crecimiento del negocio
+\parencite{nu2026,nubank2020,braithwaite2025,nu2026ia}.}
+\label{fig:linea}
+\end{figure}
+
+\section*{2. Dónde invierte: una plataforma propia}
+
+Nubank decidió construir en lugar de comprar. Su núcleo bancario corre en
+microservicios sobre Amazon Web Services, escritos en Clojure y apoyados en
+un libro contable inmutable con Datomic, una base de datos de la que hoy es
+dueña. En 2025 promedió más de 900 despliegues de código por día hábil
+\parencite{nu2026}.
+
+Varias de sus adquisiciones fueron, en la práctica, compras de capacidad de
+I+D. En 2020 adquirió Cognitect, la empresa detrás de Clojure y Datomic,
+cuando tenía unos 600 ingenieros de un total de 2\,700 empleados
+\parencite{nubank2020}. En 2024 compró Hyperplane, una plataforma
+estadounidense de IA, y con ella trajo investigadores de Google, Meta, Apple
+y Microsoft \parencite{nu2026ia}. De ahí salió nuFormer, un modelo fundacional entrenado con datos
+de transacciones \parencite{braithwaite2025} que ya decide crédito en su
+segmento más grande en Brasil y redujo el ciclo de experimentación de meses a
+un día \parencite{nu2026ia}. Hoy el 42\,\% de sus 10\,027 empleados trabaja
+en tecnología \parencite{nu2026}.
+
+\section*{3. Cuantificar la inversión}
+
+Nubank no reporta una línea de I+D: su 20-F indica que ese gasto está dentro
+de los gastos generales y de administración, junto con back-office y
+overhead \parencite{nu2026}. Por eso lo estimo como un rango con tres
+componentes del propio 20-F:
+
+\begin{enumerate}[label=\alph*), leftmargin=1.6em, itemsep=0.25em]
+  \item \textbf{Desarrollo capitalizado:} intangibles desarrollados
+    internamente, como nuevas funcionalidades y productos.
+  \item \textbf{Infraestructura y datos} registrados en administración, es
+    decir, la nube y el software que no están ligados a transacciones de
+    clientes.
+  \item \textbf{Personal de tecnología:} el 75\,\% del gasto de personal de
+    administración (salarios, pagos en acciones y otros costos), que es la
+    proporción de personal de tecnología (4\,236) frente al administrativo
+    (1\,415) en 2025.
+\end{enumerate}
+
+El rango bajo suma a y b; el alto suma los tres (Tabla~\ref{tab:id}).
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Año & a) Capitalizado & b) Infraestructura & c) Personal
+    & I+D estimado & \% de ingresos \\
+\midrule
+2023 & 165 & 175 & 449 & 340 a 789   & 4,2 a 9,8 \\
+2024 & 155 & 195 & 566 & 350 a 916   & 3,0 a 8,0 \\
+2025 & 286 & 255 & 595 & 541 a 1\,135 & 3,4 a 7,2 \\
+\bottomrule
+\end{tabular}
+\caption{Inversión estimada en I+D de Nubank, en millones de US\$. Ingresos:
+8\,029 (2023), 11\,517 (2024) y 15\,775 (2025) \parencite{nu2026}.}
+\label{tab:id}
+\end{table}
+
+La inversión creció un 44\,\% entre 2023 y 2025 en el rango alto
+(Figura~\ref{fig:inversion}), pero los ingresos casi se duplicaron, de modo
+que la intensidad bajó de 4,2--9,8\,\% a 3,4--7,2\,\%. El desarrollo
+capitalizado, la parte más cercana a crear producto nuevo, casi se duplicó en
+2025. Por cliente, la inversión se mantuvo entre 8 y 9 dólares al año
+mientras la base crecía un 39\,\%.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[foro,
+    width=8.6cm, height=6.4cm,
+    ybar stacked, bar width=26pt,
+    symbolic x coords={2023,2024,2025}, xtick=data,
+    ymin=0, ymax=1400,
+    ylabel={Millones de US\$},
+    ymajorgrids, grid style={cGris!25},
+    axis x line*=bottom, axis y line*=left,
+    enlarge x limits=0.25,
+    legend style={draw=none, font=\small, text=cEje,
+      at={(1.04,0.5)}, anchor=west, cells={anchor=west}},
+    reverse legend]
+  \addplot[fill=cCapit, draw=none]
+    coordinates {(2023,165.1) (2024,154.6) (2025,285.7)};
+  \addplot[fill=cInfra, draw=none]
+    coordinates {(2023,174.6) (2024,195.1) (2025,254.9)};
+  \addplot[fill=cPersonal, draw=none]
+    coordinates {(2023,448.8) (2024,566.0) (2025,594.7)};
+  \legend{a) Desarrollo capitalizado, b) Infraestructura y datos,
+    c) Personal de tecnología (estimado)}
+  \node[font=\small\bfseries, text=cEje, anchor=south]
+    at (axis cs:2023,788.5) {4,2--9,8\,\%};
+  \node[font=\small\bfseries, text=cEje, anchor=south]
+    at (axis cs:2024,915.7) {3,0--8,0\,\%};
+  \node[font=\small\bfseries, text=cEje, anchor=south]
+    at (axis cs:2025,1135.3) {3,4--7,2\,\%};
+\end{axis}
+\end{tikzpicture}
+\caption{Inversión estimada en I+D de Nubank por componente. Sobre cada barra,
+la intensidad en I+D (rango bajo y alto, como porcentaje de los ingresos)
+\parencite{nu2026}.}
+\label{fig:inversion}
+\end{figure}
+
+\section*{4. La I+D que no aparece en la tabla}
+
+Vélez sostiene que un modelo de crédito no se construye sin pérdidas y que
+muchas de ellas funcionan como inversión en I+D, incluso como CAPEX, porque
+el modelo necesita equivocarse para aprender \parencite{lankenau2023}. Si se
+aceptara esa lectura, la cifra sería mucho mayor: las pérdidas esperadas de
+crédito pasaron de 2\,285 a 4\,205 millones de dólares entre 2023 y 2025
+\parencite{nu2026}. No las incluyo en la estimación, porque no hay forma de
+separar la parte que \enquote{enseña} de la que es simple riesgo de negocio,
+pero muestran que en un banco basado en datos el aprendizaje también se paga
+con capital.
+
+\section*{5. ¿Qué obtuvo a cambio?}
+
+\begin{itemize}[leftmargin=1.2em, itemsep=0.25em]
+  \item \textbf{Escala y rentabilidad.} Entre 2023 y 2025 los clientes
+    pasaron de 94 a 131 millones y la utilidad neta de 1\,031 a 2\,872
+    millones de dólares, casi el triple \parencite{nu2026}. En el último
+    trimestre de 2025 alcanzó un ROE del 33\,\% \parencite{nu2026resultados}.
+  \item \textbf{Costo de servir.} Atender a un cliente activo le cuesta
+    0,8 dólares al mes, frente a 15 dólares de ingreso mensual por cliente
+    activo \parencite{nu2026resultados}. En Brasil estima que su costo de
+    servir y de administración por cliente activo es un 85\,\% menor que el de
+    los bancos tradicionales \parencite{nu2026}.
+  \item \textbf{Velocidad de producto.} Solo en 2025 lanzó más de 100
+    productos y funcionalidades \parencite{nu2026}.
+\end{itemize}
+
+\section*{6. Lo que me llevo como CTO}
+
+Nubank muestra que la intensidad en I+D no basta para juzgar a una empresa:
+puede bajar como porcentaje mientras la inversión crece, si la plataforma
+escala. Lo decisivo fue invertir en la base (lenguaje, base de datos, nube)
+antes de necesitarla, y comprar talento cuando construirlo era más lento. La
+limitación de este ejercicio es clara: mi cifra es una estimación, no un dato
+auditado, y la principal fuente de incertidumbre es qué parte del personal se
+dedica realmente a desarrollar.
+
+\printbibliography[title={Referencias}]
+
+\end{document}

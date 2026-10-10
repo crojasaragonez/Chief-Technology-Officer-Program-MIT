@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Foro 6.3. Cuánto invierte Nubank en I+D: una estimación a partir de su 20-F, cuando la cifra no aparece en los estados financieros</title>
+<style>
+  body { font-family: Georgia, "Times New Roman", serif; font-size: 16px;
+         line-height: 1.55; color: #1a1a1a; max-width: 780px;
+         margin: 2rem auto; padding: 0 1rem; }
+  h1 { font-size: 1.6em; line-height: 1.25; margin: 0 0 .2em; }
+  h2 { font-size: 1.25em; margin: 1.8em 0 .5em; }
+  p  { margin: 0 0 .9em; }
+  ol, ul { margin: 0 0 .9em; padding-left: 1.5em; }
+  li { margin-bottom: .45em; }
+  img { max-width: 100%; height: auto; display: block; margin: .6em auto .3em; }
+  table { border-collapse: collapse; margin: .6em auto .3em; font-size: .9em; }
+  th, td { padding: .3em .7em; text-align: right; }
+  th:first-child, td:first-child { text-align: left; }
+  thead th { border-top: 2px solid #1a1a1a; border-bottom: 1px solid #1a1a1a; }
+  tbody tr:last-child td { border-bottom: 2px solid #1a1a1a; }
+  .sub { font-size: 1.05em; color: #444; margin: 0 0 1.6em; }
+  .cap { font-size: .82em; color: #555; line-height: 1.4; margin: 0 0 1.6em; }
+  .ref { font-size: .85em; line-height: 1.45; }
+  .ref p { margin: 0 0 .5em; padding-left: 1.6em; text-indent: -1.6em; }
+</style>
+</head>
+<body>
+
+<h1>Cuánto invierte Nubank en I+D</h1>
+<p class="sub"><em>Una estimación a partir de su 20-F, cuando la cifra no aparece en los estados financieros</em><br>
+Carlos Luis Rojas Aragonés</p>
+
+<p>Elegí Nubank (Nu Holdings), el banco digital que ha puesto a correr a la banca tradicional en Brasil, México y Colombia. Es relevante para mi hoja de ruta porque su núcleo bancario, NuCore, es propio y está construido sobre la nube (Nu Holdings, 2026a): es un caso real de lo que una plataforma moderna puede hacer frente a sistemas heredados.</p>
+
+<h2>1. De una tarjeta morada a 131 millones de clientes</h2>
+
+<p>David Vélez, colombiano con MBA de Stanford, llegó a Brasil como inversor de Sequoia. Ese proyecto no prosperó, pero le dio la idea de un neobanco (Lankenau, 2023). Nubank se fundó en 2013, emitió su primera tarjeta de crédito en 2014 y llegó a México en 2019 y a Colombia en 2020. En 2021 salió a la Bolsa de Nueva York y recaudó 2&nbsp;300 millones de dólares (Nu Holdings, 2026a).</p>
+
+<p>A finales de 2025 sumaba 131 millones de clientes: 113 millones en Brasil (el 62&nbsp;% de los adultos del país), 14 millones en México y más de 4 millones en Colombia. En abril de 2025 recibió la autorización para iniciar su conversión en banco en México y, en enero de 2026, la aprobación condicional para abrir un banco nacional en Estados Unidos (Nu Holdings, 2026a). La Figura 1 resume el recorrido.</p>
+
+<img src="figuras/figura-1.png" alt="Figura 1. Línea de tiempo de Nubank de 2013 a 2026, con los hitos de tecnología e I+D sobre el eje y los de negocio bajo el eje">
+<p class="cap"><strong>Figura 1.</strong> Hitos de Nubank. Sobre el eje, las apuestas tecnológicas; bajo el eje, el crecimiento del negocio (Braithwaite et al., 2025; Nu Holdings, 2026a, 2026c; Nubank, 2020).</p>
+
+<h2>2. Dónde invierte: una plataforma propia</h2>
+
+<p>Nubank decidió construir en lugar de comprar. Su núcleo bancario corre en microservicios sobre Amazon Web Services, escritos en Clojure y apoyados en un libro contable inmutable con Datomic, una base de datos de la que hoy es dueña. En 2025 promedió más de 900 despliegues de código por día hábil (Nu Holdings, 2026a).</p>
+
+<p>Varias de sus adquisiciones fueron, en la práctica, compras de capacidad de I+D. En 2020 adquirió Cognitect, la empresa detrás de Clojure y Datomic, cuando tenía unos 600 ingenieros de un total de 2&nbsp;700 empleados (Nubank, 2020). En 2024 compró Hyperplane, una plataforma estadounidense de IA, y con ella trajo investigadores de Google, Meta, Apple y Microsoft (Nu Holdings, 2026c). De ahí salió nuFormer, un modelo fundacional entrenado con datos de transacciones (Braithwaite et al., 2025) que ya decide crédito en su segmento más grande en Brasil y redujo el ciclo de experimentación de meses a un día (Nu Holdings, 2026c). Hoy el 42&nbsp;% de sus 10&nbsp;027 empleados trabaja en tecnología (Nu Holdings, 2026a).</p>
+
+<h2>3. Cuantificar la inversión</h2>
+
+<p>Nubank no reporta una línea de I+D: su 20-F indica que ese gasto está dentro de los gastos generales y de administración, junto con back-office y overhead (Nu Holdings, 2026a). Por eso lo estimo como un rango con tres componentes del propio 20-F:</p>
+
+<ol type="a">
+  <li><strong>Desarrollo capitalizado:</strong> intangibles desarrollados internamente, como nuevas funcionalidades y productos.</li>
+  <li><strong>Infraestructura y datos</strong> registrados en administración, es decir, la nube y el software que no están ligados a transacciones de clientes.</li>
+  <li><strong>Personal de tecnología:</strong> el 75&nbsp;% del gasto de personal de administración (salarios, pagos en acciones y otros costos), que es la proporción de personal de tecnología (4&nbsp;236) frente al administrativo (1&nbsp;415) en 2025.</li>
+</ol>
+
+<p>El rango bajo suma a y b; el alto suma los tres (Tabla 1).</p>
+
+<table>
+<thead>
+<tr><th>Año</th><th>a) Capitalizado</th><th>b) Infraestructura</th><th>c) Personal</th><th>I+D estimado</th><th>% de ingresos</th></tr>
+</thead>
+<tbody>
+<tr><td>2023</td><td>165</td><td>175</td><td>449</td><td>340 a 789</td><td>4,2 a 9,8</td></tr>
+<tr><td>2024</td><td>155</td><td>195</td><td>566</td><td>350 a 916</td><td>3,0 a 8,0</td></tr>
+<tr><td>2025</td><td>286</td><td>255</td><td>595</td><td>541 a 1&nbsp;135</td><td>3,4 a 7,2</td></tr>
+</tbody>
+</table>
+<p class="cap"><strong>Tabla 1.</strong> Inversión estimada en I+D de Nubank, en millones de US$. Ingresos: 8&nbsp;029 (2023), 11&nbsp;517 (2024) y 15&nbsp;775 (2025) (Nu Holdings, 2026a).</p>
+
+<p>La inversión creció un 44&nbsp;% entre 2023 y 2025 en el rango alto (Figura 2), pero los ingresos casi se duplicaron, de modo que la intensidad bajó de 4,2-9,8&nbsp;% a 3,4-7,2&nbsp;%. El desarrollo capitalizado, la parte más cercana a crear producto nuevo, casi se duplicó en 2025. Por cliente, la inversión se mantuvo entre 8 y 9 dólares al año mientras la base crecía un 39&nbsp;%.</p>
+
+<img src="figuras/figura-2.png" alt="Figura 2. Barras apiladas de la inversión estimada en I+D de Nubank: 2023, 340 a 789; 2024, 350 a 916; 2025, 541 a 1 135 millones de US$">
+<p class="cap"><strong>Figura 2.</strong> Inversión estimada en I+D de Nubank por componente. Sobre cada barra, la intensidad en I+D (rango bajo y alto, como porcentaje de los ingresos) (Nu Holdings, 2026a).</p>
+
+<h2>4. La I+D que no aparece en la tabla</h2>
+
+<p>Vélez sostiene que un modelo de crédito no se construye sin pérdidas y que muchas de ellas funcionan como inversión en I+D, incluso como CAPEX, porque el modelo necesita equivocarse para aprender (Lankenau, 2023). Si se aceptara esa lectura, la cifra sería mucho mayor: las pérdidas esperadas de crédito pasaron de 2&nbsp;285 a 4&nbsp;205 millones de dólares entre 2023 y 2025 (Nu Holdings, 2026a). No las incluyo en la estimación, porque no hay forma de separar la parte que «enseña» de la que es simple riesgo de negocio, pero muestran que en un banco basado en datos el aprendizaje también se paga con capital.</p>
+
+<h2>5. ¿Qué obtuvo a cambio?</h2>
+
+<ul>
+  <li><strong>Escala y rentabilidad.</strong> Entre 2023 y 2025 los clientes pasaron de 94 a 131 millones y la utilidad neta de 1&nbsp;031 a 2&nbsp;872 millones de dólares, casi el triple (Nu Holdings, 2026a). En el último trimestre de 2025 alcanzó un ROE del 33&nbsp;% (Nu Holdings, 2026b).</li>
+  <li><strong>Costo de servir.</strong> Atender a un cliente activo le cuesta 0,8 dólares al mes, frente a 15 dólares de ingreso mensual por cliente activo (Nu Holdings, 2026b). En Brasil estima que su costo de servir y de administración por cliente activo es un 85&nbsp;% menor que el de los bancos tradicionales (Nu Holdings, 2026a).</li>
+  <li><strong>Velocidad de producto.</strong> Solo en 2025 lanzó más de 100 productos y funcionalidades (Nu Holdings, 2026a).</li>
+</ul>
+
+<h2>6. Lo que me llevo como CTO</h2>
+
+<p>Nubank muestra que la intensidad en I+D no basta para juzgar a una empresa: puede bajar como porcentaje mientras la inversión crece, si la plataforma escala. Lo decisivo fue invertir en la base (lenguaje, base de datos, nube) antes de necesitarla, y comprar talento cuando construirlo era más lento. La limitación de este ejercicio es clara: mi cifra es una estimación, no un dato auditado, y la principal fuente de incertidumbre es qué parte del personal se dedica realmente a desarrollar.</p>
+
+<h2>Referencias</h2>
+
+<div class="ref">
+<p>Braithwaite, D. T., Cavalcanti, M., McEver, R. A., et al. (2025). <em>Your spending needs attention: Modeling financial habits with transformers</em>. arXiv. https://doi.org/10.48550/arXiv.2507.23267</p>
+<p>Lankenau, R. (2023, 20 de octubre). <em>Nu: Lo que hay detrás del neobanco más grande del mundo</em>. Whitepaper. https://www.whitepaper.mx/p/nu-lo-que-hay-detras-del-neobanco</p>
+<p>Nu Holdings. (2026a). <em>Annual report on Form 20-F for the fiscal year ended December 31, 2025</em> (Formulario 20-F). U.S. Securities and Exchange Commission. https://www.sec.gov/Archives/edgar/data/1691493/000129281426002166/nuform20f_2025.htm</p>
+<p>Nu Holdings. (2026b, 25 de febrero). <em>Nu Holdings Ltd. reports fourth quarter and full year 2025 financial results</em>. Business Wire. https://www.businesswire.com/news/home/20260225967630/en/Nu-Holdings-Ltd.-Reports-Fourth-Quarter-and-Full-Year-2025-Financial-Results</p>
+<p>Nu Holdings. (2026c, 11 de junio). <em>Nubank details AI transformation strategy built on data, foundation models and democratized financial advice</em>. https://nu.com/en/newsroom/company/nubank-details-ai-transformation-strategy-built-on-data-foundation-models-and-democratized-financial-advice</p>
+<p>Nubank. (2020, 23 de julio). <em>Nubank acquires US company Cognitect, the team behind Clojure and Datomic</em>. Building Nubank. https://building.nu.com/nubank-acquires-cognitect-press-release</p>
+</div>
+
+</body>
+</html>
