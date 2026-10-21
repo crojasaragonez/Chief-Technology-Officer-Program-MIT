@@ -1,0 +1,20 @@
+Planteamiento:
+
+Lea los siguientes artículos relacionados con la innovación abierta y la innovación en el sistema militar de salud y comparta su opinión sobre el tema. Puede utilizar otras referencias:
+
+    Innovación abierta: https://mitsloan.mit.edu/ideas-made-to-matter/why-u-s-government-struggling-open-innovation
+    Innovación en el sistema militar de salud: https://www2.deloitte.com/au/en/pages/public-sector/articles/top-10-military-health-system-innovations.html
+
+También puede compartir su opinión acerca de avances tecnológicos comerciales que se hayan adaptado para fines militares con el propósito de obtener ventajas en términos de desarrollo tecnológico.
+
+
+Draft de mi respuesta:
+
+https://mitsloan.mit.edu/ideas-made-to-matter/why-u-s-government-struggling-open-innovation
+es dificil trabajar con el gobierno en términos generales y ni hablemos de temas de seguridad porque esto trae dos consecuencias:
+1. las empresas simplemente evitar participar en proyetos relacionados al gobierno por el exceso de burocracia y lo lento que se mueve todo. (eso asumiendo que el proceso es completamente transparente y que todos los participantes están en igualdad de condiciones.) (sabemos que eso algunas veces no es cierto)
+2. Las pocas empresas que si participan, inflan el precio de los proyectos porque ya saben lo que implica ganar un proyecto con el gobierno.
+
+Esos dos factores hacen que haya gente muy buena que no quiera/pueda participar y que además, todos paguemos el costo asociado a cada proyecto (sobreprecios).
+
+Nota: el segundo enlace (Deloitte) está roto.

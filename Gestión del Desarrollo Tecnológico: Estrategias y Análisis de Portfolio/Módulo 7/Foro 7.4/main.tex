@@ -1,0 +1,216 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands,es-tabla]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{csquotes}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt,maxcitenames=2]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.3cm}
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\setlist{nosep}
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy\small}
+\setlength{\bibitemsep}{0.3em}
+
+% Colores: terracota para las etapas del círculo vicioso, azul oscuro para
+% rótulos y flechas, gris para las notas con los datos de respaldo.
+\definecolor{cCiclo}{RGB}{186,86,30}
+\definecolor{cEje}{RGB}{26,58,102}
+\definecolor{cGris}{RGB}{120,116,110}
+
+\tikzset{
+  % los rótulos de la figura no se dividen con guion
+  every node/.append style={execute at begin node={\hyphenpenalty=10000}},
+  etapa/.style={draw=cCiclo, fill=cCiclo!9, thick, rounded corners=3pt,
+    text width=3.6cm, minimum height=2.3cm, align=center, inner sep=5pt,
+    font=\small},
+  dato/.style={font=\scriptsize, text=cGris, text width=3.6cm, align=center},
+  flecha/.style={cEje, very thick, -{Stealth[length=3mm]}},
+}
+
+\begin{document}
+
+% --- Portada -----------------------------------------------------------------
+\begin{titlepage}
+\centering
+\vspace*{3.2cm}
+{\large\scshape Gestión del Desarrollo Tecnológico:\\
+Estrategias y Análisis de Portfolio\par}
+\vspace{0.5cm}
+{\normalsize Módulo 7. Foro 7.4: Innovación abierta e innovación\\
+en el sistema militar de salud\par}
+\vspace{2.6cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vspace{0.7cm}
+{\LARGE\bfseries Cuando el cliente es el Estado\par}
+\vspace{0.5cm}
+{\large Por qué la burocracia aleja a los mejores innovadores\\
+y encarece lo que compramos todos\par}
+\vspace{0.7cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vfill
+{\large Carlos Luis Rojas Aragonés\par}
+\vspace{0.3cm}
+{\normalsize Chief Technology Officer Program\par}
+\vspace{0.3cm}
+{\normalsize 21 de octubre de 2026\par}
+\vspace*{1.5cm}
+\end{titlepage}
+
+% --- Cuerpo ------------------------------------------------------------------
+Trabajar con el gobierno es difícil en términos generales, y cuando el tema
+es de seguridad lo es todavía más. El artículo de MIT Sloan lo ilustra con
+casos concretos que recoge Tina Srivastava, exingeniera jefe de programas de
+guerra electrónica en Raytheon: un contrato de la Fuerza Aérea con una
+startup, para necesidades \enquote{urgentes y críticas} de seguridad
+nacional, tardó tres años en arrancar, y el oficial de contratación dejó de
+atender a la empresa hasta que contrató a un abogado
+\parencite{somers2019}.
+
+\section*{1. Dos consecuencias que se alimentan entre sí}
+
+En mi opinión, esa fricción produce dos efectos:
+
+\begin{enumerate}[label=\arabic*., leftmargin=1.6em, itemsep=0.35em]
+  \item \textbf{Las empresas simplemente evitan participar} por el exceso de
+    burocracia y lo lento que se mueve todo. El dato lo confirma: las
+    pequeñas empresas con contratos del Departamento de Defensa pasaron de
+    42\,723 en 2011 a 24\,296 en 2020, un 43\,\% menos. La GAO recogió la
+    razón de boca de los propios empresarios: muchas prefieren el sector
+    privado porque trabajar con Defensa implica retrasos impredecibles en la
+    adjudicación, las autorizaciones de seguridad, el inicio de los trabajos
+    y los pagos \parencite{gao2021}. Y eso suponiendo que el proceso sea
+    transparente y que todos compitan en igualdad de condiciones, algo que
+    no siempre se cumple: el artículo cuenta cómo se excluye a quien no
+    tiene \enquote{historial de desempeño} y cómo Tenebraex gastó cientos
+    de miles de dólares en abogados para cobrar por su propia patente,
+    después de que el Ejército adjudicara el contrato solo a su socio, una
+    filial de Raytheon \parencite{somers2019}.
+  \item \textbf{Las pocas empresas que sí participan inflan el precio},
+    porque saben lo que implica ganar un proyecto con el gobierno y porque
+    tienen menos competencia. La industria de defensa estadounidense pasó de
+    51 a 5 contratistas principales en la década de 1990 \parencite{dod2022}.
+    Con proveedores únicos, el Inspector General encontró que TransDigm
+    obtuvo ganancias excesivas en 46 de 47 repuestos, con márgenes de hasta
+    4\,451\,\% \parencite{dodig2019}, y en 2024 que la Fuerza Aérea aceptó un
+    sobreprecio del 7\,943\,\% en dispensadores de jabón para el C-17
+    \parencite{dodig2024}. Las empresas cuestionan la metodología, pero el
+    patrón se repite.
+\end{enumerate}
+
+Esos dos factores se refuerzan (Figura~\ref{fig:ciclo}): hay gente muy
+buena que no quiere o no puede participar, y todos terminamos pagando el
+costo asociado a cada proyecto en forma de sobreprecios. Peor aún, cada
+abuso descubierto justifica más controles, que vuelven el proceso más lento
+y espantan a otros participantes nuevos.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.5cm and 2.4cm]
+  \node[etapa] (buro) {\textbf{Burocracia y lentitud}\\registros, cláusulas,
+    secreto, plazos de años};
+  \node[etapa, right=of buro] (pocos) {\textbf{Pocos participantes}\\las
+    startups y pymes prefieren el sector privado};
+  \node[etapa, below=of pocos] (precio) {\textbf{Sobreprecios}\\proveedores
+    únicos fijan el precio};
+  \node[etapa, below=of buro] (control) {\textbf{Más controles}\\cada abuso
+    se responde con nuevas reglas};
+
+  \draw[flecha] (buro) -- (pocos);
+  \draw[flecha] (pocos) -- (precio);
+  \draw[flecha] (precio) -- (control);
+  \draw[flecha] (control) -- (buro);
+
+  \node[dato, above=0.15cm of buro] {Un contrato tardó 3 años en arrancar};
+  \node[dato, above=0.15cm of pocos] {Pymes en Defensa: \(-\)43\,\% (2011 a 2020)};
+  \node[dato, below=0.15cm of precio] {De 51 a 5 contratistas principales;
+    márgenes de hasta 4\,451\,\%};
+  \node[dato, below=0.15cm of control] {Interpretación propia};
+\end{tikzpicture}
+\caption{El círculo vicioso de la innovación con el gobierno: la fricción
+reduce la competencia, la falta de competencia encarece las compras y los
+abusos traen más fricción. Elaboración propia con datos de
+\textcite{somers2019}, \textcite{gao2021}, \textcite{dod2022} y
+\textcite{dodig2019}.}
+\label{fig:ciclo}
+\end{figure}
+
+\section*{2. El sistema militar de salud no puede innovar solo}
+
+El enlace al artículo de Deloitte está roto; lo leí en una copia de
+Internet Archive \parencite{deloitte2020}. Propone diez innovaciones:
+telemedicina, realidad aumentada, impresión 3D, cirugía robótica, atención
+centrada en el paciente, dispositivos vestibles, inteligencia aumentada,
+blockchain, medicina de precisión y medicina regenerativa. Lo que me llama la
+atención es que ninguna nació en el ámbito militar: todas vienen del mercado
+civil. El propio artículo lo admite al decir que los pacientes militares
+tienen las mismas expectativas que los de cualquier otro sistema de salud, y
+recomienda buscar conocimiento en \enquote{fuentes no tradicionales},
+construir un ecosistema de socios y empezar con pilotos pequeños
+\parencite{deloitte2020}.
+
+Es decir, la receta de Deloitte \emph{es} innovación abierta, y por eso
+choca de frente con las barreras que describe MIT Sloan. Una startup de
+telemedicina o de dispositivos vestibles que puede venderle a cualquier
+hospital privado en semanas difícilmente aceptará esperar años y firmar
+cientos de cláusulas para venderle al Departamento de Defensa.
+
+\section*{3. Tecnología comercial con fines militares}
+
+La guerra en Ucrania es el mejor ejemplo de lo que pasa cuando la tecnología
+comercial entra sin el filtro tradicional. Starlink, un servicio de internet
+satelital para consumidores, se convirtió en la red de comunicaciones del
+frente, y en 2023 el Pentágono terminó comprando terminales adicionales para
+Ucrania \parencite{techcrunch2023}. Los drones comerciales pasaron a ser
+munición desechable: en 2023 Ucrania perdía unos 10\,000 al mes
+\parencite{watling2023}, y en 2024 su Ministerio de Defensa compró más de
+1,5 millones, el 96\,\% de fabricantes nacionales \parencite{euromaidan2025}.
+La ventaja no vino de una tecnología superior, sino de iterar más rápido y
+más barato que el adversario.
+
+El caso contrario es IVAS, el visor de combate basado en el HoloLens de
+Microsoft, con un contrato de hasta 21\,880 millones de dólares. En 2025 el
+contrato pasó a Anduril y, según la GAO, ninguna de las 10\,000 unidades
+desarrolladas llegará a usarse en campo \parencite{crs2026}. Adaptar un
+producto comercial no basta si se hace con el ciclo de adquisición
+tradicional, que hoy promedia más de 12 años para entregar una capacidad
+\parencite{gao2026}.
+
+Hay intentos de romper el círculo. La Defense Innovation Unit (DIU) usa
+contratos de prototipo con menos requisitos y aspira a adjudicar en 60 a 90
+días; en la práctica tardó 142 en 2022 \parencite{diu2022}, lejos de su
+meta, pero muy lejos también de los años habituales. El resultado se nota en
+quién participa: el 87\,\% de sus proveedores son no tradicionales y el
+38\,\% le vendía a Defensa por primera vez \parencite{diu2024}. Cuando se
+baja la barrera, aparecen los innovadores que antes no querían o no podían
+entrar.
+
+\section*{4. Lo que me llevo como CTO}
+
+El problema del gobierno no es la falta de ideas, sino que su proceso de
+compra selecciona a quienes saben navegar la burocracia en lugar de a
+quienes mejor resuelven el problema. Lo mismo ocurre, a menor escala, en
+empresas grandes con procesos de compra pesados: si homologar a un proveedor
+nuevo toma seis meses, terminamos trabajando siempre con los mismos y
+pagando lo que nos piden. La lección es diseñar la puerta de entrada (pilotos
+pequeños, contratos simples, pagos rápidos) con el mismo cuidado que el
+proyecto, porque de ella depende quién se anima a tocarla.
+
+\printbibliography[title={Referencias}]
+
+\end{document}
