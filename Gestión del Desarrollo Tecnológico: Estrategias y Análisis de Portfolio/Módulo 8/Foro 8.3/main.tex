@@ -1,0 +1,311 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands,es-tabla]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{csquotes}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds,calc}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt,maxcitenames=2]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.3cm}
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\setlist{nosep}
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy\small}
+\setlength{\bibitemsep}{0.3em}
+
+% Colores: gris pizarra para el cajero automático (tecnología consolidada),
+% verde para SINPE Móvil (tecnología innovadora), azul oscuro para rótulos.
+\definecolor{cCaj}{RGB}{110,116,128}
+\definecolor{cSM}{RGB}{36,122,82}
+\definecolor{cEje}{RGB}{26,58,102}
+\definecolor{cGris}{RGB}{120,116,110}
+
+\tikzset{
+  hito/.style={circle, draw=#1, fill=#1, inner sep=2.6pt},
+  rotulo/.style={font=\footnotesize, align=center, text width=2.9cm,
+    execute at begin node={\hyphenpenalty=10000\relax}},
+  anio/.style={font=\small\bfseries, text=#1},
+}
+
+\begin{document}
+
+% --- Portada -----------------------------------------------------------------
+\begin{titlepage}
+\centering
+\vspace*{3.2cm}
+{\large\scshape Gestión del Desarrollo Tecnológico:\\
+Estrategias y Análisis de Portfolio\par}
+\vspace{0.5cm}
+{\normalsize Módulo 8. Foro 8.3: Conflictos entre tecnologías innovadoras y consolidadas\par}
+\vspace{2.6cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vspace{0.7cm}
+{\LARGE\bfseries SINPE Móvil y el cajero automático\par}
+\vspace{0.5cm}
+{\large La tecnología consolidada no desapareció,\\
+pero ya no rinde igual\par}
+\vspace{0.7cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vfill
+{\large Carlos Luis Rojas Aragonés\par}
+\vspace{0.3cm}
+{\normalsize Chief Technology Officer Program\par}
+\vspace{0.3cm}
+{\normalsize 26 de octubre de 2026\par}
+\vspace*{1.5cm}
+\end{titlepage}
+
+% --- Cuerpo ------------------------------------------------------------------
+\section*{1. El caso}
+
+En Costa Rica ya casi nadie pregunta \enquote{¿tiene efectivo?}, sino
+\enquote{¿le hago un SINPE?}. SINPE Móvil, la plataforma de pagos inmediatos del
+Banco Central de Costa Rica (BCCR), es un buen ejemplo de lo que plantea este
+foro: una tecnología innovadora con una cuota de mercado creciente que no
+reemplazó a las tecnologías consolidadas (el efectivo, el cajero automático, la
+transferencia bancaria tradicional y la tarjeta), pero sí comprometió su
+rendimiento. Todas siguen existiendo; ninguna rinde como antes.
+
+\section*{2. De los cheques al celular: casi 30 años de infraestructura}
+
+La innovación no salió de la nada. El 17 de abril de 1997, el BCCR puso en
+marcha SINPE, el Sistema Nacional de Pagos Electrónicos \parencite{bccr_sinpe}.
+Su primer servicio fue la compensación de cheques, que hasta entonces tardaban
+en promedio 20 días en hacerse efectivos. Desde el año 2000 el sistema ofreció
+transferencias inmediatas, hoy llamadas PIN, pensadas para montos altos
+\parencite{araujo2024}. Para 2022, SINPE ya integraba 17 servicios y liquidaba
+cerca de 3600 millones de dólares diarios \parencite{alvarado2022}.
+
+Sobre esa base, el 7 de mayo de 2015 nació SINPE Móvil: el cliente asocia su
+número de celular a una cuenta en colones y puede enviar dinero a cualquier
+banco conociendo solo el número del destinatario, gratis hasta ₡100\,000
+diarios. Al inicio, la curiosidad superó al uso: en las primeras seis semanas
+se inscribieron 117\,287 usuarios, pero apenas se hicieron 1732 transacciones
+\parencite{telesemana2015}. La Figura~\ref{fig:linea} resume los hitos.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1.95cm]
+  \draw[cGris, line width=1.2pt] (-0.35,0) -- (7.35,0);
+  \foreach \i/\a/\t/\c/\p in {
+      0/1997/{SINPE: compensación de cheques}/cEje/1,
+      1/2000/{Transferencias inmediatas (hoy PIN)}/cEje/-1,
+      2/2015/{SINPE Móvil y tarjetas con chip}/cSM/1,
+      3/2016/{Cuentas simplificadas}/cEje/-1,
+      4/2019/{IBAN en todas las cuentas}/cEje/1,
+      5/2020/{Pandemia: despega la adopción}/cSM/-1,
+      6/2025/{Código propio en la factura electrónica}/cCaj/1,
+      7/2028/{QR y alias (meta del BCCR)}/cSM/-1} {
+    \node[hito=\c] at (\i,0) {};
+    \node[anio=\c] at (\i,{0.38*\p}) {\a};
+    \ifnum\p>0
+      \node[rotulo, anchor=south] at (\i,0.62) {\t};
+    \else
+      \node[rotulo, anchor=north] at (\i,-0.62) {\t};
+    \fi
+  }
+\end{tikzpicture}
+\caption{Hitos de SINPE y de las reformas que lo acompañaron. Elaboración propia
+con base en \Textcite{araujo2024}, \Textcite{bccr2025fiscal} y
+\Textcite{arias2026}.}
+\label{fig:linea}
+\end{figure}
+
+\section*{3. Cinco años lentos y luego una explosión}
+
+En 2019, SINPE Móvil registró apenas 6 millones de pagos. La pandemia lo cambió
+todo: con los confinamientos, muchos hogares lo usaron por primera vez para
+pagar comida y compras a domicilio, y a partir de ahí actuó el efecto red: entre
+más personas lo usaban, más razones tenían los demás para adoptarlo
+\parencite{araujo2024}. En 2023 hubo 506 millones de transacciones; en 2024,
+648 millones \parencite{bccr2025usuarios}, y en 2025, 747,5 millones por
+₡12,53 billones \parencite{rivero2026} (Figura~\ref{fig:anual}).
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  ybar, bar width=30pt, width=11cm, height=6.2cm,
+  /pgf/number format/assume math mode=true,
+  enlarge x limits=0.18, ymin=0, ymax=850,
+  symbolic x coords={2019,2023,2024,2025}, xtick=data,
+  ylabel={Millones de transacciones}, ylabel style={font=\small, text=cEje},
+  tick label style={font=\small}, axis line style={cGris}, tick style={cGris},
+  ymajorgrids, grid style={cGris!25},
+  nodes near coords, nodes near coords style={font=\small\bfseries},
+]
+  \addplot[draw=cSM, fill=cSM!80] coordinates {(2019,6) (2023,506) (2024,649) (2025,748)};
+\end{axis}
+\end{tikzpicture}
+\caption{Transacciones anuales de SINPE Móvil. Elaboración propia con datos de
+\Textcite{araujo2024}, \Textcite{bccr2025usuarios} y \Textcite{rivero2026}.}
+\label{fig:anual}
+\end{figure}
+
+La penetración es igual de llamativa. En 2024, más del 76\,\% de los mayores de
+15 años eran usuarios activos, cada uno con unas 180 transacciones al año, y
+Costa Rica ocupaba el cuarto lugar mundial en pagos rápidos por habitante,
+detrás de PromptPay en Tailandia, Pix en Brasil y Swish en Suecia. El valor
+promedio de cada pago bajó a unos ₡16\,900, señal de que se usa para el gasto
+diario \parencite{araujo2024}. A mayo de 2026 había 4,8 millones de números
+inscritos, 1,29 por adulto \parencite{ramirez2026}, y entre enero y agosto de
+2026 se acumulaban 446,1 millones de transacciones \parencite{arias2026}.
+
+\section*{4. Cuatro tecnologías consolidadas que siguen, pero rinden menos}
+
+\textbf{El efectivo y el cajero automático.} El efectivo es el medio de pago más
+caro: en 2017 su manejo costó el equivalente al 1\,\% del PIB. Seguía reinando
+por dos razones: funciona siempre, para todos, tenga o no cuenta bancaria, y
+liquida al instante. SINPE Móvil le quitó justamente esa segunda ventaja. Los
+cajeros pasaron de 155 millones de transacciones en 2019 a 104 millones en 2023,
+mientras SINPE Móvil subía de 6 a 506 millones (Figura~\ref{fig:cajeros}). El
+ahorro por usar menos efectivo se estima en un 0,5\,\% del PIB al año
+\parencite{araujo2024}.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  ybar, bar width=26pt, width=10.5cm, height=6.2cm,
+  /pgf/number format/assume math mode=true,
+  enlarge x limits=0.45, ymin=0, ymax=600,
+  symbolic x coords={2019,2023}, xtick=data,
+  ylabel={Millones de transacciones}, ylabel style={font=\small, text=cEje},
+  tick label style={font=\small}, axis line style={cGris}, tick style={cGris},
+  ymajorgrids, grid style={cGris!25},
+  nodes near coords, nodes near coords style={font=\small\bfseries},
+  legend style={at={(0.03,0.97)}, anchor=north west, draw=none,
+    fill=none, font=\small, legend cell align=left},
+  legend image code/.code={\draw[#1, fill] (0cm,-0.1cm) rectangle (0.3cm,0.12cm);},
+]
+  \addplot[draw=cCaj, fill=cCaj!75] coordinates {(2019,155) (2023,104)};
+  \addplot[draw=cSM, fill=cSM!80] coordinates {(2019,6) (2023,506)};
+  \legend{Cajeros automáticos, SINPE Móvil}
+\end{axis}
+\end{tikzpicture}
+\caption{Transacciones en cajeros automáticos y en SINPE Móvil en Costa Rica.
+Elaboración propia con datos de \Textcite{araujo2024}.}
+\label{fig:cajeros}
+\end{figure}
+
+\textbf{La transferencia bancaria tradicional.} SINPE Móvil ya concentra cerca
+del 80\,\% de la cantidad de transferencias interbancarias, pero solo el 4\,\%
+de su valor \parencite{araujo2024}. Los montos grandes siguen viajando por los
+canales de siempre; lo que se perdió fue el volumen minorista.
+
+\textbf{La tarjeta.} Es la que mejor resiste. En 2022 había más de 9,2 millones
+de tarjetas emitidas, el 99\,\% sin contacto, y cerca de 200\,000 datáfonos
+\parencite{alvarado2022}. Su punto débil es el costo para el comercio: el BCCR
+fija un tope de comisión del 2\,\% por venta con tarjeta nacional, más hasta
+₡12\,500 mensuales por terminal \parencite{madrigal2023}. Para un pequeño
+comercio, recibir un SINPE Móvil gratis frente a pagar esa comisión es una
+diferencia directa en su margen.
+
+\textbf{El negocio de pagos de los bancos.} Los bancos dejaron de cobrar
+comisiones por transferencias que ahora son gratuitas, pero el BIS encontró que
+sus gastos no financieros bajaron con respecto a un escenario simulado en el que
+SINPE Móvil no hubiera despegado. Además, cayó la concentración del mercado de
+pagos \parencite{araujo2024}. Es decir, perdieron una fuente de ingresos, pero
+ganaron eficiencia y enfrentan más competencia.
+
+La Tabla~\ref{tab:resumen} resume el patrón: la tecnología consolidada no
+muere, se repliega hacia los casos que la nueva no cubre.
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{>{\raggedright\arraybackslash}p{3.3cm}
+                >{\raggedright\arraybackslash}p{5.6cm}
+                >{\raggedright\arraybackslash}p{5.6cm}}
+\toprule
+\textbf{Tecnología consolidada} & \textbf{Lo que conserva} & \textbf{Lo que perdió} \\
+\midrule
+Efectivo y cajero & Personas sin cuenta o sin conexión estable & Un tercio de las operaciones en cajero (2019-2023) \\
+Transferencia tradicional & El 96\,\% del valor transferido: los montos altos & Cerca del 80\,\% de la cantidad de transferencias \\
+Tarjeta & Comercio en línea, crédito, turistas & Pagos pequeños entre personas y en el comercio pequeño \\
+Bancos & La relación con el cliente y la cuenta & Comisiones por transferencia; menor concentración \\
+\bottomrule
+\end{tabular}
+\caption{Cómo quedó cada tecnología consolidada. Elaboración propia con base en
+\Textcite{araujo2024} y \Textcite{alvarado2022}.}
+\label{tab:resumen}
+\end{table}
+
+\section*{5. Las tensiones de una adopción masiva}
+
+El éxito trajo conflictos nuevos. Desde el 1 de setiembre de 2025, los comercios
+deben identificar los pagos con SINPE Móvil con un código propio en la factura
+electrónica. El BCCR aclaró que no es un impuesto, sino una medida de
+trazabilidad fiscal \parencite{bccr2025fiscal}, pero el debate sobre si el
+sistema facilita la informalidad sigue abierto \parencite{rivero2026}. Además,
+el propio BIS advierte que hay personas con menos habilidades digitales o con
+conexión inestable que seguirán prefiriendo el efectivo \parencite{araujo2024}.
+Esa es, precisamente, la trinchera donde sobrevive la tecnología consolidada.
+
+\section*{6. ¿Qué factores fomentan la adopción en distintos países?}
+
+El volumen del BIS sobre pagos rápidos compara experiencias de América Latina y
+Asia \parencite{aurazo2024}. De ahí, y del caso costarricense, salen seis
+factores:
+
+\begin{enumerate}
+  \item \textbf{Un banco central que opera y además promueve.} En Costa Rica, el
+    BCCR fue operador de la plataforma y catalizador del acuerdo con los bancos
+    \parencite{aurazo2024}. En Brasil, con Pix, también del banco central, más
+    del 90\,\% de los adultos envió o recibió un pago entre julio de 2023 y
+    julio de 2024 \parencite{aurazo2024}.
+  \item \textbf{Interoperabilidad.} Los bancos aceptaron que el BCCR unificara
+    sus registros de teléfonos. El dinero sale directo de la cuenta, sin pasar
+    por una billetera, a diferencia de los modelos de dinero móvil de las
+    telefónicas en África \parencite{araujo2024}. En Perú, el banco central
+    obligó a las billeteras Yape y Plin a interoperar \parencite{aurazo2024}.
+  \item \textbf{Costo cero para el usuario.} Es común a SINPE Móvil y a UPI en
+    India, donde además pesaron la facilidad de crear aplicaciones, la
+    protección de datos y la alianza con el sector privado
+    \parencite{cornelli2024}.
+  \item \textbf{Reformas previas.} Tarjetas con chip y sin contacto (2015),
+    cuentas simplificadas con solo la cédula (2016) e IBAN para todas las
+    cuentas (2019). La bancarización de los mayores de 15 años subió del 77\,\%
+    en 2018 al 90\,\% en 2024 \parencite{araujo2024}.
+  \item \textbf{Un detonante externo.} La pandemia obligó a probar el pago
+    digital, y el efecto red hizo el resto \parencite{araujo2024}.
+  \item \textbf{Una infraestructura que ya existía.} SINPE Móvil se montó sobre
+    casi dos décadas de SINPE. No hubo que construir desde cero la red entre
+    bancos, solo una capa nueva encima.
+\end{enumerate}
+
+\section*{7. Lo que viene}
+
+El BCCR prepara un SINPE Móvil con códigos QR (estáticos y con el monto
+incluido) y con alias, para no tener que compartir el número de teléfono. La
+idea es llevarlo al comercio físico, al comercio en línea y al pago de servicios
+públicos, con 2028 como referencia. El número de teléfono y el SMS se
+mantendrán, y las comisiones todavía se estudian a la luz de Brasil e India
+\parencite{arias2026}. Si eso ocurre, el próximo terreno en disputa será el
+datáfono.
+
+Les dejo dos preguntas: cuando SINPE Móvil llegue a la caja del comercio, ¿la
+tarjeta correrá la misma suerte que el cajero? Y en sus países, ¿quién está
+impulsando los pagos inmediatos: el banco central o el sector privado?
+
+\printbibliography[title={Referencias}]
+
+\end{document}
