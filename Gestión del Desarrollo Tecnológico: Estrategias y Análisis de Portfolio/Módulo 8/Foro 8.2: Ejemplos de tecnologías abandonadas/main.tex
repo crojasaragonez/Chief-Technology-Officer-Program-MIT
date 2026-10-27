@@ -1,0 +1,127 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{csquotes}
+\usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds,calc}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt,maxcitenames=2]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.3cm}
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\setlist{nosep}
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy\small}
+\setlength{\bibitemsep}{0.3em}
+
+% Colores: naranja para Stack Overflow, verde para la IA generativa,
+% azul oscuro para flechas y rótulos y gris para los fondos.
+\definecolor{cSO}{RGB}{200,96,20}
+\definecolor{cIA}{RGB}{36,122,82}
+\definecolor{cEje}{RGB}{26,58,102}
+\definecolor{cGris}{RGB}{120,116,110}
+
+\tikzset{
+  etapa/.style={draw=#1, fill=#1!8, very thick, rounded corners=4pt,
+    text width=4.4cm, align=center, minimum height=1.35cm, font=\small},
+  flujo/.style={-{Stealth[length=7pt]}, very thick, cEje},
+}
+
+\begin{document}
+
+% --- Portada -----------------------------------------------------------------
+\begin{titlepage}
+\centering
+\vspace*{3.2cm}
+{\large\scshape Gestión del Desarrollo Tecnológico:\\
+Estrategias y Análisis de Portfolio\par}
+\vspace{0.5cm}
+{\normalsize Módulo 8. Foro 8.1: Ejemplos de tecnologías abandonadas\par}
+\vspace{2.6cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vspace{0.7cm}
+{\LARGE\bfseries Stack Overflow y la IA generativa\par}
+\vspace{0.5cm}
+{\large Cuando la fuente de entrenamiento\\
+se convierte en víctima\par}
+\vspace{0.7cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vfill
+{\large Carlos Luis Rojas Aragonés\par}
+\vspace{0.3cm}
+{\normalsize Chief Technology Officer Program\par}
+\vspace{0.3cm}
+{\normalsize 26 de octubre de 2026\par}
+\vspace*{1.5cm}
+\end{titlepage}
+
+% --- Cuerpo ------------------------------------------------------------------
+\section*{1. Del sitio de referencia a la caída}
+
+Durante más de una década, Stack Overflow fue el sitio de referencia para
+resolver dudas de programación. Su modelo era sencillo: una comunidad que
+respondía gratis y un buscador que posicionaba esas respuestas. En 2021, Prosus
+la compró por 1800 millones de dólares \parencite{stackoverflow2021}. Un año y
+medio después llegó ChatGPT.
+
+El efecto fue inmediato. \Textcite{delriochanona2024} estimaron que la actividad
+en Stack Overflow cayó cerca de un 25\,\% en los seis meses siguientes al
+lanzamiento de ChatGPT, frente a plataformas equivalentes en Rusia y China,
+donde la herramienta no estaba disponible. En octubre de 2023, la empresa
+despidió al 28\,\% de su plantilla. La dirección lo atribuyó a la búsqueda de
+rentabilidad, pero coincidió con esa caída \parencite{chandrasekar2023}.
+
+\section*{2. Una disrupción de manual}
+
+El caso encaja con el dilema del innovador \parencite{christensen1997}. El
+asistente de IA es \enquote{peor} en precisión: alucina y no cita fuentes. Sin
+embargo, responde al instante, no juzga la pregunta y se adapta al código
+exacto del desarrollador. Para la mayoría de las dudas cotidianas, eso basta. En
+la encuesta de la propia Stack Overflow, el 76\,\% de los desarrolladores ya
+usaba o planeaba usar herramientas de IA \parencite{stackoverflow2024encuesta}.
+
+\section*{3. La ironía de fondo}
+
+Los modelos aprendieron del contenido de Stack Overflow, y ahora reducen las
+preguntas nuevas que alimentarían a los modelos futuros
+(Figura~\ref{fig:circulo}). La empresa respondió licenciando sus datos a Google
+y OpenAI \parencite{stackoverflow2024google,stackoverflow2024openai}. Es decir, pasó de ser una
+comunidad a ser un proveedor de datos.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.5cm and 1.6cm]
+  \node[etapa=cSO] (resp) {Respuestas públicas\\en Stack Overflow};
+  \node[etapa=cIA, right=of resp] (entr) {Entrenamiento de\\los modelos de lenguaje};
+  \node[etapa=cIA, below=of entr] (asis) {Los desarrolladores\\preguntan al asistente};
+  \node[etapa=cSO, below=of resp] (menos) {Menos preguntas nuevas\\(cerca de $-$25\,\% en seis meses)};
+  \draw[flujo] (resp) -- (entr);
+  \draw[flujo] (entr) -- (asis);
+  \draw[flujo] (asis) -- (menos);
+  \draw[flujo] (menos) -- node[left, font=\small, text=cEje, align=right]
+    {menos\\contenido} (resp);
+  \node[font=\small\itshape, text=cGris] at ($(resp)!0.5!(asis)$) {círculo vicioso};
+\end{tikzpicture}
+\caption{El contenido de la comunidad alimenta a los modelos que luego la
+sustituyen. Elaboración propia con base en \Textcite{delriochanona2024}.}
+\label{fig:circulo}
+\end{figure}
+
+Les dejo una pregunta: si las comunidades abiertas dejan de generar
+conocimiento, ¿de dónde aprenderán los próximos modelos?
+
+\printbibliography[title={Referencias}]
+
+\end{document}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Foro 8.1. Stack Overflow y la IA generativa: cuando la fuente de entrenamiento se convierte en víctima</title>
+<style>
+  body { font-family: Georgia, "Times New Roman", serif; font-size: 16px;
+         line-height: 1.55; color: #1a1a1a; max-width: 780px;
+         margin: 2rem auto; padding: 0 1rem; }
+  h1 { font-size: 1.6em; line-height: 1.25; margin: 0 0 .2em; }
+  h2 { font-size: 1.25em; margin: 1.8em 0 .5em; }
+  p  { margin: 0 0 .9em; }
+  img { max-width: 100%; height: auto; display: block; margin: .6em auto .3em; }
+  .sub { font-size: 1.05em; color: #444; margin: 0 0 1.6em; }
+  .cap { font-size: .82em; color: #555; line-height: 1.4; margin: 0 0 1.6em; }
+  .ref { font-size: .85em; line-height: 1.45; }
+  .ref p { margin: 0 0 .5em; padding-left: 1.6em; text-indent: -1.6em; }
+</style>
+</head>
+<body>
+
+<h1>Stack Overflow y la IA generativa</h1>
+<p class="sub"><em>Cuando la fuente de entrenamiento se convierte en víctima</em><br>
+Carlos Luis Rojas Aragonés</p>
+
+<h2>1. Del sitio de referencia a la caída</h2>
+
+<p>Durante más de una década, Stack Overflow fue el sitio de referencia para resolver dudas de programación. Su modelo era sencillo: una comunidad que respondía gratis y un buscador que posicionaba esas respuestas. En 2021, Prosus la compró por 1800 millones de dólares (Stack Overflow, 2021). Un año y medio después llegó ChatGPT.</p>
+
+<p>El efecto fue inmediato. Del Rio-Chanona et al. (2024) estimaron que la actividad en Stack Overflow cayó cerca de un 25&nbsp;% en los seis meses siguientes al lanzamiento de ChatGPT, frente a plataformas equivalentes en Rusia y China, donde la herramienta no estaba disponible. En octubre de 2023, la empresa despidió al 28&nbsp;% de su plantilla. La dirección lo atribuyó a la búsqueda de rentabilidad, pero coincidió con esa caída (Chandrasekar, 2023).</p>
+
+<h2>2. Una disrupción de manual</h2>
+
+<p>El caso encaja con el dilema del innovador (Christensen, 1997). El asistente de IA es «peor» en precisión: alucina y no cita fuentes. Sin embargo, responde al instante, no juzga la pregunta y se adapta al código exacto del desarrollador. Para la mayoría de las dudas cotidianas, eso basta. En la encuesta de la propia Stack Overflow, el 76&nbsp;% de los desarrolladores ya usaba o planeaba usar herramientas de IA (Stack Overflow, 2024a).</p>
+
+<h2>3. La ironía de fondo</h2>
+
+<p>Los modelos aprendieron del contenido de Stack Overflow, y ahora reducen las preguntas nuevas que alimentarían a los modelos futuros (Figura 1). La empresa respondió licenciando sus datos a Google y OpenAI (Stack Overflow, 2024b, 2024c). Es decir, pasó de ser una comunidad a ser un proveedor de datos.</p>
+
+<img src="figuras/figura-1.png" alt="Figura 1. Círculo vicioso: las respuestas públicas en Stack Overflow entrenan a los modelos de lenguaje, los desarrolladores preguntan al asistente, hay menos preguntas nuevas y, por tanto, menos contenido">
+<p class="cap"><strong>Figura 1.</strong> El contenido de la comunidad alimenta a los modelos que luego la sustituyen. Elaboración propia con base en Del Rio-Chanona et al. (2024).</p>
+
+<p>Les dejo una pregunta: si las comunidades abiertas dejan de generar conocimiento, ¿de dónde aprenderán los próximos modelos?</p>
+
+<h2>Referencias</h2>
+
+<div class="ref">
+<p>Chandrasekar, P. (2023, 16 de octubre). <em>Stack Overflow company announcement</em>. https://stackoverflow.blog/2023/10/16/stack-overflow-company-announcement-october-2023/</p>
+<p>Christensen, C. M. (1997). <em>The innovator's dilemma: When new technologies cause great firms to fail</em>. Harvard Business School Press.</p>
+<p>Del Rio-Chanona, R. M., Laurentsyeva, N. y Wachs, J. (2024). Large language models reduce public knowledge sharing on online Q&amp;A platforms. <em>PNAS Nexus, 3</em>(9). https://doi.org/10.1093/pnasnexus/pgae400</p>
+<p>Stack Overflow. (2021, 2 de junio). <em>Prosus to acquire Stack Overflow for US$1.8 billion</em>. https://stackoverflow.co/company/press/archive/prosus-acquisition/</p>
+<p>Stack Overflow. (2024a). <em>2024 Developer Survey: AI</em>. https://survey.stackoverflow.co/2024/ai</p>
+<p>Stack Overflow. (2024b, 29 de febrero). <em>Stack Overflow and Google Cloud announce strategic partnership to bring generative AI to millions of developers</em>. https://stackoverflow.co/company/press/archive/google-cloud-strategic-gen-ai-partnership/</p>
+<p>Stack Overflow. (2024c, 6 de mayo). <em>Stack Overflow and OpenAI partner to strengthen the world's most popular large language models</em>. https://stackoverflow.co/company/press/archive/openai-partnership</p>
+</div>
+
+</body>
+</html>

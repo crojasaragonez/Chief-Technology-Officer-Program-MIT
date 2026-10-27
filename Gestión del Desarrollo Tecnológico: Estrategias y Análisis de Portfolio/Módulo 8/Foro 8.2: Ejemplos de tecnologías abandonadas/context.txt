@@ -1,0 +1,11 @@
+Ejemplos de tecnologías abandonadas
+
+  En este módulo, hemos comprobado que la saturación de un determinado mercado hace que solo sobrevivan las empresas con mayor capacidad de innovación tecnológica. A partir de ahí, surgen modelos de negocio disruptivos en los que dichas empresas deben competir.
+
+  ¿Conoce alguna empresa tecnológica que haya desaparecido o cuya actividad se haya visto reducida como consecuencia de un cambio tecnológico radical o disruptivo en su correspondiente sector empresarial? ¿Cuáles fueron las causas? Comparta su respuesta con el resto de los participantes.
+
+  Criterios de evaluación: relevancia, calidad (argumentos sólidos y fuentes rigurosas) y compromiso (aporta información a los demás y contribuye al debate).
+
+  Extensión recomendada: 150 - 300 palabras.
+
+caso elegido: Stack Overflow frente a la IA generativa
