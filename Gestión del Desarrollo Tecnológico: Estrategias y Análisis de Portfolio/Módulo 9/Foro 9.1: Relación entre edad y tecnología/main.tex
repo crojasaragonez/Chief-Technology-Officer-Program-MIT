@@ -1,0 +1,254 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands,es-tabla]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{csquotes}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds,calc}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt,maxcitenames=2]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.3cm}
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\setlist{nosep}
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy\small}
+\setlength{\bibitemsep}{0.3em}
+
+% Colores: azul petróleo para el presente, ámbar para las proyecciones,
+% azul oscuro para rótulos.
+\definecolor{cHoy}{RGB}{31,111,139}
+\definecolor{cFut}{RGB}{214,137,16}
+\definecolor{cEje}{RGB}{26,58,102}
+\definecolor{cGris}{RGB}{120,116,110}
+
+\pgfplotsset{
+  foro/.style={
+    /pgf/number format/use comma,
+    /pgf/number format/1000 sep={},
+    tick label style={font=\small}, axis line style={cGris}, tick style={cGris},
+    ylabel style={font=\small, text=cEje}, xlabel style={font=\small, text=cEje},
+    ymajorgrids, grid style={cGris!25},
+  },
+}
+
+\begin{document}
+
+% --- Portada -----------------------------------------------------------------
+\begin{titlepage}
+\centering
+\vspace*{3.2cm}
+{\large\scshape Gestión del Desarrollo Tecnológico:\\
+Estrategias y Análisis de Portfolio\par}
+\vspace{0.5cm}
+{\normalsize Módulo 9. Foro 9.1: Relación entre edad y tecnología\par}
+\vspace{2.6cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vspace{0.7cm}
+{\LARGE\bfseries La vejez es una frontera móvil\par}
+\vspace{0.5cm}
+{\large Envejecimiento, tecnología y el mercado\\
+que la industria todavía no mira\par}
+\vspace{0.7cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vfill
+{\large Carlos Luis Rojas Aragonés\par}
+\vspace{0.3cm}
+{\normalsize Chief Technology Officer Program\par}
+\vspace{0.3cm}
+{\normalsize 2 de noviembre de 2026\par}
+\vspace*{1.5cm}
+\end{titlepage}
+
+% --- Cuerpo ------------------------------------------------------------------
+\section*{1. ¿Cuándo empieza la vejez?}
+
+Creo que no es un umbral objetivo, sino una variable que depende del contexto:
+la esperanza de vida, la distribución de edades de la población y hasta la
+ley de cada país. La OMS habla de personas de 60 años o más
+\parencite{who2024}, mientras que en Costa Rica la Ley Integral para la Persona
+Adulta Mayor fija el corte en 65 años \parencite{ley7935}. Son convenciones, y
+las convenciones envejecen.
+
+Los demógrafos Sanderson y Scherbov lo plantean de una forma que me parece muy
+útil: en lugar de contar los años vividos, contar los que quedan. Proponen
+considerar \enquote{vieja} a una persona cuando su esperanza de vida restante
+baja de unos 15 años \parencite{sanderson2010}. Con esa regla, la vejez no
+llega a la misma edad en todos los países ni en todas las épocas: se corre
+hacia adelante a medida que la medicina y la tecnología mejoran. En Costa Rica,
+la esperanza de vida al nacer pasó de 76,95 años en 1990 a 80,91 en 2024, y el
+INEC proyecta 84,27 en 2050 y 89,57 en 2100 \parencite{ramirez2024}
+(Figura~\ref{fig:esperanza}). Si eso se cumple, vamos a empezar a considerar
+jóvenes a muchas personas que hoy llamamos mayores.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  foro, width=11cm, height=6.2cm,
+  xmin=1980, xmax=2110, ymin=70, ymax=95,
+  xtick={1990,2024,2050,2100},
+  ylabel={Años},
+]
+  \addplot[cFut, line width=1.4pt, dashed, mark=*, mark size=2.6pt, mark options={solid}]
+    coordinates {(2024,80.91) (2050,84.27) (2100,89.57)};
+  \addplot[cHoy, line width=1.4pt, mark=*, mark size=2.6pt]
+    coordinates {(1990,76.95) (2024,80.91)};
+  \foreach \x/\y/\t in {1990/76.95/{76,95}, 2024/80.91/{80,91},
+                        2050/84.27/{84,27}, 2100/89.57/{89,57}} {
+    \edef\temp{\noexpand\node[font=\noexpand\small\noexpand\bfseries, anchor=south, yshift=3pt]
+      at (axis cs:\x,\y) {\t};}
+    \temp
+  }
+\end{axis}
+\end{tikzpicture}
+\caption{Esperanza de vida al nacer en Costa Rica: valores estimados (línea
+continua) y proyectados (línea discontinua). Elaboración propia con datos del
+INEC citados por \Textcite{ramirez2024}.}
+\label{fig:esperanza}
+\end{figure}
+
+\section*{2. El efecto social: trabajo, salud y tecnología}
+
+El cambio es global. La OMS estima que para 2030 una de cada seis personas en
+el mundo tendrá 60 años o más, y que ese grupo pasará de 1000 millones en 2020
+a 2100 millones en 2050; los mayores de 80 se triplicarán hasta 426 millones
+\parencite{who2024}. Según la ONU, a mediados de la década de 2030 habrá más
+personas de 80 años o más que bebés, y a finales de la de 2070 los mayores de
+65 superarán a los menores de 18 \parencite{un2024}.
+
+Costa Rica va más rápido que el promedio. En 2024, 11 de cada 100 habitantes
+tenían 65 años o más; en 2050 serán 25. La relación entre mayores de 65 y
+personas en edad de trabajar subirá de 16,0 a 39,2 por cada 100, y la población
+total dejará de crecer en 2044 \parencite{ramirez2024} (Figura~\ref{fig:cr}).
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  foro, ybar, bar width=30pt, width=11cm, height=6.4cm,
+  enlarge x limits=0.4, ymin=0, ymax=48,
+  symbolic x coords={pob,dep}, xtick=data,
+  xticklabels={{Por cada 100 habitantes},{Por cada 100 personas\\en edad de trabajar}},
+  xticklabel style={align=center},
+  ylabel={Personas de 65 años o más},
+  nodes near coords, nodes near coords style={font=\small\bfseries},
+  /pgf/number format/fixed, /pgf/number format/precision=1,
+  legend style={at={(0.03,0.97)}, anchor=north west, draw=none,
+    fill=none, font=\small, legend cell align=left},
+  legend image code/.code={\draw[#1, fill] (0cm,-0.1cm) rectangle (0.3cm,0.12cm);},
+]
+  \addplot[draw=cHoy, fill=cHoy!80] coordinates {(pob,11) (dep,16.0)};
+  \addplot[draw=cFut, fill=cFut!80] coordinates {(pob,25) (dep,39.2)};
+  \legend{2024, 2050 (proyección)}
+\end{axis}
+\end{tikzpicture}
+\caption{Peso de la población de 65 años o más en Costa Rica. Elaboración
+propia con datos del INEC citados por \Textcite{ramirez2024}.}
+\label{fig:cr}
+\end{figure}
+
+\textbf{En lo laboral}, la lectura pesimista es que habrá menos personas
+cotizando por cada pensionado. Pero si la gente envejece mejor, también va a
+estar en mejores condiciones de seguir trabajando, emprendiendo o cambiando de
+campo mucho después de los 65. Por eso Sanderson y Scherbov sostienen que la
+edad de retiro no debería ser fija, sino moverse con la esperanza de vida
+\parencite{sanderson2010}.
+
+\textbf{En lo médico}, vivir más significa convivir más años con enfermedades
+crónicas, y eso empuja la demanda de servicios de salud y de cuidados
+\parencite{who2024}. La medicina está avanzando bastante, y la presión
+demográfica es justamente uno de los motores de la telemedicina, el monitoreo
+remoto y los dispositivos que se usan en el cuerpo.
+
+\textbf{En lo tecnológico}, el envejecimiento mueve dinero. AARP y Economist
+Impact estimaron que en 2020 las personas de 50 años o más, el 24\,\% de la
+población mundial, generaron el 34\,\% del PIB global (unos 45 billones de
+dólares), y proyectan que en 2050 llegarán al 39\,\% (118 billones)
+\parencite{aarp2022} (Figura~\ref{fig:longevidad}).
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  foro, ybar, bar width=40pt, width=10cm, height=6.2cm,
+  enlarge x limits=0.5, ymin=0, ymax=140,
+  symbolic x coords={2020,2050}, xtick={2020,2050},
+  xticklabels={2020, 2050 (proyección)},
+  ylabel={Billones de dólares},
+  nodes near coords, nodes near coords style={font=\small\bfseries},
+  bar shift=0pt,
+]
+  \addplot[draw=cHoy, fill=cHoy!80, bar shift=0pt] coordinates {(2020,45)};
+  \addplot[draw=cFut, fill=cFut!80, bar shift=0pt] coordinates {(2050,118)};
+  \node[font=\footnotesize\bfseries, text=white, align=center, anchor=north]
+    at (axis cs:2020,40) {34\,\%\\del PIB};
+  \node[font=\footnotesize\bfseries, text=white, align=center, anchor=north]
+    at (axis cs:2050,110) {39\,\%\\del PIB};
+\end{axis}
+\end{tikzpicture}
+\caption{Aporte de las personas de 50 años o más al PIB mundial. Elaboración
+propia con datos de \Textcite{aarp2022}.}
+\label{fig:longevidad}
+\end{figure}
+
+\section*{3. Retos y oportunidades para el sector tecnológico}
+
+Como vimos en uno de los videos del curso, se abre un mercado nuevo: el de las
+personas que ya se retiraron, o que están por hacerlo, y que pueden convertirse
+fácilmente en un público objetivo para empresas que tradicionalmente apuntaban
+a poblaciones cada vez más jóvenes. Joseph Coughlin, director del MIT AgeLab,
+lo llama la \enquote{economía de la longevidad} y advierte que las empresas
+ven el tamaño y la riqueza de ese mercado, pero lo atienden con una idea
+anticuada de lo que es ser mayor: productos que gritan \enquote{para viejos} y
+que nadie quiere usar \parencite{coughlin2017}.
+
+Veo tres retos y tres oportunidades:
+
+\begin{itemize}
+  \item \textbf{Reto: dejar de diseñar para el estereotipo.} El usuario mayor
+    ya está conectado: en Estados Unidos, el 61\,\% de los mayores de 65 tenía
+    teléfono inteligente en 2021, frente al 96\,\% de los de 18 a 29
+    \parencite{faverio2022}. La brecha existe, pero se cierra rápido; lo que
+    falla es el diseño, no el interés.
+  \item \textbf{Reto: accesibilidad como requisito, no como extra.} Vista,
+    oído, motricidad fina y carga cognitiva cambian con la edad. Un producto
+    accesible para alguien de 75 suele ser mejor para todos.
+  \item \textbf{Reto: el sesgo de edad dentro de los propios equipos.} Es
+    difícil diseñar bien para un público que no está representado en la sala.
+  \item \textbf{Oportunidad: salud y cuidado.} Telemedicina, monitoreo remoto,
+    detección de caídas y logística de medicamentos, como el modelo de
+    farmacia que Coughlin cita como ejemplo \parencite{coughlin2017}.
+  \item \textbf{Oportunidad: aprendizaje y trabajo a lo largo de la vida.}
+    Carreras de 50 años o más necesitan plataformas para reentrenarse y
+    cambiar de oficio.
+  \item \textbf{Oportunidad: finanzas y vivienda.} Más años de retiro exigen
+    productos para administrar el ahorro y para envejecer en casa.
+\end{itemize}
+
+Para quienes trabajamos en tecnología hay además una lectura personal: nuestras
+propias carreras van a ser más largas, así que el aprendizaje continuo deja de
+ser opcional.
+
+Les dejo una pregunta: en sus empresas, ¿las personas mayores de 60 aparecen
+en los perfiles de usuario y en las pruebas de producto, o siguen siendo un
+segmento invisible?
+
+\printbibliography[title={Referencias}]
+
+\end{document}
