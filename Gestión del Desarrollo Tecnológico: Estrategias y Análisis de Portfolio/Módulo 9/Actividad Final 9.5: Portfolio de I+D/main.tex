@@ -1,0 +1,953 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[section]{placeins}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.3cm}
+% Los rótulos de las figuras y la bibliografía generan avisos de línea holgada
+% que son cosméticos. Se silencian para que `make check` siga siendo sensible a
+% los desbordes reales.
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.42em}
+\setlist{nosep}
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.06}
+\renewcommand{\floatpagefraction}{0.72}
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{5}
+
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy\small}
+\setlength{\bibitemsep}{0.28em}
+\setlength{\bibhang}{1.4em}
+
+\newcommand{\pct}{\,\%}
+\newcommand{\kusd}{\,k\textdollar}
+
+% Un color por proyecto, más el gris de la gestión del portafolio, el rojo de
+% la ruta crítica y el ámbar de las puertas.
+\definecolor{cR1}{RGB}{36,102,148}
+\definecolor{cR3}{RGB}{56,120,86}
+\definecolor{cR4}{RGB}{122,84,150}
+\definecolor{cR7}{RGB}{166,92,34}
+\definecolor{cDir}{RGB}{132,124,112}
+\definecolor{cAviso}{RGB}{176,42,42}
+\definecolor{cPuerta}{RGB}{196,140,20}
+\definecolor{rBajo}{RGB}{214,232,212}
+\definecolor{rMedio}{RGB}{246,224,170}
+\definecolor{rAlto}{RGB}{238,178,170}
+
+\title{\vspace{-1.2cm}\textbf{Cuatro proyectos, cuatro puertas}\\
+\large Portafolio de I+D de la plataforma de infraestructura como código para
+2026-2029, construido a partir de la hoja de ruta tecnológica del primer
+programa}
+\author{Carlos Luis Rojas Aragonés\\
+\small Gestión del Desarrollo Tecnológico: Estrategias y Análisis de Portfolio\\
+\small Actividad final 9.5: Portfolio de I+D}
+\date{\small 2 de noviembre de 2026}
+
+\begin{document}
+
+\maketitle
+\vspace{-0.8em}
+
+\section{El portafolio en una página}
+\label{sec:ficha}
+
+En el primer programa construí la hoja de ruta tecnológica de la
+infraestructura como código (IaC) de la plataforma en la nube de mi empresa
+\autocite{rojas2026hoja}. Esa hoja de ruta tiene ocho proyectos, R1 a R8, para
+llevar la plataforma de 2026 a 2029. Para esta actividad elegí cuatro de ellos y
+los organicé como un portafolio de I+D, siguiendo los capítulos 16 y 17 de
+\textcite{deweck2022}.
+
+\textbf{No agregué proyectos nuevos.} Los proyectos, las figuras de mérito, las
+ecuaciones, los precios unitarios, los prototipos y las puertas de decisión
+salen de la hoja de ruta. Lo que no estaba allí y tuve que estimar (las
+probabilidades de cada puerta y los márgenes de sobrecosto) lo señalo como
+estimación propia donde aparece. Todas las cantidades están en miles de dólares
+estadounidenses.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\caption{El portafolio, en corto.}
+\label{tab:ficha}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Dimensión} & \textbf{Dato} \\
+\midrule
+Proyectos & R1 Cierre de cobertura (la mitad que falta), R3 Catálogo de módulos
+  certificados, R4 Política como código y R7 Interfaz de autoservicio \\
+Período & De 2026 T4 a 2029 T2, once trimestres \\
+Esfuerzo & 54 meses-persona; 1,6 ingenieros de media y 2,4 en el pico \\
+Presupuesto & 473,6 de base más 73,8 de reserva (15,6\pct): \textbf{547,4
+  miles de dólares} \\
+Valor & VAN esperado de \textbf{727,3} a 2031, con un 5\pct{} de probabilidad
+  de quedar por debajo de 456,4 \\
+Figuras de mérito & Cobertura de 55 a 86\pct; tiempo de ciclo de 26 a 8 h;
+  tasa de fallo de 14 a 6\pct; cumplimiento de 62 a 94\pct;
+  reconstrucción de 40 a 11 h \\
+Puertas & G1 (2026 T4), G2 (2027 T4), G3 (2028 T3) y G4 (2029 T1), todas
+  de la hoja de ruta \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Lo que encontré, en tres frases:
+
+\begin{enumerate}
+\item \textbf{R1 y R3 son los que pagan.} Solos dan un VAN esperado de 776,8
+  a 2031. Toda la hoja de ruta descansa en la cobertura de codificación, y
+  estos dos proyectos son los que la mueven.
+\item \textbf{R4 y R7 no se pagan solos antes de 2031.} R4 resta 44,7 y R7
+  resta 4,8 de valor esperado. Los incluyo igual, porque son los que cumplen
+  dos compromisos de la estrategia: el tiempo de ciclo (C3) y el cumplimiento
+  de política (C4). El precio de esos dos compromisos es de 49,5 miles de
+  dólares de VAN, y prefiero dejarlo escrito antes que esconderlo.
+\item \textbf{Las puertas son parte del presupuesto.} Con ellas, la
+  probabilidad de pasarse de los 547,4 es del 19,6\pct; si cada proyecto se
+  ejecutara completo pase lo que pase, sería del 30\pct.
+\end{enumerate}
+
+\section{De la hoja de ruta al portafolio}
+\label{sec:seleccion}
+
+\subsection*{El criterio para elegir}
+
+Un portafolio de I+D no es la lista completa de proyectos de una hoja de ruta.
+Para \textcite[cap.~16]{deweck2022}, un proyecto de I+D existe para reducir
+una incertidumbre técnica y mover una figura de mérito; lo que ya se sabe hacer
+es ejecución. Con esa idea usé un criterio simple: \textbf{un proyecto entra en
+el portafolio si tiene una pregunta abierta que hay que contestar con un
+prototipo antes de comprometer su presupuesto}. La hoja de ruta ya definía esas
+preguntas en sus cinco prototipos (P1 a P5), así que el criterio no es
+inventado: separa los proyectos que tienen prototipo de los que no.
+
+El Cuadro~\ref{tab:seleccion} aplica el criterio a los ocho proyectos y les
+asigna una de las cuatro decisiones con las que el libro revisa una cartera:
+detener, cambiar, mantener o iniciar \autocite[fig.~16.17]{deweck2022}.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\caption{Los ocho proyectos de la hoja de ruta y la decisión para cada uno. TRL:
+nivel de madurez tecnológica de partida y de llegada \autocite{mankins1995}.
+Tipo según \textcite{wheelwright1992}. Costo de la hoja de ruta, sólo
+ingeniería.}
+\label{tab:seleccion}
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}p{3.3cm}cl>{\raggedright\arraybackslash}p{1.5cm}r>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Cód.} & \textbf{Proyecto} & \textbf{TRL} & \textbf{Prot.} &
+  \textbf{Tipo} & \textbf{Costo} & \textbf{Decisión} \\
+\midrule
+R1 & Cierre de cobertura & 8\,$\to$\,9 & P1, P5 & Derivado & 110,8 &
+  \textbf{Mantener}. Va por la mitad; quedan 55,4 \\
+R3 & Catálogo de módulos certificados & 7\,$\to$\,9 & P2, P5 & Plataforma &
+  142,5 & \textbf{Iniciar} en 2027 T1 \\
+R4 & Política como código & 8\,$\to$\,9 & P3 & Derivado & 79,2 &
+  \textbf{Iniciar} en 2027 T4 \\
+R7 & Interfaz de autoservicio & 6\,$\to$\,9 & P4 & Plataforma & 126,7 &
+  \textbf{Iniciar} en 2028 T2, con puerta \\
+\midrule
+R2 & Custodia del estado & 9\,$\to$\,9 & -- & -- & 47,5 & Cerrado en 2026 \\
+R5 & Malla de pruebas & 7\,$\to$\,9 & -- & -- & 95,0 & Cambiar: pasa a
+  operación \\
+R6 & Sustitución del motor & 8\,$\to$\,9 & -- & -- & 71,2 & Cambiar: pasa a
+  operación \\
+R8 & Observabilidad & 7\,$\to$\,9 & -- & -- & 63,3 & Cambiar: pasa a
+  operación; el portafolio depende de él \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+R2 ya terminó. R5, R6 y R8 no tienen prototipo porque su incertidumbre es de
+costo y de ejecución, no técnica: la misma hoja de ruta decidía \emph{adoptar}
+o \emph{comprar} sus herramientas, no construirlas. Los paso al presupuesto de
+operación del equipo de plataforma, con sus 229,5 miles de dólares. No
+desaparecen, pero no compiten por el dinero de I+D.
+
+\subsection*{Qué tipo de portafolio es}
+
+Ninguno de los cuatro proyectos parte por debajo de TRL 6. Es un portafolio de
+desarrollo y maduración, no de investigación básica, y la hoja de ruta explica
+por qué: la IaC es una tecnología cuya curva S ya pasó su punto de inflexión, y
+la estrategia es cerrar la distancia con lo que ya existe, no apostar por lo que
+viene. Por eso las incertidumbres no son de física ni de algoritmos: son de
+volumen (cuántos recursos se resisten a importarse), de diseño (si una interfaz
+estrecha cubre los casos reales) y de adopción (si los equipos van a usar el
+portal). R7 es el único que empieza en TRL 6, y su riesgo es de comportamiento
+humano, no técnico.
+
+Los cuatro proyectos no son independientes. R7 necesita el catálogo de R3,
+porque el portal sólo expone módulos que existen. R1 y R3 se verifican juntos en
+P5, el ensayo de reconstrucción. Y el portafolio depende de R8, que queda
+fuera: sin sus mediciones, las puertas deciden con estimaciones y no con datos.
+
+\section{Objetivos y propuesta de valor}
+\label{sec:objetivos}
+
+\textbf{Objetivo general:} llevar la plataforma de IaC a los compromisos de la
+declaración de estrategia de la hoja de ruta en 2029, con un gasto
+comprometido de 547,4 miles de dólares y sin pasar de 2,5 ingenieros a la vez.
+
+El libro propone expresar la propuesta de valor de un proyecto de I+D como
+cuánto mueve una figura de mérito y en cuánto tiempo, $\Delta\mathrm{FOM}/\Delta t$
+\autocite[ec.~16.1]{deweck2022}. El Cuadro~\ref{tab:fom} lo hace para cada
+proyecto, con los valores de 2026 y las metas de 2029 de la hoja de ruta.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\caption{Propuesta de valor de cada proyecto como $\Delta\mathrm{FOM}/\Delta t$,
+con $\Delta t$ de 2026 a 2029. La última columna es el compromiso de la
+estrategia (C1 a C5) al que sirve.}
+\label{tab:fom}
+\begin{tabular}{@{}llrrrl@{}}
+\toprule
+\textbf{Proyecto} & \textbf{Figura de mérito} & \textbf{2026} &
+  \textbf{2029} & $\boldsymbol{\Delta\mathrm{FOM}/\Delta t}$ & \textbf{Comp.} \\
+\midrule
+R1      & Cobertura de codificación (\%) & 55 & 86 & $+10{,}3$ puntos/año & C1 \\
+R1 y R3 & Tiempo de reconstrucción (h)    & 40 & 11 & $-9{,}7$ h/año & C2 \\
+R3      & Tasa de fallo del cambio (\%)   & 14 &  7 & $-2{,}3$ puntos/año & -- \\
+R4      & Cumplimiento de política (\%)   & 62 & 94 & $+10{,}7$ puntos/año & C4 \\
+R7, R4 y R3 & Tiempo de ciclo del cambio (h) & 26 &  8 & $-6{,}0$ h/año & C3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Dicho en una frase por proyecto:
+
+\begin{itemize}
+\item \textbf{R1} termina de traer al código los recursos creados a mano. Es la
+  figura más importante de la hoja de ruta: explica el 90\pct{} del tiempo de
+  reconstrucción de 2026 y es la que más mueve el VAN.
+\item \textbf{R3} reemplaza recursos escritos a mano por módulos certificados.
+  Por sí solo baja la tasa de fallo del 14 al 7\pct, porque un módulo impide las
+  combinaciones de parámetros que nadie validó.
+\item \textbf{R4} evalúa las reglas de la organización sobre el plan antes de
+  aplicarlo. Sube el cumplimiento automático del 62 al 94\pct{} y quita 4,4
+  horas de revisión humana al ciclo.
+\item \textbf{R7} pone el catálogo en manos de los equipos de producto. De las
+  18 horas que gana el tiempo de ciclo, 12 son suyas, porque es el único que
+  elimina la espera en la cola del equipo de plataforma.
+\end{itemize}
+
+El compromiso C5, la tasa de deriva, no aparece en el cuadro: depende de la
+cobertura de R1 y del intervalo de detección de R8, y R8 está fuera del
+portafolio. Es la parte de la estrategia que este portafolio no puede cumplir
+solo.
+
+\section{Estructura de división del trabajo}
+\label{sec:edt}
+
+El Cuadro~\ref{tab:edt} descompone el portafolio en 19 paquetes de trabajo, cada
+uno con un entregable que se puede verificar. El mes-persona se valora a 7,92
+miles de dólares, el mismo costo completo de 95 mil dólares anuales por
+ingeniero que usa la hoja de ruta. A cada proyecto le sumo el 11,4\pct{} de
+otros conceptos (herramientas, servicios y formación), que es la proporción que
+la hoja de ruta asignaba sobre la ingeniería.
+
+El elemento 1 es lo único que no estaba en la hoja de ruta. El libro recomienda
+no olvidar el costo de gestionar el propio portafolio, y aquí son 3
+meses-persona repartidos en todo el período.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\caption{Estructura de división del trabajo. M-p: meses-persona. Costo base en
+miles de dólares, con otros conceptos y sin reserva.}
+\label{tab:edt}
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}p{5.4cm}>{\raggedright\arraybackslash}Xrr@{}}
+\toprule
+\textbf{EDT} & \textbf{Paquete} & \textbf{Entregable} & \textbf{M-p} &
+  \textbf{Costo} \\
+\midrule
+\textbf{1} & \textbf{Gestión del portafolio} & & \textbf{3,0} & \textbf{23,8} \\
+1.1 & Gobierno del portafolio y puertas & Actas de G1 a G4 & 1,5 & 11,9 \\
+1.2 & Valor ganado y medición de figuras & Informe trimestral de SPI y CPI & 1,5 & 11,9 \\
+\addlinespace[2pt]
+\textbf{2} & \textbf{R1 Cierre de cobertura (lo que falta)} & & \textbf{7,0} & \textbf{61,7} \\
+2.1 & Importación de la cola importable & Recursos importados y conciliados & 3,0 & 26,5 \\
+2.2 & Codificación de recursos resistentes & Código para lo que no importa solo & 2,0 & 17,6 \\
+2.3 & Conciliación y medición de cobertura & Cobertura medida en 2027 T1 & 1,0 & 8,8 \\
+2.4 & P5: reconstrucción cronometrada (parte R1) & Informe del ensayo & 1,0 & 8,8 \\
+\addlinespace[2pt]
+\textbf{3} & \textbf{R3 Catálogo de módulos certificados} & & \textbf{18,0} & \textbf{158,8} \\
+3.1 & P2: módulo de referencia y contrato & Un módulo con tres consumidores & 3,0 & 26,5 \\
+3.2 & Módulos de red, cómputo y datos & Módulos publicados en el registro & 7,0 & 61,7 \\
+3.3 & Certificación: firma, versiones y registro & Contrato de interfaz firmado & 4,0 & 35,3 \\
+3.4 & Migración de consumidores & Penetración $\kappa$ medida & 3,0 & 26,5 \\
+3.5 & P5: reconstrucción cronometrada (parte R3) & Informe del ensayo & 1,0 & 8,8 \\
+\addlinespace[2pt]
+\textbf{4} & \textbf{R4 Política como código} & & \textbf{10,0} & \textbf{88,2} \\
+4.1 & P3: evaluación en modo aviso & Tasa de falsos positivos medida & 2,0 & 17,6 \\
+4.2 & Biblioteca de reglas propias & Reglas versionadas & 4,0 & 35,3 \\
+4.3 & Modo bloqueo y régimen de excepciones & Política bloqueante en producción & 3,0 & 26,5 \\
+4.4 & Medición de falsos positivos & Cumplimiento $\gamma$ medido & 1,0 & 8,8 \\
+\addlinespace[2pt]
+\textbf{5} & \textbf{R7 Interfaz de autoservicio} & & \textbf{16,0} & \textbf{141,1} \\
+5.1 & P4: portal, tres plantillas, diez equipos & Adopción $\sigma$ medida & 3,0 & 26,5 \\
+5.2 & Plantillas sobre el catálogo & Plantillas publicadas & 6,0 & 52,9 \\
+5.3 & Integración con petición y aprobación & Flujo de aprobación en producción & 4,0 & 35,3 \\
+5.4 & Despliegue a todos los equipos & Portal abierto a toda la empresa & 3,0 & 26,5 \\
+\midrule
+ & \textbf{Total} & & \textbf{54,0} & \textbf{473,6} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Calendario}
+\label{sec:calendario}
+
+La Figura~\ref{fig:gantt} programa los paquetes en los once trimestres del
+portafolio. Respeta las fechas de la hoja de ruta: R3 en 2027, R4 en 2028 y R7
+entre 2028 y 2029, con los prototipos adelantados a su proyecto para que cada
+puerta decida con una medición y no con una suposición.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=0.97cm, y=0.43cm, font=\scriptsize]
+  \foreach \i in {0,...,11} \draw[gray!20] (\i,0.9) -- (\i,-22.0);
+  \foreach \i in {1,5,9} \draw[gray!55, thick] (\i,0.9) -- (\i,-22.0);
+  \foreach \i/\a in {0.5/2026, 3/2027, 7/2028, 10/2029}
+    \node[anchor=south, font=\scriptsize\bfseries] at (\i,1.0) {\a};
+  \foreach \i/\t in {0.5/T4, 1.5/T1, 2.5/T2, 3.5/T3, 4.5/T4, 5.5/T1, 6.5/T2,
+                     7.5/T3, 8.5/T4, 9.5/T1, 10.5/T2}
+    \node[anchor=north, text=gray!50!black, font=\tiny] at (\i,-22.1) {\t};
+  % fila / inicio / fin / color / rótulo / ruta crítica
+  \foreach \f/\a/\b/\c/\r/\k in {
+     0/0/11/cDir/{1 Gestión del portafolio}/0,
+     2/0/1/cR1/{2.1 Importación de la cola importable}/0,
+     3/0/2/cR1/{2.2 Codificación de recursos resistentes}/0,
+     4/1/2/cR1/{2.3 Conciliación y medición}/0,
+     5/8/9/cR1/{2.4 P5: reconstrucción (R1)}/0,
+     7/1/2/cR3/{3.1 P2: módulo de referencia}/1,
+     8/2/4/cR3/{3.2 Módulos de red, cómputo y datos}/1,
+     9/3/5/cR3/{3.3 Certificación}/1,
+     10/4/5/cR3/{3.4 Migración de consumidores}/0,
+     11/8/9/cR3/{3.5 P5: reconstrucción (R3)}/0,
+     13/4/5/cR4/{4.1 P3: política en modo aviso}/0,
+     14/5/6/cR4/{4.2 Biblioteca de reglas propias}/0,
+     15/5/7/cR4/{4.3 Modo bloqueo y excepciones}/0,
+     16/6/7/cR4/{4.4 Medición de falsos positivos}/0,
+     18/6/8/cR7/{5.1 P4: portal y medición de $\sigma$}/1,
+     19/8/10/cR7/{5.2 Plantillas sobre el catálogo}/1,
+     20/9/10/cR7/{5.3 Integración con petición}/1,
+     21/10/11/cR7/{5.4 Despliegue a todos los equipos}/1} {
+    \fill[\c!26, draw=\c, thick, rounded corners=1.2pt]
+      (\a+0.04,-\f+0.32) rectangle (\b-0.04,-\f-0.32);
+    \ifnum\k=1
+      \draw[cAviso, very thick, rounded corners=1.2pt]
+        (\a+0.04,-\f+0.32) rectangle (\b-0.04,-\f-0.32);
+    \fi
+    \node[anchor=east, font=\tiny, text=gray!15!black] at (-0.12,-\f) {\r};
+  }
+  % holgura de la ruta crítica en 2028 T1
+  \draw[cAviso, thick, densely dotted, -{Stealth[length=4pt]}]
+    (5.0,-9) -- (5.0,-17.4) -- (5.96,-17.4) -- (5.96,-17.65);
+  \node[cAviso, font=\tiny, anchor=east, align=right] at (4.94,-12.0)
+    {holgura de\\un trimestre};
+  % puertas
+  \foreach \g/\x in {G1/1, G2/5, G3/8, G4/10} {
+    \draw[cPuerta!80!black, thick, densely dashed] (\x,0.85) -- (\x,-22.0);
+    \node[fill=white, draw=cPuerta!80!black, thick, rounded corners=1.4pt,
+          inner sep=1.4pt, font=\tiny\bfseries] at (\x,0.4) {\g};
+  }
+\end{tikzpicture}
+\caption{Calendario del portafolio, de 2026 T4 a 2029 T2. Un color por
+proyecto y gris para la gestión. Contorno rojo: ruta crítica. Líneas ámbar:
+puertas de decisión de la hoja de ruta. Elaboración propia.}
+\label{fig:gantt}
+\end{figure}
+
+La ruta crítica es \textbf{3.1, 3.2, 3.3, 5.1, G3, 5.2, 5.3 y 5.4}: el
+catálogo, el prototipo del portal, la puerta de adopción y el autoservicio
+completo. Fija el final del portafolio en 2029 T2 y tiene una sola holgura, el
+primer trimestre de 2028, entre la certificación del catálogo y el prototipo
+P4. Si la certificación se atrasa un trimestre, el portafolio termina a tiempo;
+si se atrasa dos, R7 se corre y con él el compromiso del tiempo de ciclo.
+
+El Cuadro~\ref{tab:puertas} resume las cuatro puertas. Son las de la hoja de
+ruta, con su criterio numérico y la consecuencia decidida de antemano, como en
+el modelo Stage-Gate de \textcite{cooper1990}. G1 se decide este mismo
+trimestre.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\caption{Puertas de decisión del portafolio.}
+\label{tab:puertas}
+\begin{tabularx}{\textwidth}{@{}lll>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Puerta} & \textbf{Fecha} & \textbf{Evidencia} &
+  \textbf{Criterio y consecuencia de no superarla} \\
+\midrule
+G1 & 2026 T4 & P1 & Al menos el 70\pct{} de los recursos se importa sin
+  intervención. Si no: la meta de cobertura baja y se recalcula el valor del
+  portafolio antes de iniciar R3. \\
+G2 & 2027 T4 & P2, P3 & El módulo de referencia sirve a tres consumidores sin
+  bifurcarse, y la política tiene menos del 15\pct{} de falsos positivos. Si
+  no: R4 se queda en modo aviso, no se construye el modo bloqueo (4.3) y el
+  cumplimiento se queda cerca del 70\pct. \\
+G3 & 2028 T3 & P4 & Adopción $\sigma \geq 0{,}60$ con diez equipos reales.
+  Si no: \textbf{R7 se cancela} habiendo gastado 26,5 de sus 141,1. \\
+G4 & 2029 T1 & P5 & Reconstrucción completa en menos de 16 horas. Si no: no
+  se declara cumplido el compromiso C2 y se abre un proyecto de continuidad
+  fuera del portafolio. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Presupuesto}
+\label{sec:presupuesto}
+
+\subsection*{Por proyecto y por trimestre}
+
+El Cuadro~\ref{tab:presupuesto} reparte el costo de la EDT en el calendario, y
+la Figura~\ref{fig:arena} lo muestra como gráfico de arena y como curva
+acumulada, que son las dos vistas que propone el libro
+\autocite[sec.~16.2.3]{deweck2022}.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{2.8pt}
+\caption{Presupuesto base por proyecto y trimestre, en miles de dólares, sin
+reserva. Las sumas pueden diferir en una décima por redondeo.}
+\label{tab:presupuesto}
+\begin{tabular}{@{}l*{11}{r}r@{}}
+\toprule
+ & \multicolumn{1}{c}{\textbf{2026}} & \multicolumn{4}{c}{\textbf{2027}} &
+   \multicolumn{4}{c}{\textbf{2028}} & \multicolumn{2}{c}{\textbf{2029}} & \\
+\cmidrule(lr){2-2}\cmidrule(lr){3-6}\cmidrule(lr){7-10}\cmidrule(lr){11-12}
+\textbf{EDT} & T4 & T1 & T2 & T3 & T4 & T1 & T2 & T3 & T4 & T1 & T2 &
+  \textbf{Total} \\
+\midrule
+1 Gestión & 2,2 & 2,2 & 2,2 & 2,2 & 2,2 & 2,2 & 2,2 & 2,2 & 2,2 & 2,2 & 2,2 & 23,8 \\
+2 R1      & 35,3 & 17,6 & & & & & & & 8,8 & & & 61,7 \\
+3 R3      & & 26,5 & 30,9 & 48,5 & 44,1 & & & & 8,8 & & & 158,8 \\
+4 R4      & & & & & 17,6 & 48,5 & 22,0 & & & & & 88,2 \\
+5 R7      & & & & & & & 13,2 & 13,2 & 26,5 & 61,7 & 26,5 & 141,1 \\
+\midrule
+\textbf{Trimestre} & 37,4 & 46,3 & 33,0 & 50,7 & \textbf{63,9} & 50,7 & 37,4 &
+  15,4 & 46,3 & \textbf{63,9} & 28,6 & \textbf{473,6} \\
+\textbf{Acumulado} & 37,4 & 83,7 & 116,7 & 167,4 & 231,3 & 282,0 & 319,4 &
+  334,8 & 381,0 & 444,9 & 473,6 & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  name=arena, width=8.4cm, height=6.0cm,
+  ybar stacked, bar width=10pt,
+  xmin=-0.6, xmax=10.6, ymin=0, ymax=72,
+  xtick={0,...,10},
+  xticklabels={26T4,27T1,T2,T3,T4,28T1,T2,T3,T4,29T1,T2},
+  xticklabel style={font=\tiny, rotate=60, anchor=east},
+  yticklabel style={font=\scriptsize},
+  ylabel={\footnotesize Miles de dólares por trimestre},
+  ymajorgrids, grid style={gray!18}, axis lines=left,
+  legend style={font=\tiny, at={(0.5,-0.30)}, anchor=north,
+                draw=gray!40, fill=white, legend columns=5},
+  area legend,
+  title={\footnotesize Gráfico de arena},
+]
+  \addplot[fill=cDir!45, draw=cDir] coordinates {(0,2.2)(1,2.2)(2,2.2)(3,2.2)(4,2.2)(5,2.2)(6,2.2)(7,2.2)(8,2.2)(9,2.2)(10,2.2)};
+  \addlegendentry{Gestión}
+  \addplot[fill=cR1!35, draw=cR1] coordinates {(0,35.3)(1,17.6)(2,0)(3,0)(4,0)(5,0)(6,0)(7,0)(8,8.8)(9,0)(10,0)};
+  \addlegendentry{R1}
+  \addplot[fill=cR3!35, draw=cR3] coordinates {(0,0)(1,26.5)(2,30.9)(3,48.5)(4,44.1)(5,0)(6,0)(7,0)(8,8.8)(9,0)(10,0)};
+  \addlegendentry{R3}
+  \addplot[fill=cR4!35, draw=cR4] coordinates {(0,0)(1,0)(2,0)(3,0)(4,17.6)(5,48.5)(6,22.0)(7,0)(8,0)(9,0)(10,0)};
+  \addlegendentry{R4}
+  \addplot[fill=cR7!35, draw=cR7] coordinates {(0,0)(1,0)(2,0)(3,0)(4,0)(5,0)(6,13.2)(7,13.2)(8,26.5)(9,61.7)(10,26.5)};
+  \addlegendentry{R7}
+\end{axis}
+\begin{axis}[
+  at={(arena.east)}, anchor=west, xshift=1.1cm,
+  width=7.4cm, height=6.0cm,
+  xmin=0, xmax=11, ymin=0, ymax=680,
+  xtick={0,1,5,9,11},
+  xticklabels={26T4,27T1,28T1,29T1,fin},
+  xticklabel style={font=\tiny},
+  yticklabel style={font=\scriptsize},
+  ytick={0,100,200,300,400,500,600},
+  ymajorgrids, grid style={gray!18}, axis lines=left,
+  title={\footnotesize Curva acumulada},
+  clip=false,
+]
+  \addplot[cR1, very thick, mark=*, mark size=1.4pt] coordinates {
+    (0,0)(1,37.4)(2,83.7)(3,116.7)(4,167.4)(5,231.3)(6,282.0)(7,319.4)
+    (8,334.8)(9,381.0)(10,444.9)(11,473.6)};
+  \draw[cAviso, thick] (axis cs:0,547.4) -- (axis cs:11,547.4)
+    node[pos=0.03, anchor=south west, font=\tiny] {Base más reserva: 547,4};
+  \draw[gray!60!black, thick, densely dashed] (axis cs:0,630.9) -- (axis cs:11,630.9)
+    node[pos=0.03, anchor=south west, font=\tiny] {P80 con el sobrecosto del sector: 630,9};
+  \node[font=\tiny, text=cR1, anchor=west, align=left] at (axis cs:6.4,200)
+    {2028 T3: el gasto\\casi se detiene\\mientras se mide $\sigma$};
+\end{axis}
+\end{tikzpicture}
+\caption{Gasto del portafolio por trimestre y acumulado. Los dos picos, 2027 T4
+y 2029 T1, coinciden con la mayor concurrencia de paquetes. La pausa de 2028 T3
+es la medición de la adopción antes de G3. Elaboración propia.}
+\label{fig:arena}
+\end{figure}
+
+La curva acumulada no tiene la forma de S que el libro describe como típica:
+tiene un escalón en 2028 T3. Es deliberado. Mientras los diez equipos usan el
+prototipo del portal, el gasto casi se detiene, y sólo se compromete el resto de
+R7 (114,6) si la adopción supera el umbral.
+
+\subsection*{Reserva y riesgo de costo}
+
+El libro recomienda una reserva de gestión de entre el 10 y el 30\pct{}
+\autocite[sec.~16.2.3]{deweck2022}. La gradué por madurez, porque el riesgo no es
+igual en todos los proyectos: 10\pct{} para la gestión y para R1, que ya va por
+la mitad; 15\pct{} para R3 y R4; y 20\pct{} para R7, el de menor TRL.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\caption{Reserva de gestión por proyecto, en miles de dólares.}
+\label{tab:reserva}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+\textbf{Proyecto} & \textbf{Base} & \textbf{Tasa} & \textbf{Reserva} &
+  \textbf{Total} \\
+\midrule
+1 Gestión & 23,8 & 10\pct & 2,4 & 26,1 \\
+R1 & 61,7 & 10\pct & 6,2 & 67,9 \\
+R3 & 158,8 & 15\pct & 23,8 & 182,6 \\
+R4 & 88,2 & 15\pct & 13,2 & 101,4 \\
+R7 & 141,1 & 20\pct & 28,2 & 169,3 \\
+\midrule
+\textbf{Portafolio} & \textbf{473,6} & \textbf{15,6\pct} & \textbf{73,8} &
+  \textbf{547,4} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Para saber si alcanza, simulé el costo real de cada proyecto 40.000 veces con
+un sobrecosto aleatorio (estimación propia: mediana del 6\pct{} en R1, 8\pct{} en
+R3, 10\pct{} en R4 y 12\pct{} en R7, con cola larga) y apliqué las puertas: un
+proyecto detenido sólo cuesta lo gastado hasta su puerta. El resultado es un
+costo esperado de 483,6, un P80 de 546,5 y una probabilidad del 19,6\pct{} de
+pasarse de los 547,4. El libro pide planificar para el P50 o el P80
+\autocite[sec.~16.3]{deweck2022}, y el presupuesto queda justo en el P80.
+
+Sin puertas, es decir, si cada proyecto se ejecutara completo pase lo que pase,
+el P80 subiría a 564,1 y la probabilidad de pasarse al 30\pct. \textbf{La
+reserva sólo alcanza porque existen las puertas.} Saltarse una es gastar
+reserva que no existe.
+
+\subsection*{Capacidad y seguimiento}
+
+Los 54 meses-persona en 33 meses dan 1,6 ingenieros de media, con picos de 2,4
+en 2027 T4 y 2029 T1. La hoja de ruta estimaba un equipo de 2,6 ingenieros, así
+que el portafolio cabe, pero con poco margen en los picos.
+
+El seguimiento será por valor ganado: la fila acumulada del
+Cuadro~\ref{tab:presupuesto} es la línea base, y cada trimestre se reportan el
+índice de plazo, $\mathrm{SPI} = \mathrm{BCWP}/\mathrm{BCWS}$, y el de costo,
+$\mathrm{CPI} = \mathrm{BCWP}/\mathrm{ACWP}$ \autocite[sec.~16.3]{deweck2022}. Para
+evitar el error más común, declarar tareas al 90\pct{} que van por la mitad,
+sólo acredito el trabajo al 0, 50 o 100\pct, y el 100\pct{} únicamente cuando
+alguien de fuera del proyecto verifica el entregable del Cuadro~\ref{tab:edt}.
+
+\section{Matriz de riesgo}
+\label{sec:riesgo}
+
+Uso la matriz de cinco por cinco de la NASA que reproduce el libro
+\autocite[fig.~16.9]{deweck2022}, con criterios de impacto adaptados al tamaño
+de este portafolio (Cuadro~\ref{tab:criterios}). La Figura~\ref{fig:matriz}
+ubica los ocho riesgos y el Cuadro~\ref{tab:riesgos} dice qué hago con cada
+uno.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\caption{Criterios de probabilidad e impacto. El impacto de un riesgo es el
+mayor que alcanza en cualquiera de las tres columnas.}
+\label{tab:criterios}
+\begin{tabularx}{\textwidth}{@{}c>{\raggedright\arraybackslash}p{2.1cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}p{3.6cm}@{}}
+\toprule
+\textbf{Nivel} & \textbf{Probabilidad} & \textbf{Técnico} & \textbf{Costo o
+  VAN} & \textbf{Plazo} \\
+\midrule
+5 & Más del 75\pct  & Se pierde C1, el compromiso principal & Más de 100\kusd &
+  El portafolio pasa de 2029 \\
+4 & 50 a 75\pct     & Se pierde otro compromiso o se cancela un proyecto & 50 a
+  100\kusd & Más de dos trimestres en la ruta crítica \\
+3 & 30 a 50\pct     & Una figura de mérito queda bajo su meta & 20 a 50\kusd &
+  Se consume la holgura de 2028 T1 \\
+2 & 10 a 30\pct     & Se reduce el margen de una figura & 5 a 20\kusd & Un
+  trimestre fuera de la ruta crítica \\
+1 & Menos del 10\pct & Sin efecto apreciable & Menos de 5\kusd & Sin efecto \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1.55cm, y=0.95cm]
+  \foreach \p/\i/\c in {
+    1/1/rBajo, 1/2/rBajo, 1/3/rBajo, 1/4/rMedio, 1/5/rMedio,
+    2/1/rBajo, 2/2/rBajo, 2/3/rMedio, 2/4/rMedio, 2/5/rAlto,
+    3/1/rBajo, 3/2/rMedio, 3/3/rMedio, 3/4/rAlto, 3/5/rAlto,
+    4/1/rBajo, 4/2/rMedio, 4/3/rAlto, 4/4/rAlto, 4/5/rAlto,
+    5/1/rMedio, 5/2/rMedio, 5/3/rAlto, 5/4/rAlto, 5/5/rAlto} {
+    \fill[\c, draw=white, line width=1.2pt] (\i-1,\p-1) rectangle (\i,\p);
+  }
+  \foreach \i/\t in {1/Despreciable, 2/Marginal, 3/Moderado, 4/Crítico, 5/Catastrófico}
+    \node[font=\tiny, anchor=north] at (\i-0.5,-0.05) {\i\ \t};
+  \foreach \p/\t in {1/{Improbable}, 2/{Poco probable}, 3/{Probable}, 4/{Muy probable}, 5/{Casi seguro}}
+    \node[font=\tiny, anchor=east] at (-0.06,\p-0.5) {\t\ \p};
+  \node[font=\scriptsize\bfseries] at (2.5,-0.62) {Impacto};
+  \node[font=\scriptsize\bfseries, rotate=90] at (-1.35,2.5) {Probabilidad};
+  \tikzset{r/.style={circle, fill=white, draw=gray!30!black, inner sep=0.9pt,
+                     font=\tiny\bfseries, minimum size=13pt}}
+  \node[r] at (4.5,1.5) {K1};
+  \node[r] at (3.3,1.5) {K2};  \node[r] at (3.7,1.5) {K3};
+  \node[r] at (2.2,1.5) {K4};  \node[r] at (2.5,1.5) {K5};  \node[r] at (2.8,1.5) {K6};
+  \node[r] at (2.3,2.5) {K7};  \node[r] at (2.7,2.5) {K8};
+\end{tikzpicture}
+\caption{Matriz de riesgo del portafolio. Verde: aceptar y vigilar. Ámbar:
+mitigar con responsable y disparador. Rojo: mitigar antes de iniciar el paquete
+afectado. Adaptada de \textcite[fig.~16.9]{deweck2022}.}
+\label{fig:matriz}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\caption{Registro de riesgos. P: probabilidad. I: impacto. Las probabilidades
+de K1, K2, K3 y K4 son las del modelo de la sección~\ref{sec:valor}.}
+\label{tab:riesgos}
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}p{4.6cm}cc>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Id.} & \textbf{Riesgo} & \textbf{P} & \textbf{I} &
+  \textbf{Respuesta y disparador} \\
+\midrule
+K1 & La cobertura se estanca en el 74\pct{} (25\pct) & 2 & 5 & Mitigar: G1 lo
+  detecta este trimestre y 2.2 ataca los recursos que no importan solos.
+  Disparador: menos del 70\pct{} importable en P1. \\
+K2 & La adopción $\sigma$ no llega a 0,60 en G3 (26,5\pct) & 2 & 4 & Aceptar
+  con puerta: P4 la mide antes de gastar el 81\pct{} de R7, y la cancelación
+  está presupuestada. \\
+K3 & Falsos positivos de política por encima del 15\pct{} (20\pct) & 2 & 4 &
+  Aceptar con puerta: en G2, R4 se queda en modo aviso y se ahorra 4.3. \\
+K4 & El sobrecosto supera la reserva (19,6\pct) & 2 & 3 & Mitigar: reserva
+  graduada y puertas antes de la mitad del gasto de R4 y R7. \\
+K5 & El catálogo se llena de variantes y la interfaz deja de ser estrecha
+  (18\pct) & 2 & 3 & Mitigar: contrato de interfaz en P2 y criterio de G2 de
+  tres consumidores sin bifurcación. \\
+K6 & La reconstrucción de P5 pasa de 16 horas & 2 & 3 & Aceptar con puerta:
+  G4 abre un proyecto de continuidad fuera del portafolio. \\
+K7 & Los picos de 2,4 ingenieros chocan con trabajo de clientes o de
+  operación & 3 & 3 & Mitigar: la holgura de 2028 T1 absorbe un trimestre; 3.4
+  es el primer paquete que se mueve. \\
+K8 & R8, fuera del portafolio, no entrega a tiempo las mediciones & 3 & 3 &
+  Mitigar: R8 es dependencia declarada; sin sus datos, una puerta se aplaza,
+  no se aprueba. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+El único riesgo rojo es K1, y no es casualidad: la cobertura es la variable de
+la que depende casi todo el valor (sección~\ref{sec:valor}). Por eso G1 es la
+primera puerta y se decide antes de comprometer un solo dólar de R3. Los riesgos
+K2 y K3 son críticos pero quedan en ámbar porque tienen puerta: si ocurren,
+cuestan poco, porque se descubren antes de gastar.
+
+\section{Valor y riesgo del portafolio}
+\label{sec:valor}
+
+\subsection*{El modelo}
+
+Para valorar el portafolio usé el modelo financiero de la hoja de ruta sin
+cambiar sus ecuaciones. Cada beneficio sale de una figura de mérito, y una
+mejora que no se puede escribir como función de una figura no entra:
+
+\begin{itemize}
+\item \textbf{B1, operación manual evitada:} $N(t)\,[C(t) - 0{,}55]\times 0{,}4$,
+  con $N$ el número de recursos y $C$ la cobertura. Lo mueve R1.
+\item \textbf{B2, retrabajo evitado:} $n_c(t)\,[0{,}14 - f(t)]\times 1{,}6$,
+  con $f = f_0(1-\pi\gamma)(1-\theta\kappa)$, $\pi = 0{,}354$ y
+  $\theta = 0{,}688$. Lo mueven R3 con $\kappa$ y R4 con $\gamma$.
+\item \textbf{B3, capacidad de plataforma liberada:} 2,1 horas de acompañamiento
+  por cambio, a 60 dólares la hora, que suprimen R3 y R7.
+\end{itemize}
+
+La cuarta corriente de la hoja de ruta, el menor costo unitario, viene de
+sustituir el motor (R6) y queda fuera. Las incertidumbres son los precios
+unitarios ($\pm 30$\pct), el crecimiento del parque (5 a 22\pct{} anual), el
+resultado de las tres puertas que pueden fallar (G1, G2 y G3, con las
+probabilidades del Cuadro~\ref{tab:riesgos}) y el sobrecosto de cada proyecto.
+La adopción $\sigma$ sigue una distribución beta de media 0,68, que da un
+26,5\pct{} de probabilidad de no pasar G3. Descuento al 9\pct{} hasta 2031,
+igual que la hoja de ruta, y no cuento el costo ya gastado de R1, que es costo
+hundido. El cálculo está en \texttt{modelo/portafolio.py} y se reproduce
+exactamente con la semilla fija.
+
+\subsection*{Seis portafolios posibles}
+
+R1 se mantiene en todos los casos, porque ya va por la mitad y la estrategia
+dice que, si sólo se puede cumplir un compromiso, es el de cobertura. Sobre esa
+base, las combinaciones posibles de R3, R4 y R7 son seis (R7 no puede ir sin
+R3). El Cuadro~\ref{tab:carteras} y la Figura~\ref{fig:frontera} las comparan
+por valor esperado y por riesgo, medido como desviación estándar del VAN, que
+es la lógica de media y varianza de \textcite{markowitz1952} que el libro aplica
+a las carteras de I+D \autocite[sec.~16.5]{deweck2022}.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\caption{Valor y riesgo de los seis portafolios posibles, en miles de dólares,
+a 2031. Ninguno tiene probabilidad apreciable de VAN negativo.}
+\label{tab:carteras}
+\begin{tabular}{@{}lrrrl@{}}
+\toprule
+\textbf{Portafolio} & \textbf{Costo total} & \textbf{VAN esperado} &
+  \textbf{Desv. est.} & \textbf{Posición} \\
+\midrule
+R1            &  94,0 & 552,1 & 148,5 & Frontera \\
+R1 + R3       & 276,6 & \textbf{776,8} & 158,8 & Frontera, máximo VAN \\
+R1 + R4       & 195,5 & 535,3 & 150,0 & Dominado \\
+R1 + R3 + R4  & 378,0 & 732,1 & 159,8 & Dominado \\
+R1 + R3 + R7  & 446,0 & 772,0 & 163,3 & Dominado \\
+\textbf{R1 + R3 + R4 + R7} & \textbf{547,4} & \textbf{727,3} & \textbf{164,4} &
+  Dominado; \textbf{recomendado} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=11.5cm, height=6.4cm,
+  xmin=146, xmax=167, ymin=500, ymax=810,
+  xlabel={\footnotesize Riesgo: desviación estándar del VAN, miles de dólares},
+  ylabel={\footnotesize VAN esperado a 2031},
+  xticklabel style={font=\scriptsize}, yticklabel style={font=\scriptsize},
+  grid=major, grid style={gray!18}, axis lines=left, clip=false,
+]
+  \addplot[cR1, thick, densely dashed] coordinates {(148.5,552.1) (158.8,776.8)};
+  \addplot[only marks, mark=*, mark size=2.4pt, cR1] coordinates {(148.5,552.1) (158.8,776.8)};
+  \addplot[only marks, mark=o, mark size=2.4pt, gray!60!black, thick] coordinates {
+    (150.0,535.3) (159.8,732.1) (163.3,772.0)};
+  \addplot[only marks, mark=square*, mark size=2.8pt, cR7] coordinates {(164.4,727.3)};
+  \node[font=\tiny, anchor=west] at (axis cs:148.9,552.1) {R1};
+  \node[font=\tiny, anchor=south east] at (axis cs:158.6,778) {R1+R3};
+  \node[font=\tiny, anchor=west] at (axis cs:150.4,535.3) {R1+R4};
+  \node[font=\tiny, anchor=north] at (axis cs:159.8,728) {R1+R3+R4};
+  \node[font=\tiny, anchor=south] at (axis cs:163.3,775) {R1+R3+R7};
+  \node[font=\tiny\bfseries, text=cR7, anchor=north] at (axis cs:164.4,722)
+    {Los cuatro};
+  \draw[cR7, thin, -{Stealth[length=4pt]}] (axis cs:159.6,770) --
+    (axis cs:164.0,731);
+  \node[font=\tiny, text=cR7, anchor=west, align=left] at (axis cs:160.6,620)
+    {Precio de C3 y C4:\\49,5 de VAN};
+\end{axis}
+\end{tikzpicture}
+\caption{Valor esperado contra riesgo de los seis portafolios. Puntos llenos:
+frontera eficiente. Círculos: portafolios dominados. Cuadrado: el portafolio
+recomendado. Elaboración propia.}
+\label{fig:frontera}
+\end{figure}
+
+\subsection*{Qué aporta cada proyecto}
+
+Quitando un proyecto a la vez del portafolio completo se obtiene lo que aporta
+cada uno:
+
+\begin{itemize}
+\item \textbf{R1:} $+573{,}4$. Es el proyecto que sostiene todo el portafolio.
+\item \textbf{R3, junto con R7, que depende de él:} $+192{,}0$, con una
+  probabilidad de pérdida del 0,1\pct.
+\item \textbf{R7:} $-4{,}8$ a 2031, con un 60\pct{} de probabilidad de restar.
+  Si el horizonte se alarga a 2033, aporta $+73{,}5$ y la probabilidad de
+  restar baja al 27\pct. Es un proyecto que llega tarde al modelo, no un mal
+  proyecto.
+\item \textbf{R4:} $-44{,}7$ a 2031 y $-25{,}0$ a 2033. Resta en casi todos los
+  escenarios, porque su beneficio en dinero es sólo la reducción de la tasa de
+  fallo, y el catálogo ya hace la mayor parte de ese trabajo.
+\end{itemize}
+
+\subsection*{La decisión}
+
+Si sólo mirara el dinero, el portafolio sería R1 y R3. Recomiendo los cuatro,
+sabiendo que es un portafolio dominado, por dos razones que el modelo no
+captura:
+
+\begin{enumerate}
+\item \textbf{R7 es el tiempo de ciclo.} Sin él, el tiempo de ciclo de 2029 se
+  queda en 20 horas en lugar de 8, según la ecuación de la hoja de ruta, y el
+  compromiso C3 no se cumple. El tiempo de ciclo es lo que el negocio percibe
+  como plazo de salida al mercado, y el modelo no le pone precio. Además, G3
+  limita la pérdida: si la adopción no llega, R7 se cancela habiendo gastado
+  26,5.
+\item \textbf{R4 es el cumplimiento demostrable.} La motivación E3 de la hoja de
+  ruta es que cada auditoría deje de ser un proyecto. El modelo no cuenta el
+  costo de una auditoría ni el de una excepción manual, así que R4 aparece como
+  pérdida. Si la empresa no tiene una obligación real de cumplimiento, R4 es el
+  primer proyecto que yo quitaría, y el ahorro serían 101,4 miles de dólares
+  del presupuesto.
+\end{enumerate}
+
+Los 49,5 miles de dólares de VAN que se dejan sobre la mesa son el precio de
+esos dos compromisos, y es una decisión que tiene que tomar la dirección con el
+número a la vista, no el equipo técnico por su cuenta.
+
+\section{Contraste con el sector}
+\label{sec:contraste}
+
+La consigna pide contrastar el proyecto con profesionales del sector. Lo hice
+con lo que el sector publica: informes de adopción y datos de sobrecostos.
+\textbf{No hice entrevistas}; al final de la sección dejo las preguntas que le
+haría a un colega. El Cuadro~\ref{tab:contraste} compara cada supuesto con la
+evidencia externa.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\caption{Supuestos del portafolio frente a la evidencia del sector. (P) indica
+dato de un proveedor con interés comercial.}
+\label{tab:contraste}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.1cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{4.6cm}@{}}
+\toprule
+\textbf{Supuesto} & \textbf{Evidencia} & \textbf{Veredicto} \\
+\midrule
+Cobertura del 55 al 86\pct{} en tres años
+& El 89\pct{} de las organizaciones dice usar IaC, pero sólo el 6\pct{} tiene
+  todo su parque codificado (P) \autocite{firefly2025}.
+& Ambicioso pero razonable: la meta no es la cobertura total. \\
+\addlinespace[2pt]
+Adopción del portal: 26,5\pct{} de no llegar a 0,60
+& Fuera de Spotify, la adopción interna de Backstage se cita en torno al
+  10\pct{}, una cifra de origen poco claro (P); en 2025, cerca de la mitad de
+  las organizaciones tenía un portal interno (P) \autocite{port2025,backstage}.
+& \textbf{Probablemente optimista.} Con una media de 0,60, la probabilidad de
+  no pasar G3 sube al 48\pct{} y R7 resta 14,4; el portafolio sigue en 717,6. \\
+\addlinespace[2pt]
+Primero la plataforma, después el autoservicio
+& El 90\pct{} de las organizaciones ya adoptó la ingeniería de plataformas
+  \autocite{dora2025}; Gartner preveía que el 80\pct{} tendría equipos de
+  plataforma en 2026 \autocite{gartner2023pe}.
+& Respalda el orden R3 antes que R7. Es una previsión, no una medición. \\
+\addlinespace[2pt]
+Sobrecosto medio cercano al 10\pct
+& En 1.471 proyectos de tecnología, el sobrecosto medio fue del 27\pct, y uno
+  de cada seis tuvo un sobrecosto medio del 200\pct{}
+  \autocite{flyvbjerg2011}.
+& \textbf{Optimista.} Con un 27\pct, la probabilidad de pasarse sube al
+  60\pct{} y el P80 a 630,9. El VAN esperado sigue en 661,8. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+El contraste me corrige en dos puntos, y los dos van en la misma dirección: la
+adopción de los portales y los sobrecostos son peores en el sector de lo que yo
+supuse. En los dos casos el portafolio aguanta gracias a las puertas, pero el
+segundo pide una decisión: \textbf{si la dirección quiere un P80 con la tasa de
+Flyvbjerg, la reserva tiene que subir de 73,8 a 157,3 miles de dólares}, el
+33\pct{} de la base. La otra opción es aceptar una probabilidad de pasarse
+cercana al 60\pct. Lo dejo planteado con el número calculado.
+
+\subsection*{Preguntas para un profesional}
+
+\begin{enumerate}
+\item ¿Qué fracción de los recursos creados a mano en un parque real no se
+  puede importar automáticamente? Es el criterio de G1 y el riesgo K1.
+\item ¿Qué adopción voluntaria ha visto en un portal interno seis meses después
+  de abrirlo? Es la $\sigma$ de G3.
+\item ¿Cuánto cuesta de verdad una auditoría o una excepción manual de
+  política? Es lo que falta para saber si R4 se paga solo.
+\item ¿Cuál fue el sobrecosto real de sus últimos tres proyectos de plataforma?
+  Calibraría la reserva mejor que la media de Flyvbjerg.
+\end{enumerate}
+
+\section{Por qué vale la pena}
+\label{sec:porque}
+
+Creo que el portafolio vale la pena por tres razones.
+
+\textbf{Se paga, y con margen.} Con 547,4 miles de dólares comprometidos, el VAN
+esperado a 2031 es de 727,3, y en el 95\pct{} de los escenarios simulados
+supera los 456,4. El flujo acumulado toca fondo a finales de 2027, en $-205{,}1$,
+y se vuelve positivo durante 2029. Aun con el sobrecosto medio del sector, el
+VAN esperado es de 661,8.
+
+\textbf{Mueve las figuras que la estrategia prometió.} Cuatro de los cinco
+compromisos de la hoja de ruta dependen de estos cuatro proyectos: cobertura,
+reconstrucción, tiempo de ciclo y cumplimiento. El quinto, la deriva, depende
+además de R8.
+
+\textbf{El riesgo está acotado.} Cada pregunta abierta tiene su prototipo y su
+puerta antes de que se gaste la mayor parte del dinero. El peor caso de R7, que
+es el proyecto más incierto, cuesta 26,5. Es exactamente lo que el libro quiere
+decir cuando pide que un proyecto de I+D mida antes de comprometer, y lo que en
+mi experiencia con pilotos en la empresa separa los que se pagan de los que se
+quedan a medio camino.
+
+\section{Limitaciones}
+\label{sec:limitaciones}
+
+\begin{enumerate}
+\item \textbf{Las probabilidades son mías.} Las de las puertas (25, 20 y
+  26,5\pct) y los márgenes de sobrecosto no salen de una base de datos. El
+  contraste con el sector sugiere que las dos más importantes son optimistas.
+\item \textbf{El modelo sólo cuenta tres beneficios.} El plazo de salida al
+  mercado y el costo de las auditorías no tienen precio en el modelo, y por eso
+  R4 y R7 aparecen peor de lo que probablemente son.
+\item \textbf{El horizonte de 2031 castiga a R7.} Llega en 2029 y tiene sólo dos
+  años completos para devolver su costo. Con 2033 aporta valor positivo.
+\item \textbf{R1 se valora desde el 55\pct{} de cobertura de 2026}, que es el
+  dato de la hoja de ruta, aunque una parte de esa mejora ya se logró con el
+  dinero ya gastado. Eso infla el aporte de R1, pero no cambia ninguna decisión:
+  R1 se mantiene en todos los casos.
+\item \textbf{No hubo entrevistas.} El contraste es documental, y las cuatro
+  preguntas de la sección~\ref{sec:contraste} quedan pendientes.
+\end{enumerate}
+
+\printbibliography[title={Referencias}]
+
+\end{document}

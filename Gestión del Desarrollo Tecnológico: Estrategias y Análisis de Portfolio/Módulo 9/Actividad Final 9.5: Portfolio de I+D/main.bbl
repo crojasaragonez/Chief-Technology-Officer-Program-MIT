@@ -1,0 +1,899 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/apasortcite//global/global/global}
+    \entry{cooper1990}{article}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=cb47c650ee1bdc8c24ae16a47f0f31c2}{%
+           family={Cooper},
+           familyi={C\bibinitperiod},
+           given={Robert\bibnamedelima G.},
+           giveni={R\bibinitperiod\bibinitdelim G\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{cb47c650ee1bdc8c24ae16a47f0f31c2}
+      \strng{fullhash}{cb47c650ee1bdc8c24ae16a47f0f31c2}
+      \strng{fullhashraw}{cb47c650ee1bdc8c24ae16a47f0f31c2}
+      \strng{bibnamehash}{cb47c650ee1bdc8c24ae16a47f0f31c2}
+      \strng{authorbibnamehash}{cb47c650ee1bdc8c24ae16a47f0f31c2}
+      \strng{authornamehash}{cb47c650ee1bdc8c24ae16a47f0f31c2}
+      \strng{authorfullhash}{cb47c650ee1bdc8c24ae16a47f0f31c2}
+      \strng{authorfullhashraw}{cb47c650ee1bdc8c24ae16a47f0f31c2}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Business Horizons}
+      \field{number}{3}
+      \field{title}{Stage-Gate Systems: A New Tool for Managing New Products}
+      \field{volume}{33}
+      \field{year}{1990}
+      \field{pages}{44\bibrangedash 54}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1016/0007-6813(90)90040-I
+      \endverb
+    \endentry
+    \entry{deweck2022}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=c15426d9ac209ba010a8afb3354df966}{%
+           family={Weck},
+           familyi={W\bibinitperiod},
+           given={Olivier\bibnamedelima L.},
+           giveni={O\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=0,
+           prefix={de},
+           prefixi={d\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Cham}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{c15426d9ac209ba010a8afb3354df966}
+      \strng{fullhash}{c15426d9ac209ba010a8afb3354df966}
+      \strng{fullhashraw}{c15426d9ac209ba010a8afb3354df966}
+      \strng{bibnamehash}{c15426d9ac209ba010a8afb3354df966}
+      \strng{authorbibnamehash}{c15426d9ac209ba010a8afb3354df966}
+      \strng{authornamehash}{c15426d9ac209ba010a8afb3354df966}
+      \strng{authorfullhash}{c15426d9ac209ba010a8afb3354df966}
+      \strng{authorfullhashraw}{c15426d9ac209ba010a8afb3354df966}
+      \field{sortinit}{d}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-3-030-88345-4}
+      \field{title}{Technology Roadmapping and Development: A Quantitative Approach to the Management of Technology}
+      \field{year}{2022}
+      \verb{doi}
+      \verb 10.1007/978-3-030-88346-1
+      \endverb
+    \endentry
+    \entry{dora2025}{report}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=585a6a314575f9792df621b0c598a37a}{%
+           family={{DORA}},
+           familyi={D\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Google Cloud}%
+      }
+      \strng{namehash}{585a6a314575f9792df621b0c598a37a}
+      \strng{fullhash}{585a6a314575f9792df621b0c598a37a}
+      \strng{fullhashraw}{585a6a314575f9792df621b0c598a37a}
+      \strng{bibnamehash}{585a6a314575f9792df621b0c598a37a}
+      \strng{authorbibnamehash}{585a6a314575f9792df621b0c598a37a}
+      \strng{authornamehash}{585a6a314575f9792df621b0c598a37a}
+      \strng{authorfullhash}{585a6a314575f9792df621b0c598a37a}
+      \strng{authorfullhashraw}{585a6a314575f9792df621b0c598a37a}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{State of {AI}-Assisted Software Development 2025}
+      \field{type}{techreport}
+      \field{urlday}{2}
+      \field{urlmonth}{11}
+      \field{urlyear}{2026}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://services.google.com/fh/files/misc/2025_state_of_ai_assisted_software_development.pdf
+      \endverb
+      \verb{url}
+      \verb https://services.google.com/fh/files/misc/2025_state_of_ai_assisted_software_development.pdf
+      \endverb
+    \endentry
+    \entry{firefly2025}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=e344a4e3a128f4d2297fd379f7c2962d}{%
+           family={{Firefly}},
+           familyi={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{e344a4e3a128f4d2297fd379f7c2962d}
+      \strng{fullhash}{e344a4e3a128f4d2297fd379f7c2962d}
+      \strng{fullhashraw}{e344a4e3a128f4d2297fd379f7c2962d}
+      \strng{bibnamehash}{e344a4e3a128f4d2297fd379f7c2962d}
+      \strng{authorbibnamehash}{e344a4e3a128f4d2297fd379f7c2962d}
+      \strng{authornamehash}{e344a4e3a128f4d2297fd379f7c2962d}
+      \strng{authorfullhash}{e344a4e3a128f4d2297fd379f7c2962d}
+      \strng{authorfullhashraw}{e344a4e3a128f4d2297fd379f7c2962d}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{The State of {Infrastructure-as-Code} 2025}
+      \field{urlday}{2}
+      \field{urlmonth}{11}
+      \field{urlyear}{2026}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.firefly.ai/state-of-iac-2025
+      \endverb
+      \verb{url}
+      \verb https://www.firefly.ai/state-of-iac-2025
+      \endverb
+    \endentry
+    \entry{flyvbjerg2011}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=add5d82636be8462aea781208bc4e3ee}{%
+           family={Flyvbjerg},
+           familyi={F\bibinitperiod},
+           given={Bent},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=30cc5808c5d1eb2bb49abd50069e3285}{%
+           family={Budzier},
+           familyi={B\bibinitperiod},
+           given={Alexander},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{ffd9c81dd6b2340d97848f5a8802ad86}
+      \strng{fullhash}{ffd9c81dd6b2340d97848f5a8802ad86}
+      \strng{fullhashraw}{ffd9c81dd6b2340d97848f5a8802ad86}
+      \strng{bibnamehash}{ffd9c81dd6b2340d97848f5a8802ad86}
+      \strng{authorbibnamehash}{ffd9c81dd6b2340d97848f5a8802ad86}
+      \strng{authornamehash}{ffd9c81dd6b2340d97848f5a8802ad86}
+      \strng{authorfullhash}{ffd9c81dd6b2340d97848f5a8802ad86}
+      \strng{authorfullhashraw}{ffd9c81dd6b2340d97848f5a8802ad86}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arXiv}
+      \field{journaltitle}{Harvard Business Review}
+      \field{number}{9}
+      \field{title}{Why Your {IT} Project May Be Riskier than You Think}
+      \field{volume}{89}
+      \field{year}{2011}
+      \field{pages}{23\bibrangedash 25}
+      \range{pages}{3}
+      \verb{eprint}
+      \verb 1304.0265
+      \endverb
+    \endentry
+    \entry{gartner2023pe}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=18bfab6309a4addeb7e1dae07d2a4b89}{%
+           family={{Gartner}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \strng{fullhash}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \strng{fullhashraw}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \strng{bibnamehash}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \strng{authorbibnamehash}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \strng{authornamehash}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \strng{authorfullhash}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \strng{authorfullhashraw}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Platform Engineering Empowers Developers to Be Better, Faster, Happier}
+      \field{urlday}{2}
+      \field{urlmonth}{11}
+      \field{urlyear}{2026}
+      \field{year}{2023}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.gartner.com/en/experts/top-tech-trends-unpacked-series/platform-engineering-empowers-developers
+      \endverb
+      \verb{url}
+      \verb https://www.gartner.com/en/experts/top-tech-trends-unpacked-series/platform-engineering-empowers-developers
+      \endverb
+    \endentry
+    \entry{mankins1995}{article}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=b9dde6253af1dc0fa76df6d6b0dc5207}{%
+           family={Mankins},
+           familyi={M\bibinitperiod},
+           given={John\bibnamedelima C.},
+           giveni={J\bibinitperiod\bibinitdelim C\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{b9dde6253af1dc0fa76df6d6b0dc5207}
+      \strng{fullhash}{b9dde6253af1dc0fa76df6d6b0dc5207}
+      \strng{fullhashraw}{b9dde6253af1dc0fa76df6d6b0dc5207}
+      \strng{bibnamehash}{b9dde6253af1dc0fa76df6d6b0dc5207}
+      \strng{authorbibnamehash}{b9dde6253af1dc0fa76df6d6b0dc5207}
+      \strng{authornamehash}{b9dde6253af1dc0fa76df6d6b0dc5207}
+      \strng{authorfullhash}{b9dde6253af1dc0fa76df6d6b0dc5207}
+      \strng{authorfullhashraw}{b9dde6253af1dc0fa76df6d6b0dc5207}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{NASA Office of Space Access and Technology}
+      \field{title}{Technology Readiness Levels: A White Paper}
+      \field{urlday}{7}
+      \field{urlmonth}{9}
+      \field{urlyear}{2026}
+      \field{year}{1995}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://aiaa.kavi.com/apps/group_public/download.php/2212/TRLs_MankinsPaper_1995.pdf
+      \endverb
+      \verb{url}
+      \verb https://aiaa.kavi.com/apps/group_public/download.php/2212/TRLs_MankinsPaper_1995.pdf
+      \endverb
+    \endentry
+    \entry{markowitz1952}{article}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=bdfa1c8585b5a4ae901315043a00f2f2}{%
+           family={Markowitz},
+           familyi={M\bibinitperiod},
+           given={Harry},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{bdfa1c8585b5a4ae901315043a00f2f2}
+      \strng{fullhash}{bdfa1c8585b5a4ae901315043a00f2f2}
+      \strng{fullhashraw}{bdfa1c8585b5a4ae901315043a00f2f2}
+      \strng{bibnamehash}{bdfa1c8585b5a4ae901315043a00f2f2}
+      \strng{authorbibnamehash}{bdfa1c8585b5a4ae901315043a00f2f2}
+      \strng{authornamehash}{bdfa1c8585b5a4ae901315043a00f2f2}
+      \strng{authorfullhash}{bdfa1c8585b5a4ae901315043a00f2f2}
+      \strng{authorfullhashraw}{bdfa1c8585b5a4ae901315043a00f2f2}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{The Journal of Finance}
+      \field{number}{1}
+      \field{title}{Portfolio Selection}
+      \field{volume}{7}
+      \field{year}{1952}
+      \field{pages}{77\bibrangedash 91}
+      \range{pages}{15}
+      \verb{doi}
+      \verb 10.2307/2975974
+      \endverb
+    \endentry
+    \entry{port2025}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=60aaf44d4b562252c04db7f98497e9aa}{%
+           family={{Port}},
+           familyi={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{60aaf44d4b562252c04db7f98497e9aa}
+      \strng{fullhash}{60aaf44d4b562252c04db7f98497e9aa}
+      \strng{fullhashraw}{60aaf44d4b562252c04db7f98497e9aa}
+      \strng{bibnamehash}{60aaf44d4b562252c04db7f98497e9aa}
+      \strng{authorbibnamehash}{60aaf44d4b562252c04db7f98497e9aa}
+      \strng{authornamehash}{60aaf44d4b562252c04db7f98497e9aa}
+      \strng{authorfullhash}{60aaf44d4b562252c04db7f98497e9aa}
+      \strng{authorfullhashraw}{60aaf44d4b562252c04db7f98497e9aa}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{2025 State of Internal Developer Portals}
+      \field{urlday}{2}
+      \field{urlmonth}{11}
+      \field{urlyear}{2026}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.port.io/state-of-internal-developer-portals
+      \endverb
+      \verb{url}
+      \verb https://www.port.io/state-of-internal-developer-portals
+      \endverb
+    \endentry
+    \entry{rojas2026hoja}{report}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=5b752beb21ce7330de3ca6fc6373613d}{%
+           family={Rojas\bibnamedelima Aragonés},
+           familyi={R\bibinitperiod\bibinitdelim A\bibinitperiod},
+           given={Carlos\bibnamedelima Luis},
+           giveni={C\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {Gestión del Desarrollo Tecnológico, Actividad 9.1, Parte C}%
+      }
+      \strng{namehash}{5b752beb21ce7330de3ca6fc6373613d}
+      \strng{fullhash}{5b752beb21ce7330de3ca6fc6373613d}
+      \strng{fullhashraw}{5b752beb21ce7330de3ca6fc6373613d}
+      \strng{bibnamehash}{5b752beb21ce7330de3ca6fc6373613d}
+      \strng{authorbibnamehash}{5b752beb21ce7330de3ca6fc6373613d}
+      \strng{authornamehash}{5b752beb21ce7330de3ca6fc6373613d}
+      \strng{authorfullhash}{5b752beb21ce7330de3ca6fc6373613d}
+      \strng{authorfullhashraw}{5b752beb21ce7330de3ca6fc6373613d}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{7}
+      \field{month}{9}
+      \field{title}{Hoja de ruta tecnológica de la infraestructura como código}
+      \field{type}{Informe de curso}
+      \field{year}{2026}
+      \field{dateera}{ce}
+    \endentry
+    \entry{backstage}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=85dc3d8fb5a01c62e565a519516703f9}{%
+           family={{The Backstage Authors}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Cloud Native Computing Foundation}%
+      }
+      \strng{namehash}{85dc3d8fb5a01c62e565a519516703f9}
+      \strng{fullhash}{85dc3d8fb5a01c62e565a519516703f9}
+      \strng{fullhashraw}{85dc3d8fb5a01c62e565a519516703f9}
+      \strng{bibnamehash}{85dc3d8fb5a01c62e565a519516703f9}
+      \strng{authorbibnamehash}{85dc3d8fb5a01c62e565a519516703f9}
+      \strng{authornamehash}{85dc3d8fb5a01c62e565a519516703f9}
+      \strng{authorfullhash}{85dc3d8fb5a01c62e565a519516703f9}
+      \strng{authorfullhashraw}{85dc3d8fb5a01c62e565a519516703f9}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labeldatesource}{nodate}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{What Is {Backstage}?}
+      \field{urlday}{1}
+      \field{urlmonth}{9}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://backstage.io/docs/overview/what-is-backstage
+      \endverb
+      \verb{url}
+      \verb https://backstage.io/docs/overview/what-is-backstage
+      \endverb
+    \endentry
+    \entry{wheelwright1992}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=73258d6492119e8147d577c515f6c9b0}{%
+           family={Wheelwright},
+           familyi={W\bibinitperiod},
+           given={Steven\bibnamedelima C.},
+           giveni={S\bibinitperiod\bibinitdelim C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7fea8a7231aba4a1132ef7e17861b0aa}{%
+           family={Clark},
+           familyi={C\bibinitperiod},
+           given={Kim\bibnamedelima B.},
+           giveni={K\bibinitperiod\bibinitdelim B\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{a4b29d92348cc6fe590e6e2ea39a1a0b}
+      \strng{fullhash}{a4b29d92348cc6fe590e6e2ea39a1a0b}
+      \strng{fullhashraw}{a4b29d92348cc6fe590e6e2ea39a1a0b}
+      \strng{bibnamehash}{a4b29d92348cc6fe590e6e2ea39a1a0b}
+      \strng{authorbibnamehash}{a4b29d92348cc6fe590e6e2ea39a1a0b}
+      \strng{authornamehash}{a4b29d92348cc6fe590e6e2ea39a1a0b}
+      \strng{authorfullhash}{a4b29d92348cc6fe590e6e2ea39a1a0b}
+      \strng{authorfullhashraw}{a4b29d92348cc6fe590e6e2ea39a1a0b}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Harvard Business Review}
+      \field{number}{2}
+      \field{title}{Creating Project Plans to Focus Product Development}
+      \field{volume}{70}
+      \field{year}{1992}
+      \field{pages}{70\bibrangedash 82}
+      \range{pages}{13}
+    \endentry
+  \enddatalist
+  \datalist[entry]{nyt/global//global/global/global}
+    \entry{cooper1990}{article}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=cb47c650ee1bdc8c24ae16a47f0f31c2}{%
+           family={Cooper},
+           familyi={C\bibinitperiod},
+           given={Robert\bibnamedelima G.},
+           giveni={R\bibinitperiod\bibinitdelim G\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{cb47c650ee1bdc8c24ae16a47f0f31c2}
+      \strng{fullhash}{cb47c650ee1bdc8c24ae16a47f0f31c2}
+      \strng{fullhashraw}{cb47c650ee1bdc8c24ae16a47f0f31c2}
+      \strng{bibnamehash}{cb47c650ee1bdc8c24ae16a47f0f31c2}
+      \strng{authorbibnamehash}{cb47c650ee1bdc8c24ae16a47f0f31c2}
+      \strng{authornamehash}{cb47c650ee1bdc8c24ae16a47f0f31c2}
+      \strng{authorfullhash}{cb47c650ee1bdc8c24ae16a47f0f31c2}
+      \strng{authorfullhashraw}{cb47c650ee1bdc8c24ae16a47f0f31c2}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Business Horizons}
+      \field{number}{3}
+      \field{title}{Stage-Gate Systems: A New Tool for Managing New Products}
+      \field{volume}{33}
+      \field{year}{1990}
+      \field{pages}{44\bibrangedash 54}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1016/0007-6813(90)90040-I
+      \endverb
+    \endentry
+    \entry{deweck2022}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=c15426d9ac209ba010a8afb3354df966}{%
+           family={Weck},
+           familyi={W\bibinitperiod},
+           given={Olivier\bibnamedelima L.},
+           giveni={O\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=0,
+           prefix={de},
+           prefixi={d\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Cham}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{c15426d9ac209ba010a8afb3354df966}
+      \strng{fullhash}{c15426d9ac209ba010a8afb3354df966}
+      \strng{fullhashraw}{c15426d9ac209ba010a8afb3354df966}
+      \strng{bibnamehash}{c15426d9ac209ba010a8afb3354df966}
+      \strng{authorbibnamehash}{c15426d9ac209ba010a8afb3354df966}
+      \strng{authornamehash}{c15426d9ac209ba010a8afb3354df966}
+      \strng{authorfullhash}{c15426d9ac209ba010a8afb3354df966}
+      \strng{authorfullhashraw}{c15426d9ac209ba010a8afb3354df966}
+      \field{sortinit}{d}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-3-030-88345-4}
+      \field{title}{Technology Roadmapping and Development: A Quantitative Approach to the Management of Technology}
+      \field{year}{2022}
+      \verb{doi}
+      \verb 10.1007/978-3-030-88346-1
+      \endverb
+    \endentry
+    \entry{dora2025}{report}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=585a6a314575f9792df621b0c598a37a}{%
+           family={{DORA}},
+           familyi={D\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Google Cloud}%
+      }
+      \strng{namehash}{585a6a314575f9792df621b0c598a37a}
+      \strng{fullhash}{585a6a314575f9792df621b0c598a37a}
+      \strng{fullhashraw}{585a6a314575f9792df621b0c598a37a}
+      \strng{bibnamehash}{585a6a314575f9792df621b0c598a37a}
+      \strng{authorbibnamehash}{585a6a314575f9792df621b0c598a37a}
+      \strng{authornamehash}{585a6a314575f9792df621b0c598a37a}
+      \strng{authorfullhash}{585a6a314575f9792df621b0c598a37a}
+      \strng{authorfullhashraw}{585a6a314575f9792df621b0c598a37a}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{State of {AI}-Assisted Software Development 2025}
+      \field{type}{techreport}
+      \field{urlday}{2}
+      \field{urlmonth}{11}
+      \field{urlyear}{2026}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://services.google.com/fh/files/misc/2025_state_of_ai_assisted_software_development.pdf
+      \endverb
+      \verb{url}
+      \verb https://services.google.com/fh/files/misc/2025_state_of_ai_assisted_software_development.pdf
+      \endverb
+    \endentry
+    \entry{firefly2025}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=e344a4e3a128f4d2297fd379f7c2962d}{%
+           family={{Firefly}},
+           familyi={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{e344a4e3a128f4d2297fd379f7c2962d}
+      \strng{fullhash}{e344a4e3a128f4d2297fd379f7c2962d}
+      \strng{fullhashraw}{e344a4e3a128f4d2297fd379f7c2962d}
+      \strng{bibnamehash}{e344a4e3a128f4d2297fd379f7c2962d}
+      \strng{authorbibnamehash}{e344a4e3a128f4d2297fd379f7c2962d}
+      \strng{authornamehash}{e344a4e3a128f4d2297fd379f7c2962d}
+      \strng{authorfullhash}{e344a4e3a128f4d2297fd379f7c2962d}
+      \strng{authorfullhashraw}{e344a4e3a128f4d2297fd379f7c2962d}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{The State of {Infrastructure-as-Code} 2025}
+      \field{urlday}{2}
+      \field{urlmonth}{11}
+      \field{urlyear}{2026}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.firefly.ai/state-of-iac-2025
+      \endverb
+      \verb{url}
+      \verb https://www.firefly.ai/state-of-iac-2025
+      \endverb
+    \endentry
+    \entry{flyvbjerg2011}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=add5d82636be8462aea781208bc4e3ee}{%
+           family={Flyvbjerg},
+           familyi={F\bibinitperiod},
+           given={Bent},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=30cc5808c5d1eb2bb49abd50069e3285}{%
+           family={Budzier},
+           familyi={B\bibinitperiod},
+           given={Alexander},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{ffd9c81dd6b2340d97848f5a8802ad86}
+      \strng{fullhash}{ffd9c81dd6b2340d97848f5a8802ad86}
+      \strng{fullhashraw}{ffd9c81dd6b2340d97848f5a8802ad86}
+      \strng{bibnamehash}{ffd9c81dd6b2340d97848f5a8802ad86}
+      \strng{authorbibnamehash}{ffd9c81dd6b2340d97848f5a8802ad86}
+      \strng{authornamehash}{ffd9c81dd6b2340d97848f5a8802ad86}
+      \strng{authorfullhash}{ffd9c81dd6b2340d97848f5a8802ad86}
+      \strng{authorfullhashraw}{ffd9c81dd6b2340d97848f5a8802ad86}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arXiv}
+      \field{journaltitle}{Harvard Business Review}
+      \field{number}{9}
+      \field{title}{Why Your {IT} Project May Be Riskier than You Think}
+      \field{volume}{89}
+      \field{year}{2011}
+      \field{pages}{23\bibrangedash 25}
+      \range{pages}{3}
+      \verb{eprint}
+      \verb 1304.0265
+      \endverb
+    \endentry
+    \entry{gartner2023pe}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=18bfab6309a4addeb7e1dae07d2a4b89}{%
+           family={{Gartner}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \strng{fullhash}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \strng{fullhashraw}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \strng{bibnamehash}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \strng{authorbibnamehash}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \strng{authornamehash}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \strng{authorfullhash}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \strng{authorfullhashraw}{18bfab6309a4addeb7e1dae07d2a4b89}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Platform Engineering Empowers Developers to Be Better, Faster, Happier}
+      \field{urlday}{2}
+      \field{urlmonth}{11}
+      \field{urlyear}{2026}
+      \field{year}{2023}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.gartner.com/en/experts/top-tech-trends-unpacked-series/platform-engineering-empowers-developers
+      \endverb
+      \verb{url}
+      \verb https://www.gartner.com/en/experts/top-tech-trends-unpacked-series/platform-engineering-empowers-developers
+      \endverb
+    \endentry
+    \entry{mankins1995}{article}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=b9dde6253af1dc0fa76df6d6b0dc5207}{%
+           family={Mankins},
+           familyi={M\bibinitperiod},
+           given={John\bibnamedelima C.},
+           giveni={J\bibinitperiod\bibinitdelim C\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{b9dde6253af1dc0fa76df6d6b0dc5207}
+      \strng{fullhash}{b9dde6253af1dc0fa76df6d6b0dc5207}
+      \strng{fullhashraw}{b9dde6253af1dc0fa76df6d6b0dc5207}
+      \strng{bibnamehash}{b9dde6253af1dc0fa76df6d6b0dc5207}
+      \strng{authorbibnamehash}{b9dde6253af1dc0fa76df6d6b0dc5207}
+      \strng{authornamehash}{b9dde6253af1dc0fa76df6d6b0dc5207}
+      \strng{authorfullhash}{b9dde6253af1dc0fa76df6d6b0dc5207}
+      \strng{authorfullhashraw}{b9dde6253af1dc0fa76df6d6b0dc5207}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{NASA Office of Space Access and Technology}
+      \field{title}{Technology Readiness Levels: A White Paper}
+      \field{urlday}{7}
+      \field{urlmonth}{9}
+      \field{urlyear}{2026}
+      \field{year}{1995}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://aiaa.kavi.com/apps/group_public/download.php/2212/TRLs_MankinsPaper_1995.pdf
+      \endverb
+      \verb{url}
+      \verb https://aiaa.kavi.com/apps/group_public/download.php/2212/TRLs_MankinsPaper_1995.pdf
+      \endverb
+    \endentry
+    \entry{markowitz1952}{article}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=bdfa1c8585b5a4ae901315043a00f2f2}{%
+           family={Markowitz},
+           familyi={M\bibinitperiod},
+           given={Harry},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{bdfa1c8585b5a4ae901315043a00f2f2}
+      \strng{fullhash}{bdfa1c8585b5a4ae901315043a00f2f2}
+      \strng{fullhashraw}{bdfa1c8585b5a4ae901315043a00f2f2}
+      \strng{bibnamehash}{bdfa1c8585b5a4ae901315043a00f2f2}
+      \strng{authorbibnamehash}{bdfa1c8585b5a4ae901315043a00f2f2}
+      \strng{authornamehash}{bdfa1c8585b5a4ae901315043a00f2f2}
+      \strng{authorfullhash}{bdfa1c8585b5a4ae901315043a00f2f2}
+      \strng{authorfullhashraw}{bdfa1c8585b5a4ae901315043a00f2f2}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{The Journal of Finance}
+      \field{number}{1}
+      \field{title}{Portfolio Selection}
+      \field{volume}{7}
+      \field{year}{1952}
+      \field{pages}{77\bibrangedash 91}
+      \range{pages}{15}
+      \verb{doi}
+      \verb 10.2307/2975974
+      \endverb
+    \endentry
+    \entry{port2025}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=60aaf44d4b562252c04db7f98497e9aa}{%
+           family={{Port}},
+           familyi={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{60aaf44d4b562252c04db7f98497e9aa}
+      \strng{fullhash}{60aaf44d4b562252c04db7f98497e9aa}
+      \strng{fullhashraw}{60aaf44d4b562252c04db7f98497e9aa}
+      \strng{bibnamehash}{60aaf44d4b562252c04db7f98497e9aa}
+      \strng{authorbibnamehash}{60aaf44d4b562252c04db7f98497e9aa}
+      \strng{authornamehash}{60aaf44d4b562252c04db7f98497e9aa}
+      \strng{authorfullhash}{60aaf44d4b562252c04db7f98497e9aa}
+      \strng{authorfullhashraw}{60aaf44d4b562252c04db7f98497e9aa}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{2025 State of Internal Developer Portals}
+      \field{urlday}{2}
+      \field{urlmonth}{11}
+      \field{urlyear}{2026}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.port.io/state-of-internal-developer-portals
+      \endverb
+      \verb{url}
+      \verb https://www.port.io/state-of-internal-developer-portals
+      \endverb
+    \endentry
+    \entry{rojas2026hoja}{report}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=5b752beb21ce7330de3ca6fc6373613d}{%
+           family={Rojas\bibnamedelima Aragonés},
+           familyi={R\bibinitperiod\bibinitdelim A\bibinitperiod},
+           given={Carlos\bibnamedelima Luis},
+           giveni={C\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {Gestión del Desarrollo Tecnológico, Actividad 9.1, Parte C}%
+      }
+      \strng{namehash}{5b752beb21ce7330de3ca6fc6373613d}
+      \strng{fullhash}{5b752beb21ce7330de3ca6fc6373613d}
+      \strng{fullhashraw}{5b752beb21ce7330de3ca6fc6373613d}
+      \strng{bibnamehash}{5b752beb21ce7330de3ca6fc6373613d}
+      \strng{authorbibnamehash}{5b752beb21ce7330de3ca6fc6373613d}
+      \strng{authornamehash}{5b752beb21ce7330de3ca6fc6373613d}
+      \strng{authorfullhash}{5b752beb21ce7330de3ca6fc6373613d}
+      \strng{authorfullhashraw}{5b752beb21ce7330de3ca6fc6373613d}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{7}
+      \field{month}{9}
+      \field{title}{Hoja de ruta tecnológica de la infraestructura como código}
+      \field{type}{Informe de curso}
+      \field{year}{2026}
+      \field{dateera}{ce}
+    \endentry
+    \entry{backstage}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=85dc3d8fb5a01c62e565a519516703f9}{%
+           family={{The Backstage Authors}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Cloud Native Computing Foundation}%
+      }
+      \strng{namehash}{85dc3d8fb5a01c62e565a519516703f9}
+      \strng{fullhash}{85dc3d8fb5a01c62e565a519516703f9}
+      \strng{fullhashraw}{85dc3d8fb5a01c62e565a519516703f9}
+      \strng{bibnamehash}{85dc3d8fb5a01c62e565a519516703f9}
+      \strng{authorbibnamehash}{85dc3d8fb5a01c62e565a519516703f9}
+      \strng{authornamehash}{85dc3d8fb5a01c62e565a519516703f9}
+      \strng{authorfullhash}{85dc3d8fb5a01c62e565a519516703f9}
+      \strng{authorfullhashraw}{85dc3d8fb5a01c62e565a519516703f9}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labeldatesource}{nodate}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{What Is {Backstage}?}
+      \field{urlday}{1}
+      \field{urlmonth}{9}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://backstage.io/docs/overview/what-is-backstage
+      \endverb
+      \verb{url}
+      \verb https://backstage.io/docs/overview/what-is-backstage
+      \endverb
+    \endentry
+    \entry{wheelwright1992}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=73258d6492119e8147d577c515f6c9b0}{%
+           family={Wheelwright},
+           familyi={W\bibinitperiod},
+           given={Steven\bibnamedelima C.},
+           giveni={S\bibinitperiod\bibinitdelim C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7fea8a7231aba4a1132ef7e17861b0aa}{%
+           family={Clark},
+           familyi={C\bibinitperiod},
+           given={Kim\bibnamedelima B.},
+           giveni={K\bibinitperiod\bibinitdelim B\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{a4b29d92348cc6fe590e6e2ea39a1a0b}
+      \strng{fullhash}{a4b29d92348cc6fe590e6e2ea39a1a0b}
+      \strng{fullhashraw}{a4b29d92348cc6fe590e6e2ea39a1a0b}
+      \strng{bibnamehash}{a4b29d92348cc6fe590e6e2ea39a1a0b}
+      \strng{authorbibnamehash}{a4b29d92348cc6fe590e6e2ea39a1a0b}
+      \strng{authornamehash}{a4b29d92348cc6fe590e6e2ea39a1a0b}
+      \strng{authorfullhash}{a4b29d92348cc6fe590e6e2ea39a1a0b}
+      \strng{authorfullhashraw}{a4b29d92348cc6fe590e6e2ea39a1a0b}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Harvard Business Review}
+      \field{number}{2}
+      \field{title}{Creating Project Plans to Focus Product Development}
+      \field{volume}{70}
+      \field{year}{1992}
+      \field{pages}{70\bibrangedash 82}
+      \range{pages}{13}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
