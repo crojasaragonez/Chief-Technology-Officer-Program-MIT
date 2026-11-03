@@ -1,0 +1,177 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands,es-tabla]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{csquotes}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt,maxcitenames=2]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.3cm}
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\setlist{nosep}
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy\small}
+\setlength{\bibitemsep}{0.3em}
+
+\definecolor{cEje}{RGB}{26,58,102}
+\definecolor{cGris}{RGB}{120,116,110}
+
+% Enunciado de cada pregunta, en gris y con sangría.
+\newcommand{\pregunta}[1]{%
+  \begin{quote}\color{cGris}\small\itshape #1\end{quote}}
+
+\begin{document}
+
+% --- Portada -----------------------------------------------------------------
+\begin{titlepage}
+\centering
+\vspace*{3.2cm}
+{\large\scshape Inteligencia Artificial Generativa\\
+Aplicada a la Transformación Digital\par}
+\vspace{0.5cm}
+{\normalsize Módulo 1. Actividad 1.1\par}
+\vspace{2.6cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vspace{0.7cm}
+{\LARGE\bfseries La IA al alcance de todos\par}
+\vspace{0.5cm}
+{\large Accesibilidad, liderazgo en T\\
+y lo que espero de este curso\par}
+\vspace{0.7cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vfill
+{\large Carlos Luis Rojas Aragonés\par}
+\vspace{0.3cm}
+{\normalsize Chief Technology Officer Program\par}
+\vspace{0.3cm}
+{\normalsize 3 de noviembre de 2026\par}
+\vspace*{1.5cm}
+\end{titlepage}
+
+% --- Pregunta 1 --------------------------------------------------------------
+\section*{1. Una tecnología que se volvió accesible para todos}
+
+\pregunta{Susan Doniz sostiene que el verdadero avance de la IA generativa fue
+hacer que una tecnología muy potente resultara accesible para todo el mundo y
+no únicamente para especialistas. Describa una situación en la que una
+tecnología se volviera realmente accesible de este modo en su sector. ¿Qué
+cambió para su organización o para su sector? ¿Qué ventajas aportó desde el
+punto de vista del negocio?}
+
+Lo contesto con un ejemplo: ChatGPT. El hecho de que llegara a tantos millones
+de usuarios en tiempo récord no fue casualidad. Según un análisis de UBS
+citado por Reuters, alcanzó unos 100 millones de usuarios mensuales en apenas
+dos meses; a TikTok le tomó nueve meses llegar a esa cifra y a Instagram unos
+dos años y medio \parencite{hu2023}. Para que esto se diera tuvieron que
+coincidir varias cosas:
+
+\begin{enumerate}
+  \item \textbf{Es una tecnología diseñada para una persona de cualquier
+    edad.} Si alguien sabe usar WhatsApp, entonces sabe usar ChatGPT. La
+    interfaz es una conversación: no hay que aprender un lenguaje de
+    programación ni un menú nuevo. Antes, usar un modelo de lenguaje
+    requería un equipo de ciencia de datos; ahora basta con escribir.
+  \item \textbf{Se aplica en cualquier negocio del mundo y brinda una ventaja
+    competitiva increíble.} En un estudio con más de 5000 agentes de servicio
+    al cliente, un asistente de IA generativa aumentó en promedio un 15\,\% los
+    casos resueltos por hora, y en un 34\,\% los de los agentes con menos
+    experiencia \parencite{brynjolfsson2025}. Es decir, la herramienta
+    transfiere a los nuevos parte del conocimiento de los mejores.
+  \item \textbf{Fue una tecnología verdaderamente disruptiva, que sorprendió
+    tanto a usuarios no técnicos como a técnicos.} En un experimento con 758
+    consultores de BCG, quienes usaron GPT-4 completaron un 12,2\,\% más de
+    tareas, un 25,1\,\% más rápido y con una calidad más de un 40\,\% superior
+    \parencite{dellacqua2023}. Los mismos autores advierten que, fuera de las
+    tareas para las que la IA es buena, los consultores fallaron más; por eso
+    hablan de una \enquote{frontera irregular}.
+\end{enumerate}
+
+¿Qué cambió para el sector? Que la IA dejó de ser un proyecto del área de
+datos y pasó a estar en manos de todos. McKinsey reporta que en 2025 el 88\,\%
+de las organizaciones ya usaba IA de forma regular en al menos una función del
+negocio, frente al 78\,\% del año anterior \parencite{mckinsey2025}. La ventaja
+para el negocio no está solamente en hacer lo mismo más rápido, sino en que
+personas sin perfil técnico pueden probar ideas, automatizar tareas y
+prototipar sin depender de un equipo de desarrollo. El mismo informe aclara
+que la mayoría de las empresas todavía está en etapa de pilotos, así que el
+reto ahora no es el acceso, sino escalar.
+
+% --- Pregunta 2 --------------------------------------------------------------
+\section*{2. Mi preparación para la IA según el liderazgo en T}
+
+\pregunta{Susan Doniz presenta el modelo del liderazgo en T, que combina
+profundidad técnica y una amplia visión de negocio. Evalúe su nivel actual de
+preparación para la IA utilizando este modelo. ¿Cuáles considera que son sus
+principales fortalezas? ¿En qué aspectos identifica oportunidades de mejora?
+¿Qué supondría, en su caso, reforzar la dimensión menos desarrollada de la T?}
+
+Mi principal fortaleza es que llevo más de seis años preparándome en
+inteligencia artificial enfocada 100\,\% en negocios. Eso me ha permitido ver
+muchos casos de éxito de la vida real, y también casos no exitosos. Los
+segundos enseñan tanto como los primeros: según un estudio de MIT Sloan
+Management Review y BCG, solo un 10\,\% de las empresas obtenía beneficios
+financieros significativos con IA, y lo que las distinguía no era la
+tecnología, sino que cambiaban sus procesos para aprender junto con ella
+\parencite{ransbotham2020}.
+
+El modelo en T me llama la atención porque se parece a algo que una vez me
+dijo un amigo: \enquote{Un CTO es una persona con un mar de conocimiento, pero
+de un centímetro de profundidad}. La idea tampoco es nueva en la gestión:
+Hansen y von Oetinger describieron hace más de veinte años al gerente en T como
+alguien comprometido a fondo con su área (la parte vertical) que además
+comparte conocimiento con el resto de la organización (la parte horizontal)
+\parencite{hansen2001}.
+
+Creo que debemos elegir muy bien en qué temas profundizar y en cuáles no. Eso
+nos convierte en especialistas de algunas áreas y nos deja un conocimiento
+general de otras. Sin perder nunca de vista la forma en que funcionan los
+negocios y cómo hacen dinero, porque eso marca una gran diferencia a la hora
+de presentar un proyecto de tecnología ante una junta directiva.
+
+La mejor analogía que puedo dar es la de los médicos generales y los
+especialistas. El médico general no sabe operar un corazón, pero sabe
+reconocer cuándo hace falta un cardiólogo y a cuál enviar al paciente. David
+Epstein defiende algo parecido: en entornos cambiantes, donde las reglas no
+están claras, quienes tienen amplitud de experiencias suelen adaptarse mejor
+que quienes solo han profundizado en una cosa \parencite{epstein2019}. La IA
+es justamente uno de esos entornos.
+
+En mi caso, la parte horizontal de la T (negocio) es la más desarrollada. La
+oportunidad de mejora está en mantener al día la parte vertical: la IA
+generativa cambia cada pocos meses, y reforzarla significa reservar tiempo
+para probar los modelos y herramientas nuevas con las manos, no solo leer
+sobre ellas, de forma que pueda evaluar con criterio propio qué es útil y qué
+es ruido.
+
+% --- Pregunta 3 --------------------------------------------------------------
+\section*{3. Lo que quiero lograr al terminar el curso}
+
+\pregunta{Al finalizar este curso, ¿qué le gustaría ser capaz de hacer, decidir
+o liderar que hoy todavía no puede? Sea específico e identifique un reto, una
+decisión o una conversación real de su organización para la que este curso
+pueda ayudarle a prepararse.}
+
+Me gustaría poder participar en cualquier foro de IA del mundo y que mi aporte
+sea significativo para la audiencia.
+
+Para mí, un aporte significativo es uno que va más allá de repetir lo que ya
+dicen las noticias. Hoy casi todas las empresas usan IA \parencite{mckinsey2025},
+pero muy pocas logran resultados financieros con ella \parencite{ransbotham2020}.
+La conversación que vale la pena en esos foros es justamente esa: por qué
+unas empresas sí y otras no, y qué decisiones de liderazgo marcan la
+diferencia. Espero que este curso me dé el marco y los casos para hablar de
+eso con datos y con criterio propio.
+
+\printbibliography[title={Referencias}]
+
+\end{document}

@@ -1,0 +1,34 @@
+Pregunta 1:
+
+Susan Doniz sostiene que el verdadero avance de la IA generativa fue hacer que una tecnología muy potente resultara accesible para todo el mundo y no únicamente para especialistas. Describa una situación en la que una tecnología se volviera realmente accesible de este modo en su sector. ¿Qué cambió para su organización o para su sector? ¿Qué ventajas aportó desde el punto de vista del negocio?
+
+Respuesta:
+
+Lo contesto con un ejemplo:
+El hecho de que chatgpt llegara a tantos millones de usuarios en tiempo record no fue casualidad. para que esto se diera tuvieron que coincidir una serie de hechos:
+
+1. Es una tecnología diseñada para una persona con cualquier edad. si alguien sabe usar whatsapp entonces sabe usar chatgpt.
+2. Es una tecnología que se aplica en cualquier negocio del mundo y brinda una ventaja competitiva increible.
+3. Fue una tecnología verdaderamente disruptiva, que sorprendía tanto a usuarios no técnicos como a usuarios técnicos.
+
+Pregunta 2:
+
+Susan Doniz presenta el modelo del liderazgo en T, que combina profundidad técnica y una amplia visión de negocio. Evalúe su nivel actual de preparación para la IA utilizando este modelo. ¿Cuáles considera que son sus principales fortalezas? ¿En qué aspectos identifica oportunidades de mejora? ¿Qué supondría, en su caso, reforzar la dimensión menos desarrollada de la T?
+
+Respuesta:
+
+Mi principal fortaleza es que llevo más de 6 años preparandome en inteligencia artificial enfocada 100% en negocios, entonces ya he visto muchos casos de éxito de la vida real y también casos no exitosos.
+
+EL modelo T me llama la tensión porque se parece a algo que una vez me dijo un amigo. El me dijo "Un CTO es una persona con un mar de conocimiento pero de un centimetro de profundidad".
+Creo que debemos elegir muy bien en que temas debemos profundizar y cuales no, esto nos convertirá en especialistas de algunas áreas y tener conocimiento general de otras.
+Sin perder nunca de vista la forma en que los negocios funcionan y entender como hacen dinero. esto hace una gran diferencia a la hora de presentar un proyecto de tecnología ante una junta directiva.
+creo que la mejor analogía que puedo dar es los médicos generales y los especialistas.
+
+
+Pregunta 3:
+
+Al finalizar este curso, ¿qué le gustaría ser capaz de hacer, decidir o liderar que hoy todavía no puede? Sea específico e identifique un reto, una decisión o una conversación real de su organización para la que este curso pueda ayudarle a prepararse.
+
+Respuesta:
+
+Me gustaría poder participar a cualquier foro del mundo de AI y que mi aporte sea significativo para la audiencia.

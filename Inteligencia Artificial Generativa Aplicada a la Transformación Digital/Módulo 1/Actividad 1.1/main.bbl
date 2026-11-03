@@ -1,0 +1,739 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/apasortcite//global/global/global}
+    \entry{brynjolfsson2025}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=7bd9f54569cb8c0301da00ed49b5a752}{%
+           family={Brynjolfsson},
+           familyi={B\bibinitperiod},
+           given={Erik},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9549ba5d9e9696208664346821d3ac14}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Danielle},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=526a7239b4cbed8ac82f3731346cd822}{%
+           family={Raymond},
+           familyi={R\bibinitperiod},
+           given={Lindsey},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{00a6af65ff0bae825ed9db1b0be8f4fa}
+      \strng{fullhash}{52c6338e9f79371688e62392e04268b3}
+      \strng{fullhashraw}{52c6338e9f79371688e62392e04268b3}
+      \strng{bibnamehash}{52c6338e9f79371688e62392e04268b3}
+      \strng{authorbibnamehash}{52c6338e9f79371688e62392e04268b3}
+      \strng{authornamehash}{00a6af65ff0bae825ed9db1b0be8f4fa}
+      \strng{authorfullhash}{52c6338e9f79371688e62392e04268b3}
+      \strng{authorfullhashraw}{52c6338e9f79371688e62392e04268b3}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{The Quarterly Journal of Economics}
+      \field{number}{2}
+      \field{title}{Generative {AI} at work}
+      \field{volume}{140}
+      \field{year}{2025}
+      \field{pages}{889\bibrangedash 942}
+      \range{pages}{54}
+      \verb{doi}
+      \verb 10.1093/qje/qjae044
+      \endverb
+    \endentry
+    \entry{dellacqua2023}{report}{}{}
+      \name{author}{9}{}{%
+        {{un=0,uniquepart=base,hash=d483cf96686fe3ddac398e2392a42050}{%
+           family={Dell'Acqua},
+           familyi={D\bibinitperiod},
+           given={Fabrizio},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ed273453afa56678b05eeea1cf5a17d3}{%
+           family={McFowland},
+           familyi={M\bibinitperiod},
+           given={Edward},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ffc1d7cdd406a996180acfcaf69f491c}{%
+           family={Mollick},
+           familyi={M\bibinitperiod},
+           given={Ethan\bibnamedelima R.},
+           giveni={E\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=240bce7a3d84a93af83210bf6b260897}{%
+           family={Lifshitz-Assaf},
+           familyi={L\bibinithyphendelim A\bibinitperiod},
+           given={Hila},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1fc721f10492d1acf7e5244b8f60122b}{%
+           family={Kellogg},
+           familyi={K\bibinitperiod},
+           given={Katherine},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=43f5c08ce9f393600e53a11143403a02}{%
+           family={Rajendran},
+           familyi={R\bibinitperiod},
+           given={Saran},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8056722de998a5e712c3f07ea9b7bf32}{%
+           family={Krayer},
+           familyi={K\bibinitperiod},
+           given={Lisa},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=56f4470deafd2a1dc4c10f4e465e706e}{%
+           family={Candelon},
+           familyi={C\bibinitperiod},
+           given={François},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5e63af7268feabfea0dfb53e2ec62d60}{%
+           family={Lakhani},
+           familyi={L\bibinitperiod},
+           given={Karim\bibnamedelima R.},
+           giveni={K\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {Harvard Business School}%
+      }
+      \strng{namehash}{8cc7b69dd2f7bcb35c5c01570e68e6a8}
+      \strng{fullhash}{8d6a2a5c641d19d7294c13c309972ce7}
+      \strng{fullhashraw}{8d6a2a5c641d19d7294c13c309972ce7}
+      \strng{bibnamehash}{8d6a2a5c641d19d7294c13c309972ce7}
+      \strng{authorbibnamehash}{8d6a2a5c641d19d7294c13c309972ce7}
+      \strng{authornamehash}{8cc7b69dd2f7bcb35c5c01570e68e6a8}
+      \strng{authorfullhash}{8d6a2a5c641d19d7294c13c309972ce7}
+      \strng{authorfullhashraw}{8d6a2a5c641d19d7294c13c309972ce7}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{number}{24-013}
+      \field{title}{Navigating the jagged technological frontier: Field experimental evidence of the effects of {AI} on knowledge worker productivity and quality}
+      \field{type}{Working Paper}
+      \field{urlday}{3}
+      \field{urlmonth}{11}
+      \field{urlyear}{2026}
+      \field{year}{2023}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.hbs.edu/faculty/Pages/item.aspx?num=64700
+      \endverb
+      \verb{url}
+      \verb https://www.hbs.edu/faculty/Pages/item.aspx?num=64700
+      \endverb
+    \endentry
+    \entry{epstein2019}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=6f51d161b02b320ee5bd64dfdb7d4113}{%
+           family={Epstein},
+           familyi={E\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Riverhead Books}%
+      }
+      \strng{namehash}{6f51d161b02b320ee5bd64dfdb7d4113}
+      \strng{fullhash}{6f51d161b02b320ee5bd64dfdb7d4113}
+      \strng{fullhashraw}{6f51d161b02b320ee5bd64dfdb7d4113}
+      \strng{bibnamehash}{6f51d161b02b320ee5bd64dfdb7d4113}
+      \strng{authorbibnamehash}{6f51d161b02b320ee5bd64dfdb7d4113}
+      \strng{authornamehash}{6f51d161b02b320ee5bd64dfdb7d4113}
+      \strng{authorfullhash}{6f51d161b02b320ee5bd64dfdb7d4113}
+      \strng{authorfullhashraw}{6f51d161b02b320ee5bd64dfdb7d4113}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Range: Why generalists triumph in a specialized world}
+      \field{year}{2019}
+    \endentry
+    \entry{hansen2001}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=8f5a5811e789e226bd1dab3c145c2cf5}{%
+           family={Hansen},
+           familyi={H\bibinitperiod},
+           given={Morten\bibnamedelima T.},
+           giveni={M\bibinitperiod\bibinitdelim T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0602d406fcdc328cf1b5227806daa148}{%
+           family={Oetinger},
+           familyi={O\bibinitperiod},
+           given={Bolko},
+           giveni={B\bibinitperiod},
+           givenun=0,
+           prefix={von},
+           prefixi={v\bibinitperiod}}}%
+      }
+      \strng{namehash}{4145fa0faa9561037464ce35e0aa7ecc}
+      \strng{fullhash}{4145fa0faa9561037464ce35e0aa7ecc}
+      \strng{fullhashraw}{4145fa0faa9561037464ce35e0aa7ecc}
+      \strng{bibnamehash}{4145fa0faa9561037464ce35e0aa7ecc}
+      \strng{authorbibnamehash}{4145fa0faa9561037464ce35e0aa7ecc}
+      \strng{authornamehash}{4145fa0faa9561037464ce35e0aa7ecc}
+      \strng{authorfullhash}{4145fa0faa9561037464ce35e0aa7ecc}
+      \strng{authorfullhashraw}{4145fa0faa9561037464ce35e0aa7ecc}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Harvard Business Review}
+      \field{number}{3}
+      \field{title}{Introducing {T}-shaped managers: Knowledge management's next generation}
+      \field{volume}{79}
+      \field{year}{2001}
+    \endentry
+    \entry{hu2023}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=35aa9f6d2ff77433ee325b40e993f1a4}{%
+           family={Hu},
+           familyi={H\bibinitperiod},
+           given={Krystal},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{organization}{1}{%
+        {Reuters}%
+      }
+      \strng{namehash}{35aa9f6d2ff77433ee325b40e993f1a4}
+      \strng{fullhash}{35aa9f6d2ff77433ee325b40e993f1a4}
+      \strng{fullhashraw}{35aa9f6d2ff77433ee325b40e993f1a4}
+      \strng{bibnamehash}{35aa9f6d2ff77433ee325b40e993f1a4}
+      \strng{authorbibnamehash}{35aa9f6d2ff77433ee325b40e993f1a4}
+      \strng{authornamehash}{35aa9f6d2ff77433ee325b40e993f1a4}
+      \strng{authorfullhash}{35aa9f6d2ff77433ee325b40e993f1a4}
+      \strng{authorfullhashraw}{35aa9f6d2ff77433ee325b40e993f1a4}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{2}
+      \field{month}{2}
+      \field{title}{{ChatGPT} sets record for fastest-growing user base: analyst note}
+      \field{urlday}{3}
+      \field{urlmonth}{11}
+      \field{urlyear}{2026}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.reuters.com/technology/chatgpt-sets-record-fastest-growing-user-base-analyst-note-2023-02-01/
+      \endverb
+      \verb{url}
+      \verb https://www.reuters.com/technology/chatgpt-sets-record-fastest-growing-user-base-analyst-note-2023-02-01/
+      \endverb
+    \endentry
+    \entry{mckinsey2025}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=96eaa81a81a29c441708d1ec4be5a27b}{%
+           family={{McKinsey \& Company}},
+           familyi={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{96eaa81a81a29c441708d1ec4be5a27b}
+      \strng{fullhash}{96eaa81a81a29c441708d1ec4be5a27b}
+      \strng{fullhashraw}{96eaa81a81a29c441708d1ec4be5a27b}
+      \strng{bibnamehash}{96eaa81a81a29c441708d1ec4be5a27b}
+      \strng{authorbibnamehash}{96eaa81a81a29c441708d1ec4be5a27b}
+      \strng{authornamehash}{96eaa81a81a29c441708d1ec4be5a27b}
+      \strng{authorfullhash}{96eaa81a81a29c441708d1ec4be5a27b}
+      \strng{authorfullhashraw}{96eaa81a81a29c441708d1ec4be5a27b}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{5}
+      \field{month}{11}
+      \field{title}{The state of {AI} in 2025: Agents, innovation, and transformation}
+      \field{urlday}{3}
+      \field{urlmonth}{11}
+      \field{urlyear}{2026}
+      \field{year}{2025}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai
+      \endverb
+      \verb{url}
+      \verb https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai
+      \endverb
+    \endentry
+    \entry{ransbotham2020}{report}{}{}
+      \name{author}{6}{}{%
+        {{un=0,uniquepart=base,hash=391a949ae8897b108b754b16e21ec62e}{%
+           family={Ransbotham},
+           familyi={R\bibinitperiod},
+           given={Sam},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=53928f4a069a019e63969f77a6de1838}{%
+           family={Khodabandeh},
+           familyi={K\bibinitperiod},
+           given={Shervin},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7a057edcd4073b2f9063bbb393c1df0b}{%
+           family={Kiron},
+           familyi={K\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=56f4470deafd2a1dc4c10f4e465e706e}{%
+           family={Candelon},
+           familyi={C\bibinitperiod},
+           given={François},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8e9adf2c78c7e31af092f3643bc983be}{%
+           family={Chu},
+           familyi={C\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=be045e4f32cbd4cd9ee0920777d36be4}{%
+           family={LaFountain},
+           familyi={L\bibinitperiod},
+           given={Burt},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {MIT Sloan Management Review y Boston Consulting Group}%
+      }
+      \strng{namehash}{ec5a123b930cf34da8a833e56ec5c012}
+      \strng{fullhash}{4f15b4b023040f376306a07cf5058581}
+      \strng{fullhashraw}{4f15b4b023040f376306a07cf5058581}
+      \strng{bibnamehash}{4f15b4b023040f376306a07cf5058581}
+      \strng{authorbibnamehash}{4f15b4b023040f376306a07cf5058581}
+      \strng{authornamehash}{ec5a123b930cf34da8a833e56ec5c012}
+      \strng{authorfullhash}{4f15b4b023040f376306a07cf5058581}
+      \strng{authorfullhashraw}{4f15b4b023040f376306a07cf5058581}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Expanding {AI}'s impact with organizational learning}
+      \field{type}{Informe}
+      \field{urlday}{3}
+      \field{urlmonth}{11}
+      \field{urlyear}{2026}
+      \field{year}{2020}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://sloanreview.mit.edu/projects/expanding-ais-impact-with-organizational-learning/
+      \endverb
+      \verb{url}
+      \verb https://sloanreview.mit.edu/projects/expanding-ais-impact-with-organizational-learning/
+      \endverb
+    \endentry
+  \enddatalist
+  \datalist[entry]{nyt/global//global/global/global}
+    \entry{brynjolfsson2025}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=7bd9f54569cb8c0301da00ed49b5a752}{%
+           family={Brynjolfsson},
+           familyi={B\bibinitperiod},
+           given={Erik},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9549ba5d9e9696208664346821d3ac14}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Danielle},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=526a7239b4cbed8ac82f3731346cd822}{%
+           family={Raymond},
+           familyi={R\bibinitperiod},
+           given={Lindsey},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{00a6af65ff0bae825ed9db1b0be8f4fa}
+      \strng{fullhash}{52c6338e9f79371688e62392e04268b3}
+      \strng{fullhashraw}{52c6338e9f79371688e62392e04268b3}
+      \strng{bibnamehash}{52c6338e9f79371688e62392e04268b3}
+      \strng{authorbibnamehash}{52c6338e9f79371688e62392e04268b3}
+      \strng{authornamehash}{00a6af65ff0bae825ed9db1b0be8f4fa}
+      \strng{authorfullhash}{52c6338e9f79371688e62392e04268b3}
+      \strng{authorfullhashraw}{52c6338e9f79371688e62392e04268b3}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{The Quarterly Journal of Economics}
+      \field{number}{2}
+      \field{title}{Generative {AI} at work}
+      \field{volume}{140}
+      \field{year}{2025}
+      \field{pages}{889\bibrangedash 942}
+      \range{pages}{54}
+      \verb{doi}
+      \verb 10.1093/qje/qjae044
+      \endverb
+    \endentry
+    \entry{dellacqua2023}{report}{}{}
+      \name{author}{9}{}{%
+        {{un=0,uniquepart=base,hash=d483cf96686fe3ddac398e2392a42050}{%
+           family={Dell'Acqua},
+           familyi={D\bibinitperiod},
+           given={Fabrizio},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ed273453afa56678b05eeea1cf5a17d3}{%
+           family={McFowland},
+           familyi={M\bibinitperiod},
+           given={Edward},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ffc1d7cdd406a996180acfcaf69f491c}{%
+           family={Mollick},
+           familyi={M\bibinitperiod},
+           given={Ethan\bibnamedelima R.},
+           giveni={E\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=240bce7a3d84a93af83210bf6b260897}{%
+           family={Lifshitz-Assaf},
+           familyi={L\bibinithyphendelim A\bibinitperiod},
+           given={Hila},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1fc721f10492d1acf7e5244b8f60122b}{%
+           family={Kellogg},
+           familyi={K\bibinitperiod},
+           given={Katherine},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=43f5c08ce9f393600e53a11143403a02}{%
+           family={Rajendran},
+           familyi={R\bibinitperiod},
+           given={Saran},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8056722de998a5e712c3f07ea9b7bf32}{%
+           family={Krayer},
+           familyi={K\bibinitperiod},
+           given={Lisa},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=56f4470deafd2a1dc4c10f4e465e706e}{%
+           family={Candelon},
+           familyi={C\bibinitperiod},
+           given={François},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5e63af7268feabfea0dfb53e2ec62d60}{%
+           family={Lakhani},
+           familyi={L\bibinitperiod},
+           given={Karim\bibnamedelima R.},
+           giveni={K\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {Harvard Business School}%
+      }
+      \strng{namehash}{8cc7b69dd2f7bcb35c5c01570e68e6a8}
+      \strng{fullhash}{8d6a2a5c641d19d7294c13c309972ce7}
+      \strng{fullhashraw}{8d6a2a5c641d19d7294c13c309972ce7}
+      \strng{bibnamehash}{8d6a2a5c641d19d7294c13c309972ce7}
+      \strng{authorbibnamehash}{8d6a2a5c641d19d7294c13c309972ce7}
+      \strng{authornamehash}{8cc7b69dd2f7bcb35c5c01570e68e6a8}
+      \strng{authorfullhash}{8d6a2a5c641d19d7294c13c309972ce7}
+      \strng{authorfullhashraw}{8d6a2a5c641d19d7294c13c309972ce7}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{number}{24-013}
+      \field{title}{Navigating the jagged technological frontier: Field experimental evidence of the effects of {AI} on knowledge worker productivity and quality}
+      \field{type}{Working Paper}
+      \field{urlday}{3}
+      \field{urlmonth}{11}
+      \field{urlyear}{2026}
+      \field{year}{2023}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.hbs.edu/faculty/Pages/item.aspx?num=64700
+      \endverb
+      \verb{url}
+      \verb https://www.hbs.edu/faculty/Pages/item.aspx?num=64700
+      \endverb
+    \endentry
+    \entry{epstein2019}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=6f51d161b02b320ee5bd64dfdb7d4113}{%
+           family={Epstein},
+           familyi={E\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Riverhead Books}%
+      }
+      \strng{namehash}{6f51d161b02b320ee5bd64dfdb7d4113}
+      \strng{fullhash}{6f51d161b02b320ee5bd64dfdb7d4113}
+      \strng{fullhashraw}{6f51d161b02b320ee5bd64dfdb7d4113}
+      \strng{bibnamehash}{6f51d161b02b320ee5bd64dfdb7d4113}
+      \strng{authorbibnamehash}{6f51d161b02b320ee5bd64dfdb7d4113}
+      \strng{authornamehash}{6f51d161b02b320ee5bd64dfdb7d4113}
+      \strng{authorfullhash}{6f51d161b02b320ee5bd64dfdb7d4113}
+      \strng{authorfullhashraw}{6f51d161b02b320ee5bd64dfdb7d4113}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Range: Why generalists triumph in a specialized world}
+      \field{year}{2019}
+    \endentry
+    \entry{hansen2001}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=8f5a5811e789e226bd1dab3c145c2cf5}{%
+           family={Hansen},
+           familyi={H\bibinitperiod},
+           given={Morten\bibnamedelima T.},
+           giveni={M\bibinitperiod\bibinitdelim T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0602d406fcdc328cf1b5227806daa148}{%
+           family={Oetinger},
+           familyi={O\bibinitperiod},
+           given={Bolko},
+           giveni={B\bibinitperiod},
+           givenun=0,
+           prefix={von},
+           prefixi={v\bibinitperiod}}}%
+      }
+      \strng{namehash}{4145fa0faa9561037464ce35e0aa7ecc}
+      \strng{fullhash}{4145fa0faa9561037464ce35e0aa7ecc}
+      \strng{fullhashraw}{4145fa0faa9561037464ce35e0aa7ecc}
+      \strng{bibnamehash}{4145fa0faa9561037464ce35e0aa7ecc}
+      \strng{authorbibnamehash}{4145fa0faa9561037464ce35e0aa7ecc}
+      \strng{authornamehash}{4145fa0faa9561037464ce35e0aa7ecc}
+      \strng{authorfullhash}{4145fa0faa9561037464ce35e0aa7ecc}
+      \strng{authorfullhashraw}{4145fa0faa9561037464ce35e0aa7ecc}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Harvard Business Review}
+      \field{number}{3}
+      \field{title}{Introducing {T}-shaped managers: Knowledge management's next generation}
+      \field{volume}{79}
+      \field{year}{2001}
+    \endentry
+    \entry{hu2023}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=35aa9f6d2ff77433ee325b40e993f1a4}{%
+           family={Hu},
+           familyi={H\bibinitperiod},
+           given={Krystal},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{organization}{1}{%
+        {Reuters}%
+      }
+      \strng{namehash}{35aa9f6d2ff77433ee325b40e993f1a4}
+      \strng{fullhash}{35aa9f6d2ff77433ee325b40e993f1a4}
+      \strng{fullhashraw}{35aa9f6d2ff77433ee325b40e993f1a4}
+      \strng{bibnamehash}{35aa9f6d2ff77433ee325b40e993f1a4}
+      \strng{authorbibnamehash}{35aa9f6d2ff77433ee325b40e993f1a4}
+      \strng{authornamehash}{35aa9f6d2ff77433ee325b40e993f1a4}
+      \strng{authorfullhash}{35aa9f6d2ff77433ee325b40e993f1a4}
+      \strng{authorfullhashraw}{35aa9f6d2ff77433ee325b40e993f1a4}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{2}
+      \field{month}{2}
+      \field{title}{{ChatGPT} sets record for fastest-growing user base: analyst note}
+      \field{urlday}{3}
+      \field{urlmonth}{11}
+      \field{urlyear}{2026}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.reuters.com/technology/chatgpt-sets-record-fastest-growing-user-base-analyst-note-2023-02-01/
+      \endverb
+      \verb{url}
+      \verb https://www.reuters.com/technology/chatgpt-sets-record-fastest-growing-user-base-analyst-note-2023-02-01/
+      \endverb
+    \endentry
+    \entry{mckinsey2025}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=96eaa81a81a29c441708d1ec4be5a27b}{%
+           family={{McKinsey \& Company}},
+           familyi={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{96eaa81a81a29c441708d1ec4be5a27b}
+      \strng{fullhash}{96eaa81a81a29c441708d1ec4be5a27b}
+      \strng{fullhashraw}{96eaa81a81a29c441708d1ec4be5a27b}
+      \strng{bibnamehash}{96eaa81a81a29c441708d1ec4be5a27b}
+      \strng{authorbibnamehash}{96eaa81a81a29c441708d1ec4be5a27b}
+      \strng{authornamehash}{96eaa81a81a29c441708d1ec4be5a27b}
+      \strng{authorfullhash}{96eaa81a81a29c441708d1ec4be5a27b}
+      \strng{authorfullhashraw}{96eaa81a81a29c441708d1ec4be5a27b}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{5}
+      \field{month}{11}
+      \field{title}{The state of {AI} in 2025: Agents, innovation, and transformation}
+      \field{urlday}{3}
+      \field{urlmonth}{11}
+      \field{urlyear}{2026}
+      \field{year}{2025}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai
+      \endverb
+      \verb{url}
+      \verb https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai
+      \endverb
+    \endentry
+    \entry{ransbotham2020}{report}{}{}
+      \name{author}{6}{}{%
+        {{un=0,uniquepart=base,hash=391a949ae8897b108b754b16e21ec62e}{%
+           family={Ransbotham},
+           familyi={R\bibinitperiod},
+           given={Sam},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=53928f4a069a019e63969f77a6de1838}{%
+           family={Khodabandeh},
+           familyi={K\bibinitperiod},
+           given={Shervin},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7a057edcd4073b2f9063bbb393c1df0b}{%
+           family={Kiron},
+           familyi={K\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=56f4470deafd2a1dc4c10f4e465e706e}{%
+           family={Candelon},
+           familyi={C\bibinitperiod},
+           given={François},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8e9adf2c78c7e31af092f3643bc983be}{%
+           family={Chu},
+           familyi={C\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=be045e4f32cbd4cd9ee0920777d36be4}{%
+           family={LaFountain},
+           familyi={L\bibinitperiod},
+           given={Burt},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {MIT Sloan Management Review y Boston Consulting Group}%
+      }
+      \strng{namehash}{ec5a123b930cf34da8a833e56ec5c012}
+      \strng{fullhash}{4f15b4b023040f376306a07cf5058581}
+      \strng{fullhashraw}{4f15b4b023040f376306a07cf5058581}
+      \strng{bibnamehash}{4f15b4b023040f376306a07cf5058581}
+      \strng{authorbibnamehash}{4f15b4b023040f376306a07cf5058581}
+      \strng{authornamehash}{ec5a123b930cf34da8a833e56ec5c012}
+      \strng{authorfullhash}{4f15b4b023040f376306a07cf5058581}
+      \strng{authorfullhashraw}{4f15b4b023040f376306a07cf5058581}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Expanding {AI}'s impact with organizational learning}
+      \field{type}{Informe}
+      \field{urlday}{3}
+      \field{urlmonth}{11}
+      \field{urlyear}{2026}
+      \field{year}{2020}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://sloanreview.mit.edu/projects/expanding-ais-impact-with-organizational-learning/
+      \endverb
+      \verb{url}
+      \verb https://sloanreview.mit.edu/projects/expanding-ais-impact-with-organizational-learning/
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
