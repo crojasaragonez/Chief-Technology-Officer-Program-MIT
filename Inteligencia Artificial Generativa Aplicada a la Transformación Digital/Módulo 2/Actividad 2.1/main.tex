@@ -1,0 +1,180 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands,es-tabla]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{csquotes}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=apa,sorting=nyt,maxcitenames=2]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+
+\geometry{margin=2.3cm}
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\setlist{nosep}
+\addbibresource{referencias.bib}
+\AtBeginBibliography{\sloppy\small}
+\setlength{\bibitemsep}{0.3em}
+
+\definecolor{cEje}{RGB}{26,58,102}
+\definecolor{cGris}{RGB}{120,116,110}
+\definecolor{cFondo}{RGB}{244,242,238}
+
+% Enunciado de cada paso, en gris y con sangría.
+\newcommand{\pregunta}[1]{%
+  \begin{quote}\color{cGris}\small\itshape #1\end{quote}}
+
+% Recuadro para el prompt original.
+\newenvironment{prompt}{%
+  \begin{center}\begin{minipage}{0.92\textwidth}\color{black!80}\small
+  \setlength{\parskip}{0.4em}}{%
+  \end{minipage}\end{center}}
+
+\begin{document}
+
+% --- Portada -----------------------------------------------------------------
+\begin{titlepage}
+\centering
+\vspace*{3.2cm}
+{\large\scshape Inteligencia Artificial Generativa\\
+Aplicada a la Transformación Digital\par}
+\vspace{0.5cm}
+{\normalsize Módulo 2. Actividad 2.1\par}
+\vspace{2.6cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vspace{0.7cm}
+{\LARGE\bfseries ¿Publicaría lo que escribió la IA?\par}
+\vspace{0.5cm}
+{\large Las cuatro preguntas aplicadas a un artículo\\
+sobre gemelos digitales para fondos de inversión\par}
+\vspace{0.7cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vfill
+{\large Carlos Luis Rojas Aragonés\par}
+\vspace{0.3cm}
+{\normalsize Chief Technology Officer Program\par}
+\vspace{0.3cm}
+{\normalsize 7 de noviembre de 2026\par}
+\vspace*{1.5cm}
+\end{titlepage}
+
+% --- Paso 1 ------------------------------------------------------------------
+\section*{1. El resultado que evalué}
+
+\pregunta{Utilice una herramienta de IA generativa de su elección para crear
+un resultado relevante para su contexto profesional.}
+
+Le pedí a un agente de Claude Code que redactara para mi blog un artículo
+sobre gemelos digitales aplicados a fondos de inversión privados, a partir de
+lo que estamos probando en Subaxa. El resultado fue un artículo en inglés con
+cinco figuras: un diagrama de Sankey con el destino del dinero de la venta de
+una propiedad y un modelo de ejemplo con 2000 simulaciones
+\parencite{rojas2026twins}. Este fue el prompt:
+
+\begin{prompt}
+\itshape
+Let's write an post in my blog about \enquote{Digital twins for private
+investment funds}.
+what I want is to briefly explain the Digital Twin concept
+and the explain how a digital twin works in real life. We are experimenting
+with them for our private investment funds at Subaxa and it help us
+visualize different scenarios and analyze different paths we could take and
+the eventual results in a safe and simulated environment. we can't disclosure
+subaxa comercial secrets but we can describe it at a high level. make sure
+you include images and/or charts to ilustrate and make the article easier
+to read.
+
+I want to include an extra image to illustrate a cash distribution in a
+property investment. a Sankey diagram would make a lot of sense.
+\end{prompt}
+
+Lo evalúo comparando la primera versión que generó la IA con la que terminé
+publicando. Las dos quedaron en el historial del repositorio del blog.
+
+% --- Paso 2 ------------------------------------------------------------------
+\section*{2. Las cuatro preguntas}
+
+\pregunta{¿La información es precisa? ¿Está actualizada? ¿Encaja con este
+contexto? ¿Qué habría que verificar antes de actuar?}
+
+\textbf{¿Es precisa?} En su mayoría, sí. Las cifras del Sankey cuadran y las
+de las simulaciones salen de un código que se puede volver a correr
+\parencite{rojas2026codigo}. Pero la primera versión decía que los
+inversionistas casi nunca pueden probar una estrategia antes de ejecutarla,
+y eso es falso: el análisis de escenarios y las simulaciones de Monte Carlo
+se usan en finanzas desde hace décadas. Queda además un detalle menor: la
+figura dice 3\,\% de escenarios con pérdidas y el texto, 2,7\,\%.
+
+\textbf{¿Está actualizada?} El concepto, sí. La historia del término es otra
+cosa: la IA contó la versión clásica (Grieves en 2002, NASA en 2010) sin
+mencionar que hay revisiones que la cuestionan.
+
+\textbf{¿Encaja con el contexto?} En tono y alcance, sí. No revela nada de
+Subaxa y marca cada cifra como ilustrativa. Lo que no encajaba era llamar
+gemelo digital a una simulación que no está conectada a ningún fondo real,
+cuando esa conexión es justamente lo que define a un gemelo
+\parencite{nasem2023}.
+
+\textbf{¿Qué verificaría antes de actuar?} Las fuentes, porque la primera
+versión no tenía ninguna; que los rendimientos digan que son antes de
+comisiones e impuestos; el supuesto de que las propiedades son
+independientes; y que las frases sobre cómo usamos el gemelo en Subaxa
+reflejen lo que de verdad hacemos.
+
+% --- Paso 3 ------------------------------------------------------------------
+\section*{3. Mi valoración como líder}
+
+\pregunta{¿Utilizaría este resultado en un contexto empresarial real? ¿Qué
+revisiones o salvaguardas aplicaría? ¿Qué riesgos surgirían si se usara sin
+revisión?}
+
+Sí lo usé: el artículo está publicado. Pero no la primera versión, sino la
+revisada. Para un blog, el riesgo es de reputación. Para decidir una
+inversión no usaría el modelo de ejemplo, porque no está calibrado con datos
+reales.
+
+Las salvaguardas que aplicaría son leer cada afirmación como si la hubiera
+escrito un analista nuevo, exigir una fuente para cada dato, publicar el
+código para que las figuras se puedan reproducir y revisar que nada revele
+información comercial. Si el modelo se usara para decidir, lo calibraría con
+datos del fondo y le agregaría choques que afectan a todas las propiedades
+a la vez, como una recesión o un cambio en los juzgados.
+
+Sin revisión, los riesgos son publicar errores con mi nombre, que un
+inversionista lea el 1,32 como una promesa de rendimiento y que alguien
+concluya que diversificar elimina el riesgo de perder dinero, cuando eso solo
+pasa en un modelo que ignora los choques compartidos.
+
+% --- Paso 4 ------------------------------------------------------------------
+\section*{4. Reflexión sobre el uso responsable de la IA}
+
+\pregunta{¿Qué revela este ejercicio sobre el papel del criterio humano al
+utilizar IA? ¿Cómo influirá esto en la forma en que usted o su organización
+utilicen la IA en adelante?}
+
+La IA escribió en minutos un artículo que me habría tomado mucho más tiempo,
+y lo escribió bien. Justamente por eso hay que tener cuidado. Los errores no
+estaban en la redacción, sino en afirmaciones que suenan razonables y que
+solo se detectan si uno conoce el negocio y el tema. El criterio humano ya
+no está tanto en escribir como en saber qué preguntar y qué no dar por
+cierto. Un texto bien escrito genera confianza, y esa confianza es la que
+hay que poner a prueba. Revisar no es desconfiar de la herramienta, es hacer
+el trabajo que le toca a uno.
+
+En adelante voy a tratar lo que produce la IA como el borrador de un analista
+junior: rápido y útil, pero firmado por mí. En Subaxa quiero que cualquier
+texto o modelo hecho con IA que llegue a inversionistas pase por una revisión
+de fuentes y de cifras, y que los modelos que apoyen decisiones se validen
+con datos reales antes de usarlos. La IA acelera el trabajo; la
+responsabilidad no se delega.
+
+\printbibliography[title={Referencias}]
+
+\end{document}
