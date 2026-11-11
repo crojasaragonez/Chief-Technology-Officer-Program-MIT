@@ -3,6 +3,9 @@
 \usepackage[spanish,es-noshorthands,es-tabla]{babel}
 \usepackage{fontspec}
 \setmainfont{Source Serif Pro}
+% Símbolo del colón, que Source Serif Pro no trae.
+\newfontfamily\fuentecolon{DejaVu Sans}[Scale=MatchLowercase]
+\newcommand{\colones}{{\fuentecolon ₡}}
 \usepackage{microtype}
 \usepackage{geometry}
 \usepackage{enumitem}
@@ -12,7 +15,8 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{xurl}
-\usepackage[hidelinks]{hyperref}
+\usepackage[colorlinks=true,urlcolor=cEje,linkcolor=black]{hyperref}
+\usepackage[breakable]{tcolorbox}
 
 \geometry{margin=2.3cm}
 \hbadness=10000
@@ -40,17 +44,16 @@
   \setlength{\parskip}{0.4em}\itshape}{%
   \end{minipage}\end{center}}
 
-% Captura de pantalla. Si el archivo todavía no existe, deja un aviso en su
-% lugar para que el documento compile igual.
-%   \captura{archivo dentro de capturas/}{pie de figura}
-\newcommand{\captura}[2]{%
-  \begin{figure}[p]\centering
-  \IfFileExists{capturas/#1}{%
-    \includegraphics[angle=90,height=0.88\textheight]{capturas/#1}}{%
-    \fbox{\parbox[c][3cm][c]{0.8\textwidth}{\centering
-      \pendiente{guardar la captura en capturas/#1}}}}
-  \caption{#2}
-  \end{figure}}
+% Recuadro con la salida de un prompt, tal como la devolvió la herramienta.
+% El texto vive en un archivo aparte, generado con md2tex.py.
+%   \resultado{título}{archivo.tex}
+\newcommand{\resultado}[2]{%
+  \begin{tcolorbox}[breakable,colback=cFondo,colframe=cEje,
+    boxrule=0.5pt,arc=1.5pt,left=7pt,right=7pt,top=5pt,bottom=5pt,
+    title={#1},fonttitle=\small\bfseries]
+  \footnotesize\setlength{\parskip}{0.35em}\raggedright
+  \input{#2}
+  \end{tcolorbox}}
 
 % Entrada de la biblioteca de prompts.
 %   \entrada{nombre}{cuándo usarlo}{plantilla}{buen resultado}{técnicas}
@@ -152,19 +155,19 @@ Judicial news site, the Asamblea Legislativa record of those two bills, and
 the competitors' sites. Open every article you cite and confirm its date and
 what it says. If you could not open a source, say so.
 
-Format: Answer in Spanish, in at most 300 words, not counting links. First
+Format: Answer in English, in at most 300 words, not counting links. First
 line: the verdict in one sentence (whether there were consequential
 developments this week). Then at most three developments, most important
-first, each with three labeled lines: \enquote{Qué cambió} (confirmed fact,
-with link), \enquote{Por qué importa} (your analysis), \enquote{Seguimiento}
-(one concrete action). \enquote{En vigilancia}: at most two items from
-outside the week, one line each. \enquote{No verificado}: anything you could
-not confirm. \enquote{Fuentes revisadas}: one line per primary source, saying
+first, each with three labeled lines: \enquote{What changed} (confirmed fact,
+with link), \enquote{Why it matters} (your analysis), \enquote{Follow-up}
+(one concrete action). \enquote{Watch list}: at most two items from
+outside the week, one line each. \enquote{Unverified}: anything you could
+not confirm. \enquote{Sources checked}: one line per primary source, saying
 whether you opened it and whether you saw any change.
 
 Constraints: Keep confirmed facts separate from your analysis. Leave out
 routine or speculative news and anything outside the dates that does not fit
-in \enquote{En vigilancia}. Do not pad: if nothing qualifies, say so and stop
+in \enquote{Watch list}. Do not pad: if nothing qualifies, say so and stop
 after the fixed sections.
 \end{prompt}
 
@@ -179,7 +182,7 @@ Componente & Primera versión & Versión final \\
 Rol           & No estaba. & Analista de mercado que le reporta al CTO. \\
 Tarea         & Novedades de \enquote{la última semana}. & Igual, con fechas exactas. \\
 Contexto      & Solo el nombre de Subaxa. & Qué hace Subaxa, de qué fuentes depende y para qué uso el informe. \\
-Formato       & Qué explicar de cada novedad. & Español, 300 palabras, veredicto primero y secciones fijas. \\
+Formato       & Qué explicar de cada novedad. & Máximo 300 palabras, veredicto primero y secciones fijas. \\
 Restricciones & Separar hechos de análisis y evitar lo rutinario. & Además, qué cuenta como relevante, abrir las fuentes y no rellenar. \\
 \bottomrule
 \end{tabularx}
@@ -191,67 +194,13 @@ A la primera versión le faltaban el rol, el contexto y el formato. Su
 resultado salió de resúmenes del buscador y se llenó de noticias
 viejas. En la segunda definí qué es relevante, pedí abrir las fuentes y
 fijé el formato. El nuevo resultado dice cuáles fuentes revisó y cuáles no
-pudo leer, y encontró dos cosas que el primero no vio: un bloqueo en las
-consultas del Registro Nacional y los precios de un competidor.
+pudo leer, y encontró dos cosas que el primero no vio: una circular que fija
+el formato de los edictos y los precios de un competidor.
 
-\captura{resultado-v1.png}{Resultado de la primera versión (captura de la terminal, girada para que se pueda leer).}
-\begin{figure}[p]\centering
-\fcolorbox{cGris}{cFondo}{\begin{minipage}{0.93\textwidth}\footnotesize
-\setlength{\parskip}{0.35em}
-\textbf{Veredicto:} No confirmé ningún desarrollo consecuente para Subaxa
-entre el 3 y el 10 de noviembre de 2026, pero no pude leer las ediciones del
-Boletín Judicial ni abrir el sitio de la Asamblea Legislativa.
+\resultado{Resultado de la primera versión}{resultado-v1.tex}
+\resultado{Resultado de la versión final}{resultado-v2.tex}
 
-\textbf{En vigilancia}
-\begin{itemize}[leftmargin=1.2em]
-\item Registro Nacional: hoy \texttt{rnpdigital.com/consultas/} me devolvió
-un aviso de IP en \enquote{lista negra}, mientras que la página de login sí
-abrió. Una guía de terceros ya reportaba ese bloqueo al 4 de setiembre de
-2026, así que no es de esta semana. Conviene revisar si nuestra recolección
-recibe ese aviso. \url{https://www.rnpdigital.com/consultas/} y
-\url{https://www.businessdataguide.com/blog/jurisdictions/costa-rica-company-search-guide}
-\item RemateJudicialCR: publica planes desde \$29,90 al año, con mapa,
-análisis de riesgo con IA y un plan gratuito, muy por debajo de nuestros
-\$27 al mes. No pude fechar el lanzamiento.
-\url{https://rematejudicialcr.com/planes}
-\end{itemize}
-
-\textbf{No verificado}
-\begin{itemize}[leftmargin=1.2em]
-\item Contenido y formato de las ediciones del Boletín Judicial del 3 al 10
-de noviembre: NexusPJ no entregó el texto.
-\item Estado del expediente 19.722: solo confirmé que se presentó en 2015
-(El Mundo); en Delfino da 404.
-\url{https://elmundo.cr/costa-rica/diputado-plantea-proyecto-de-ley-para-habilitar-los-remates-judiciales-via-internet/}
-\item Expediente 25.745: según Delfino, es la \enquote{Ley para la
-modernización y digitalización de las cédulas hipotecarias}, en Asuntos
-Jurídicos y sin movimientos desde el 26 de agosto de 2026. No lo contrasté
-con el registro oficial. \url{https://delfino.cr/asamblea/proyecto/25745}
-\item Latinoamérica: solo hice una búsqueda, sin abrir fuentes primarias; no
-apareció nada fechado en la semana.
-\end{itemize}
-
-\textbf{Fuentes revisadas}
-\begin{itemize}[leftmargin=1.2em]
-\item Boletín Judicial (\url{https://boletinjudicial.poder-judicial.go.cr/}):
-abierto; sin avisos de cambio en la portada. Ediciones en NexusPJ: no
-legibles.
-\item Registro Nacional (\url{https://www.rnpdigital.com/}): portada y login
-abiertos, sin avisos fechados; consultas bloqueadas.
-\item Noticias del Poder Judicial
-(\url{https://pj.poder-judicial.go.cr/index.php/enlace-noticias}): abierto;
-nada sobre remates, edictos o cobro judicial. Las agendas de Corte Plena del
-2 y 9 de noviembre tampoco los incluyen.
-\item Asamblea Legislativa (asamblea.go.cr): no abrió (error de certificado).
-\item Competidores: abrí rematejusto.com, rematesrjc.com, rematescr.org,
-rematejudicialcr.com, remate360.app y rematescostarica.info; ninguno muestra
-anuncios fechados en la semana, y no tengo versión previa para comparar.
-\end{itemize}
-\end{minipage}}
-\caption{Resultado de la versión final, transcrito tal como lo devolvió la
-herramienta.}
-\end{figure}
-
+\clearpage
 % === Paso 2 (no cuenta para el límite de palabras) ===========================
 \section*{2. Mi biblioteca de prompts}
 
@@ -285,9 +234,9 @@ dos funciones profesionales o tipos de tareas distintos.}
   Format: Answer in [IDIOMA], in at most [N] words. First line: the verdict
   in one sentence. Then at most [N] developments, each with three labeled
   lines: what changed (confirmed fact, with link), why it matters (your
-  analysis) and one follow-up action. Then \enquote{En vigilancia} (at most
-  [N] items outside the dates), \enquote{No verificado} and \enquote{Fuentes
-  revisadas} (one line per primary source).
+  analysis) and one follow-up action. Then \enquote{Watch list} (at most
+  [N] items outside the dates), \enquote{Unverified} and \enquote{Sources
+  checked} (one line per primary source).
 
   Constraints: Keep confirmed facts separate from your analysis. Leave out
   routine or speculative news. Do not pad: if nothing qualifies, say so and

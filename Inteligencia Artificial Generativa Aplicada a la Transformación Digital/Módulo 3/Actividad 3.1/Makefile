@@ -9,7 +9,11 @@
 
 pdf: main.pdf
 
-main.pdf: main.tex $(wildcard capturas/*)
+# Las salidas de los prompts se guardan en markdown y se convierten a LaTeX.
+resultado-%.tex: resultado-%.md md2tex.py
+	python3 md2tex.py $< > $@
+
+main.pdf: main.tex $(patsubst %.md,%.tex,$(wildcard resultado-*.md))
 	lualatex -interaction=nonstopmode -halt-on-error main.tex
 	lualatex -interaction=nonstopmode -halt-on-error main.tex
 
