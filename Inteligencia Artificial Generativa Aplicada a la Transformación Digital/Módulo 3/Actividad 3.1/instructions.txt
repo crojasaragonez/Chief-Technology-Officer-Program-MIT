@@ -1,0 +1,45 @@
+Actividad obligatoria 3.1: Su prompt en la práctica
+
+Introducción
+
+La ingeniería de prompts solo resulta útil cuando se lleva a la práctica. Esta actividad le propone precisamente eso: aplicar las técnicas y los marcos presentados en este módulo a una tarea profesional real, reflexionar sobre el proceso y comenzar a crear una biblioteca de prompts que vaya a utilizar en su trabajo.
+
+Anteriormente, desarrolló un marco de evaluación crítica para analizar los resultados generados por IA y la información proporcionada por los proveedores. Este marco planteaba si la información era correcta, estaba actualizada y resultaba adecuada, así como qué aspectos debían verificarse todavía. Se centraba, por tanto, en la confianza: ¿es posible confiar en la información que proporciona la IA?
+
+Este módulo traslada ese hábito a otro momento del proceso: después de ejecutar un prompt, cuando debe decidir si acepta el resultado o continúa perfeccionándolo.
+
+Complete los tres pasos antes de entregar la actividad. Puede redactar la respuesta como un texto continuo o utilizar un encabezado breve para cada paso. La extensión total debe ser de aproximadamente 400–500 palabras, además de las entradas de la biblioteca de prompts.
+
+
+Paso 1: Diseñe un prompt para una tarea profesional real (entre 80 y 120 palabras)
+
+    Identifique una tarea profesional que realice con regularidad: un resumen, un informe, una comunicación con las partes interesadas, un memorando de decisión o similar.
+    Diseñe un prompt para esa tarea utilizando el marco de los cinco componentes: rol, tarea, contexto, formato y restricciones.
+    Ejecute el prompt en una herramienta de IA, evalúe el resultado utilizando el marco de las cuatro preguntas del capítulo 2 y realice al menos una iteración.
+    Describa: (a) la tarea elegida, (b) el prompt final, (c) los cambios realizados entre la primera y la segunda versión y (d) qué ha permitido conseguir el resultado mejorado que no permitía el primero.
+
+Mi prompt:
+
+  Research consequential developments from the past week in the judicial-auction market that could affect Subaxa. Prioritize Costa Rica, then Latin America and international developments with clear transferable relevance. Focus especially on changes to auction data sources and access, collection or scraping methods, auction platform practices, and business models. For each development, explain what changed, why it matters to Subaxa, and any concrete implication or follow-up worth considering. Use reliable, current sources and include links. Distinguish confirmed facts from analysis, avoid routine or speculative news, and say briefly if there were no consequential developments.
+
+Paso 2: Comience a crear su biblioteca de prompts (objetivo de aprendizaje 3 del módulo)
+
+Utilice la plantilla para la biblioteca de prompts incluida en la sección "Para profundizar: Cree su biblioteca personal de prompts" y cree al menos tres entradas completas que abarquen un mínimo de dos funciones profesionales o tipos de tareas distintos.
+
+Cada entrada debe incluir:
+
+    el nombre de la tarea;
+    cuándo debe utilizarse;
+    la plantilla completa del prompt, con los elementos variables entre corchetes "[ ]";
+    una nota sobre las características que debe tener un buen resultado;
+    las técnicas utilizadas.
+
+El prompt del paso 1 puede ser una de las tres entradas.
+
+Paso 3: Reflexione sobre la calidad del prompt y el proceso de iteración (entre 150 y 200 palabras)
+
+    Reflexione sobre lo que ha revelado el proceso de iteración.
+    Indique cuál de los cuatro criterios de evaluación —corrección, pertinencia, formato y tono, e integridad— ha resultado más difícil de satisfacer en su tarea.
+    Explique qué revela esta dificultad sobre la técnica de ingeniería de prompts utilizada o sobre las limitaciones de la IA para este tipo de tarea.
+    Describa cómo cambiará esto su manera de utilizar las herramientas de IA a partir de ahora.
+

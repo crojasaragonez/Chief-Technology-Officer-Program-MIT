@@ -1,0 +1,399 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands,es-tabla]{babel}
+\usepackage{fontspec}
+\setmainfont{Source Serif Pro}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+
+\geometry{margin=2.3cm}
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\setlist{nosep}
+
+\definecolor{cEje}{RGB}{26,58,102}
+\definecolor{cGris}{RGB}{120,116,110}
+\definecolor{cFondo}{RGB}{244,242,238}
+\definecolor{cPend}{RGB}{176,48,32}
+
+% Enunciado de cada paso, en gris y con sangría.
+\newcommand{\pregunta}[1]{%
+  \begin{quote}\color{cGris}\small\itshape #1\end{quote}}
+
+% Marca en rojo lo que falta escribir. Al terminar no debe quedar ninguna
+% (make check lo revisa).
+\newcommand{\pendiente}[1]{{\color{cPend}\itshape [Pendiente: #1]}}
+
+% Recuadro para un prompt, con fondo suave.
+\newenvironment{prompt}{%
+  \begin{center}\begin{minipage}{0.92\textwidth}\color{black!80}\small
+  \setlength{\parskip}{0.4em}\itshape}{%
+  \end{minipage}\end{center}}
+
+% Captura de pantalla. Si el archivo todavía no existe, deja un aviso en su
+% lugar para que el documento compile igual.
+%   \captura{archivo dentro de capturas/}{pie de figura}
+\newcommand{\captura}[2]{%
+  \begin{figure}[p]\centering
+  \IfFileExists{capturas/#1}{%
+    \includegraphics[angle=90,height=0.88\textheight]{capturas/#1}}{%
+    \fbox{\parbox[c][3cm][c]{0.8\textwidth}{\centering
+      \pendiente{guardar la captura en capturas/#1}}}}
+  \caption{#2}
+  \end{figure}}
+
+% Entrada de la biblioteca de prompts.
+%   \entrada{nombre}{cuándo usarlo}{plantilla}{buen resultado}{técnicas}
+\newcommand{\entrada}[5]{%
+  \subsection*{#1}
+  \textbf{Cuándo usarlo.} #2
+
+  \textbf{Plantilla.}
+  \begin{prompt}#3\end{prompt}
+
+  \textbf{Cómo se ve un buen resultado.} #4
+
+  \textbf{Técnicas.} #5}
+
+\begin{document}
+
+% === Portada =================================================================
+\begin{titlepage}
+\centering
+\vspace*{3.2cm}
+{\large\scshape Inteligencia Artificial Generativa\\
+Aplicada a la Transformación Digital\par}
+\vspace{0.5cm}
+{\normalsize Módulo 3. Actividad 3.1\par}
+\vspace{2.6cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vspace{0.7cm}
+{\LARGE\bfseries Mi prompt en la práctica\par}
+\vspace{0.5cm}
+{\large Seguimiento semanal del mercado de remates judiciales\\
+para Subaxa\par}
+\vspace{0.7cm}
+{\color{cEje}\rule{0.55\textwidth}{0.8pt}\par}
+\vfill
+{\large Carlos Luis Rojas Aragonés\par}
+\vspace{0.3cm}
+{\normalsize Chief Technology Officer Program\par}
+\vspace{0.3cm}
+{\normalsize 10 de noviembre de 2026\par}
+\vspace*{1.5cm}
+\end{titlepage}
+
+% === Paso 1 (80 a 120 palabras, sin contar los prompts) ======================
+\section*{1. El prompt y su iteración}
+
+\pregunta{Describa: (a) la tarea elegida, (b) el prompt final, (c) los
+cambios realizados entre la primera y la segunda versión y (d) qué ha
+permitido conseguir el resultado mejorado que no permitía el primero.}
+
+% (a) La tarea: qué es, cada cuánto la hace y para qué le sirve.
+Cada semana reviso si pasó algo en el mercado de remates judiciales que
+afecte a Subaxa: cambios en las fuentes de datos, en los remates o en la
+competencia. Ejecuté las dos versiones en Claude Code.
+
+% Primera versión, tal cual la ejecutó. No la corrija ni la traduzca.
+\textbf{Primera versión.}
+\begin{prompt}
+Research consequential developments from the past week in the
+judicial-auction market that could affect Subaxa. Prioritize Costa Rica, then
+Latin America and international developments with clear transferable
+relevance. Focus especially on changes to auction data sources and access,
+collection or scraping methods, auction platform practices, and business
+models. For each development, explain what changed, why it matters to Subaxa,
+and any concrete implication or follow-up worth considering. Use reliable,
+current sources and include links. Distinguish confirmed facts from analysis,
+avoid routine or speculative news, and say briefly if there were no
+consequential developments.
+\end{prompt}
+
+% (b) Versión final, íntegra. La rúbrica pide el prompt completo, no un resumen.
+\textbf{Versión final.}
+\begin{prompt}
+You are a market-intelligence analyst reporting to the CTO of Subaxa.
+
+Context: Subaxa is a Costa Rican PropTech company. Its platform helps
+investors buy real estate at judicial auctions in Costa Rica: an interactive
+map of opportunities, AI-based analysis, and a legal and investment team that
+supports the investor through the auction. The platform depends on auction
+edicts published in the Boletín Judicial (run by the Poder Judicial) and on
+property data from the Registro Nacional, which we collect automatically. I
+read this brief every Monday to decide whether we need to change our data
+collection, our product or our priorities.
+
+Task: Research developments from November 3 to November 10, 2026 in the
+judicial-auction market that could affect Subaxa. Cover Costa Rica first,
+then Latin America and other countries only when the lesson clearly transfers
+to Costa Rica.
+
+A development is consequential only if it changes at least one of these:
+(1) what auction data is published, where, or how it can be accessed (login,
+format, fees, terms of use, rate limits); (2) how judicial auctions are run
+(electronic auctions, procedural rules, bills in the Asamblea Legislativa
+such as 19.722 and 25.745); (3) what competing auction-listing platforms in
+Costa Rica offer (launches, pricing, features).
+
+Verification: Do not rely on search-result summaries. Open the primary
+sources yourself: the Boletín Judicial site, the Registro Nacional, the Poder
+Judicial news site, the Asamblea Legislativa record of those two bills, and
+the competitors' sites. Open every article you cite and confirm its date and
+what it says. If you could not open a source, say so.
+
+Format: Answer in Spanish, in at most 300 words, not counting links. First
+line: the verdict in one sentence (whether there were consequential
+developments this week). Then at most three developments, most important
+first, each with three labeled lines: \enquote{Qué cambió} (confirmed fact,
+with link), \enquote{Por qué importa} (your analysis), \enquote{Seguimiento}
+(one concrete action). \enquote{En vigilancia}: at most two items from
+outside the week, one line each. \enquote{No verificado}: anything you could
+not confirm. \enquote{Fuentes revisadas}: one line per primary source, saying
+whether you opened it and whether you saw any change.
+
+Constraints: Keep confirmed facts separate from your analysis. Leave out
+routine or speculative news and anything outside the dates that does not fit
+in \enquote{En vigilancia}. Do not pad: if nothing qualifies, say so and stop
+after the fixed sections.
+\end{prompt}
+
+% (c) Qué cambió. Una fila por componente; ponga "no estaba" o "igual" donde
+% corresponda. Borre las filas que no aporten.
+\begin{table}[htbp]\centering\small
+\caption{Los cinco componentes en cada versión del prompt.}
+\begin{tabularx}{0.95\textwidth}{@{}lXX@{}}
+\toprule
+Componente & Primera versión & Versión final \\
+\midrule
+Rol           & No estaba. & Analista de mercado que le reporta al CTO. \\
+Tarea         & Novedades de \enquote{la última semana}. & Igual, con fechas exactas. \\
+Contexto      & Solo el nombre de Subaxa. & Qué hace Subaxa, de qué fuentes depende y para qué uso el informe. \\
+Formato       & Qué explicar de cada novedad. & Español, 300 palabras, veredicto primero y secciones fijas. \\
+Restricciones & Separar hechos de análisis y evitar lo rutinario. & Además, qué cuenta como relevante, abrir las fuentes y no rellenar. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% (d) Qué logró la segunda versión que la primera no. Algo que se pueda ver
+% en los dos resultados, no una impresión general.
+A la primera versión le faltaban el rol, el contexto y el formato. Su
+resultado salió de resúmenes del buscador y se llenó de noticias
+viejas. En la segunda definí qué es relevante, pedí abrir las fuentes y
+fijé el formato. El nuevo resultado dice cuáles fuentes revisó y cuáles no
+pudo leer, y encontró dos cosas que el primero no vio: un bloqueo en las
+consultas del Registro Nacional y los precios de un competidor.
+
+\captura{resultado-v1.png}{Resultado de la primera versión (captura de la terminal, girada para que se pueda leer).}
+\begin{figure}[p]\centering
+\fcolorbox{cGris}{cFondo}{\begin{minipage}{0.93\textwidth}\footnotesize
+\setlength{\parskip}{0.35em}
+\textbf{Veredicto:} No confirmé ningún desarrollo consecuente para Subaxa
+entre el 3 y el 10 de noviembre de 2026, pero no pude leer las ediciones del
+Boletín Judicial ni abrir el sitio de la Asamblea Legislativa.
+
+\textbf{En vigilancia}
+\begin{itemize}[leftmargin=1.2em]
+\item Registro Nacional: hoy \texttt{rnpdigital.com/consultas/} me devolvió
+un aviso de IP en \enquote{lista negra}, mientras que la página de login sí
+abrió. Una guía de terceros ya reportaba ese bloqueo al 4 de setiembre de
+2026, así que no es de esta semana. Conviene revisar si nuestra recolección
+recibe ese aviso. \url{https://www.rnpdigital.com/consultas/} y
+\url{https://www.businessdataguide.com/blog/jurisdictions/costa-rica-company-search-guide}
+\item RemateJudicialCR: publica planes desde \$29,90 al año, con mapa,
+análisis de riesgo con IA y un plan gratuito, muy por debajo de nuestros
+\$27 al mes. No pude fechar el lanzamiento.
+\url{https://rematejudicialcr.com/planes}
+\end{itemize}
+
+\textbf{No verificado}
+\begin{itemize}[leftmargin=1.2em]
+\item Contenido y formato de las ediciones del Boletín Judicial del 3 al 10
+de noviembre: NexusPJ no entregó el texto.
+\item Estado del expediente 19.722: solo confirmé que se presentó en 2015
+(El Mundo); en Delfino da 404.
+\url{https://elmundo.cr/costa-rica/diputado-plantea-proyecto-de-ley-para-habilitar-los-remates-judiciales-via-internet/}
+\item Expediente 25.745: según Delfino, es la \enquote{Ley para la
+modernización y digitalización de las cédulas hipotecarias}, en Asuntos
+Jurídicos y sin movimientos desde el 26 de agosto de 2026. No lo contrasté
+con el registro oficial. \url{https://delfino.cr/asamblea/proyecto/25745}
+\item Latinoamérica: solo hice una búsqueda, sin abrir fuentes primarias; no
+apareció nada fechado en la semana.
+\end{itemize}
+
+\textbf{Fuentes revisadas}
+\begin{itemize}[leftmargin=1.2em]
+\item Boletín Judicial (\url{https://boletinjudicial.poder-judicial.go.cr/}):
+abierto; sin avisos de cambio en la portada. Ediciones en NexusPJ: no
+legibles.
+\item Registro Nacional (\url{https://www.rnpdigital.com/}): portada y login
+abiertos, sin avisos fechados; consultas bloqueadas.
+\item Noticias del Poder Judicial
+(\url{https://pj.poder-judicial.go.cr/index.php/enlace-noticias}): abierto;
+nada sobre remates, edictos o cobro judicial. Las agendas de Corte Plena del
+2 y 9 de noviembre tampoco los incluyen.
+\item Asamblea Legislativa (asamblea.go.cr): no abrió (error de certificado).
+\item Competidores: abrí rematejusto.com, rematesrjc.com, rematescr.org,
+rematejudicialcr.com, remate360.app y rematescostarica.info; ninguno muestra
+anuncios fechados en la semana, y no tengo versión previa para comparar.
+\end{itemize}
+\end{minipage}}
+\caption{Resultado de la versión final, transcrito tal como lo devolvió la
+herramienta.}
+\end{figure}
+
+% === Paso 2 (no cuenta para el límite de palabras) ===========================
+\section*{2. Mi biblioteca de prompts}
+
+\pregunta{Cree al menos tres entradas completas que abarquen un mínimo de
+dos funciones profesionales o tipos de tareas distintos.}
+
+% Las variables van entre corchetes: [PAÍS], [PERIODO], [AUDIENCIA]...
+% Al menos una entrada debe ser de otra función o tipo de tarea.
+
+\entrada{1. Informe semanal de novedades del mercado}
+  {Cada lunes, para decidir si una novedad del mercado obliga a cambiar la
+  recolección de datos, el producto o las prioridades. Necesita una
+  herramienta que pueda buscar en la web y abrir páginas.}
+  {You are a market-intelligence analyst reporting to the [PUESTO] of
+  [EMPRESA].
+
+  Context: [QUÉ HACE LA EMPRESA Y DE QUÉ FUENTES DE DATOS DEPENDE]. I read
+  this brief every [DÍA] to decide [DECISIÓN QUE APOYA EL INFORME].
+
+  Task: Research developments from [FECHA INICIAL] to [FECHA FINAL] in
+  [MERCADO] that could affect [EMPRESA]. Cover [PAÍS PRINCIPAL] first, then
+  [OTRAS REGIONES] only when the lesson clearly transfers.
+
+  A development is consequential only if it changes at least one of these:
+  [CRITERIOS DE RELEVANCIA, NUMERADOS].
+
+  Verification: Do not rely on search-result summaries. Open the primary
+  sources yourself: [FUENTES PRIMARIAS]. Open every article you cite and
+  confirm its date and what it says. If you could not open a source, say so.
+
+  Format: Answer in [IDIOMA], in at most [N] words. First line: the verdict
+  in one sentence. Then at most [N] developments, each with three labeled
+  lines: what changed (confirmed fact, with link), why it matters (your
+  analysis) and one follow-up action. Then \enquote{En vigilancia} (at most
+  [N] items outside the dates), \enquote{No verificado} and \enquote{Fuentes
+  revisadas} (one line per primary source).
+
+  Constraints: Keep confirmed facts separate from your analysis. Leave out
+  routine or speculative news. Do not pad: if nothing qualifies, say so and
+  stop after the fixed sections.}
+  {Empieza con el veredicto. Cada hecho trae un enlace que se abrió, no un
+  resumen del buscador. Dice qué fuentes revisó y qué no pudo confirmar. Si
+  no pasó nada, lo dice en pocas líneas y no rellena.}
+  {\emph{Role prompting} (analista de mercado) y \emph{zero-shot}: no lleva
+  ejemplos, así que el formato de salida fijo y la definición explícita de
+  qué es relevante hacen el trabajo que haría un ejemplo. Usa los cinco
+  componentes: rol, tarea, contexto, formato y restricciones.}
+
+\entrada{2. Borrador de artículo para el blog}
+  {Cuando quiero explicar un tema técnico a partir de algo que estamos
+  haciendo en la empresa, sin revelar información comercial.}
+  {You are a technical writer helping the [PUESTO] of [EMPRESA] write for
+  [AUDIENCIA].
+
+  Task: Write a blog post about [TEMA]. First explain the concept briefly,
+  then show how it works in practice using this experience: [EXPERIENCIA
+  REAL, A ALTO NIVEL].
+
+  Context: [QUÉ HACE LA EMPRESA]. We cannot disclose [LO QUE ES
+  CONFIDENCIAL]; describe our work only at a high level.
+
+  Format: [N] words, in [IDIOMA], with [N] figures or charts. Include
+  [FIGURA ESPECÍFICA, SI HACE FALTA].
+
+  Example: This is a previous post of mine. Match its tone, length and
+  structure, not its content: [ARTÍCULO ANTERIOR].
+
+  Constraints: Give a source with a link for every factual or historical
+  claim. Mark every number that is illustrative. Do not claim that something
+  is new or unique unless a source supports it. End with a list of the
+  claims I should verify before publishing.}
+  {Se lee de corrido, la audiencia lo entiende y suena como el artículo de
+  ejemplo. Cada dato tiene fuente. Las
+  cifras de ejemplo están marcadas como ilustrativas y cuadran entre el
+  texto y las figuras. No revela nada confidencial.}
+  {\emph{Role prompting} (redactor técnico) y \emph{one-shot}: un artículo
+  anterior sirve de ejemplo de tono y estructura. Con varios artículos
+  pasaría a ser \emph{few-shot}. Las restricciones cubren las fuentes y la
+  confidencialidad.}
+
+\entrada{3. Revisión de un texto generado por IA antes de publicarlo}
+  {Antes de publicar o enviar cualquier texto hecho con IA que vaya con mi
+  nombre o que llegue a inversionistas.}
+  {You are a skeptical editor reviewing a text before publication. You did
+  not write it and you have no reason to defend it.
+
+  Context: The text below was drafted with an AI tool for [AUDIENCIA]. It
+  will be published at [DÓNDE SE PUBLICA] under the name of [AUTOR].
+  [EMPRESA] cannot disclose [LO QUE ES CONFIDENCIAL].
+
+  Task: Review it step by step with these four questions: (1) Is it
+  accurate? (2) Is it current? (3) Does it fit this context and audience?
+  (4) What still has to be verified before acting on it?
+
+  Format: A table with one row per problem: the quoted sentence, which of
+  the four questions it fails, why, and the fix you propose. After the
+  table, one line with your verdict: publish, publish with changes, or do
+  not publish.
+
+  Constraints: Quote the text exactly. Do not rewrite the whole text. Do
+  not comment on style unless it changes the meaning. If you cannot check a
+  claim, list it as unverified and do not guess.
+
+  Text: [TEXTO A REVISAR]}
+  {Cita frases exactas del texto, no impresiones generales. Encuentra
+  afirmaciones que suenan bien pero son falsas o no tienen fuente. Separa
+  lo que está mal de lo que solo falta verificar. Termina con un veredicto
+  claro.}
+  {\emph{Role prompting} (editor escéptico, para que no defienda el texto) y
+  \emph{chain of thought}: le pido revisar paso a paso con las cuatro
+  preguntas del módulo 2 antes de dar el veredicto. La salida va en una
+  tabla.}
+
+% === Paso 3 (150 a 200 palabras) =============================================
+\section*{3. Reflexión sobre la iteración}
+
+\pregunta{Indique cuál de los cuatro criterios de evaluación (corrección,
+pertinencia, formato y tono, e integridad) ha resultado más difícil de
+satisfacer. Explique qué revela esta dificultad y cómo cambiará su manera de
+utilizar las herramientas de IA.}
+
+% Cuatro ideas, en este orden:
+%   1. qué le mostró iterar que no veía con la primera versión;
+%   2. cuál criterio costó más, con un ejemplo concreto del resultado;
+%   3. si eso es un problema del prompt o un límite de la herramienta;
+%   4. qué va a hacer distinto a partir de ahora.
+Iterar me mostró que la primera versión dejaba casi todas las decisiones en
+manos de la IA: qué era una semana, qué era relevante, qué hacer con lo
+viejo y en qué formato responder. El resultado no era malo, pero era el
+informe que la IA decidió hacer, no el que yo necesitaba.
+
+La pertinencia y el formato se resolvieron al definir el criterio y fijar la
+estructura. El criterio más difícil fue la integridad.
+Lo que más me interesa es saber si cambió algo en las fuentes de datos, y
+eso casi nunca sale en las noticias. En la segunda versión la IA abrió las
+fuentes, pero no pudo leer las ediciones del Boletín Judicial ni entrar al
+sitio de la Asamblea.
+
+Creo que esto no es un problema del prompt, sino un límite de la herramienta:
+una IA que busca en la web ve lo que se publica, no lo que cambia en
+silencio. A partir de ahora voy a pedir siempre la lista de fuentes revisadas
+y de lo no verificado, y los cambios técnicos los voy a vigilar en nuestros
+propios sistemas, no con un prompt.
+
+\end{document}
