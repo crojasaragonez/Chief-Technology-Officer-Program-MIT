@@ -1,0 +1,394 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[spanish,es-noshorthands,es-tabla]{babel}
+\usepackage{fontspec}
+% Nimbus Sans es una Helvetica libre: calza con el look & feel del MIT.
+\setmainfont{Nimbus Sans}
+% Símbolo del colón, que Nimbus Sans no trae.
+\newfontfamily\fuentecolon{Liberation Sans}
+\newcommand{\colones}{{\fuentecolon ₡}}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{csquotes}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{needspace}
+\usepackage[colorlinks=true,urlcolor=mitRojo,linkcolor=black]{hyperref}
+\usepackage[breakable]{tcolorbox}
+
+\geometry{hmargin=2.3cm,top=2.2cm,bottom=2.2cm,headheight=14pt}
+\hbadness=10000
+\setlength{\emergencystretch}{1em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlist{nosep,topsep=0.3em}
+\renewcommand{\arraystretch}{1.3}
+
+% Colores del MIT y uno por cada pieza del prompt.
+\definecolor{mitRojo}{HTML}{A31F34}
+\definecolor{mitGris}{HTML}{8A8B8C}
+\definecolor{fondo}{HTML}{F3F3F3}
+\definecolor{pRol}{HTML}{A31F34}
+\definecolor{pContexto}{HTML}{1F5C99}
+\definecolor{pTarea}{HTML}{2E7D32}
+\definecolor{pReglas}{HTML}{B35C00}
+\definecolor{pEjemplo}{HTML}{6A4C93}
+\definecolor{pFormato}{HTML}{5A5B5C}
+
+% Títulos de sección: rojo MIT, con una línea gris debajo.
+\titleformat{\section}{\Large\bfseries\color{mitRojo}}{}{0pt}{}
+  [{\color{mitGris}\titlerule[0.6pt]}]
+\titlespacing*{\section}{0pt}{1.1em}{0.6em}
+\titleformat{\subsection}{\large\bfseries}{}{0pt}{}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.3em}
+
+% Encabezado y pie discretos.
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[L]{\small\color{mitGris}Teach-back. Ingeniería de prompts}
+\fancyhead[R]{\small\color{mitGris}Módulo 4. Actividad 4.1}
+\fancyfoot[C]{\small\color{mitGris}\thepage}
+
+% Etiqueta de color con el nombre de una pieza del prompt.
+%   \etiqueta{color}{texto}
+\newcommand{\etiqueta}[2]{%
+  \tcbox[on line,colback=#1,colframe=#1,boxrule=0pt,arc=1.5pt,
+    left=3pt,right=3pt,top=1pt,bottom=1pt]{\color{white}\footnotesize\bfseries #2}}
+
+% Una pieza del prompt: etiqueta al margen izquierdo y el texto a la derecha.
+%   \pieza{color}{nombre}{texto}
+\newcommand{\pieza}[3]{%
+  \begin{tcolorbox}[colback=#1!6,colframe=#1,boxrule=0pt,
+    leftrule=3pt,arc=0pt,left=6pt,right=6pt,top=3pt,bottom=3pt,
+    before skip=3pt,after skip=3pt]
+  \begin{minipage}[t]{2.3cm}\raggedright\footnotesize\bfseries
+    \textcolor{#1}{\MakeUppercase{#2}}\end{minipage}\hfill
+  \begin{minipage}[t]{\dimexpr\linewidth-2.3cm-8pt\relax}
+    \small\raggedright #3\end{minipage}
+  \end{tcolorbox}}
+
+% Recuadro de un prompt (texto que se le da a la IA).
+\newtcolorbox{prompt}[1]{breakable,colback=white,colframe=mitGris,
+  boxrule=0.6pt,arc=1.5pt,left=6pt,right=6pt,top=6pt,bottom=6pt,
+  title={#1},coltitle=black,colbacktitle=fondo,fonttitle=\small\bfseries}
+
+% Recuadro del mensaje que saldría al cliente.
+\newtcolorbox{mensaje}[1]{colback=fondo,colframe=fondo,
+  boxrule=0pt,arc=4pt,left=10pt,right=10pt,top=6pt,bottom=6pt,
+  title={#1},coltitle=mitGris,colbacktitle=fondo,fonttitle=\footnotesize\bfseries,
+  toptitle=2pt,bottomtitle=-2pt}
+
+% Aviso de que el ejemplo es ilustrativo.
+\newtcolorbox{aviso}{colback=mitRojo!5,colframe=mitRojo,boxrule=0pt,
+  leftrule=3pt,arc=0pt,left=8pt,right=8pt,top=5pt,bottom=5pt}
+
+\begin{document}
+
+% === Portada =================================================================
+\begin{titlepage}
+\newgeometry{margin=2.5cm}
+\raggedright
+{\color{mitRojo}\rule{\textwidth}{3pt}\par}
+\vspace{0.4cm}
+{\small\bfseries\color{mitGris}MIT Professional Education,
+Chief Technology Officer Program\par}
+\vspace{4.0cm}
+{\large Inteligencia Artificial Generativa\\
+Aplicada a la Transformación Digital\par}
+\vspace{0.4cm}
+{\normalsize\color{mitGris}Módulo 4. Actividad 4.1. Teach-back\par}
+\vspace{1.4cm}
+{\fontsize{30}{36}\selectfont\bfseries\color{mitRojo}
+Ingeniería de prompts:\\ qué es y por qué importa\par}
+\vspace{0.6cm}
+{\large Una explicación para el equipo de\\
+customer success managers de Subaxa\par}
+\vfill
+{\color{mitGris}\rule{\textwidth}{0.6pt}\par}
+\vspace{0.3cm}
+{\large\bfseries Carlos Luis Rojas Aragonés\par}
+\vspace{0.1cm}
+{\normalsize\color{mitGris}CTO de Subaxa\quad\textbar\quad 23 de noviembre de 2026\par}
+\restoregeometry
+\end{titlepage}
+
+% === 1. Nota de contextualización (100 a 150 palabras) =======================
+\needspace{8\baselineskip}
+\section*{1. Nota de contextualización}
+
+Elegí explicar la ingeniería de prompts: qué es y por qué importa. Un prompt
+son las instrucciones por escrito que le damos a la IA para que haga un
+trabajo. En Subaxa esto pesa todos los días. Nuestro agente de user
+engagement escribe mensajes personalizados por correo y WhatsApp para cada
+inversionista, y la calidad de esos mensajes depende del prompt.
+
+El público es el equipo de customer success managers de Subaxa. No son
+técnicos, pero aprueban cada mensaje antes de que salga. Son la última
+revisión entre la IA y el cliente.
+
+La idea clave que obtuve al prepararlo es que un mensaje genérico casi nunca
+es culpa de la IA: es un prompt que dejó decisiones sin tomar. Y las
+personas que mejor pueden tomar esas decisiones son los CSM, no yo.
+
+% === 2. Explicación del concepto ==============================================
+\needspace{8\baselineskip}
+\section*{2. Qué es un prompt y cómo funciona}
+
+\needspace{5\baselineskip}
+\subsection*{Qué es}
+
+Un \textbf{prompt} son las instrucciones por escrito que le damos a la IA
+para que haga un trabajo. La \textbf{IA generativa} (o \emph{modelo}) es el
+programa que escribe el texto a partir de esas instrucciones.
+
+La \textbf{ingeniería de prompts} es el oficio de escribir esas
+instrucciones de forma que la IA entregue lo que necesitamos, y no lo que
+ella supone.
+
+\needspace{5\baselineskip}
+\subsection*{Una forma sencilla de verlo: el brief a un compañero nuevo}
+
+Imaginen que llega alguien nuevo al equipo y le piden: \enquote{escribile a
+un cliente sobre un remate}. Va a escribir algo correcto, pero genérico.
+No conoce al cliente ni nuestras reglas.
+
+Ahora imaginen que le dicen quién es el cliente, qué busca y qué remate
+salió. Le dicen qué no puede prometer. Le muestran un mensaje que ya
+funcionó y le piden que sea corto, para WhatsApp. El mensaje sale bien
+desde la primera vez.
+
+La IA es ese compañero nuevo: escribe rápido y bien, pero solo sabe lo que
+le decimos. \textbf{El prompt es el brief.} Si el brief es vago, el
+resultado es vago.
+
+\needspace{5\baselineskip}
+\subsection*{Cómo funciona: las seis piezas de un buen prompt}
+
+Un buen prompt tiene seis piezas. Cada una responde una pregunta que el
+compañero nuevo nos haría. Junto con la tarea, le pasamos a la IA un
+\emph{contexto}: la información que necesita, en este caso lo que sabemos
+del usuario y del remate.
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.9cm}
+  >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Pieza} & \textbf{Qué es, en palabras simples} &
+  \textbf{En el agente de user engagement}\\
+\midrule
+\etiqueta{pRol}{Rol} & Quién \enquote{es} la IA en esta tarea &
+  Alguien del equipo de Subaxa que acompaña a inversionistas\\
+\etiqueta{pContexto}{Contexto} & Lo que sabemos de la persona &
+  Zonas, tipo de propiedad, presupuesto, qué remates vio o guardó, etapa
+  del cliente\\
+\etiqueta{pTarea}{Tarea} & Qué tiene que hacer, una sola cosa &
+  Avisar de un remate nuevo que calza con su perfil\\
+\etiqueta{pReglas}{Reglas} & Lo que puede y no puede hacer &
+  No prometer ganancias, no inventar datos del remate, invitar a hablar con
+  el equipo\\
+\etiqueta{pEjemplo}{Ejemplo} & Un mensaje modelo de cómo suena
+  \enquote{bien} & Un mensaje corto, cercano y profesional ya aprobado\\
+\etiqueta{pFormato}{Formato} & Cómo se entrega &
+  Canal (WhatsApp o correo), largo máximo, un solo llamado a la acción\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+La pieza de reglas incluye \enquote{no inventar datos}. Lo pongo porque la
+IA a veces inventa un dato que suena creíble. A eso se le llama
+\emph{alucinación}.
+
+\needspace{5\baselineskip}
+\subsection*{Por qué importa}
+
+\begin{itemize}
+\item \textbf{Ustedes aprueban cada mensaje antes de que salga.} Son la
+  última revisión entre la IA y el inversionista.
+\item \textbf{Un mensaje bueno o malo casi siempre se explica por el
+  prompt.} Si falta el contexto, sale genérico. Si falta una regla, puede
+  prometer algo que no debe. Si falta el formato, sale largo o en el tono
+  equivocado.
+\item \textbf{Es el mismo criterio que ya tienen.} Un CSM sabe cómo se le
+  habla a un cliente nuevo y cómo a uno inactivo. El prompt es el lugar
+  donde ese criterio queda por escrito para la IA.
+\end{itemize}
+
+% === 3. Ejemplo en Subaxa =====================================================
+\needspace{8\baselineskip}
+\section*{3. Un ejemplo en Subaxa: el agente de user engagement}
+
+\needspace{5\baselineskip}
+\subsection*{Qué hace el agente hoy}
+
+El agente está en producción. Escribe mensajes por \textbf{correo} y
+\textbf{WhatsApp} para cada usuario de la plataforma. Para personalizarlos
+usa cuatro tipos de datos:
+
+\begin{itemize}
+\item las preferencias del usuario: zonas, tipo de propiedad y presupuesto;
+\item lo que hace en la plataforma: remates que vio, guardó o en los que
+  participó;
+\item los remates nuevos del Boletín Judicial que calzan con su perfil;
+\item la etapa del cliente: nuevo, activo, inactivo, etc.
+\end{itemize}
+
+Escribe en dos momentos: cuando pasa algo (aparece un remate que calza, o el
+usuario hace o deja de hacer algo) y en un resumen periódico personalizado.
+Antes de que un mensaje salga, \textbf{un CSM lo aprueba}.
+
+\begin{aviso}
+\small\textbf{Importante:} el ejemplo que sigue es \textbf{ilustrativo y
+simplificado}. No es el prompt real del agente. La usuaria, el remate y los
+montos son ficticios.
+\end{aviso}
+
+\needspace{5\baselineskip}
+\subsection*{Un prompt pobre}
+
+\begin{prompt}{Prompt pobre}
+\small Escriba un mensaje de WhatsApp para un usuario de Subaxa sobre un
+remate nuevo.
+\end{prompt}
+
+\begin{mensaje}{Mensaje que produciría (genérico)}
+\small ¡Hola! En Subaxa tenemos nuevas oportunidades de inversión en remates
+judiciales. ¡No se las pierda! Entre a la plataforma y descubra las mejores
+propiedades al mejor precio. ¡Invierta hoy!
+\end{mensaje}
+
+\textbf{Qué está mal.} No dice cuál remate. No sabe a quién le habla. Suena
+a publicidad masiva. Y \enquote{al mejor precio} es una promesa que no
+podemos hacer.
+
+% Las seis piezas van juntas en una misma página.
+\needspace{24\baselineskip}
+\subsection*{El mismo pedido, con las seis piezas}
+
+Cada recuadro de color es una pieza. La etiqueta al margen dice cuál.
+
+\pieza{pRol}{Rol}{Usted es parte del equipo de Subaxa que acompaña a
+inversionistas en remates judiciales en Costa Rica. Escribe de forma
+cercana y profesional, tratando de \enquote{usted}.}
+
+\pieza{pContexto}{Contexto del usuario}{%
+Nombre: Ana (usuaria ficticia).\\
+Etapa: activa. Se registró hace unos meses y todavía no ha participado en
+un remate.\\
+Busca: casas en Heredia. Presupuesto: hasta \colones 80\,000\,000.\\
+Comportamiento: la semana pasada guardó dos casas en Heredia en remate.\\[0.3em]
+\textbf{Remate nuevo que calza (ficticio):} casa de 3 habitaciones en
+Heredia. Base del remate: \colones 65\,000\,000. Primer remate: 15 de enero
+(fecha ficticia).}
+
+\pieza{pTarea}{Tarea}{Avísele a Ana de este remate nuevo y por qué podría
+interesarle.}
+
+\pieza{pReglas}{Reglas}{%
+Use solo los datos de arriba. No invente nada del remate.\\
+No prometa ganancias ni diga que es \enquote{una ganga}.\\
+No ponga direcciones exactas.\\
+Invítela a ver el detalle o a hablar con el equipo legal y de inversión.}
+
+\pieza{pEjemplo}{Ejemplo de tono}{\enquote{Hola, Luis. Vimos que le interesan
+los lotes en Cartago y apareció uno nuevo en el Boletín Judicial. Si gusta,
+lo revisamos juntos.} (ficticio)}
+
+\pieza{pFormato}{Formato}{WhatsApp. Máximo 4 líneas. Un solo llamado a la
+acción. Sin emojis.}
+
+\begin{mensaje}{Mensaje que produciría (personalizado)}
+\small Hola, Ana. Salió en el Boletín Judicial una casa de 3 habitaciones en
+Heredia, parecida a las que guardó la semana pasada. La base es de
+\colones 65\,000\,000 y el primer remate es el 15 de enero. Si gusta, el
+equipo legal y de inversión le acompaña a revisarla antes de decidir.
+\end{mensaje}
+
+\textbf{Qué cambió.} El mensaje usa su zona, su tipo de propiedad y lo que
+hizo en la plataforma. Está dentro de su presupuesto. No promete nada. Y es
+corto. La IA es la misma en los dos casos: lo único que cambió fue el
+prompt.
+
+% === 4. Conexión con resultados reales =======================================
+\needspace{8\baselineskip}
+\section*{4. Cómo esto cambia lo que sale y lo que decidimos}
+
+\textbf{Lo que le llega al cliente.} Cada mensaje que el agente manda por
+correo o WhatsApp sale de un prompt. Si al prompt le falta contexto, el
+inversionista recibe algo genérico, que se parece a cualquier publicidad. Si
+le falta una regla, el mensaje puede prometer algo que Subaxa no puede
+cumplir. Si le falta el formato, llega un texto largo a un canal donde se
+lee rápido. Con las seis piezas, el mensaje habla de lo que esa persona
+busca, con los datos correctos del remate.
+
+\textbf{El trabajo de aprobación de los CSM.} Cuando el prompt es pobre,
+el CSM termina reescribiendo mensajes en lugar de revisarlos. Cuando el
+prompt es bueno, aprobar es más rápido y la revisión se enfoca en lo que de
+verdad requiere criterio humano: el tono con un cliente en particular, o un
+caso que el prompt no previó.
+
+\textbf{La decisión de fondo: corregir cada mensaje o ajustar el prompt
+una vez.} Corregir a mano arregla un mensaje. El mismo error vuelve a
+aparecer en el siguiente. Ajustar el prompt arregla la causa, y ese ajuste
+mejora todos los mensajes que vienen. Por eso, cuando un CSM ve que un
+error se repite, lo más útil no es solo corregirlo: es decir qué pieza
+falló y proponer el cambio.
+
+En resumen, los cuatro mensajes que quiero que se lleven:
+
+\begin{enumerate}
+\item Un prompt es el brief que le damos a la IA: si el brief es vago, el
+  resultado es vago.
+\item Un buen prompt tiene seis piezas: rol, contexto del usuario, tarea,
+  reglas, ejemplo y formato.
+\item Cuando un mensaje sale mal, casi siempre falta o falla una pieza.
+\item El CSM no solo aprueba: puede mejorar el prompt, y eso mejora todos
+  los mensajes que vienen.
+\end{enumerate}
+
+% === 5. Conclusión práctica ===================================================
+\needspace{8\baselineskip}
+\section*{5. Qué pueden hacer desde mañana}
+
+Al aprobar un mensaje, háganse estas cinco preguntas rápidas:
+
+\begin{tcolorbox}[colback=white,colframe=mitRojo,boxrule=0.8pt,
+  arc=1.5pt,left=8pt,right=8pt,top=6pt,bottom=6pt]
+\begin{enumerate}[label=\textbf{\color{mitRojo}\arabic*.},leftmargin=1.6em,itemsep=0.3em]
+\item ¿Se nota que es para esta persona? (zona, tipo de propiedad, lo que
+  hizo)
+\item ¿Los datos del remate son correctos y no hay nada inventado?
+\item ¿Promete algo que no debe? (ganancias, \enquote{ganga}, certeza del
+  resultado)
+\item ¿El tono calza con la etapa del cliente? (nuevo, activo, inactivo)
+\item ¿Tiene el largo del canal y un solo llamado a la acción?
+\end{enumerate}
+\end{tcolorbox}
+
+Si una respuesta es \enquote{no}, además de corregir el mensaje, escriban
+una sugerencia de ajuste con esta forma simple:
+
+\begin{tcolorbox}[colback=fondo,colframe=fondo,arc=1.5pt,
+  left=8pt,right=8pt,top=6pt,bottom=6pt,
+  title={Plantilla para sugerir un ajuste al prompt},coltitle=black,
+  colbacktitle=fondo,fonttitle=\small\bfseries]
+\small
+\begin{tabularx}{\linewidth}{@{}>{\bfseries}p{3.6cm}X@{}}
+Pieza: & \etiqueta{pReglas}{Reglas}\\
+Qué pasó: & El mensaje dijo \enquote{excelente oportunidad de ganancia}.\\
+Ajuste propuesto: & Agregar la regla \enquote{no hablar de ganancias ni de
+  rentabilidad esperada}.\\
+\end{tabularx}
+\end{tcolorbox}
+
+Ustedes ya tienen el criterio. Esta plantilla es la forma de dejarlo por
+escrito para la IA.
+
+\end{document}

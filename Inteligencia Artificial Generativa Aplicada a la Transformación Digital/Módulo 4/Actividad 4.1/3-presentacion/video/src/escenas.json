@@ -1,0 +1,351 @@
+[
+  {
+    "escena": 1,
+    "audio": "audio/escena-1.mp3",
+    "duracionAudio": 22.089,
+    "frases": [
+      {
+        "texto": "Hola. Soy Carlos Luis Rojas Aragonés, CTO de Subaxa.",
+        "inicio": 0.0,
+        "fin": 5.109
+      },
+      {
+        "texto": "Este es mi teach-back para el programa de CTO del MIT Professional Education.",
+        "inicio": 5.559,
+        "fin": 10.176
+      },
+      {
+        "texto": "El tema es la ingeniería de prompts: qué es y por qué importa.",
+        "inicio": 10.626,
+        "fin": 14.431
+      },
+      {
+        "texto": "Lo preparé para ustedes, el equipo de customer success managers de Subaxa.",
+        "inicio": 14.881,
+        "fin": 19.532
+      },
+      {
+        "texto": "No hace falta saber nada técnico.",
+        "inicio": 19.982,
+        "fin": 22.089
+      }
+    ]
+  },
+  {
+    "escena": 2,
+    "audio": "audio/escena-2.mp3",
+    "duracionAudio": 41.415,
+    "frases": [
+      {
+        "texto": "Empiezo por la palabra.",
+        "inicio": 0.0,
+        "fin": 1.309
+      },
+      {
+        "texto": "Un prompt son las instrucciones por escrito que le damos a la IA para que haga un trabajo.",
+        "inicio": 1.759,
+        "fin": 6.65
+      },
+      {
+        "texto": "Imaginen que llega alguien nuevo al equipo y le piden: escribile a un cliente sobre un remate.",
+        "inicio": 7.1,
+        "fin": 12.697
+      },
+      {
+        "texto": "Va a escribir algo correcto, pero genérico.",
+        "inicio": 13.147,
+        "fin": 15.96
+      },
+      {
+        "texto": "No conoce al cliente ni nuestras reglas.",
+        "inicio": 16.41,
+        "fin": 18.719
+      },
+      {
+        "texto": "Ahora imaginen que le dicen quién es el cliente, qué busca y qué no puede prometer.",
+        "inicio": 19.169,
+        "fin": 24.055
+      },
+      {
+        "texto": "Y le muestran un mensaje que ya funcionó.",
+        "inicio": 24.505,
+        "fin": 26.917
+      },
+      {
+        "texto": "El mensaje sale bien desde la primera vez.",
+        "inicio": 27.367,
+        "fin": 29.849
+      },
+      {
+        "texto": "La IA es ese compañero nuevo: escribe rápido y bien, pero solo sabe lo que le decimos.",
+        "inicio": 30.299,
+        "fin": 35.888
+      },
+      {
+        "texto": "El prompt es el brief. Si el brief es vago, el resultado es vago.",
+        "inicio": 36.338,
+        "fin": 41.415
+      }
+    ]
+  },
+  {
+    "escena": 3,
+    "audio": "audio/escena-3.mp3",
+    "duracionAudio": 28.689,
+    "frases": [
+      {
+        "texto": "Un buen prompt tiene seis piezas.",
+        "inicio": 0.0,
+        "fin": 2.018
+      },
+      {
+        "texto": "El rol: quién es la IA en esta tarea.",
+        "inicio": 2.468,
+        "fin": 5.073
+      },
+      {
+        "texto": "El contexto: lo que sabemos de la persona.",
+        "inicio": 5.523,
+        "fin": 8.205
+      },
+      {
+        "texto": "La tarea: qué tiene que hacer, una sola cosa.",
+        "inicio": 8.655,
+        "fin": 11.739
+      },
+      {
+        "texto": "Las reglas: lo que puede y no puede hacer.",
+        "inicio": 12.189,
+        "fin": 14.83
+      },
+      {
+        "texto": "Por ejemplo, no inventar datos, porque la IA a veces inventa un dato que suena creíble.",
+        "inicio": 15.28,
+        "fin": 20.756
+      },
+      {
+        "texto": "El ejemplo: un mensaje modelo de cómo suena bien.",
+        "inicio": 21.206,
+        "fin": 24.404
+      },
+      {
+        "texto": "Y el formato: cómo se entrega, por qué canal y de qué largo.",
+        "inicio": 24.854,
+        "fin": 28.689
+      }
+    ]
+  },
+  {
+    "escena": 4,
+    "audio": "audio/escena-4.mp3",
+    "duracionAudio": 27.678,
+    "frases": [
+      {
+        "texto": "Llevemos esto a algo que ustedes conocen.",
+        "inicio": 0.0,
+        "fin": 2.36
+      },
+      {
+        "texto": "Nuestro agente de user engagement está en producción.",
+        "inicio": 2.81,
+        "fin": 5.678
+      },
+      {
+        "texto": "Escribe mensajes por correo y WhatsApp para cada usuario.",
+        "inicio": 6.128,
+        "fin": 9.676
+      },
+      {
+        "texto": "Usa sus preferencias, lo que hace en la plataforma, los remates nuevos del Boletín Judicial que calzan con su perfil, y su etapa como cliente.",
+        "inicio": 10.126,
+        "fin": 19.205
+      },
+      {
+        "texto": "Escribe cuando pasa algo, y también en un resumen periódico.",
+        "inicio": 19.655,
+        "fin": 23.565
+      },
+      {
+        "texto": "Y antes de que un mensaje salga, uno de ustedes lo aprueba.",
+        "inicio": 24.015,
+        "fin": 27.678
+      }
+    ]
+  },
+  {
+    "escena": 5,
+    "audio": "audio/escena-5.mp3",
+    "duracionAudio": 43.661,
+    "frases": [
+      {
+        "texto": "Veamos un ejemplo ilustrativo y simplificado.",
+        "inicio": 0.0,
+        "fin": 2.706
+      },
+      {
+        "texto": "No es el prompt real, y Ana es una usuaria ficticia.",
+        "inicio": 3.156,
+        "fin": 6.603
+      },
+      {
+        "texto": "A la izquierda, un prompt pobre: escriba un mensaje de WhatsApp para un usuario sobre un remate nuevo.",
+        "inicio": 7.053,
+        "fin": 13.634
+      },
+      {
+        "texto": "El resultado suena a publicidad masiva, y hasta promete el mejor precio.",
+        "inicio": 14.084,
+        "fin": 18.524
+      },
+      {
+        "texto": "A la derecha, el mismo pedido con las seis piezas.",
+        "inicio": 18.974,
+        "fin": 22.245
+      },
+      {
+        "texto": "El rol.",
+        "inicio": 22.695,
+        "fin": 23.229
+      },
+      {
+        "texto": "El contexto: Ana busca casas en Heredia, y la semana pasada guardó dos.",
+        "inicio": 23.679,
+        "fin": 28.672
+      },
+      {
+        "texto": "La tarea.",
+        "inicio": 29.122,
+        "fin": 29.747
+      },
+      {
+        "texto": "Las reglas.",
+        "inicio": 30.197,
+        "fin": 30.996
+      },
+      {
+        "texto": "Un ejemplo de tono.",
+        "inicio": 31.446,
+        "fin": 32.562
+      },
+      {
+        "texto": "Y el formato.",
+        "inicio": 33.012,
+        "fin": 33.881
+      },
+      {
+        "texto": "Ahora el mensaje habla de lo que Ana busca, con datos correctos y sin promesas.",
+        "inicio": 34.331,
+        "fin": 39.003
+      },
+      {
+        "texto": "La IA es la misma. Lo único que cambió fue el prompt.",
+        "inicio": 39.453,
+        "fin": 43.661
+      }
+    ]
+  },
+  {
+    "escena": 6,
+    "audio": "audio/escena-6.mp3",
+    "duracionAudio": 30.167,
+    "frases": [
+      {
+        "texto": "¿Qué cambia para ustedes?",
+        "inicio": 0.0,
+        "fin": 1.274
+      },
+      {
+        "texto": "Cuando un mensaje sale mal, casi siempre falta o falla una pieza.",
+        "inicio": 1.724,
+        "fin": 5.915
+      },
+      {
+        "texto": "Corregir a mano arregla un mensaje, pero el mismo error vuelve en el siguiente.",
+        "inicio": 6.365,
+        "fin": 10.852
+      },
+      {
+        "texto": "Ajustar el prompt arregla la causa, y mejora todos los mensajes que vienen.",
+        "inicio": 11.302,
+        "fin": 15.993
+      },
+      {
+        "texto": "Ustedes ya tienen el criterio: saben cómo se le habla a un cliente nuevo y cómo a uno inactivo.",
+        "inicio": 16.443,
+        "fin": 22.187
+      },
+      {
+        "texto": "El prompt es donde ese criterio queda por escrito.",
+        "inicio": 22.637,
+        "fin": 25.469
+      },
+      {
+        "texto": "Por eso no solo aprueban. También pueden mejorar el prompt.",
+        "inicio": 25.919,
+        "fin": 30.167
+      }
+    ]
+  },
+  {
+    "escena": 7,
+    "audio": "audio/escena-7.mp3",
+    "duracionAudio": 39.983,
+    "frases": [
+      {
+        "texto": "Desde mañana, al aprobar un mensaje, háganse cinco preguntas.",
+        "inicio": 0.0,
+        "fin": 4.376
+      },
+      {
+        "texto": "¿Se nota que es para esta persona?",
+        "inicio": 4.826,
+        "fin": 6.886
+      },
+      {
+        "texto": "¿Los datos del remate son correctos?",
+        "inicio": 7.336,
+        "fin": 9.437
+      },
+      {
+        "texto": "¿Promete algo que no debe?",
+        "inicio": 9.887,
+        "fin": 11.346
+      },
+      {
+        "texto": "¿El tono calza con la etapa del cliente?",
+        "inicio": 11.796,
+        "fin": 14.112
+      },
+      {
+        "texto": "¿Tiene el largo del canal y un solo llamado a la acción?",
+        "inicio": 14.562,
+        "fin": 17.501
+      },
+      {
+        "texto": "Si una respuesta es no, corrijan el mensaje y escriban una sugerencia corta: qué pieza falló, qué pasó y qué ajuste proponen.",
+        "inicio": 17.951,
+        "fin": 26.317
+      },
+      {
+        "texto": "Al preparar esto aprendí algo.",
+        "inicio": 26.767,
+        "fin": 28.448
+      },
+      {
+        "texto": "Un mensaje genérico casi nunca es culpa de la IA: es un prompt que dejó decisiones sin tomar.",
+        "inicio": 28.898,
+        "fin": 34.818
+      },
+      {
+        "texto": "Y quienes mejor pueden tomar esas decisiones son ustedes.",
+        "inicio": 35.268,
+        "fin": 38.536
+      },
+      {
+        "texto": "Muchas gracias.",
+        "inicio": 38.986,
+        "fin": 39.983
+      }
+    ]
+  }
+]

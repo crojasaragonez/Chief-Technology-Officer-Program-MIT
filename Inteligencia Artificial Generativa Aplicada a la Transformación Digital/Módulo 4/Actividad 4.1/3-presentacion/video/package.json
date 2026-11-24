@@ -1,0 +1,21 @@
+{
+  "name": "teach-back-ingenieria-de-prompts",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Video del teach-back de la actividad 4.1 (Remotion).",
+  "scripts": {
+    "voz": "python3 scripts/voz.py",
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts TeachBack teach-back.mp4 --codec=h264"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.546",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "remotion": "4.0.546"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.2",
+    "typescript": "5.9.3"
+  }
+}
